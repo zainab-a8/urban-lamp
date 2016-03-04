@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:minHeight="@dimen/dim_seekbar_preference_min_height"
+             android:minHeight="@dimen/seekbar_preference_min_height"
              android:gravity="center_vertical"
              android:paddingLeft="@dimen/preference_padding_start"
              android:paddingStart="@dimen/preference_padding_start"

@@ -7,21 +7,23 @@ import android.view.View;
 
 import com.cngu.shades.preference.ColorPickerPreference;
 import com.cngu.shades.preference.DimSeekBarPreference;
+import com.cngu.shades.preference.IntensitySeekBarPreference;
 
 
 public class ScreenFilterView extends View {
-    public static final int MIN_DIM      = 0;
-    private static final float MAX_DIM   = 100f;
-    private static final float MIN_ALPHA = 0x00;
-    private static final float MAX_ALPHA = (int) (0xFF * 0.75);
+    public static final int MIN_DIM       = 0;
+    public static final int MIN_INTENSITY = 0;
+    private static final float MAX_DIM    = 100f;
+    private static final float MIN_ALPHA  = 0x00;
+    private static final float MAX_ALPHA  = 0.75f;
     private static final float MAX_DARKEN = 0.75f;
 
-    private static final float DIM_ALPHA_INFLUENCE       = 0.5f;
-    private static final float INTENSITY_ALPHA_INFLUENCE = 0.5f;
+    private static final float DIM_MAX_ALPHA        = 0.9f;
+    private static final float INTENSITY_MAX_ALPHA  = 0.75f;
+    private static final float ALPHA_ADD_MULTIPLIER = 0.75f;
 
     private int mDimLevel = DimSeekBarPreference.DEFAULT_VALUE;
-    private int mIntensityLevel = 50; // TODO: default value
-    private int mAlpha = levelsToAlpha(mDimLevel, mIntensityLevel);
+    private int mIntensityLevel = IntensitySeekBarPreference.DEFAULT_VALUE;
     private int mRgbColor = ColorPickerPreference.DEFAULT_VALUE;
 
     public ScreenFilterView(Context context) {
@@ -30,6 +32,10 @@ public class ScreenFilterView extends View {
 
     public int getFilterDimLevel() {
         return mDimLevel;
+    }
+
+    public int getFilterIntensityLevel() {
+        return mIntensityLevel;
     }
 
     public int getFilterRgbColor() {
@@ -45,7 +51,6 @@ public class ScreenFilterView extends View {
      */
     public void setFilterDimLevel(int dimLevel) {
         mDimLevel = dimLevel;
-        mAlpha = levelsToAlpha(mDimLevel, mIntensityLevel);
         invalidate();
     }
 
@@ -58,7 +63,6 @@ public class ScreenFilterView extends View {
      */
     public void setFilterIntensityLevel(int intensityLevel) {
         mIntensityLevel = intensityLevel;
-        mAlpha = levelsToAlpha(mDimLevel, mIntensityLevel);
         invalidate();
     }
 
@@ -75,21 +79,51 @@ public class ScreenFilterView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        float darken = (MAX_DIM - (mDimLevel * MAX_DARKEN)) / MAX_DIM;
-        canvas.drawColor(Color.argb(mAlpha,
-                                    (int) ((float) Color.red(mRgbColor) * darken),
-                                    (int) ((float) Color.green(mRgbColor) * darken),
-                                    (int) ((float) Color.blue(mRgbColor) * darken)));
+        int filterColor = getFilterColor(mRgbColor, mDimLevel, mIntensityLevel);
+
+        canvas.drawColor(filterColor);
     }
 
-    private static int levelsToAlpha(int dimLevel, int intensityLevel) {
-        float totalRelativeValue = ((float) dimLevel) * DIM_ALPHA_INFLUENCE +
-            ((float) intensityLevel) * INTENSITY_ALPHA_INFLUENCE;
-        return (int) mapToRange(totalRelativeValue, MIN_DIM, MAX_DIM, MIN_ALPHA, MAX_ALPHA);
+    private int getFilterColor(int rgbColor, int dimLevel, int intensityLevel) {
+        int intensityColor = Color.argb(floatToColorBits(((float) intensityLevel / 100.0f)),
+                                          Color.red(rgbColor),
+                                          Color.green(rgbColor),
+                                          Color.blue(rgbColor));
+        int dimColor = Color.argb(floatToColorBits(((float) dimLevel / 100.0f)), 0, 0, 0);
+        return addColors(dimColor, intensityColor);
     }
 
-    private static float mapToRange(float value, float minInput, float maxInput,
-                                    float minOutput, float maxOutput) {
-        return (value - minInput) * ((maxOutput - minOutput) / (maxInput - minInput)) + minOutput;
+    private int addColors(int color1, int color2) {
+        float alpha1 = colorBitsToFloat(Color.alpha(color1));
+        float alpha2 = colorBitsToFloat(Color.alpha(color2));
+        float red1 = colorBitsToFloat(Color.red(color1));
+        float red2 = colorBitsToFloat(Color.red(color2));
+        float green1 = colorBitsToFloat(Color.green(color1));
+        float green2 = colorBitsToFloat(Color.green(color2));
+        float blue1 = colorBitsToFloat(Color.blue(color1));
+        float blue2 = colorBitsToFloat(Color.blue(color2));
+
+        // See: http://stackoverflow.com/a/10782314
+
+        // Alpha changed to allow more controll
+        float fAlpha = alpha2 * INTENSITY_MAX_ALPHA +
+            (DIM_MAX_ALPHA - alpha2 * INTENSITY_MAX_ALPHA) * alpha1;
+        alpha1 *= ALPHA_ADD_MULTIPLIER;
+        alpha2 *= ALPHA_ADD_MULTIPLIER;
+        
+        int alpha = floatToColorBits(fAlpha);
+        int red = floatToColorBits((red1 * alpha1 + red2 * alpha2 * (1.0f - alpha1)) / fAlpha);
+        int green = floatToColorBits((green1 * alpha1 + green2 * alpha2 * (1.0f - alpha1)) / fAlpha);
+        int blue = floatToColorBits((blue1 * alpha1 + blue2 * alpha2 * (1.0f - alpha1)) / fAlpha);
+
+        return Color.argb(alpha, red, green, blue);
+    }
+
+    private float colorBitsToFloat(int bits) {
+        return (float) bits / 255.0f;
+    }
+
+    private int floatToColorBits(float color) {
+        return (int) (color * 255.0f);
     }
 }

@@ -2,6 +2,10 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="@string/pref_title_appearance">
+        <com.cngu.shades.preference.IntensitySeekBarPreference
+            android:key="@string/pref_key_shades_intensity_level"
+            android:defaultValue="50" />
+
         <com.cngu.shades.preference.DimSeekBarPreference
             android:key="@string/pref_key_shades_dim_level"
             android:defaultValue="50" />

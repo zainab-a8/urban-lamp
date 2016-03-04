@@ -54,6 +54,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
 
     private ValueAnimator mColorAnimator;
     private ValueAnimator mDimAnimator;
+    private ValueAnimator mIntensityAnimator;
 
     private final State mOnState = new OnState();
     private final State mOffState = new OffState();
@@ -163,6 +164,15 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
     }
 
     @Override
+    public void onShadesIntensityLevelChanged(int intensityLevel) {
+        if (!isPaused()) {
+            cancelRunningAnimator(mIntensityAnimator);
+
+            mView.setFilterIntensityLevel(intensityLevel);
+        }
+    }
+
+    @Override
     public void onShadesColorChanged(int color) {
         if (!isPaused()) {
             animateShadesColor(color);
@@ -205,6 +215,27 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
         }
 
         mDimAnimator.start();
+    }
+
+    private void animateIntensityLevel(int toIntensityLevel, Animator.AnimatorListener listener) {
+        cancelRunningAnimator(mIntensityAnimator);
+
+        int fromIntensityLevel = mView.getFilterIntensityLevel();
+
+        mIntensityAnimator = ValueAnimator.ofInt(fromIntensityLevel, toIntensityLevel);
+        mIntensityAnimator.setDuration(FADE_DURATION_MS);
+        mIntensityAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    mView.setFilterIntensityLevel((Integer) valueAnimator.getAnimatedValue());
+                }
+            });
+
+        if (listener != null) {
+            mIntensityAnimator.addListener(listener);
+        }
+
+        mIntensityAnimator.start();
     }
 
     private boolean isOff() {
@@ -304,6 +335,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                     refreshForegroundNotification();
 
                     animateDimLevel(ScreenFilterView.MIN_DIM, null);
+                    animateIntensityLevel(ScreenFilterView.MIN_INTENSITY, null);
 
                     break;
 
@@ -313,6 +345,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                     moveToState(mOffState);
                     mServiceController.stopForeground(true);
 
+                    animateIntensityLevel(ScreenFilterView.MIN_INTENSITY, null);
                     animateDimLevel(ScreenFilterView.MIN_DIM, new AbstractAnimatorListener() {
                         @Override
                         public void onAnimationEnd(Animator animator) {
@@ -335,6 +368,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                     refreshForegroundNotification();
 
                     animateDimLevel(mSettingsModel.getShadesDimLevel(), null);
+                    animateIntensityLevel(mSettingsModel.getShadesIntensityLevel(), null);
 
                     break;
 
@@ -359,14 +393,18 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
 
                     int fromDim = ScreenFilterView.MIN_DIM;
                     int toDim = mSettingsModel.getShadesDimLevel();
+                    int fromIntensity = ScreenFilterView.MIN_INTENSITY;
+                    int toIntensity = mSettingsModel.getShadesIntensityLevel();
                     int color = mSettingsModel.getShadesColor();
 
                     mView.setFilterDimLevel(fromDim);
+                    mView.setFilterIntensityLevel(fromIntensity);
                     mView.setFilterRgbColor(color);
 
                     openScreenFilter();
 
                     animateDimLevel(toDim, null);
+                    animateIntensityLevel(toIntensity, null);
 
                     break;
 

@@ -8,6 +8,7 @@ import android.util.Log;
 import com.cngu.shades.R;
 import com.cngu.shades.preference.ColorPickerPreference;
 import com.cngu.shades.preference.DimSeekBarPreference;
+import com.cngu.shades.preference.IntensitySeekBarPreference;
 
 /**
  * This class provides access to get and set Shades settings, and also listen to settings changes.
@@ -31,6 +32,7 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
     private String mPowerStatePrefKey;
     private String mPauseStatePrefKey;
     private String mDimPrefKey;
+    private String mIntensityPrefKey;
     private String mColorPrefKey;
     private String mOpenOnBootPrefKey;
     private String mKeepRunningAfterRebootPrefKey;
@@ -41,6 +43,7 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
         mPowerStatePrefKey = resources.getString(R.string.pref_key_shades_power_state);
         mPauseStatePrefKey = resources.getString(R.string.pref_key_shades_pause_state);
         mDimPrefKey = resources.getString(R.string.pref_key_shades_dim_level);
+        mIntensityPrefKey = resources.getString(R.string.pref_key_shades_intensity_level);
         mColorPrefKey = resources.getString(R.string.pref_key_shades_color);
         mOpenOnBootPrefKey = resources.getString(R.string.pref_key_always_open_on_startup);
         mKeepRunningAfterRebootPrefKey = resources.getString(R.string.pref_key_keep_running_after_reboot);
@@ -64,6 +67,10 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
 
     public int getShadesDimLevel() {
         return mSharedPreferences.getInt(mDimPrefKey, DimSeekBarPreference.DEFAULT_VALUE);
+    }
+
+    public int getShadesIntensityLevel() {
+        return mSharedPreferences.getInt(mIntensityPrefKey, IntensitySeekBarPreference.DEFAULT_VALUE);
     }
 
     public int getShadesColor() {
@@ -116,6 +123,11 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
             int dimLevel = getShadesDimLevel();
             mSettingsChangedListener.onShadesDimLevelChanged(dimLevel);
         }
+        else if (key.equals(mIntensityPrefKey))
+        {
+            int intensityLevel = getShadesIntensityLevel();
+            mSettingsChangedListener.onShadesIntensityLevelChanged(intensityLevel);
+        }
         else if (key.equals(mColorPrefKey))
         {
             int color = getShadesColor();
@@ -128,6 +140,7 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
         void onShadesPowerStateChanged(boolean powerState);
         void onShadesPauseStateChanged(boolean pauseState);
         void onShadesDimLevelChanged(int dimLevel);
+        void onShadesIntensityLevelChanged(int intensityLevel);
         void onShadesColorChanged(int color);
     }
 }

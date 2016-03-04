@@ -12,6 +12,7 @@
     <string name="pref_title_startup">Startup</string>
 
     <string name="shades_dim_level">Shades dim level</string>
+    <string name="shades_intensity_level">Shades intensity level</string>
     <string name="shades_color">Shades color</string>
     <string name="always_open_on_startup">Always open on startup</string>
     <string name="keep_running_after_reboot">Keep running after reboot</string>

@@ -69,6 +69,9 @@ public class ShadesPresenter implements SettingsModel.OnSettingsChangedListener 
     public void onShadesDimLevelChanged(int dimLevel) {/* do nothing */}
 
     @Override
+    public void onShadesIntensityLevelChanged(int dimLevel) {/* do nothing */}
+
+    @Override
     public void onShadesColorChanged(int color) {/* do nothing */}
     //endregion
 }
