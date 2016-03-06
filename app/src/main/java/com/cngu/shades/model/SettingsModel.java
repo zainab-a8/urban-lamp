@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.cngu.shades.R;
-import com.cngu.shades.preference.ColorPickerPreference;
+import com.cngu.shades.preference.ColorSeekBarPreference;
 import com.cngu.shades.preference.DimSeekBarPreference;
 import com.cngu.shades.preference.IntensitySeekBarPreference;
 
@@ -44,7 +44,7 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
         mPauseStatePrefKey = resources.getString(R.string.pref_key_shades_pause_state);
         mDimPrefKey = resources.getString(R.string.pref_key_shades_dim_level);
         mIntensityPrefKey = resources.getString(R.string.pref_key_shades_intensity_level);
-        mColorPrefKey = resources.getString(R.string.pref_key_shades_color);
+        mColorPrefKey = resources.getString(R.string.pref_key_shades_color_temp);
         mOpenOnBootPrefKey = resources.getString(R.string.pref_key_always_open_on_startup);
         mKeepRunningAfterRebootPrefKey = resources.getString(R.string.pref_key_keep_running_after_reboot);
     }
@@ -74,7 +74,7 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
     }
 
     public int getShadesColor() {
-        return mSharedPreferences.getInt(mColorPrefKey, ColorPickerPreference.DEFAULT_VALUE);
+        return mSharedPreferences.getInt(mColorPrefKey, ColorSeekBarPreference.DEFAULT_VALUE);
     }
 
     public boolean getOpenOnBootFlag() {

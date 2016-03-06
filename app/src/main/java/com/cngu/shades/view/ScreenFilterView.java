@@ -1,11 +1,13 @@
 package com.cngu.shades.view;
 
+import java.lang.Math.*;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.View;
 
-import com.cngu.shades.preference.ColorPickerPreference;
+import com.cngu.shades.preference.ColorSeekBarPreference;
 import com.cngu.shades.preference.DimSeekBarPreference;
 import com.cngu.shades.preference.IntensitySeekBarPreference;
 
@@ -24,7 +26,8 @@ public class ScreenFilterView extends View {
 
     private int mDimLevel = DimSeekBarPreference.DEFAULT_VALUE;
     private int mIntensityLevel = IntensitySeekBarPreference.DEFAULT_VALUE;
-    private int mRgbColor = ColorPickerPreference.DEFAULT_VALUE;
+    private int mColorTempProgress = ColorSeekBarPreference.DEFAULT_VALUE;
+    private int mRgbColor = rgbFromColorTemperature(mColorTempProgress);
 
     public ScreenFilterView(Context context) {
         super(context);
@@ -38,8 +41,8 @@ public class ScreenFilterView extends View {
         return mIntensityLevel;
     }
 
-    public int getFilterRgbColor() {
-        return mRgbColor;
+    public int getColorTempProgress() {
+        return mColorTempProgress;
     }
 
     /**
@@ -67,13 +70,14 @@ public class ScreenFilterView extends View {
     }
 
     /**
-     * Sets the color tint of the screen filter.
+     * Sets the progress of the color temperature slider of the screen filter.
      *
-     * @param color RGB color represented by a 32-bit int; the format is the same as the one defined
-     *              in {@link android.graphics.Color}, but the alpha byte is ignored.
+     * @param colorTempProgress the progress of the color temperature slider.
      */
-    public void setFilterRgbColor(int color) {
-        mRgbColor = color;
+    public void setColorTempProgress(int colorTempProgress) {
+        int colorTemperature = 500 + colorTempProgress * 30;
+
+        mRgbColor = rgbFromColorTemperature(colorTemperature);
         invalidate();
     }
 
@@ -82,6 +86,52 @@ public class ScreenFilterView extends View {
         int filterColor = getFilterColor(mRgbColor, mDimLevel, mIntensityLevel);
 
         canvas.drawColor(filterColor);
+    }
+
+    private int rgbFromColorTemperature(int colorTemperature) {
+        int alpha = 255; // alpha is managed seperately
+
+        // After: http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
+        double temp = ((double) colorTemperature) / 100.0f;
+
+        double red;
+        if (temp <= 66)
+            red = 255.0;
+        else {
+            red = temp - 60;
+            red = 329.698727446 * Math.pow(red, -0.1332047592);
+            if (red < 0) red = 0;
+            if (red > 255) red = 255;
+        }
+
+        double green;
+        if (temp <= 66) {
+            green = temp;
+            green = 99.4708025861 * Math.log(green) - 161.1195681661;
+            if (green < 0) green = 0;
+            if (green > 255) green = 255;
+        } else {
+            green = temp - 60;
+            green = 288.1221695283 * Math.pow(green, -0.0755148492);
+            if (green < 0) green = 0;
+            if (green > 255) green = 255;
+        }
+
+        double blue;
+        if (temp >= 66)
+            blue = 255;
+        else {
+            if (temp < 19)
+                blue = 0;
+            else {
+                blue = temp - 10;
+                blue = 138.5177312231 * Math.log(blue) - 305.0447927307;
+                if (blue < 0) blue = 0;
+                if (blue > 255) blue = 255;
+            }
+        }
+
+        return Color.argb(alpha, (int) red, (int) green, (int) blue);
     }
 
     private int getFilterColor(int rgbColor, int dimLevel, int intensityLevel) {
@@ -110,7 +160,7 @@ public class ScreenFilterView extends View {
             (DIM_MAX_ALPHA - alpha2 * INTENSITY_MAX_ALPHA) * alpha1;
         alpha1 *= ALPHA_ADD_MULTIPLIER;
         alpha2 *= ALPHA_ADD_MULTIPLIER;
-        
+
         int alpha = floatToColorBits(fAlpha);
         int red = floatToColorBits((red1 * alpha1 + red2 * alpha2 * (1.0f - alpha1)) / fAlpha);
         int green = floatToColorBits((green1 * alpha1 + green2 * alpha2 * (1.0f - alpha1)) / fAlpha);

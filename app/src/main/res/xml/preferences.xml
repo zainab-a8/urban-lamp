@@ -2,6 +2,10 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="@string/pref_title_appearance">
+        <com.cngu.shades.preference.ColorSeekBarPreference
+            android:key="@string/pref_key_shades_color_temp"
+            android:defaultValue="10"/>
+
         <com.cngu.shades.preference.IntensitySeekBarPreference
             android:key="@string/pref_key_shades_intensity_level"
             android:defaultValue="50" />
@@ -9,10 +13,6 @@
         <com.cngu.shades.preference.DimSeekBarPreference
             android:key="@string/pref_key_shades_dim_level"
             android:defaultValue="50" />
-
-        <com.cngu.shades.preference.ColorPickerPreference
-            android:key="@string/pref_key_shades_color"
-            android:defaultValue="0xFF000000"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_title_startup">

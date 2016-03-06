@@ -175,21 +175,21 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
     @Override
     public void onShadesColorChanged(int color) {
         if (!isPaused()) {
-            animateShadesColor(color);
+            mView.setColorTempProgress(color);
         }
     }
 
     private void animateShadesColor(int toColor) {
         cancelRunningAnimator(mColorAnimator);
 
-        int fromColor = mView.getFilterRgbColor();
+        int fromColor = mView.getColorTempProgress();
 
         mColorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), fromColor, toColor);
         mColorAnimator.setDuration(FADE_DURATION_MS);
         mColorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                mView.setFilterRgbColor((Integer) valueAnimator.getAnimatedValue());
+                mView.setColorTempProgress((Integer) valueAnimator.getAnimatedValue());
             }
         });
 
@@ -399,7 +399,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
 
                     mView.setFilterDimLevel(fromDim);
                     mView.setFilterIntensityLevel(fromIntensity);
-                    mView.setFilterRgbColor(color);
+                    mView.setColorTempProgress(color);
 
                     openScreenFilter();
 
@@ -413,7 +413,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                     refreshForegroundNotification();
 
                     mView.setFilterDimLevel(ScreenFilterView.MIN_DIM);
-                    mView.setFilterRgbColor(mSettingsModel.getShadesColor());
+                    mView.setColorTempProgress(mSettingsModel.getShadesColor());
 
                     openScreenFilter();
 
