@@ -2,15 +2,15 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="@string/pref_title_appearance">
-        <com.cngu.shades.preference.ColorSeekBarPreference
+        <com.jmstudios.redmoon.preference.ColorSeekBarPreference
             android:key="@string/pref_key_shades_color_temp"
             android:defaultValue="10"/>
 
-        <com.cngu.shades.preference.IntensitySeekBarPreference
+        <com.jmstudios.redmoon.preference.IntensitySeekBarPreference
             android:key="@string/pref_key_shades_intensity_level"
             android:defaultValue="50" />
 
-        <com.cngu.shades.preference.DimSeekBarPreference
+        <com.jmstudios.redmoon.preference.DimSeekBarPreference
             android:key="@string/pref_key_shades_dim_level"
             android:defaultValue="50" />
     </PreferenceCategory>

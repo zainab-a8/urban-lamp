@@ -1,14 +1,14 @@
 <resources>
     <!-- App Name and Activity Labels -->
-    <string name="app_name">Shades</string>
-    <string name="shades_settings">Shades Settings</string>
+    <string name="app_name">Red Moon</string>
+    <string name="shades_settings">Red Moon</string>
 
     <!-- Notification -->
     <string name="running">Running</string>
     <string name="paused">Paused</string>
 
     <!-- Preference -->
-    <string name="pref_title_appearance">Appearance</string>
+    <string name="pref_title_appearance">Filter</string>
     <string name="pref_title_startup">Startup</string>
 
     <string name="shades_dim_level">Dim level</string>

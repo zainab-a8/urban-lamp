@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Theme Colors -->
-    <color name="color_primary">#FFFEBD0C</color>
-    <color name="color_primary_dark">#F99F00</color>
+    <color name="color_primary">#FFF44336</color>
+    <color name="color_primary_dark">#D32F2F</color>
 
     <!-- Widgets -->
     <color name="fab_background_tint">@color/color_primary</color>
