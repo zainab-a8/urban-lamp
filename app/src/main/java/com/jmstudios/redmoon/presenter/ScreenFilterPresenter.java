@@ -125,8 +125,8 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                             .setContentText(contentText)
                             .setColor(color)
                             .setContentIntent(settingsPI)
-                            .addAction(R.drawable.ic_stop, "", stopPI)
                             .addAction(pauseOrResumeDrawableResId, "", pauseOrResumePI)
+                            .addAction(R.drawable.ic_stop, "", stopPI)
                             .addAction(R.drawable.ic_settings, "", settingsPI)
                             .setPriority(Notification.PRIORITY_MIN);
 
