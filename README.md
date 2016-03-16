@@ -20,6 +20,17 @@ complete control
 * Real-time color, intensity and dim level indicators
 * Automatic turn on and off times
 
+## License
+The source code of Red Moon is distributed under the MIT License (see the
+LICENSE file in the root folder of the project).
+
+All used artwork is released into the public domain. Some of the icons use
+cliparts from [openclipart.org](https://openclipart.org/), which are all
+released in the public domain, namely:
+* https://openclipart.org/detail/121903/full-moon
+* https://openclipart.org/detail/213998/nexus-5-flat
+* https://openclipart.org/detail/219211/option-button-symbol-minimal-svg-markup
+
 ## Building
 To build the app on GNU+Linux, clone the repository and run
 
