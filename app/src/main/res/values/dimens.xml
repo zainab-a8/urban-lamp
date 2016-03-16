@@ -7,8 +7,4 @@
 
     <dimen name="colored_circle_size">48dp</dimen>
     <dimen name="colored_circle_padding">10dp</dimen>
-
-    <!-- FAB -->
-    <dimen name="fab_margin_right_bug">0dp</dimen>
-    <dimen name="fab_margin_bottom_bug">0dp</dimen>
 </resources>
