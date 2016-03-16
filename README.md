@@ -1,15 +1,38 @@
-# Shades
-A simple screen filter app for Android.
+# Red Moon
 
-Shades lets you [put on your figurative sunglasses](http://capcomprotour.com/wp-content/uploads/2015/03/GuileSunglasses-300x185.png) when you look at your phone or tablet. You can use Shades to dim the screen even more than the lowest Android brightness setting, which your night-time-reading eyes will thank you for, or even give your screen a colored tint!
+Red Moon is a screen filter app for night time phone use. It helps you
+sleep after using your phone, by providing a red and dimming filter
+that is easy on the eyes. It has seperate color temperature, intensity
+and dim level settings.
 
 ## Features
-* Opacity setting
-* Color tint setting
-* Persistent notification when Shades is turned on
-  * Notification allows user to open the Shades settings page, or pause or turn off Shades
-* Always open Shades on startup
-* Keep Shades running after reboot
+* Free and open source (MIT License)
+* Separate color temperature, intensity and dim level settings for
+complete control
+* Persistent notification with pause and stop action
+* Automatic startup feature
+* Material design
+* Smooth transitions when turning the filter on or off
 
-## Planned Features
-* All intended features are complete...for now!
+## Planned feature
+* Standard profiles
+* Custom profiles
+* Real-time color, intensity and dim level indicators
+* Automatic turn on and off times
+
+## Building
+To build the app on GNU+Linux, clone the repository and run
+
+```
+./gradlew build
+```
+
+in the root directory.
+
+Use
+
+```
+./gradlew installDebug
+```
+
+to install the app on a connected device.
