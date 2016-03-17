@@ -7,14 +7,20 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.SeekBar;
+import android.widget.ImageView;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.PorterDuff;
 
 import com.jmstudios.redmoon.R;
+import com.jmstudios.redmoon.view.ScreenFilterView;
+import com.jmstudios.redmoon.activity.ShadesActivity;
 
 public class IntensitySeekBarPreference extends Preference {
     public static final int DEFAULT_VALUE = 50;
 
     private SeekBar mIntensityLevelSeekBar;
     private int mIntensityLevel;
+    private View mView;
 
     public IntensitySeekBarPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -41,6 +47,8 @@ public class IntensitySeekBarPreference extends Preference {
     protected void onBindView(@NonNull View view) {
         super.onBindView(view);
 
+        mView = view;
+
         mIntensityLevelSeekBar = (SeekBar) view.findViewById(R.id.intensity_level_seekbar);
         initLayout();
     }
@@ -53,6 +61,8 @@ public class IntensitySeekBarPreference extends Preference {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mIntensityLevel = progress;
                 persistInt(mIntensityLevel);
+
+                updateMoonIconColor();
             }
 
             @Override
@@ -61,5 +71,20 @@ public class IntensitySeekBarPreference extends Preference {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
+
+        updateMoonIconColor();
+    }
+
+    public void updateMoonIconColor() {
+        int colorTempProgress = ((ShadesActivity) getContext()).getColorTempProgress();
+
+        int color = ScreenFilterView.getIntensityColor(mIntensityLevel, colorTempProgress);
+
+        ImageView moonIcon = (ImageView) mView.findViewById(R.id.moon_icon_intensity);
+
+        PorterDuffColorFilter colorFilter
+            = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
+
+        moonIcon.setColorFilter(colorFilter);
     }
 }

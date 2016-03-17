@@ -7,6 +7,11 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.SeekBar;
+import android.widget.ImageView;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.Color;
 
 import com.jmstudios.redmoon.R;
 
@@ -15,6 +20,7 @@ public class DimSeekBarPreference extends Preference {
 
     private SeekBar mDimLevelSeekBar;
     private int mDimLevel;
+    private View mView;
 
     public DimSeekBarPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -40,6 +46,8 @@ public class DimSeekBarPreference extends Preference {
     protected void onBindView(@NonNull View view) {
         super.onBindView(view);
 
+        mView = view;
+
         mDimLevelSeekBar = (SeekBar) view.findViewById(R.id.dim_level_seekbar);
         initLayout();
     }
@@ -52,6 +60,8 @@ public class DimSeekBarPreference extends Preference {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mDimLevel = progress;
                 persistInt(mDimLevel);
+
+                updateMoonIconColor();
             }
 
             @Override
@@ -60,5 +70,19 @@ public class DimSeekBarPreference extends Preference {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
+
+        updateMoonIconColor();
+    }
+
+    private void updateMoonIconColor() {
+        int lightness = 102 + (int) (((float) (100 - mDimLevel)) * (2.55f * 0.6f));
+        int color = Color.rgb(lightness, lightness, lightness);
+
+        ImageView moonIcon = (ImageView) mView.findViewById(R.id.moon_icon_dim);
+
+        PorterDuffColorFilter colorFilter
+            = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
+
+        moonIcon.setColorFilter(colorFilter);
     }
 }

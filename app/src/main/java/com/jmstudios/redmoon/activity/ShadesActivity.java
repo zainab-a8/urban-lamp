@@ -102,4 +102,12 @@ public class ShadesActivity extends AppCompatActivity {
     public SwitchCompat getSwitch() {
         return mSwitch;
     }
+
+    public int getColorTempProgress() {
+        return mSettingsModel.getShadesColor();
+    }
+
+    public int getIntensityLevelProgress() {
+        return mSettingsModel.getShadesIntensityLevel();
+    }
 }

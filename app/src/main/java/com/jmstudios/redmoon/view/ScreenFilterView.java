@@ -18,7 +18,7 @@ public class ScreenFilterView extends View {
     private static final float MAX_ALPHA  = 0.75f;
     private static final float MAX_DARKEN = 0.75f;
 
-    private static final float DIM_MAX_ALPHA        = 0.9f;
+    public static final float DIM_MAX_ALPHA        = 0.9f;
     private static final float INTENSITY_MAX_ALPHA  = 0.75f;
     private static final float ALPHA_ADD_MULTIPLIER = 0.75f;
 
@@ -86,7 +86,13 @@ public class ScreenFilterView extends View {
         canvas.drawColor(filterColor);
     }
 
-    private int rgbFromColorTemperature(int colorTemperature) {
+    public static int rgbFromColorProgress(int colorTempProgress) {
+        int colorTemperature = 500 + colorTempProgress * 30;
+
+         return rgbFromColorTemperature(colorTemperature);
+    }
+
+    private static int rgbFromColorTemperature(int colorTemperature) {
         int alpha = 255; // alpha is managed seperately
 
         // After: http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
@@ -132,6 +138,19 @@ public class ScreenFilterView extends View {
         return Color.argb(alpha, (int) red, (int) green, (int) blue);
     }
 
+    public static int getIntensityColor(int intensityLevel, int colorTempProgress) {
+        int rgbColor = rgbFromColorTemperature(500 + colorTempProgress * 30);
+        float red = ((float) Color.red(rgbColor));
+        float green = ((float) Color.green(rgbColor));
+        float blue = ((float) Color.blue(rgbColor));
+        float intensity = 1.0f - ((float) intensityLevel) / 100.0f;
+
+        return Color.argb(255,
+                          (int) (red + ((255.0f - red) * intensity)),
+                          (int) (green + ((255.0f - green) * intensity)),
+                          (int) (blue + ((255.0f - blue) * intensity)));
+    }
+
     private int getFilterColor(int rgbColor, int dimLevel, int intensityLevel) {
         int intensityColor = Color.argb(floatToColorBits(((float) intensityLevel / 100.0f)),
                                           Color.red(rgbColor),
@@ -167,11 +186,11 @@ public class ScreenFilterView extends View {
         return Color.argb(alpha, red, green, blue);
     }
 
-    private float colorBitsToFloat(int bits) {
+    private static float colorBitsToFloat(int bits) {
         return (float) bits / 255.0f;
     }
 
-    private int floatToColorBits(float color) {
+    private static int floatToColorBits(float color) {
         return (int) (color * 255.0f);
     }
 }

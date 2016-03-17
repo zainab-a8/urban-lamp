@@ -7,8 +7,12 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.SeekBar;
+import android.widget.ImageView;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.PorterDuff;
 
 import com.jmstudios.redmoon.R;
+import com.jmstudios.redmoon.view.ScreenFilterView;
 
 public class ColorSeekBarPreference extends Preference {
     private static final String TAG = "ColorSeekBarPreference";
@@ -17,6 +21,7 @@ public class ColorSeekBarPreference extends Preference {
 
     private SeekBar mColorTempSeekBar;
     private int mProgress;
+    private View mView;
 
     public ColorSeekBarPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -43,18 +48,22 @@ public class ColorSeekBarPreference extends Preference {
     protected void onBindView(@NonNull View view) {
         super.onBindView(view);
 
+        mView = view;
+
         mColorTempSeekBar = (SeekBar) view.findViewById(R.id.color_temp_seekbar);
         initLayout();
     }
 
     private void initLayout() {
         mColorTempSeekBar.setProgress(mProgress);
-        
+
         mColorTempSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mProgress = progress;
                 persistInt(mProgress);
+
+                updateMoonIconColor();
             }
 
             @Override
@@ -63,5 +72,18 @@ public class ColorSeekBarPreference extends Preference {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
+
+        updateMoonIconColor();
+    }
+
+    private void updateMoonIconColor() {
+        int color = ScreenFilterView.rgbFromColorProgress(mProgress);
+
+        ImageView moonIcon = (ImageView) mView.findViewById(R.id.moon_icon_color);
+
+        PorterDuffColorFilter colorFilter
+            = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
+
+        moonIcon.setColorFilter(colorFilter);
     }
 }
