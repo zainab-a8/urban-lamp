@@ -73,7 +73,7 @@ public class ScreenFilterView extends View {
      * @param colorTempProgress the progress of the color temperature slider.
      */
     public void setColorTempProgress(int colorTempProgress) {
-        int colorTemperature = 500 + colorTempProgress * 30;
+        int colorTemperature = getColorTempFromProgress(colorTempProgress);
 
         mRgbColor = rgbFromColorTemperature(colorTemperature);
         invalidate();
@@ -87,9 +87,13 @@ public class ScreenFilterView extends View {
     }
 
     public static int rgbFromColorProgress(int colorTempProgress) {
-        int colorTemperature = 500 + colorTempProgress * 30;
+        int colorTemperature = getColorTempFromProgress(colorTempProgress);
 
          return rgbFromColorTemperature(colorTemperature);
+    }
+
+    public static int getColorTempFromProgress(int colorTempProgress) {
+        return 500 + colorTempProgress * 30;
     }
 
     private static int rgbFromColorTemperature(int colorTemperature) {
@@ -139,7 +143,7 @@ public class ScreenFilterView extends View {
     }
 
     public static int getIntensityColor(int intensityLevel, int colorTempProgress) {
-        int rgbColor = rgbFromColorTemperature(500 + colorTempProgress * 30);
+        int rgbColor = rgbFromColorTemperature(getColorTempFromProgress(colorTempProgress));
         float red = ((float) Color.red(rgbColor));
         float green = ((float) Color.green(rgbColor));
         float blue = ((float) Color.blue(rgbColor));

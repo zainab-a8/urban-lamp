@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.PorterDuff;
 
@@ -63,6 +64,7 @@ public class IntensitySeekBarPreference extends Preference {
                 persistInt(mIntensityLevel);
 
                 updateMoonIconColor();
+                updateProgressText();
             }
 
             @Override
@@ -73,6 +75,7 @@ public class IntensitySeekBarPreference extends Preference {
         });
 
         updateMoonIconColor();
+        updateProgressText();
     }
 
     public void updateMoonIconColor() {
@@ -86,5 +89,13 @@ public class IntensitySeekBarPreference extends Preference {
             = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
 
         moonIcon.setColorFilter(colorFilter);
+    }
+
+    private void updateProgressText() {
+        String progress = Integer.toString(mIntensityLevel);
+        String suffix = "%";
+
+        TextView progressText = (TextView) mView.findViewById(R.id.current_intensity_level);
+        progressText.setText(progress + suffix);
     }
 }

@@ -2,16 +2,22 @@
 <resources>
     <!-- App Themes -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/color_primary</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+      <item name="colorPrimary">@color/color_primary</item>
+      <item name="colorPrimaryDark">@color/color_primary_dark</item>
     </style>
 
     <!-- Preference TextView Style -->
     <style name="PreferenceTextStyle">
-        <item name="android:textAppearance">@android:style/TextAppearance.Holo.Medium</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:ellipsize">marquee</item>
+      <item name="android:textAppearance">@android:style/TextAppearance.Holo.Medium</item>
+      <item name="android:singleLine">true</item>
+      <item name="android:ellipsize">marquee</item>
     </style>
 
+    <style name="PreferenceSecundaryTextStyle">
+      <item name="android:textColor">#DE000000</item>
+      <item name="android:textSize">14sp</item>
+      <item name="android:singleLine">true</item>
+      <item name="android:ellipsize">marquee</item>
+    </style>
 
 </resources>

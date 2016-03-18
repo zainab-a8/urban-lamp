@@ -8,12 +8,14 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.Color;
 
 import com.jmstudios.redmoon.R;
+import com.jmstudios.redmoon.view.ScreenFilterView;
 
 public class DimSeekBarPreference extends Preference {
     public static final int DEFAULT_VALUE = 50;
@@ -62,6 +64,7 @@ public class DimSeekBarPreference extends Preference {
                 persistInt(mDimLevel);
 
                 updateMoonIconColor();
+                updateProgressText();
             }
 
             @Override
@@ -72,6 +75,7 @@ public class DimSeekBarPreference extends Preference {
         });
 
         updateMoonIconColor();
+        updateProgressText();
     }
 
     private void updateMoonIconColor() {
@@ -84,5 +88,13 @@ public class DimSeekBarPreference extends Preference {
             = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
 
         moonIcon.setColorFilter(colorFilter);
+    }
+
+    private void updateProgressText() {
+        String progress = Integer.toString((int) (((float) mDimLevel) * ScreenFilterView.DIM_MAX_ALPHA));
+        String suffix = "%";
+
+        TextView progressText = (TextView) mView.findViewById(R.id.current_dim_level);
+        progressText.setText(progress + suffix);
     }
 }
