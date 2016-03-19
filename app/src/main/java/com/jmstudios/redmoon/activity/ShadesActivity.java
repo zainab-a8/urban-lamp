@@ -11,6 +11,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.support.v7.widget.SwitchCompat;
 import android.widget.CompoundButton;
+import android.provider.Settings;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build.VERSION;
 
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.fragment.ShadesFragment;
@@ -25,9 +29,12 @@ public class ShadesActivity extends AppCompatActivity {
     private static final boolean DEBUG = true;
     private static final String FRAGMENT_TAG_SHADES = "jmstudios.fragment.tag.SHADES";
 
+    public static int OVERLAY_PERMISSION_REQ_CODE = 1234;
+
     private ShadesPresenter mPresenter;
     private SettingsModel mSettingsModel;
     private SwitchCompat mSwitch;
+    private ShadesActivity context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +84,26 @@ public class ShadesActivity extends AppCompatActivity {
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    mPresenter.sendCommand(isChecked ?
-                                           ScreenFilterService.COMMAND_ON :
-                                           ScreenFilterService.COMMAND_OFF);
+                    // http://stackoverflow.com/a/3993933
+                    if (android.os.Build.VERSION.SDK_INT >= 23) {
+                        if (!Settings.canDrawOverlays(context)) {
+                            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                                                       Uri.parse("package:" + getPackageName()));
+                            startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
+                        }
+
+                        if (Settings.canDrawOverlays(context)) {
+                            mPresenter.sendCommand(isChecked ?
+                                                   ScreenFilterService.COMMAND_ON :
+                                                   ScreenFilterService.COMMAND_OFF);
+                        } else {
+                            buttonView.setChecked(false);
+                        }
+                    } else {
+                        mPresenter.sendCommand(isChecked ?
+                                               ScreenFilterService.COMMAND_ON :
+                                               ScreenFilterService.COMMAND_OFF);
+                    }
                 }
             });
 
