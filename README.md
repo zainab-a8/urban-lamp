@@ -33,6 +33,8 @@ released in the public domain, namely:
 * https://openclipart.org/detail/213998/nexus-5-flat
 * https://openclipart.org/detail/219211/option-button-symbol-minimal-svg-markup
 
+Red Moon is based on [Shades](https://github.com/cngu/shades), by Chris Nguyen.
+
 ## Building
 To build the app on GNU+Linux, clone the repository and run
 
