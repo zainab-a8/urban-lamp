@@ -15,11 +15,11 @@ complete control
 * Automatic startup feature
 * Material design
 * Smooth transitions when turning the filter on or off
+* Real-time color, intensity and dim level indicators
 
 ## Planned feature
 * Standard profiles
 * Custom profiles
-* Real-time color, intensity and dim level indicators
 * Automatic turn on and off times
 
 ## License
