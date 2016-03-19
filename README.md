@@ -5,6 +5,8 @@ sleep after using your phone, by providing a red and dimming filter
 that is easy on the eyes. It has seperate color temperature, intensity
 and dim level settings.
 
+[![F-Droid](https://f-droid.org/wiki/images/0/06/F-Droid-button_get-it-on.png)](https://f-droid.org/repository/browse/?fdid=com.jmstudios.redmoon)
+
 ## Features
 * Free and open source (MIT License)
 * Separate color temperature, intensity and dim level settings for
