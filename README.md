@@ -21,6 +21,7 @@ complete control
 * Standard profiles
 * Custom profiles
 * Automatic turn on and off times
+* Base turn on and off times on sun down and sun rise times at the users location (issue #5)
 
 ## License
 The source code of Red Moon is distributed under the MIT License (see the
