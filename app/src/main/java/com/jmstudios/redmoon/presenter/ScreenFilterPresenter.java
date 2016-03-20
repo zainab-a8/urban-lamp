@@ -332,10 +332,18 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
             switch (commandFlag) {
                 case ScreenFilterService.COMMAND_PAUSE:
                     moveToState(mPauseState);
+
                     refreshForegroundNotification();
 
-                    animateDimLevel(ScreenFilterView.MIN_DIM, null);
+                    mServiceController.stopForeground(false);
+
                     animateIntensityLevel(ScreenFilterView.MIN_INTENSITY, null);
+                    animateDimLevel(ScreenFilterView.MIN_DIM, new AbstractAnimatorListener() {
+                        @Override
+                        public void onAnimationEnd(Animator animator) {
+                            closeScreenFilter();
+                        }
+                    });
 
                     break;
 
@@ -355,6 +363,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                             mServiceController.stop();
                         }
                     });
+
                     break;
             }
         }
@@ -368,6 +377,8 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                     moveToState(mOnState);
                     refreshForegroundNotification();
 
+                    openScreenFilter();
+
                     animateDimLevel(mSettingsModel.getShadesDimLevel(), null);
                     animateIntensityLevel(mSettingsModel.getShadesIntensityLevel(), null);
 
@@ -376,8 +387,6 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                 case ScreenFilterService.COMMAND_OFF:
                     moveToState(mOffState);
                     mServiceController.stopForeground(true);
-
-                    closeScreenFilter();
 
                     break;
             }
@@ -415,8 +424,6 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
 
                     mView.setFilterDimLevel(ScreenFilterView.MIN_DIM);
                     mView.setColorTempProgress(mSettingsModel.getShadesColor());
-
-                    openScreenFilter();
 
                     break;
 
