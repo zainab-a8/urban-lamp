@@ -16,12 +16,20 @@ complete control
 * Material design
 * Smooth transitions when turning the filter on or off
 * Real-time color, intensity and dim level indicators
+* Ability to dim the navigation and the notification bar
 
 ## Planned feature
 * Standard profiles
 * Custom profiles
 * Automatic turn on and off times
 * Base turn on and off times on sun down and sun rise times at the users location (issue #5)
+
+## Screenshots
+<img src="https://lut.im/3k5INuLva5/lXt4Y2SqMVOrqsOt.png" width="180" height="320" />
+<img src="https://lut.im/d2v7Qp5F95/u8gMgjrCN1w9PFiG.png" width="180" height="320" />
+<img src="https://lut.im/E6Znl6oGGL/wPJyhFXa8hVmyVUS.png" width="180" height="320" />
+<img src="https://lut.im/M2Rbi9d4FX/usbnTueHly6Nb3sO.png" width="180" height="320" />
+
 
 ## License
 The source code of Red Moon is distributed under the MIT License (see the
