@@ -15,6 +15,7 @@ import android.provider.Settings;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build.VERSION;
+import android.widget.Toast;
 
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.fragment.ShadesFragment;
@@ -35,6 +36,8 @@ public class ShadesActivity extends AppCompatActivity {
     private SettingsModel mSettingsModel;
     private SwitchCompat mSwitch;
     private ShadesActivity context = this;
+
+    private boolean hasShownWarningToast = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +99,7 @@ public class ShadesActivity extends AppCompatActivity {
                             mPresenter.sendCommand(isChecked ?
                                                    ScreenFilterService.COMMAND_ON :
                                                    ScreenFilterService.COMMAND_OFF);
+                            displayInstallWarningToast();
                         } else {
                             buttonView.setChecked(false);
                         }
@@ -103,6 +107,7 @@ public class ShadesActivity extends AppCompatActivity {
                         mPresenter.sendCommand(isChecked ?
                                                ScreenFilterService.COMMAND_ON :
                                                ScreenFilterService.COMMAND_OFF);
+                        displayInstallWarningToast();
                     }
                 }
             });
@@ -121,6 +126,18 @@ public class ShadesActivity extends AppCompatActivity {
     protected void onStop() {
         mSettingsModel.closeSettingsChangeListener();
         super.onStop();
+    }
+
+    public void displayInstallWarningToast() {
+        if (hasShownWarningToast) return;
+
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(getApplicationContext(),
+                                     getString(R.string.toast_warning_install),
+                                     duration);
+        toast.show();
+
+        hasShownWarningToast = true;
     }
 
     public SwitchCompat getSwitch() {

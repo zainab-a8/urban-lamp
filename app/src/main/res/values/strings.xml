@@ -4,7 +4,7 @@
     <string name="shades_settings" translatable="false">Red Moon</string>
 
     <!-- Notification -->
-    <string name="running">Running</string>
+    <string name="running">Running. Pause to install apks</string>
     <string name="paused">Paused</string>
 
     <!-- Preference -->
@@ -17,4 +17,6 @@
     <string name="always_open_on_startup">Always open on startup</string>
     <string name="keep_running_after_reboot">Keep running after reboot</string>
 
+    <!-- Toasts -->
+    <string name="toast_warning_install">You won\'t be able to install APKs while the filter is running.</string>
 </resources>

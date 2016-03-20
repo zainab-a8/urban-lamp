@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Red Moon</string>
     <string name="always_open_on_startup">Beim Hochfahren automatisch starten</string>
     <string name="keep_running_after_reboot">Nach Neustart weiterlaufen lassen</string>
-    <string name="paused">Pausiert</string>
-    <string name="running">Läuft</string>
+    <string name="paused">Pausier</string>
+    <string name="running">Läuft. Pausiert wenn Sie apks installier</string>
     <string name="shades_color_temp">Farbtemperatur</string>
     <string name="pref_title_appearance">Filter</string>
     <string name="shades_dim_level">Grad der Abblendung</string>
     <string name="shades_intensity_level">Grad der Intensität</string>
     <string name="pref_title_startup">App Start</string>
+    <string name="toast_warning_install">Sie können keinen APKs installieren während der Filter läuft.</string>
 </resources>
