@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/pref_title_appearance">
-        <com.jmstudios.redmoon.preference.ColorSeekBarPreference
-            android:key="@string/pref_key_shades_color_temp"
-            android:defaultValue="10"/>
+  <PreferenceCategory android:title="@string/pref_title_appearance">
+    <com.jmstudios.redmoon.preference.ProfileSelectorPreference
+        android:key="@string/pref_key_profile_spinner"
+        android:defaultValue="1"/>
 
-        <com.jmstudios.redmoon.preference.IntensitySeekBarPreference
-            android:key="@string/pref_key_shades_intensity_level"
-            android:defaultValue="50" />
+    <com.jmstudios.redmoon.preference.ColorSeekBarPreference
+        android:key="@string/pref_key_shades_color_temp"
+        android:defaultValue="10" />
 
-        <com.jmstudios.redmoon.preference.DimSeekBarPreference
-            android:key="@string/pref_key_shades_dim_level"
-            android:defaultValue="50" />
-    </PreferenceCategory>
+    <com.jmstudios.redmoon.preference.IntensitySeekBarPreference
+        android:key="@string/pref_key_shades_intensity_level"
+        android:defaultValue="50" />
 
-    <PreferenceCategory android:title="@string/pref_title_startup">
-        <CheckBoxPreference
-            android:key="@string/pref_key_keep_running_after_reboot"
-            android:title="@string/keep_running_after_reboot"
-            android:defaultValue="false" />
-        <CheckBoxPreference
-            android:key="@string/pref_key_always_open_on_startup"
-            android:title="@string/always_open_on_startup"
-            android:defaultValue="false" />
-    </PreferenceCategory>
+    <com.jmstudios.redmoon.preference.DimSeekBarPreference
+        android:key="@string/pref_key_shades_dim_level"
+        android:defaultValue="50" />
+  </PreferenceCategory>
+
+  <PreferenceCategory android:title="@string/pref_title_startup">
+    <CheckBoxPreference
+        android:key="@string/pref_key_keep_running_after_reboot"
+        android:title="@string/keep_running_after_reboot"
+        android:defaultValue="false" />
+    <CheckBoxPreference
+        android:key="@string/pref_key_always_open_on_startup"
+        android:title="@string/always_open_on_startup"
+        android:defaultValue="false" />
+  </PreferenceCategory>
 
 </PreferenceScreen>
