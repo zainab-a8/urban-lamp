@@ -1,7 +1,7 @@
 <resources>
     <!-- App Name and Activity Labels -->
-    <string name="app_name">Red Moon</string>
-    <string name="shades_settings">Red Moon</string>
+    <string name="app_name" translatable="false">Red Moon</string>
+    <string name="shades_settings" translatable="false">Red Moon</string>
 
     <!-- Notification -->
     <string name="running">Running</string>
