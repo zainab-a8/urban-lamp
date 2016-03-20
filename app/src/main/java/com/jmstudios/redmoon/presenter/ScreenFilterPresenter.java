@@ -331,10 +331,6 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
         protected void onScreenFilterCommand(int commandFlag) {
             switch (commandFlag) {
                 case ScreenFilterService.COMMAND_PAUSE:
-                    moveToState(mPauseState);
-
-                    refreshForegroundNotification();
-
                     mServiceController.stopForeground(false);
 
                     animateIntensityLevel(ScreenFilterView.MIN_INTENSITY, null);
@@ -342,6 +338,10 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                         @Override
                         public void onAnimationEnd(Animator animator) {
                             closeScreenFilter();
+
+                            moveToState(mPauseState);
+
+                            refreshForegroundNotification();
                         }
                     });
 
