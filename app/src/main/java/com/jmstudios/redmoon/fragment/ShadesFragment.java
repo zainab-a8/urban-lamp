@@ -83,13 +83,12 @@ public class ShadesFragment extends PreferenceFragment {
         if (DEBUG) Log.i(TAG, "Registered Presenter");
     }
 
-    public void setShadesFabIcon(int drawableResId) {
-        mShadesFabIconResId = drawableResId;
-
+    public void setSwitchOn(boolean on, boolean paused) {
         ShadesActivity activity = (ShadesActivity) getActivity();
-        SwitchCompat filterSwitch = (SwitchCompat) activity.getSwitch();
+        SwitchCompat filterSwitch = activity.getSwitch();
         if (filterSwitch != null) {
-            filterSwitch.setChecked(drawableResId == R.drawable.ic_shades_off);
+            activity.setIgnoreNextSwitchChange(paused);
+            filterSwitch.setChecked(!on);
         }
     }
 }

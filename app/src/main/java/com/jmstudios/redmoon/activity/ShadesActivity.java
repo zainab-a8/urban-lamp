@@ -38,6 +38,7 @@ public class ShadesActivity extends AppCompatActivity {
     private ShadesActivity context = this;
 
     private boolean hasShownWarningToast = false;
+    private boolean ignoreNextSwitchChange = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,12 @@ public class ShadesActivity extends AppCompatActivity {
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (ignoreNextSwitchChange) {
+                        if (DEBUG) Log.i(TAG, "Switch change ignored");
+                        ignoreNextSwitchChange = false;
+                        return;
+                    }
+
                     // http://stackoverflow.com/a/3993933
                     if (android.os.Build.VERSION.SDK_INT >= 23) {
                         if (!Settings.canDrawOverlays(context)) {
@@ -150,5 +157,9 @@ public class ShadesActivity extends AppCompatActivity {
 
     public int getIntensityLevelProgress() {
         return mSettingsModel.getShadesIntensityLevel();
+    }
+
+    public void setIgnoreNextSwitchChange(boolean ignore) {
+        ignoreNextSwitchChange = ignore;
     }
 }
