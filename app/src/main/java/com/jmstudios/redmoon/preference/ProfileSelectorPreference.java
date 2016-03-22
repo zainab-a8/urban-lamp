@@ -10,20 +10,27 @@ import android.content.res.TypedArray;
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.jmstudios.redmoon.R;
+import com.jmstudios.redmoon.model.ProfilesModel;
 
 public class ProfileSelectorPreference extends Preference
     implements OnItemSelectedListener {
     public static final int DEFAULT_VALUE = 1;
 
     private Spinner mProfileSpinner;
+    ArrayAdapter<CharSequence> mArrayAdapter;
     private int mProfile;
     private View mView;
+    private ProfilesModel mProfilesModel;
 
     public ProfileSelectorPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         setLayoutResource(R.layout.preference_profile_selector);
+
+        mProfilesModel = new ProfilesModel(context);
     }
 
     @Override
@@ -52,11 +59,19 @@ public class ProfileSelectorPreference extends Preference
     }
 
     private void initLayout() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource
-            (getContext(), R.array.standard_profiles_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // The default operations first need to be converted to an ArrayList,
+        // because the ArrayAdapter will turn it into an AbstractList otherwise,
+        // which doesn't support certain actions, like adding elements.
+        // See: http://stackoverflow.com/a/3200631
+        ArrayList<CharSequence> defaultOperations = new ArrayList<CharSequence>
+            (Arrays.asList(getContext().getResources().getStringArray(R.array.standard_profiles_array)));
+        mArrayAdapter = new ArrayAdapter<CharSequence>
+            (getContext(), android.R.layout.simple_spinner_item, defaultOperations);
+        mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        mProfileSpinner.setAdapter(adapter);
+        readProfiles();
+
+        mProfileSpinner.setAdapter(mArrayAdapter);
         mProfileSpinner.setSelection(mProfile);
         mProfileSpinner.setOnItemSelectedListener(this);
     }
@@ -70,4 +85,17 @@ public class ProfileSelectorPreference extends Preference
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {}
+
+    //Section: Reading and writing profiles
+
+    /**
+     * Reads the profiles saved in the SharedPreference in the spinner
+     */
+    public void readProfiles() {
+        ArrayList<ProfilesModel.Profile> profiles = mProfilesModel.getProfiles();
+
+        for (ProfilesModel.Profile profile : profiles) {
+            mArrayAdapter.add((CharSequence) profile.mProfileName);
+        }
+    }
 }
