@@ -2,7 +2,7 @@
 
 Red Moon is a screen filter app for night time phone use. It helps you
 sleep after using your phone, by providing a red and dimming filter
-that is easy on the eyes. It has seperate color temperature, intensity
+that is easy on the eyes. It has separate color temperature, intensity
 and dim level settings.
 
 [![F-Droid](https://f-droid.org/wiki/images/0/06/F-Droid-button_get-it-on.png)](https://f-droid.org/repository/browse/?fdid=com.jmstudios.redmoon)
@@ -22,7 +22,7 @@ complete control
 * Standard profiles
 * Custom profiles
 * Automatic turn on and off times
-* Base turn on and off times on sun down and sun rise times at the users location (issue #5)
+* Base turn on and off times on sunset and sunrise times at the user's location (issue #5)
 
 ## Screenshots
 <img src="https://lut.im/3k5INuLva5/lXt4Y2SqMVOrqsOt.png" width="180" height="320" />
