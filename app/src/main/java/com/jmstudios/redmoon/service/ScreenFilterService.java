@@ -61,7 +61,7 @@ public class ScreenFilterService extends Service implements ServiceLifeCycleCont
 
         // Make Presenter listen to settings changes and orientation changes
         mSettingsModel.openSettingsChangeListener();
-        mSettingsModel.setOnSettingsChangedListener(mPresenter);
+        mSettingsModel.addOnSettingsChangedListener(mPresenter);
 
         registerOrientationReceiver(mPresenter);
     }

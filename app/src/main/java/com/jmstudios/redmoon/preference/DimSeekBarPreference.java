@@ -20,7 +20,7 @@ import com.jmstudios.redmoon.view.ScreenFilterView;
 public class DimSeekBarPreference extends Preference {
     public static final int DEFAULT_VALUE = 50;
 
-    private SeekBar mDimLevelSeekBar;
+    public SeekBar mDimLevelSeekBar;
     private int mDimLevel;
     private View mView;
 

@@ -1,4 +1,6 @@
-<resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
     <!-- App Name and Activity Labels -->
     <string name="app_name" translatable="false">Red Moon</string>
     <string name="shades_settings" translatable="false">Red Moon</string>
@@ -10,13 +12,32 @@
     <!-- Preference -->
     <string name="pref_title_appearance">Filter</string>
     <string name="pref_title_startup">Startup</string>
+    <string name="pref_title_app_appearance">Appearance</string>
 
+    <string name="button_add_profile">Add</string>
+    <string name="button_remove_profile">Delete</string>
     <string name="shades_dim_level">Dim level</string>
     <string name="shades_intensity_level">Intensity level</string>
     <string name="shades_color_temp">Color temperature</string>
     <string name="always_open_on_startup">Always open on startup</string>
     <string name="keep_running_after_reboot">Keep running after reboot</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="dark_theme_summary">Use a dark theme for this activity</string>
 
     <!-- Toasts -->
     <string name="toast_warning_install">You won\'t be able to install APKs while the filter is running.</string>
+
+    <!-- Dialog -->
+    <string name="add_new_profile_dialog_title">Enter profile name</string>
+    <string name="add_new_profile_edit_hint">Profile name</string>
+    <string name="remove_profile_dialog_title">Delete this profile?</string>
+    <string name="ok_dialog">OK</string>
+    <string name="cancel_dialog">Cancel</string>
+
+    <!-- Profiles -->
+    <string-array name="standard_profiles_array">
+      <item>Custom</item>
+      <item>Default</item>
+      <item>Reading</item>
+    </string-array>
 </resources>

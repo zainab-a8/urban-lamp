@@ -33,6 +33,7 @@ public class ShadesActivity extends AppCompatActivity {
     public static int OVERLAY_PERMISSION_REQ_CODE = 1234;
 
     private ShadesPresenter mPresenter;
+    private ShadesFragment mFragment;
     private SettingsModel mSettingsModel;
     private SwitchCompat mSwitch;
     private ShadesActivity context = this;
@@ -42,6 +43,14 @@ public class ShadesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Wire MVP classes
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mSettingsModel = new SettingsModel(getResources(), sharedPreferences);
+        FilterCommandFactory filterCommandFactory = new FilterCommandFactory(this);
+        FilterCommandSender filterCommandSender = new FilterCommandSender(this);
+
+        if (mSettingsModel.getDarkThemeFlag()) setTheme(R.style.AppThemeDark);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shades);
 
@@ -65,17 +74,13 @@ public class ShadesActivity extends AppCompatActivity {
             view = (ShadesFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG_SHADES);
         }
 
-        // Wire MVP classes
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mSettingsModel = new SettingsModel(getResources(), sharedPreferences);
-        FilterCommandFactory filterCommandFactory = new FilterCommandFactory(this);
-        FilterCommandSender filterCommandSender = new FilterCommandSender(this);
-
         mPresenter = new ShadesPresenter(view, mSettingsModel, filterCommandFactory, filterCommandSender);
         view.registerPresenter(mPresenter);
 
         // Make Presenter listen to settings changes
-        mSettingsModel.setOnSettingsChangedListener(mPresenter);
+        mSettingsModel.addOnSettingsChangedListener(mPresenter);
+
+        mFragment = view;
     }
 
     @Override
@@ -85,6 +90,7 @@ public class ShadesActivity extends AppCompatActivity {
 
         final MenuItem item = menu.findItem(R.id.screen_filter_switch);
         mSwitch = (SwitchCompat) item.getActionView();
+        mSwitch.setChecked(mSettingsModel.getShadesPowerState());
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -161,5 +167,17 @@ public class ShadesActivity extends AppCompatActivity {
 
     public void setIgnoreNextSwitchChange(boolean ignore) {
         ignoreNextSwitchChange = ignore;
+    }
+
+    public int getDimLevelProgress() {
+        return mSettingsModel.getShadesDimLevel();
+    }
+
+    public ShadesFragment getFragment() {
+        return mFragment;
+    }
+
+    public SettingsModel getSettingsModel() {
+        return mSettingsModel;
     }
 }
