@@ -35,10 +35,12 @@ public class ShadesFragment extends PreferenceFragment {
 
         String openOnStartupKey = getString(R.string.pref_key_always_open_on_startup);
         String resumeAfterRebootPrefKey= getString(R.string.pref_key_keep_running_after_reboot);
+        String darkThemePrefKey= getString(R.string.pref_key_dark_theme);
 
         PreferenceScreen prefScreen = getPreferenceScreen();
         final CheckBoxPreference openOnStartupPref = (CheckBoxPreference) prefScreen.findPreference(openOnStartupKey);
         final CheckBoxPreference resumeAfterRebootPref = (CheckBoxPreference) prefScreen.findPreference(resumeAfterRebootPrefKey);
+        final CheckBoxPreference darkThemePref = (CheckBoxPreference) prefScreen.findPreference(darkThemePrefKey);
 
         openOnStartupPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -67,6 +69,16 @@ public class ShadesFragment extends PreferenceFragment {
                 return false;
             }
         });
+
+        darkThemePref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                getActivity().recreate();
+
+                return false;
+            }
+        });
+
     }
 
     @Override

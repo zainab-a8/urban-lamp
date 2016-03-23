@@ -10,12 +10,15 @@
     <!-- Preference -->
     <string name="pref_title_appearance">Filter</string>
     <string name="pref_title_startup">Startup</string>
+    <string name="pref_title_app_appearance">Appearance</string>
 
     <string name="shades_dim_level">Dim level</string>
     <string name="shades_intensity_level">Intensity level</string>
     <string name="shades_color_temp">Color temperature</string>
     <string name="always_open_on_startup">Always open on startup</string>
     <string name="keep_running_after_reboot">Keep running after reboot</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="dark_theme_summary">Use a dark theme for this activity</string>
 
     <!-- Toasts -->
     <string name="toast_warning_install">You won\'t be able to install APKs while the filter is running.</string>

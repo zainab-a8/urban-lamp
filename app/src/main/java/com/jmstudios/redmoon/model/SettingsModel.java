@@ -36,6 +36,7 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
     private String mColorPrefKey;
     private String mOpenOnBootPrefKey;
     private String mKeepRunningAfterRebootPrefKey;
+    private String mDarkThemePrefKey;
 
     public SettingsModel(@NonNull Resources resources, @NonNull SharedPreferences sharedPreferences) {
         mSharedPreferences = sharedPreferences;
@@ -47,6 +48,7 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
         mColorPrefKey = resources.getString(R.string.pref_key_shades_color_temp);
         mOpenOnBootPrefKey = resources.getString(R.string.pref_key_always_open_on_startup);
         mKeepRunningAfterRebootPrefKey = resources.getString(R.string.pref_key_keep_running_after_reboot);
+        mDarkThemePrefKey = resources.getString(R.string.pref_key_dark_theme);
     }
 
     public boolean getShadesPowerState() {
@@ -83,6 +85,10 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
 
     public boolean getResumeAfterRebootFlag() {
         return mSharedPreferences.getBoolean(mKeepRunningAfterRebootPrefKey, false);
+    }
+
+    public boolean getDarkThemeFlag() {
+        return mSharedPreferences.getBoolean(mDarkThemePrefKey, false);
     }
 
     public void setOnSettingsChangedListener(OnSettingsChangedListener listener) {

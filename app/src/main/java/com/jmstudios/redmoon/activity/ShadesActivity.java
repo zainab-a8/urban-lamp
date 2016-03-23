@@ -42,6 +42,14 @@ public class ShadesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Wire MVP classes
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mSettingsModel = new SettingsModel(getResources(), sharedPreferences);
+        FilterCommandFactory filterCommandFactory = new FilterCommandFactory(this);
+        FilterCommandSender filterCommandSender = new FilterCommandSender(this);
+
+        if (mSettingsModel.getDarkThemeFlag()) setTheme(R.style.AppThemeDark);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shades);
 
@@ -64,12 +72,6 @@ public class ShadesActivity extends AppCompatActivity {
 
             view = (ShadesFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG_SHADES);
         }
-
-        // Wire MVP classes
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mSettingsModel = new SettingsModel(getResources(), sharedPreferences);
-        FilterCommandFactory filterCommandFactory = new FilterCommandFactory(this);
-        FilterCommandSender filterCommandSender = new FilterCommandSender(this);
 
         mPresenter = new ShadesPresenter(view, mSettingsModel, filterCommandFactory, filterCommandSender);
         view.registerPresenter(mPresenter);
