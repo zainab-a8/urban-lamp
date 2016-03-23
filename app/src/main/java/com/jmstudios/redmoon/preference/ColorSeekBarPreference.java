@@ -20,7 +20,7 @@ public class ColorSeekBarPreference extends Preference {
     // Changes to DEFAULT_VALUE should be reflected in preferences.xml
     public static final int DEFAULT_VALUE = 10;
 
-    private SeekBar mColorTempSeekBar;
+    public SeekBar mColorTempSeekBar;
     private int mProgress;
     private View mView;
 

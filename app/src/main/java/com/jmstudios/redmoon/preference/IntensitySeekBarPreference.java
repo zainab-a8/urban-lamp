@@ -19,7 +19,7 @@ import com.jmstudios.redmoon.activity.ShadesActivity;
 public class IntensitySeekBarPreference extends Preference {
     public static final int DEFAULT_VALUE = 50;
 
-    private SeekBar mIntensityLevelSeekBar;
+    public SeekBar mIntensityLevelSeekBar;
     private int mIntensityLevel;
     private View mView;
 
