@@ -1,52 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingStart="@dimen/preference_padding_start"
+    android:paddingEnd="@dimen/preference_padding_end"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="@dimen/preference_padding_start"
-    android:paddingEnd="@dimen/preference_padding_end" >
+    android:orientation="horizontal" >
 
-  <LinearLayout
-      android:layout_width="match_parent"
+  <android.support.v7.widget.AppCompatSpinner
+      android:id="@+id/profile_spinner"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:layout_marginTop="8dp"
-      android:layout_marginBottom="8dp">
-    
-    <TextView
-        android:id="@+id/profile_preference_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/profile_selector_title"
-        style="@style/PreferenceTextStyle" />
+      android:layout_weight="1" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+  <Button
+      android:id="@+id/profile_action_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/button_add_profile"
+      android:textColor="@color/color_accent"
+      style="?attr/borderlessButtonStyle" />
 
-      <android.support.v7.widget.AppCompatSpinner
-          android:id="@+id/profile_spinner"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:layout_alignParentBottom="true"
-          android:layout_below="@id/profile_preference_title" />
-
-      <Button
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignParentBottom="true"
-          android:layout_alignParentEnd="true"
-          android:layout_toRightOf="@id/profile_spinner"
-          android:text="@string/button_add_profile"
-          android:textColor="@color/color_accent"
-          style="?attr/borderlessButtonStyle" />
-
-    </LinearLayout>
-
-  </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

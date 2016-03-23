@@ -8,17 +8,23 @@
     <string name="paused">Paused</string>
 
     <!-- Preference -->
-    <string name="pref_title_profiles">Profiles</string>
     <string name="pref_title_appearance">Filter</string>
     <string name="pref_title_startup">Startup</string>
 
-    <string name="profile_selector_title">Profile</string>
     <string name="button_add_profile">Add</string>
+    <string name="button_remove_profile">Delete</string>
     <string name="shades_dim_level">Dim level</string>
     <string name="shades_intensity_level">Intensity level</string>
     <string name="shades_color_temp">Color temperature</string>
     <string name="always_open_on_startup">Always open on startup</string>
     <string name="keep_running_after_reboot">Keep running after reboot</string>
+
+    <!-- Dialog -->
+    <string name="add_new_profile_dialog_title">Enter profile name</string>
+    <string name="add_new_profile_edit_hint">Profile name</string>
+    <string name="remove_profile_dialog_title">Delete this profile?</string>
+    <string name="ok_dialog">OK</string>
+    <string name="cancel_dialog">Cancel</string>
 
     <!-- Profiles -->
     <string-array name="standard_profiles_array">
