@@ -51,6 +51,10 @@ public class ProfilesModel {
         return mParsedProfiles;
     }
 
+    public Profile getProfile(int index) {
+        return mParsedProfiles.get(index);
+    }
+
     public void removeProfile(int index) {
         mParsedProfiles.remove(index);
 

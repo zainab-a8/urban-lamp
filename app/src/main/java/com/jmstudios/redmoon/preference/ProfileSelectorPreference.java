@@ -22,12 +22,16 @@ import java.util.Arrays;
 
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.model.ProfilesModel;
+import com.jmstudios.redmoon.model.SettingsModel;
+import com.jmstudios.redmoon.activity.ShadesActivity;
+import com.jmstudios.redmoon.fragment.ShadesFragment;
+import com.jmstudios.redmoon.preference.ColorSeekBarPreference;
 
 public class ProfileSelectorPreference extends Preference
     implements OnItemSelectedListener {
     public static final int DEFAULT_VALUE = 1;
 
-    private static final String TAG = "ProfileSelectorPreference";
+    private static final String TAG = "ProfileSelectorPref";
     private static final boolean DEBUG = true;
 
     private static final int DEFAULT_OPERATIONS_AM = 3;
@@ -41,9 +45,15 @@ public class ProfileSelectorPreference extends Preference
 
     private ArrayList<CharSequence> mDefaultOperations;
 
+    private int currentColor;
+    private int currentIntensity;
+    private int currentDim;
+
     public ProfileSelectorPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         setLayoutResource(R.layout.preference_profile_selector);
+
+        currentColor = currentDim = currentIntensity = 0;
 
         mProfilesModel = new ProfilesModel(context);
     }
@@ -73,6 +83,10 @@ public class ProfileSelectorPreference extends Preference
         mProfileActionButton = (Button) view.findViewById(R.id.profile_action_button);
 
         initLayout();
+
+        updateButtonSetup();
+
+        addSettingsChangedListener();
     }
 
     private void initLayout() {
@@ -92,8 +106,6 @@ public class ProfileSelectorPreference extends Preference
         mProfileSpinner.setAdapter(mArrayAdapter);
         mProfileSpinner.setSelection(mProfile);
         mProfileSpinner.setOnItemSelectedListener(this);
-
-        updateButtonSetup();
     }
 
     private void updateButtonSetup() {
@@ -128,6 +140,31 @@ public class ProfileSelectorPreference extends Preference
         mProfile = pos;
         persistInt(mProfile);
         updateButtonSetup();
+
+        if (mProfile > (DEFAULT_OPERATIONS_AM - 1)) {
+            ProfilesModel.Profile currentProfile = mProfilesModel.getProfile(mProfile - DEFAULT_OPERATIONS_AM);
+            setColorTemperatureProgress(currentProfile.mColorProgress);
+            setIntensityLevelProgress(currentProfile.mIntensityProgress);
+            setDimLevelProgress(currentProfile.mDimProgress);
+        } else if (mProfile != 0) {
+            int color = 0, intensity = 0, dim = 0;
+            switch (mProfile) {
+            case 1:
+                color = 10;
+                intensity = 30;
+                dim = 40;
+                break;
+            case 2:
+                color = 20;
+                intensity = 60;
+                dim = 78;
+                break;
+            }
+
+            setColorTemperatureProgress(color);
+            setIntensityLevelProgress(intensity);
+            setDimLevelProgress(dim);
+        }
     }
 
     @Override
@@ -145,8 +182,7 @@ public class ProfileSelectorPreference extends Preference
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                         mProfilesModel.removeProfile(mProfile - DEFAULT_OPERATIONS_AM);
-                        if (mProfile >= DEFAULT_OPERATIONS_AM + mProfilesModel.getProfiles().size())
-                            mProfile--;
+                        mProfile = 0;
                         initLayout();
                 }
             });
@@ -179,7 +215,10 @@ public class ProfileSelectorPreference extends Preference
                 public void onClick(DialogInterface dialog, int which) {
                     if (!(nameInput.getText().toString().trim().equals(""))) {
                         ProfilesModel.Profile profile = new ProfilesModel.Profile
-                            (nameInput.getText().toString(), 100, 100, 100);
+                            (nameInput.getText().toString(),
+                             getColorTemperatureProgress(),
+                             getIntensityLevelProgress(),
+                             getDimLevelProgress());
 
                         mProfilesModel.addProfile(profile);
                         mArrayAdapter.add((CharSequence) profile.mProfileName);
@@ -202,6 +241,47 @@ public class ProfileSelectorPreference extends Preference
         builder.show();
     }
 
+    //Section: Reading and writing preference states
+
+    private int getColorTemperatureProgress() {
+        return ((ShadesActivity) getContext()).getColorTempProgress();
+    }
+
+    private int getIntensityLevelProgress() {
+        return ((ShadesActivity) getContext()).getIntensityLevelProgress();
+    }
+
+    private int getDimLevelProgress() {
+        return ((ShadesActivity) getContext()).getDimLevelProgress();
+    }
+
+    private void setColorTemperatureProgress(int progress) {
+        currentColor = progress;
+        ShadesFragment fragment = ((ShadesActivity) getContext()).getFragment();
+        ColorSeekBarPreference colorPref = (ColorSeekBarPreference) fragment.findPreference
+            (getContext().getResources().getString(R.string.pref_key_shades_color_temp));
+
+        colorPref.mColorTempSeekBar.setProgress(progress);
+    }
+
+    private void setIntensityLevelProgress(int progress) {
+        currentIntensity = progress;
+        ShadesFragment fragment = ((ShadesActivity) getContext()).getFragment();
+        IntensitySeekBarPreference intensityPref = (IntensitySeekBarPreference) fragment.findPreference
+            (getContext().getResources().getString(R.string.pref_key_shades_intensity_level));
+
+        intensityPref.mIntensityLevelSeekBar.setProgress(progress);
+    }
+
+    private void setDimLevelProgress(int progress) {
+        currentDim = progress;
+        ShadesFragment fragment = ((ShadesActivity) getContext()).getFragment();
+        DimSeekBarPreference dimPref = (DimSeekBarPreference) fragment.findPreference
+            (getContext().getResources().getString(R.string.pref_key_shades_dim_level));
+
+        dimPref.mDimLevelSeekBar.setProgress(progress);
+    }
+
     //Section: Reading and writing profiles
 
     /**
@@ -213,5 +293,36 @@ public class ProfileSelectorPreference extends Preference
         for (ProfilesModel.Profile profile : profiles) {
             mArrayAdapter.add((CharSequence) profile.mProfileName);
         }
+    }
+
+    //Section: onSettingsChangedListener
+    private void addSettingsChangedListener() {
+        SettingsModel model = ((ShadesActivity) getContext()).getSettingsModel();
+        model.addOnSettingsChangedListener(new SettingsModel.OnSettingsChangedListener() {
+                @Override
+                public void onShadesPowerStateChanged(boolean powerState) { }
+
+                @Override
+                public void onShadesPauseStateChanged(boolean pauseState) { }
+
+                @Override
+                public void onShadesDimLevelChanged(int dimLevel) {
+                    if (dimLevel == currentDim) return;
+                    mProfileSpinner.setSelection(0);
+                }
+
+                @Override
+                public void onShadesIntensityLevelChanged(int intensityLevel) {
+                    if (intensityLevel == currentIntensity) return;
+                    mProfileSpinner.setSelection(0);
+                }
+
+                @Override
+                public void onShadesColorChanged(int color) {
+                    if (color == currentColor) return;
+
+                    mProfileSpinner.setSelection(0);
+                }
+            });
     }
 }

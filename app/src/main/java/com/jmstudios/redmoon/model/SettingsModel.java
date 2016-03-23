@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.preference.ColorSeekBarPreference;
 import com.jmstudios.redmoon.preference.DimSeekBarPreference;
@@ -27,7 +29,7 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
     private static final boolean DEBUG = true;
 
     private SharedPreferences mSharedPreferences;
-    private OnSettingsChangedListener mSettingsChangedListener;
+    private ArrayList<OnSettingsChangedListener> mSettingsChangedListeners;
 
     private String mPowerStatePrefKey;
     private String mPauseStatePrefKey;
@@ -39,6 +41,7 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
 
     public SettingsModel(@NonNull Resources resources, @NonNull SharedPreferences sharedPreferences) {
         mSharedPreferences = sharedPreferences;
+        mSettingsChangedListeners = new ArrayList<OnSettingsChangedListener>();
 
         mPowerStatePrefKey = resources.getString(R.string.pref_key_shades_power_state);
         mPauseStatePrefKey = resources.getString(R.string.pref_key_shades_pause_state);
@@ -85,8 +88,8 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
         return mSharedPreferences.getBoolean(mKeepRunningAfterRebootPrefKey, false);
     }
 
-    public void setOnSettingsChangedListener(OnSettingsChangedListener listener) {
-        mSettingsChangedListener = listener;
+    public void addOnSettingsChangedListener(OnSettingsChangedListener listener) {
+        mSettingsChangedListeners.add(listener);
     }
 
     public void openSettingsChangeListener() {
@@ -104,34 +107,40 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
     //region OnSharedPreferenceChangeListener
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (mSettingsChangedListener == null) {
-            return;
-        }
+        for (OnSettingsChangedListener mSettingsChangedListener : mSettingsChangedListeners)
+            if (mSettingsChangedListener == null) {
+                mSettingsChangedListeners.remove(mSettingsChangedListeners.indexOf(mSettingsChangedListener));
+            }
 
         if (key.equals(mPowerStatePrefKey))
         {
             boolean powerState = getShadesPowerState();
-            mSettingsChangedListener.onShadesPowerStateChanged(powerState);
+            for (OnSettingsChangedListener mSettingsChangedListener : mSettingsChangedListeners)
+                mSettingsChangedListener.onShadesPowerStateChanged(powerState);
         }
         else if (key.equals(mPauseStatePrefKey))
         {
             boolean pauseState = getShadesPauseState();
-            mSettingsChangedListener.onShadesPauseStateChanged(pauseState);
+            for (OnSettingsChangedListener mSettingsChangedListener : mSettingsChangedListeners)
+                mSettingsChangedListener.onShadesPauseStateChanged(pauseState);
         }
         else if (key.equals(mDimPrefKey))
         {
             int dimLevel = getShadesDimLevel();
-            mSettingsChangedListener.onShadesDimLevelChanged(dimLevel);
+            for (OnSettingsChangedListener mSettingsChangedListener : mSettingsChangedListeners)
+                mSettingsChangedListener.onShadesDimLevelChanged(dimLevel);
         }
         else if (key.equals(mIntensityPrefKey))
         {
             int intensityLevel = getShadesIntensityLevel();
-            mSettingsChangedListener.onShadesIntensityLevelChanged(intensityLevel);
+            for (OnSettingsChangedListener mSettingsChangedListener : mSettingsChangedListeners)
+                mSettingsChangedListener.onShadesIntensityLevelChanged(intensityLevel);
         }
         else if (key.equals(mColorPrefKey))
         {
             int color = getShadesColor();
-            mSettingsChangedListener.onShadesColorChanged(color);
+            for (OnSettingsChangedListener mSettingsChangedListener : mSettingsChangedListeners)
+                mSettingsChangedListener.onShadesColorChanged(color);
         }
     }
     //endregion

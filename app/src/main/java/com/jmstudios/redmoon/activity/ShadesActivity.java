@@ -32,6 +32,7 @@ public class ShadesActivity extends AppCompatActivity {
     public static int OVERLAY_PERMISSION_REQ_CODE = 1234;
 
     private ShadesPresenter mPresenter;
+    private ShadesFragment mFragment;
     private SettingsModel mSettingsModel;
     private SwitchCompat mSwitch;
     private ShadesActivity context = this;
@@ -71,7 +72,9 @@ public class ShadesActivity extends AppCompatActivity {
         view.registerPresenter(mPresenter);
 
         // Make Presenter listen to settings changes
-        mSettingsModel.setOnSettingsChangedListener(mPresenter);
+        mSettingsModel.addOnSettingsChangedListener(mPresenter);
+
+        mFragment = view;
     }
 
     @Override
@@ -133,5 +136,17 @@ public class ShadesActivity extends AppCompatActivity {
 
     public int getIntensityLevelProgress() {
         return mSettingsModel.getShadesIntensityLevel();
+    }
+
+    public int getDimLevelProgress() {
+        return mSettingsModel.getShadesDimLevel();
+    }
+
+    public ShadesFragment getFragment() {
+        return mFragment;
+    }
+
+    public SettingsModel getSettingsModel() {
+        return mSettingsModel;
     }
 }
