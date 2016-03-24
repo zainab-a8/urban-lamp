@@ -17,6 +17,7 @@ complete control
 * Standard profiles
 * Custom profiles
 * Real-time color, intensity and dim level indicators
+* A widget to toggle the filter
 * Material design
 * Dark and light theme
 * Smooth transitions when turning the filter on or off
