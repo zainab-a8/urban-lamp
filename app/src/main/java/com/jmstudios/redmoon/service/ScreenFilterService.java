@@ -18,6 +18,7 @@ import com.jmstudios.redmoon.manager.WindowViewManager;
 import com.jmstudios.redmoon.model.SettingsModel;
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter;
 import com.jmstudios.redmoon.receiver.OrientationChangeReceiver;
+import com.jmstudios.redmoon.receiver.SwitchAppWidgetProvider;
 import com.jmstudios.redmoon.view.ScreenFilterView;
 
 public class ScreenFilterService extends Service implements ServiceLifeCycleController {
@@ -88,6 +89,13 @@ public class ScreenFilterService extends Service implements ServiceLifeCycleCont
 
         mSettingsModel.closeSettingsChangeListener();
         unregisterOrientationReceiver();
+
+        //Broadcast to keep appwidgets in sync
+        if(DEBUG) Log.i(TAG, "Sending update broadcast");
+        Intent updateAppWidgetIntent = new Intent(this, SwitchAppWidgetProvider.class);
+        updateAppWidgetIntent.setAction(SwitchAppWidgetProvider.ACTION_UPDATE);
+        updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_PAUSED, true);
+        sendBroadcast(updateAppWidgetIntent);
 
         super.onDestroy();
     }

@@ -23,6 +23,7 @@ import com.jmstudios.redmoon.manager.ScreenManager;
 import com.jmstudios.redmoon.manager.WindowViewManager;
 import com.jmstudios.redmoon.model.SettingsModel;
 import com.jmstudios.redmoon.receiver.OrientationChangeReceiver;
+import com.jmstudios.redmoon.receiver.SwitchAppWidgetProvider;
 import com.jmstudios.redmoon.service.ScreenFilterService;
 import com.jmstudios.redmoon.service.ServiceLifeCycleController;
 import com.jmstudios.redmoon.view.ScreenFilterView;
@@ -150,7 +151,14 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
     public void onShadesPowerStateChanged(boolean powerState) {/* do nothing */}
 
     @Override
-    public void onShadesPauseStateChanged(boolean pauseState) {/* do nothing */}
+    public void onShadesPauseStateChanged(boolean pauseState) {
+        //Broadcast to keep appwidgets in sync
+        if(DEBUG) Log.i(TAG, "Sending update broadcast");
+        Intent updateAppWidgetIntent = new Intent(mContext, SwitchAppWidgetProvider.class);
+        updateAppWidgetIntent.setAction(SwitchAppWidgetProvider.ACTION_UPDATE);
+        updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_PAUSED, pauseState);
+        mContext.sendBroadcast(updateAppWidgetIntent);
+    }
 
     @Override
     public void onShadesDimLevelChanged(int dimLevel) {
