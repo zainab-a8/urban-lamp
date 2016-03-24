@@ -94,7 +94,7 @@ public class ScreenFilterService extends Service implements ServiceLifeCycleCont
         if(DEBUG) Log.i(TAG, "Sending update broadcast");
         Intent updateAppWidgetIntent = new Intent(this, SwitchAppWidgetProvider.class);
         updateAppWidgetIntent.setAction(SwitchAppWidgetProvider.ACTION_UPDATE);
-        updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_PAUSED, true);
+        updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_POWER, false);
         sendBroadcast(updateAppWidgetIntent);
 
         super.onDestroy();

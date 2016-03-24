@@ -148,7 +148,15 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
 
     //region OnSettingsChangedListener
     @Override
-    public void onShadesPowerStateChanged(boolean powerState) {/* do nothing */}
+    public void onShadesPowerStateChanged(boolean powerState) {
+        //Broadcast to keep appwidgets in sync
+        if(DEBUG) Log.i(TAG, "Sending update broadcast");
+        Intent updateAppWidgetIntent = new Intent(mContext, SwitchAppWidgetProvider.class);
+        updateAppWidgetIntent.setAction(SwitchAppWidgetProvider.ACTION_UPDATE);
+        updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_POWER,
+                                       powerState && !mSettingsModel.getShadesPauseState());
+        mContext.sendBroadcast(updateAppWidgetIntent);
+    }
 
     @Override
     public void onShadesPauseStateChanged(boolean pauseState) {
@@ -156,7 +164,8 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
         if(DEBUG) Log.i(TAG, "Sending update broadcast");
         Intent updateAppWidgetIntent = new Intent(mContext, SwitchAppWidgetProvider.class);
         updateAppWidgetIntent.setAction(SwitchAppWidgetProvider.ACTION_UPDATE);
-        updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_PAUSED, pauseState);
+        updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_POWER,
+                                       mSettingsModel.getShadesPowerState() && !pauseState);
         mContext.sendBroadcast(updateAppWidgetIntent);
     }
 

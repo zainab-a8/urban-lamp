@@ -19,7 +19,7 @@ import com.jmstudios.redmoon.service.ScreenFilterService;
 public class SwitchAppWidgetProvider extends AppWidgetProvider {
     public final static String ACTION_TOGGLE = "com.jmstudios.redmoon.action.APPWIDGET_TOGGLE";
     public final static String ACTION_UPDATE = "com.jmstudios.redmoon.action.APPWIDGET_UPDATE";
-    public final static String EXTRA_PAUSED = "com.jmstudios.redmoon.action.APPWIDGET_EXTRA_PAUSED";
+    public final static String EXTRA_POWER = "com.jmstudios.redmoon.action.APPWIDGET_EXTRA_POWER";
     private final static String TAG = "SwitchAppWidgetProvider";
     private final static boolean DEBUG = true;
 
@@ -47,7 +47,7 @@ public class SwitchAppWidgetProvider extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         if(intent.getAction().equals(SwitchAppWidgetProvider.ACTION_TOGGLE)) toggle(context);
         else if(intent.getAction().equals(SwitchAppWidgetProvider.ACTION_UPDATE))
-            updateImage(context, intent.getBooleanExtra(SwitchAppWidgetProvider.EXTRA_PAUSED, false));
+            updateImage(context, intent.getBooleanExtra(SwitchAppWidgetProvider.EXTRA_POWER, false));
         else super.onReceive(context, intent);
     }
 
@@ -59,22 +59,22 @@ public class SwitchAppWidgetProvider extends AppWidgetProvider {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SettingsModel settingsModel = new SettingsModel(context.getResources(), sharedPreferences);
 
-        if(settingsModel.getShadesPauseState()) {
+        if(settingsModel.getShadesPauseState() || !(settingsModel.getShadesPowerState())) {
             context.startService(onCommand);
         } else {
             context.startService(pauseCommand);
         }
     }
 
-    void updateImage(Context context, boolean isPaused) {
+    void updateImage(Context context, boolean powerState) {
         if(DEBUG) Log.i(TAG, "Updating image!");
-        RemoteViews views = new RemoteViews (context.getPackageName(), R.layout.appwidget_switch);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.appwidget_switch);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         ComponentName appWidgetComponent = new ComponentName(context, SwitchAppWidgetProvider.class.getName());
 
         int drawable;
 
-        if(isPaused) drawable = R.drawable.ic_play;
+        if(!powerState) drawable = R.drawable.ic_play;
         else drawable = R.drawable.ic_pause;
 
         views.setInt(R.id.widget_pause_play_button, "setImageResource", drawable);
