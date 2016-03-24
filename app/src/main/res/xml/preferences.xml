@@ -30,11 +30,29 @@
         android:defaultValue="false" />
   </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_title_app_appearance">
-      <CheckBoxPreference
-          android:key="@string/pref_key_dark_theme"
-          android:title="@string/dark_theme"
-          android:summary="@string/dark_theme_summary"
-          android:defaultValue="false" />
-    </PreferenceCategory>
+  <PreferenceCategory android:title="@string/pref_title_app_appearance">
+    <CheckBoxPreference
+        android:key="@string/pref_key_dark_theme"
+        android:title="@string/dark_theme"
+        android:summary="@string/dark_theme_summary"
+        android:defaultValue="false" />
+  </PreferenceCategory>
+
+  <PreferenceCategory android:title="@string/pref_title_contact">
+    <Preference
+        android:title="@string/project_page_title"
+        android:summary="@string/project_page_summary" >
+      <intent
+          android:action="android.intent.action.VIEW"
+          android:data="@string/project_page_url" />
+    </Preference>
+
+    <Preference
+        android:title="@string/email_me_title"
+        android:summary="@string/email_me_summary">
+      <intent
+          android:action="android.intent.action.VIEW"
+          android:data="@string/contact_email_adress" />
+    </Preference>
+  </PreferenceCategory>
 </PreferenceScreen>

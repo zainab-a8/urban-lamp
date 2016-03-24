@@ -13,6 +13,7 @@
     <string name="pref_title_appearance">Filter</string>
     <string name="pref_title_startup">Startup</string>
     <string name="pref_title_app_appearance">Appearance</string>
+    <string name="pref_title_contact">Contact</string>
 
     <string name="button_add_profile">Add</string>
     <string name="button_remove_profile">Delete</string>
@@ -23,6 +24,12 @@
     <string name="keep_running_after_reboot">Keep running after reboot</string>
     <string name="dark_theme">Dark theme</string>
     <string name="dark_theme_summary">Use a dark theme for this activity</string>
+    <string name="email_me_title">Email me at marienraat@riseup.net</string>
+    <string name="email_me_summary">Email me with bugs or suggestions</string>
+    <string name="contact_email_adress" translatable="false">mailto:marienraat@riseup.net</string>
+    <string name="project_page_title">Visit the project page</string>
+    <string name="project_page_summary">Find more info, leave feedback and contribute</string>
+    <string name="project_page_url" translatable="false">https://github.com/raatmarien/red-moon</string>
 
     <!-- Toasts -->
     <string name="toast_warning_install">You won\'t be able to install APKs while the filter is running.</string>
