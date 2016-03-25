@@ -11,6 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.SwitchCompat;
+import android.provider.Settings;
+import android.os.Build.VERSION;
+import android.net.Uri;
+import android.content.Intent;
+import android.os.Bundle;
 
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.presenter.ShadesPresenter;
@@ -33,49 +38,41 @@ public class ShadesFragment extends PreferenceFragment {
 
         addPreferencesFromResource(R.xml.preferences);
 
-        String openOnStartupKey = getString(R.string.pref_key_always_open_on_startup);
-        String resumeAfterRebootPrefKey= getString(R.string.pref_key_keep_running_after_reboot);
         String darkThemePrefKey= getString(R.string.pref_key_dark_theme);
+        String lowerBrightnessPrefKey = getString(R.string.pref_key_control_brightness);
 
         PreferenceScreen prefScreen = getPreferenceScreen();
-        final CheckBoxPreference openOnStartupPref = (CheckBoxPreference) prefScreen.findPreference(openOnStartupKey);
-        final CheckBoxPreference resumeAfterRebootPref = (CheckBoxPreference) prefScreen.findPreference(resumeAfterRebootPrefKey);
-        final CheckBoxPreference darkThemePref = (CheckBoxPreference) prefScreen.findPreference(darkThemePrefKey);
-
-        openOnStartupPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                boolean checked = openOnStartupPref.isChecked();
-                if (checked) {
-                    resumeAfterRebootPref.setEnabled(false);
-                } else {
-                    resumeAfterRebootPref.setEnabled(true);
-                }
-
-                return false;
-            }
-        });
-
-        resumeAfterRebootPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                boolean checked = resumeAfterRebootPref.isChecked();
-                if (checked) {
-                    openOnStartupPref.setEnabled(false);
-                } else {
-                    openOnStartupPref.setEnabled(true);
-                }
-
-                return false;
-            }
-        });
+        final CheckBoxPreference darkThemePref = (CheckBoxPreference)
+            prefScreen.findPreference(darkThemePrefKey);
+        final CheckBoxPreference lowerBrightnessPref = (CheckBoxPreference)
+            prefScreen.findPreference(lowerBrightnessPrefKey);
 
         darkThemePref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 getActivity().recreate();
-
                 return false;
+            }
+        });
+
+        if (android.os.Build.VERSION.SDK_INT >= 23 &&
+            !Settings.System.canWrite(getContext())) lowerBrightnessPref.setChecked(false);
+
+        lowerBrightnessPref.setOnPreferenceChangeListener
+            (new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                boolean checked = (Boolean) newValue;
+                if (checked && android.os.Build.VERSION.SDK_INT >= 23 &&
+                    !Settings.System.canWrite(getContext())) {
+                    Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
+                                               Uri.parse("package:" +
+                                                         getContext().getPackageName()));
+                    startActivityForResult(intent, -1);
+                    return false;
+                }
+
+                return true;
             }
         });
 

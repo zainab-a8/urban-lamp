@@ -17,6 +17,12 @@
     <com.jmstudios.redmoon.preference.DimSeekBarPreference
         android:key="@string/pref_key_shades_dim_level"
         android:defaultValue="50" />
+
+    <CheckBoxPreference
+        android:key="@string/pref_key_control_brightness"
+        android:title="@string/control_brightness_title"
+        android:summary="@string/control_brightness_summary"
+        android:defaultValue="true" />
   </PreferenceCategory>
 
   <PreferenceCategory android:title="@string/pref_title_startup">

@@ -13,6 +13,10 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.WindowManager;
+import android.content.ContentResolver;
+import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
+import android.os.Build.VERSION;
 
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.activity.ShadesActivity;
@@ -62,6 +66,10 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
     private final State mPauseState = new PauseState();
     private State mCurrentState = mOffState;
 
+    // Screen brightness state
+    private int oldScreenBrightness;
+    private boolean oldIsAutomaticBrightness;
+
     public ScreenFilterPresenter(@NonNull ScreenFilterView view,
                                  @NonNull SettingsModel model,
                                  @NonNull ServiceLifeCycleController serviceController,
@@ -80,6 +88,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
         mNotificationBuilder = notificationBuilder;
         mFilterCommandFactory = filterCommandFactory;
         mFilterCommandParser = filterCommandParser;
+        oldScreenBrightness = -1;
     }
 
     private void refreshForegroundNotification() {
@@ -278,6 +287,33 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
     }
     //endregion
 
+    private void saveOldBrightnessState() {
+        if (mSettingsModel.getBrightnessControlFlag()) {
+            ContentResolver resolver = mContext.getContentResolver();
+            try {
+                oldScreenBrightness = Settings.System.getInt
+                    (resolver, Settings.System.SCREEN_BRIGHTNESS);
+                oldIsAutomaticBrightness = 1 == Settings.System.getInt(resolver, "screen_brightness_mode");
+            } catch (SettingNotFoundException e) {
+                Log.e(TAG, "Error reading brightness state", e);
+                oldIsAutomaticBrightness = false;
+            }
+        } else {
+            oldScreenBrightness = -1;
+        }
+    }
+
+    private void setBrightnessState(int brightness, boolean automatic) {
+        if (android.os.Build.VERSION.SDK_INT >= 23 &&
+            !Settings.System.canWrite(mContext)) return;
+        if (mSettingsModel.getBrightnessControlFlag() &&
+            brightness >= 0) {
+            ContentResolver resolver = mContext.getContentResolver();
+            Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, brightness);
+            Settings.System.putInt(resolver, "screen_brightness_mode", (automatic ? 1 : 0));
+        }
+    }
+
     private WindowManager.LayoutParams createFilterLayoutParams() {
         WindowManager.LayoutParams wlp = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
@@ -360,6 +396,8 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                         }
                     });
 
+                    setBrightnessState(oldScreenBrightness, oldIsAutomaticBrightness);
+
                     break;
 
                 case ScreenFilterService.COMMAND_OFF:
@@ -379,6 +417,8 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                         }
                     });
 
+                    setBrightnessState(oldScreenBrightness, oldIsAutomaticBrightness);
+
                     break;
             }
         }
@@ -396,6 +436,9 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
 
                     animateDimLevel(mSettingsModel.getShadesDimLevel(), null);
                     animateIntensityLevel(mSettingsModel.getShadesIntensityLevel(), null);
+
+                    saveOldBrightnessState();
+                    setBrightnessState(0, false);
 
                     break;
 
@@ -430,6 +473,9 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
 
                     animateDimLevel(toDim, null);
                     animateIntensityLevel(toIntensity, null);
+
+                    saveOldBrightnessState();
+                    setBrightnessState(0, false);
 
                     break;
 
