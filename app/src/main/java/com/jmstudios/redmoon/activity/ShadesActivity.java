@@ -112,7 +112,8 @@ public class ShadesActivity extends AppCompatActivity {
                             mPresenter.sendCommand(isChecked ?
                                                    ScreenFilterService.COMMAND_ON :
                                                    ScreenFilterService.COMMAND_OFF);
-                            displayInstallWarningToast();
+                            if (isChecked)
+                                displayInstallWarningToast();
                         } else {
                             buttonView.setChecked(false);
                         }
