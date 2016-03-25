@@ -18,6 +18,7 @@ complete control
 * Custom profiles
 * Real-time color, intensity and dim level indicators
 * A widget to toggle the filter
+* Automatically lower the screen brightness as long as the filter is running
 * Material design
 * Dark and light theme
 * Smooth transitions when turning the filter on or off
