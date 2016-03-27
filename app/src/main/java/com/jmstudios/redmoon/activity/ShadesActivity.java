@@ -30,6 +30,8 @@ public class ShadesActivity extends AppCompatActivity {
     private static final boolean DEBUG = true;
     private static final String FRAGMENT_TAG_SHADES = "jmstudios.fragment.tag.SHADES";
 
+    public static final String EXTRA_FROM_SHORTCUT_BOOL =
+        "com.jmstudios.redmoon.activity.ShadesActivity.EXTRA_FROM_SHORTCUT_BOOL";
     public static int OVERLAY_PERMISSION_REQ_CODE = 1234;
 
     private ShadesPresenter mPresenter;
@@ -43,6 +45,13 @@ public class ShadesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent intent = getIntent();
+        if (DEBUG) Log.i(TAG, "Got intent");
+        boolean fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false);
+        if (fromShortcut) {
+            toggleAndFinish();
+        }
+
         // Wire MVP classes
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mSettingsModel = new SettingsModel(getResources(), sharedPreferences);
@@ -90,7 +99,8 @@ public class ShadesActivity extends AppCompatActivity {
 
         final MenuItem item = menu.findItem(R.id.screen_filter_switch);
         mSwitch = (SwitchCompat) item.getActionView();
-        mSwitch.setChecked(mSettingsModel.getShadesPowerState());
+        mSwitch.setChecked(mSettingsModel.getShadesPowerState() &&
+                           !mSettingsModel.getShadesPauseState());
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -138,6 +148,14 @@ public class ShadesActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        boolean fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false);
+        if (fromShortcut) {
+            toggleAndFinish();
+        }
+    }
+
+    @Override
     protected void onStop() {
         mSettingsModel.closeSettingsChangeListener();
         super.onStop();
@@ -181,5 +199,25 @@ public class ShadesActivity extends AppCompatActivity {
 
     public SettingsModel getSettingsModel() {
         return mSettingsModel;
+    }
+
+    private void toggleAndFinish() {
+        FilterCommandSender commandSender = new FilterCommandSender(this);
+        FilterCommandFactory commandFactory = new FilterCommandFactory(this);
+        Intent onCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_ON);
+        Intent pauseCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_PAUSE);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SettingsModel settingsModel = new SettingsModel(getResources(), sharedPreferences);
+        boolean poweredOn = settingsModel.getShadesPowerState();
+        boolean paused = settingsModel.getShadesPauseState();
+
+        if (!poweredOn || paused) {
+            commandSender.send(onCommand);
+        } else {
+            commandSender.send(pauseCommand);
+        }
+
+        finish();
     }
 }

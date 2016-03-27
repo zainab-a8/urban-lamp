@@ -36,6 +36,15 @@
                 android:resource="@xml/switch_appwidget_info" />
         </receiver>
 
+        <activity
+            android:name="com.jmstudios.redmoon.activity.ShortcutCreationActivity"
+            android:label="@string/shortcut_activity" >
+          <intent-filter>
+            <action android:name="android.intent.action.CREATE_SHORTCUT"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+          </intent-filter>
+        </activity>
+
         <service
             android:name="com.jmstudios.redmoon.service.ScreenFilterService"
             android:enabled="true" >

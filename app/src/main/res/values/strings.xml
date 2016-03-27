@@ -4,6 +4,7 @@
     <!-- App Name and Activity Labels -->
     <string name="app_name" translatable="false">Red Moon</string>
     <string name="shades_settings" translatable="false">Red Moon</string>
+    <string name="shortcut_activity">Red Moon Toggle</string>
 
     <!-- Notification -->
     <string name="running">Running. Pause to install apks</string>
@@ -42,6 +43,9 @@
     <string name="remove_profile_dialog_title">Delete this profile?</string>
     <string name="ok_dialog">OK</string>
     <string name="cancel_dialog">Cancel</string>
+
+    <!-- Shortcuts -->
+    <string name="toggle_shortcut_title">Toggle</string>
 
     <!-- Profiles -->
     <string-array name="standard_profiles_array">
