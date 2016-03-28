@@ -40,6 +40,9 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
     private String mKeepRunningAfterRebootPrefKey;
     private String mDarkThemePrefKey;
     private String mBrightnessControlPrefKey;
+    private String mAutomaticFilterModePrefKey;
+    private String mAutomaticTurnOnPrefKey;
+    private String mAutomaticTurnOffPrefKey;
 
     public SettingsModel(@NonNull Resources resources, @NonNull SharedPreferences sharedPreferences) {
         mSharedPreferences = sharedPreferences;
@@ -54,6 +57,9 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
         mKeepRunningAfterRebootPrefKey = resources.getString(R.string.pref_key_keep_running_after_reboot);
         mDarkThemePrefKey = resources.getString(R.string.pref_key_dark_theme);
         mBrightnessControlPrefKey = resources.getString(R.string.pref_key_control_brightness);
+        mAutomaticFilterModePrefKey = resources.getString(R.string.pref_key_automatic_filter);
+        mAutomaticTurnOnPrefKey = resources.getString(R.string.pref_key_custom_start_time);
+        mAutomaticTurnOffPrefKey = resources.getString(R.string.pref_key_custom_end_time);
     }
 
     public boolean getShadesPowerState() {
@@ -98,6 +104,18 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
 
     public boolean getBrightnessControlFlag() {
         return mSharedPreferences.getBoolean(mBrightnessControlPrefKey, false);
+    }
+
+    public String getAutomaticFilterMode() {
+        return mSharedPreferences.getString(mAutomaticFilterModePrefKey, "never");
+    }
+
+    public String getAutomaticTurnOnTime() {
+        return mSharedPreferences.getString(mAutomaticTurnOnPrefKey, "22:00");
+    }
+
+    public String getAutomaticTurnOffTime() {
+        return mSharedPreferences.getString(mAutomaticTurnOffPrefKey, "06:00");
     }
 
     public void addOnSettingsChangedListener(OnSettingsChangedListener listener) {
@@ -146,13 +164,32 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
         {
             int intensityLevel = getShadesIntensityLevel();
             for (OnSettingsChangedListener mSettingsChangedListener : mSettingsChangedListeners)
-                mSettingsChangedListener.onShadesIntensityLevelChanged(intensityLevel);
+                 mSettingsChangedListener.onShadesIntensityLevelChanged(intensityLevel);
         }
         else if (key.equals(mColorPrefKey))
         {
             int color = getShadesColor();
             for (OnSettingsChangedListener mSettingsChangedListener : mSettingsChangedListeners)
                 mSettingsChangedListener.onShadesColorChanged(color);
+        }
+        else if (key.equals(mAutomaticFilterModePrefKey))
+            {
+            String automaticFilterMode = getAutomaticFilterMode();
+            for (OnSettingsChangedListener mSettingsChangedListener : mSettingsChangedListeners) {
+                mSettingsChangedListener.onShadesAutomaticFilterModeChanged(automaticFilterMode);
+            }
+        }
+        else if (key.equals(mAutomaticTurnOnPrefKey))
+            {
+            String turnOnTime = getAutomaticTurnOnTime();
+            for (OnSettingsChangedListener mSettingsChangedListener : mSettingsChangedListeners)
+                mSettingsChangedListener.onShadesAutomaticTurnOnChanged(turnOnTime);
+        }
+        else if (key.equals(mAutomaticTurnOffPrefKey))
+            {
+            String turnOffTime = getAutomaticTurnOffTime();
+            for (OnSettingsChangedListener mSettingsChangedListener : mSettingsChangedListeners)
+                mSettingsChangedListener.onShadesAutomaticTurnOffChanged(turnOffTime);
         }
     }
     //endregion
@@ -163,5 +200,8 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
         void onShadesDimLevelChanged(int dimLevel);
         void onShadesIntensityLevelChanged(int intensityLevel);
         void onShadesColorChanged(int color);
+        void onShadesAutomaticFilterModeChanged(String automaticFilterMode);
+        void onShadesAutomaticTurnOnChanged(String turnOnTime);
+        void onShadesAutomaticTurnOffChanged(String turnOffTime);
     }
 }

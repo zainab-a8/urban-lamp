@@ -25,6 +25,28 @@
         android:defaultValue="true" />
   </PreferenceCategory>
 
+  <PreferenceCategory android:title="@string/pref_title_automatic_filter">
+    <ListPreference
+        android:key="@string/pref_key_automatic_filter"
+        android:title="@string/automatic_filter_title"
+        android:summary="@string/automatic_filter_summary"
+        android:entries="@array/automatic_filter_options_array"
+        android:entryValues="@array/automatic_filter_values_array"
+        android:defaultValue="never" />
+
+    <com.jmstudios.redmoon.preference.TimePickerPreference
+        android:key="@string/pref_key_custom_start_time"
+        android:title="@string/custom_start_time_title"
+        android:summary="@string/custom_start_time_summary"
+        android:defaultValue="22:00" />
+
+    <com.jmstudios.redmoon.preference.TimePickerPreference
+        android:key="@string/pref_key_custom_end_time"
+        android:title="@string/custom_end_time_title"
+        android:summary="@string/custom_end_time_summary"
+        android:defaultValue="06:00" />
+  </PreferenceCategory>
+
   <PreferenceCategory android:title="@string/pref_title_startup">
     <CheckBoxPreference
         android:key="@string/pref_key_keep_running_after_reboot"

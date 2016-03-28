@@ -203,6 +203,15 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
         }
     }
 
+    @Override
+    public void onShadesAutomaticFilterModeChanged(String automaticFilterMode) { }
+
+    @Override
+    public void onShadesAutomaticTurnOnChanged(String turnOnTime) { }
+
+    @Override
+    public void onShadesAutomaticTurnOffChanged(String turnOffTime) { }
+
     private void animateShadesColor(int toColor) {
         cancelRunningAnimator(mColorAnimator);
 

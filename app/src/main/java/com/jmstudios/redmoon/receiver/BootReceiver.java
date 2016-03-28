@@ -11,6 +11,7 @@ import com.jmstudios.redmoon.helper.FilterCommandFactory;
 import com.jmstudios.redmoon.helper.FilterCommandSender;
 import com.jmstudios.redmoon.model.SettingsModel;
 import com.jmstudios.redmoon.service.ScreenFilterService;
+import com.jmstudios.redmoon.receiver.AutomaticFilterChangeReceiver;
 
 public class BootReceiver extends BroadcastReceiver {
     private static final String TAG = "BootReceiver";
@@ -58,5 +59,8 @@ public class BootReceiver extends BroadcastReceiver {
         // Allow ScreenFilterService to sync its state and any shared preferences to "off" mode
         Intent offCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_OFF);
         commandSender.send(offCommand);
+
+        AutomaticFilterChangeReceiver.scheduleNextOnCommand(context);
+        AutomaticFilterChangeReceiver.scheduleNextPauseCommand(context);
     }
 }

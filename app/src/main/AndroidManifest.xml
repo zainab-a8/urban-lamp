@@ -36,6 +36,9 @@
                 android:resource="@xml/switch_appwidget_info" />
         </receiver>
 
+        <receiver android:name="com.jmstudios.redmoon.receiver.AutomaticFilterChangeReceiver">
+        </receiver>
+
         <activity
             android:name="com.jmstudios.redmoon.activity.ShortcutCreationActivity"
             android:label="@string/shortcut_activity" >

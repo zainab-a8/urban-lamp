@@ -49,6 +49,8 @@ public class ProfileSelectorPreference extends Preference
     private int currentIntensity;
     private int currentDim;
 
+    private boolean mIsListenerRegistered;
+
     public ProfileSelectorPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         setLayoutResource(R.layout.preference_profile_selector);
@@ -56,6 +58,8 @@ public class ProfileSelectorPreference extends Preference
         currentColor = currentDim = currentIntensity = 0;
 
         mProfilesModel = new ProfilesModel(context);
+
+        mIsListenerRegistered = false;
     }
 
     @Override
@@ -297,6 +301,8 @@ public class ProfileSelectorPreference extends Preference
 
     //Section: onSettingsChangedListener
     private void addSettingsChangedListener() {
+        if (mIsListenerRegistered) return;
+        mIsListenerRegistered = true;
         SettingsModel model = ((ShadesActivity) getContext()).getSettingsModel();
         model.addOnSettingsChangedListener(new SettingsModel.OnSettingsChangedListener() {
                 @Override
@@ -323,6 +329,15 @@ public class ProfileSelectorPreference extends Preference
 
                     mProfileSpinner.setSelection(0);
                 }
+
+                @Override
+                public void onShadesAutomaticFilterModeChanged(String automaticFilterMode) {}
+
+                @Override
+                public void onShadesAutomaticTurnOnChanged(String turnOnTime) {}
+
+                @Override
+                public void onShadesAutomaticTurnOffChanged(String turnOffTime) {}
             });
     }
 }

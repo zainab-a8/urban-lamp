@@ -12,6 +12,7 @@
 
     <!-- Preference -->
     <string name="pref_title_appearance">Filter</string>
+    <string name="pref_title_automatic_filter">Automatic filter</string>
     <string name="pref_title_startup">Startup</string>
     <string name="pref_title_app_appearance">Appearance</string>
     <string name="pref_title_contact">Contact</string>
@@ -23,10 +24,20 @@
     <string name="shades_color_temp">Color temperature</string>
     <string name="control_brightness_title">Lower brightness</string>
     <string name="control_brightness_summary">Automatically lower brightness when the filter is running</string>
+
+    <string name="automatic_filter_title">Automatically turn on filter</string>
+    <string name="automatic_filter_summary">Turn filter on and off automatically at certain times</string>
+    <string name="custom_start_time_title">Automatic turn on time</string>
+    <string name="custom_start_time_summary">Choose when to automatically start the filter</string>
+    <string name="custom_end_time_title">Automatic turn off time</string>
+    <string name="custom_end_time_summary">Choose when to automatically close the filter</string>
+
     <string name="always_open_on_startup">Always open on startup</string>
     <string name="keep_running_after_reboot">Keep running after reboot</string>
+
     <string name="dark_theme">Dark theme</string>
     <string name="dark_theme_summary">Use a dark theme for this activity</string>
+
     <string name="email_me_title">Email me at marienraat@riseup.net</string>
     <string name="email_me_summary">Email me with bugs or suggestions</string>
     <string name="contact_email_adress" translatable="false">mailto:marienraat@riseup.net</string>
@@ -41,6 +52,7 @@
     <string name="add_new_profile_dialog_title">Enter profile name</string>
     <string name="add_new_profile_edit_hint">Profile name</string>
     <string name="remove_profile_dialog_title">Delete this profile?</string>
+    <string name="set_dialog">Set</string>
     <string name="ok_dialog">OK</string>
     <string name="cancel_dialog">Cancel</string>
 
@@ -52,5 +64,17 @@
       <item>Custom</item>
       <item>Default</item>
       <item>Reading</item>
+    </string-array>
+
+    <!-- Automatic filter -->
+    <string-array name="automatic_filter_options_array">
+      <item>Never</item>
+      <item>Custom times</item>
+    </string-array>
+
+    <string-array name="automatic_filter_values_array"
+                  translatable="false">
+      <item>never</item>
+      <item>custom</item>
     </string-array>
 </resources>

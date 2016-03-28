@@ -83,7 +83,8 @@ public class ShadesActivity extends AppCompatActivity {
             view = (ShadesFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG_SHADES);
         }
 
-        mPresenter = new ShadesPresenter(view, mSettingsModel, filterCommandFactory, filterCommandSender);
+        mPresenter = new ShadesPresenter(view, mSettingsModel, filterCommandFactory,
+                                         filterCommandSender, context);
         view.registerPresenter(mPresenter);
 
         // Make Presenter listen to settings changes
