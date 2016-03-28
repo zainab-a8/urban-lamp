@@ -16,8 +16,10 @@ complete control
 * Automatic startup feature
 * Standard profiles
 * Custom profiles
+* Automatic turn on and off times
 * Real-time color, intensity and dim level indicators
 * A widget to toggle the filter
+* A shortcut to toggle the filter
 * Automatically lower the screen brightness as long as the filter is running
 * Material design
 * Dark and light theme
@@ -25,16 +27,15 @@ complete control
 * Ability to dim the navigation and the notification bar
 
 ## Planned feature
-* Automatic turn on and off times
 * Base turn on and off times on sunset and sunrise times at the user's location (issue #5)
 
 ## Screenshots
-<img src="https://lut.im/SevCJgBVqp/oYgQjjFeF1Osevdc.png" width="180" height="320" />
-<img src="https://lut.im/h8FQzuo2qZ/WxCE0CljflMb8iEj.png" width="180" height="320" />
-<img src="https://lut.im/7LjrrQwssI/iCj5lvP136G27JeC.png" width="180" height="320" />
-<img src="https://lut.im/Sf7pkjsnAL/h7dOJ6Vweyguq7dJ.png" width="180" height="320" />
-<img src="https://lut.im/3LelmIloww/aN7LswaDr6fA3361.png" width="180" height="320" />
-<img src="https://lut.im/uHzUMI5P0f/LFayd7loIoOGXSV3.png" width="180" height="320" />
+<img src="https://lut.im/vmFN3vnhn7/anZettuas7khW5l9.png" width="180" height="320" />
+<img src="https://lut.im/oymEd1HoVK/YWEpkIPVNOzPfm0O.png" width="180" height="320" />
+<img src="https://lut.im/XDgAt3mSOx/WZO1rmwVaM1gS4Qk.png" width="180" height="320" />
+<img src="https://lut.im/mBVVEtCZj6/tUNoPKUPoXOc29es.png" width="180" height="320" />
+<img src="https://lut.im/EmFrykMlFy/ZIdJvWfV9w7PuVb4.png" width="180" height="320" />
+<img src="https://lut.im/WrQySHuyyB/Z6Hy5x22gw9XZNFn.png" width="180" height="320" />
 
 
 ## License
@@ -48,7 +49,6 @@ released in the public domain, namely:
 * https://openclipart.org/detail/213998/nexus-5-flat
 * https://openclipart.org/detail/219211/option-button-symbol-minimal-svg-markup
 * https://openclipart.org/detail/20806/wolf-head-howl-1
-* https://openclipart.org/detail/190400/power-symbol
 
 Red Moon is based on [Shades](https://github.com/cngu/shades), by Chris Nguyen.
 
