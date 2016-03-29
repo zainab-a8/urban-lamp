@@ -66,7 +66,8 @@ to install the app on a connected device.
 
 ## Contributing
 
-All help is welcome! If you have found a bug, just
+All help is welcome! If you have found a bug or have an idea for a new
+feature, just
 [open a new issue](https://github.com/raatmarien/red-moon/issues/new). If
-you can implement it yourself, just fork this repository, make your
+you can implement it yourself, simply fork this repository, make your
 changes and open a pull request.
