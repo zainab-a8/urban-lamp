@@ -47,6 +47,7 @@
 
     <!-- Toasts -->
     <string name="toast_warning_install">You won\'t be able to install APKs while the filter is running.</string>
+    <string name="toast_warning_no_location">Location service isn\'t enabled, custom times will be used. Please enable the location services to use sunrise and sunset times.</string>
 
     <!-- Dialog -->
     <string name="add_new_profile_dialog_title">Enter profile name</string>
@@ -70,11 +71,13 @@
     <string-array name="automatic_filter_options_array">
       <item>Never</item>
       <item>Custom times</item>
+      <item>Sun</item>
     </string-array>
 
     <string-array name="automatic_filter_values_array"
                   translatable="false">
       <item>never</item>
       <item>custom</item>
+      <item>sun</item>
     </string-array>
 </resources>
