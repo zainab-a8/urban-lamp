@@ -64,6 +64,14 @@ Use
 
 to install the app on a connected device.
 
+## How it works
+
+Red Moon displays a constant transparant overlay to dim and color the
+screen when the filter is on. If, for example, you have the intensity
+set to 0%, then the overlay will be black with a transparency equal to
+the dim level you selected. If you choose a higher intensity, the
+color will be saturated with the selected color.
+
 ## Contributing
 
 All help is welcome! If you have found a bug or have an idea for a new
