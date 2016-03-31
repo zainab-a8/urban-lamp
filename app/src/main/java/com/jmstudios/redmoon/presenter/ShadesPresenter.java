@@ -85,6 +85,7 @@ public class ShadesPresenter implements SettingsModel.OnSettingsChangedListener 
     public void onShadesAutomaticFilterModeChanged(String automaticFilterMode) {
         if (DEBUG) Log.i(TAG, "Filter mode changed to " + automaticFilterMode);
         if (!automaticFilterMode.equals("never")) {
+            AutomaticFilterChangeReceiver.cancelAlarms(mContext);
             AutomaticFilterChangeReceiver.scheduleNextOnCommand(mContext);
             AutomaticFilterChangeReceiver.scheduleNextPauseCommand(mContext);
         } else {

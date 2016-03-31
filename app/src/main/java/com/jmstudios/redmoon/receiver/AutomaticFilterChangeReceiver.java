@@ -123,9 +123,9 @@ public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
         calendar.set(Calendar.MINUTE, Integer.parseInt(time.split(":")[1]));
 
         GregorianCalendar now = new GregorianCalendar();
-        now.roll(Calendar.SECOND, true);
+        now.add(Calendar.SECOND, 1);
         if (calendar.before(now)) {
-            calendar.roll(Calendar.DAY_OF_MONTH, true);
+            calendar.add(Calendar.DATE, 1);
         }
         if (!timeInUtc)
             calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
