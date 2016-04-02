@@ -3,7 +3,7 @@
     <string name="always_open_on_startup">Beim Hochfahren automatisch starten</string>
     <string name="keep_running_after_reboot">Nach Neustart weiterlaufen lassen</string>
     <string name="paused">Pausiert</string>
-    <string name="running">Läuft. Pausieren sie, wenn sie APKs installieren</string>
+    <string name="running">Läuft. Pausieren Sie, wenn Sie APKs installieren möchten.</string>
     <string name="shades_color_temp">Farbtemperatur</string>
     <string name="pref_title_appearance">Filter</string>
     <string name="shades_dim_level">Grad der Abblendung</string>
