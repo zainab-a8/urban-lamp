@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
+    <!-- App Name and Activity Labels -->
+    <string name="app_name">رد مون</string>
+    <string name="shortcut_activity">تغییر حالت رد مون</string>
+
+    <!-- Notification -->
+    <string name="running">در حال تجرا. برای نصب بسته‌ها مکث کنید</string>
+    <string name="paused">مکث شده</string>
+
+    <!-- Preference -->
+    <string name="pref_title_appearance">پالایه</string>
+    <string name="pref_title_automatic_filter">پالایهٔ خودکار</string>
+    <string name="pref_title_startup">روشن شدن</string>
+    <string name="pref_title_app_appearance">ظاهر</string>
+    <string name="pref_title_contact">تماس</string>
+
+    <string name="button_add_profile">افزودن</string>
+    <string name="button_remove_profile">حذف</string>
+    <string name="shades_dim_level">تراز تیرگی</string>
+    <string name="shades_intensity_level">تراز شدّت</string>
+    <string name="shades_color_temp">دمای رنگ</string>
+    <string name="control_brightness_title">کاهش روشنایی</string>
+    <string name="control_brightness_summary">کاهش خودکار روشنایی هنگام روشن بودن پالایه</string>
+
+    <string name="automatic_filter_title">روشن کردن خودکار پالایه</string>
+    <string name="automatic_filter_summary">روشن و خاموش کردن خودکار پالایه در زمان‌های مشخّص</string>
+    <string name="custom_start_time_title">زمان روشن شدن خودکار</string>
+    <string name="custom_start_time_summary">انتخاب کنید چه زمانی پالایه به صورت خودکار روشن شود</string>
+    <string name="custom_end_time_title">زمان خاموش شدن خودکار</string>
+    <string name="custom_end_time_summary">نتخاب کنید چه زمانی پالایه به صورت خودکار خاموش شود</string>
+
+    <string name="always_open_on_startup">همیشه هنگام روشن شدن گشوده شود</string>
+    <string name="keep_running_after_reboot">ادامهٔ اجرا پس از راه‌اندازی دوباره</string>
+
+    <string name="dark_theme">زمینهٔ تیره</string>
+    <string name="dark_theme_summary">استفاده از یک زمینهٔ تیره برای این فعّالیت</string>
+
+    <string name="email_me_title">‫به من در marienraat@riseup.net رایانامه بزنید‬</string>
+    <string name="email_me_summary">مشکلات یا پیشنهادهایتان را به من رایانامه کنید</string>
+    <string name="project_page_title">از صفحهٔ پروژه بازدید کنید</string>
+    <string name="project_page_summary">اطّلاعات بیش‌تری بگیرید، بازخورد دهید و مشارکت کنید</string>
+
+    <!-- Toasts -->
+    <string name="toast_warning_install">هنگام روشن بودن پالایه نخواهید توانست بسته‌ای را نصب کنید</string>
+    <string name="toast_warning_no_location">خدمت موقعیّت فعّال نشده است، پس زمان‌های شخصی استفاده خواهند شد. لطفاً برای استفاده از زمان‌های طلوع و غروب، خدمات موقعیّت را فعّال کنید.</string>
+
+    <!-- Dialog -->
+    <string name="add_new_profile_dialog_title">ورود نام نمایه</string>
+    <string name="add_new_profile_edit_hint">نام نمایه</string>
+    <string name="remove_profile_dialog_title">حذف این نمایه؟</string>
+    <string name="set_dialog">تنظیم</string>
+    <string name="ok_dialog">قبول</string>
+    <string name="cancel_dialog">لغو</string>
+
+    <!-- Shortcuts -->
+    <string name="toggle_shortcut_title">تغییر حالت</string>
+
+    <!-- Profiles -->
+    <string-array name="standard_profiles_array">
+      <item>شخصی</item>
+      <item>پیش‌گزیده</item>
+      <item>مطالعه</item>
+    </string-array>
+
+    <!-- Automatic filter -->
+    <string-array name="automatic_filter_options_array">
+      <item>هرگز</item>
+      <item>زمان‌های شخصی</item>
+      <item>خورشید</item>
+    </string-array>
+</resources>

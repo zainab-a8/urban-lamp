@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="MissingTranslation">
     <!-- App Name and Activity Labels -->
-    <string name="app_name" translatable="false">Red Moon</string>
+    <string name="app_name">Red Moon</string>
     <string name="shades_settings" translatable="false">Red Moon</string>
     <string name="shortcut_activity">Red Moon Toggle</string>
 
