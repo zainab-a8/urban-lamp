@@ -73,9 +73,17 @@ public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
                                                    new LocationSunCommandListener(context, true, manager));
                     return;
                 } else {
-                    displayNoLocationWarningToast(context);
-                    timeInUtc = false;
-                    time = settingsModel.getAutomaticTurnOnTime();
+                    android.location.Location lastLocation = manager
+                        .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    if (lastLocation != null) {
+                        SunriseSunsetCalculator calculator = getLocationCalculator(context, lastLocation);
+                        time = calculator.getOfficialSunsetForDate(Calendar.getInstance());
+                        timeInUtc = true;
+                    } else {
+                        displayNoLocationWarningToast(context);
+                        timeInUtc = false;
+                        time = settingsModel.getAutomaticTurnOnTime();
+                    }
                 }
             }
             Intent turnOnIntent = new Intent(context, AutomaticFilterChangeReceiver.class);
@@ -104,9 +112,17 @@ public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
                                                    new LocationSunCommandListener(context, false, manager));
                     return;
                 } else {
-                    displayNoLocationWarningToast(context);
-                    timeInUtc = false;
-                    time = settingsModel.getAutomaticTurnOffTime();
+                    android.location.Location lastLocation = manager
+                        .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    if (lastLocation != null) {
+                        SunriseSunsetCalculator calculator = getLocationCalculator(context, lastLocation);
+                        time = calculator.getOfficialSunriseForDate(Calendar.getInstance());
+                        timeInUtc = true;
+                    } else {
+                        displayNoLocationWarningToast(context);
+                        timeInUtc = false;
+                        time = settingsModel.getAutomaticTurnOffTime();
+                    }
                 }
             }
             Intent pauseIntent = new Intent(context, AutomaticFilterChangeReceiver.class);
