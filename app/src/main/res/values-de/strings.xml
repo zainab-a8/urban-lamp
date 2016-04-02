@@ -36,4 +36,6 @@
     <string name="remove_profile_dialog_title">Dieses Profil löschen?</string>
     <string name="set_dialog">Einstellen</string>
     <string name="toast_warning_no_location">Standortdienst ist nicht eingeschaltet. Es werden benutzerdefinierte Zeiten verwendet. Bitte den Standortdienst einschalten um Sonnenauf- und untergangszeiten verwenden zu können.</string>
+    <string name="toggle_shortcut_title">Umschalten</string>
+    <string name="shortcut_activity">Umschalter für Red Moon</string>
 </resources>
