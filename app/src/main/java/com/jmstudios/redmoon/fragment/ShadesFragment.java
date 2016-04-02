@@ -17,6 +17,10 @@ import android.os.Build.VERSION;
 import android.net.Uri;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.presenter.ShadesPresenter;
@@ -101,6 +105,14 @@ public class ShadesFragment extends PreferenceFragment {
                     } else {
                         automaticTurnOnPref.setEnabled(true);
                         automaticTurnOffPref.setEnabled(true);
+                    }
+
+                    if (newValue.toString().equals("sun") && ContextCompat.checkSelfPermission
+                        (getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(getActivity(), new String[]
+                            {Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
+                        return false;
                     }
                     return true;
                 }
