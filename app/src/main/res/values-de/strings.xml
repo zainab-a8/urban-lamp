@@ -38,4 +38,18 @@
     <string name="toast_warning_no_location">Standortdienst ist nicht eingeschaltet. Es werden benutzerdefinierte Zeiten verwendet. Bitte den Standortdienst einschalten um Sonnenauf- und untergangszeiten verwenden zu können.</string>
     <string name="toggle_shortcut_title">Umschalten</string>
     <string name="shortcut_activity">Umschalter für Red Moon</string>
+
+    <!-- Profiles -->
+    <string-array name="standard_profiles_array">
+        <item>Benutzerdefiniert</item>
+        <item>Standard</item>
+        <item>Lesen</item>
+    </string-array>
+
+    <!-- Automatic filter -->
+    <string-array name="automatic_filter_options_array">
+        <item>Niemals</item>
+        <item>Benutzerdefinierte Zeiten</item>
+        <item>Sonnenstand</item>
+    </string-array>
 </resources>
