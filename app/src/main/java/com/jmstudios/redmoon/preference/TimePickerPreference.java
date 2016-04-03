@@ -60,6 +60,7 @@ public class TimePickerPreference extends DialogPreference {
             mTime = (String) defaultValue;
             persistString(mTime);
         }
+        setSummary(mTime);
     }
 
     @Override
@@ -107,5 +108,6 @@ public class TimePickerPreference extends DialogPreference {
                 (minute < 10 ? "0" : "") + Integer.toString(minute);
             persistString(mTime);
         }
+        setSummary(mTime);
     }
 }

@@ -99,7 +99,7 @@
     <!-- Automatic filter -->
     <string-array name="automatic_filter_options_array">
       <item>Niekada</item>
-      <item>Pritaikytas laikas</item>
       <item>Saulė</item>
+      <item>Pritaikytas laikas</item>
     </string-array>
 </resources>

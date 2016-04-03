@@ -47,7 +47,7 @@
 
     <!-- Preference -->
     <string name="pref_title_appearance">Filter</string>
-    <string name="pref_title_automatic_filter">Automatic filter</string>
+    <string name="pref_title_automatic_filter">Filter times</string>
     <string name="pref_title_startup">Startup</string>
     <string name="pref_title_other">Other</string>
 
@@ -59,12 +59,9 @@
     <string name="control_brightness_title">Lower brightness</string>
     <string name="control_brightness_summary">Automatically lower brightness when the filter is running</string>
 
-    <string name="automatic_filter_title">Automatically turn on filter</string>
-    <string name="automatic_filter_summary">Turn filter on and off automatically at certain times</string>
-    <string name="custom_start_time_title">Automatic turn on time</string>
-    <string name="custom_start_time_summary">Choose when to automatically start the filter</string>
-    <string name="custom_end_time_title">Automatic turn off time</string>
-    <string name="custom_end_time_summary">Choose when to automatically close the filter</string>
+    <string name="automatic_filter_title">Toggle filter automatically</string>
+    <string name="custom_start_time_title">Turn on time</string>
+    <string name="custom_end_time_title">Turn off time</string>
 
     <string name="always_open_on_startup">Always open on startup</string>
     <string name="keep_running_after_reboot">Keep running after reboot</string>
@@ -103,14 +100,14 @@
     <!-- Automatic filter -->
     <string-array name="automatic_filter_options_array">
       <item>Never</item>
-      <item>Custom times</item>
       <item>Sun</item>
+      <item>Custom times</item>
     </string-array>
 
     <string-array name="automatic_filter_values_array"
                   translatable="false">
       <item>never</item>
-      <item>custom</item>
       <item>sun</item>
+      <item>custom</item>
     </string-array>
 </resources>

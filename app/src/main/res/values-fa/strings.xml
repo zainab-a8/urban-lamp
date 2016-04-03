@@ -81,7 +81,7 @@
     <!-- Automatic filter -->
     <string-array name="automatic_filter_options_array">
       <item>هرگز</item>
-      <item>زمان‌های شخصی</item>
       <item>خورشید</item>
+      <item>زمان‌های شخصی</item>
     </string-array>
 </resources>

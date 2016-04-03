@@ -63,7 +63,7 @@
     <!-- Automatic filter -->
     <string-array name="automatic_filter_options_array">
         <item>Niemals</item>
-        <item>Benutzerdefinierte Zeiten</item>
         <item>Sonnenstand</item>
+        <item>Benutzerdefinierte Zeiten</item>
     </string-array>
 </resources>

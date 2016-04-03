@@ -131,6 +131,7 @@ public class ShadesFragment extends PreferenceFragment {
             automaticTurnOnPref.setEnabled(false);
             automaticTurnOffPref.setEnabled(false);
         }
+        automaticFilterPref.setSummary(automaticFilterPref.getEntry());
 
         automaticFilterPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
@@ -150,6 +151,11 @@ public class ShadesFragment extends PreferenceFragment {
                             {Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
                         return false;
                     }
+
+                    ListPreference lp = (ListPreference) preference;
+                    String entry = lp.getEntries()[lp.findIndexOfValue(newValue.toString())].toString();
+                    lp.setSummary(entry);
+
                     return true;
                 }
             });
