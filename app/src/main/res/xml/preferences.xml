@@ -94,10 +94,9 @@
   </PreferenceCategory>
 
   <PreferenceCategory android:title="@string/pref_title_app_appearance">
-    <CheckBoxPreference
+    <SwitchPreference
         android:key="@string/pref_key_dark_theme"
         android:title="@string/dark_theme"
-        android:summary="@string/dark_theme_summary"
         android:defaultValue="false" />
   </PreferenceCategory>
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
  * Copyright (c) 2016 Danial Behzadi <dani.behzi@ubuntu.com>
+ * Copyright (c) 2016 Marien Raat <marienraat@riseup.net>
  *
  *  This file is free software: you may copy, redistribute and/or modify it
  *  under the terms of the GNU General Public License as published by the Free
@@ -51,7 +52,6 @@
     <string name="keep_running_after_reboot">ادامهٔ اجرا پس از راه‌اندازی دوباره</string>
 
     <string name="dark_theme">زمینهٔ تیره</string>
-    <string name="dark_theme_summary">استفاده از یک زمینهٔ تیره برای این فعّالیت</string>
 
     <string name="email_me_title">‫به من در marienraat@riseup.net رایانامه بزنید‬</string>
     <string name="email_me_summary">مشکلات یا پیشنهادهایتان را به من رایانامه کنید</string>

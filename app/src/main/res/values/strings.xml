@@ -71,7 +71,6 @@
     <string name="keep_running_after_reboot">Keep running after reboot</string>
 
     <string name="dark_theme">Dark theme</string>
-    <string name="dark_theme_summary">Use a dark theme for this activity</string>
 
     <string name="email_me_title">Email me at marienraat@riseup.net</string>
     <string name="email_me_summary">Email me with bugs or suggestions</string>

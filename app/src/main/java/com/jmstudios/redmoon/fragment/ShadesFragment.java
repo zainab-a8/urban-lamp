@@ -37,6 +37,7 @@ package com.jmstudios.redmoon.fragment;
 
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.SwitchPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
@@ -86,7 +87,7 @@ public class ShadesFragment extends PreferenceFragment {
         String automaticTurnOffPrefKey = getString(R.string.pref_key_custom_end_time);
 
         PreferenceScreen prefScreen = getPreferenceScreen();
-        final CheckBoxPreference darkThemePref = (CheckBoxPreference)
+        final SwitchPreference darkThemePref = (SwitchPreference)
             prefScreen.findPreference(darkThemePrefKey);
         final CheckBoxPreference lowerBrightnessPref = (CheckBoxPreference)
             prefScreen.findPreference(lowerBrightnessPrefKey);
@@ -97,11 +98,11 @@ public class ShadesFragment extends PreferenceFragment {
         final TimePickerPreference automaticTurnOffPref = (TimePickerPreference)
             prefScreen.findPreference(automaticTurnOffPrefKey);
 
-        darkThemePref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        darkThemePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
-            public boolean onPreferenceClick(Preference preference) {
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
                 getActivity().recreate();
-                return false;
+                return true;
             }
         });
 

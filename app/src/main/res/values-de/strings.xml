@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- * Copyright (c) 2016 twckr <https://github.com/twckr>
+ * Copyright (c) 2016  twckr <https://github.com/twckr>
+ * Copyright (c) 2016  Marien Raat <marienraat@riseup.net>
  *
  *  This file is free software: you may copy, redistribute and/or modify it
  *  under the terms of the GNU General Public License as published by the Free
@@ -40,7 +41,6 @@
     <string name="custom_start_time_summary">Auswählen, wann der Filter eingeschaltet werden soll</string>
     <string name="custom_start_time_title">Einschaltzeit</string>
     <string name="dark_theme">Dunkles Thema</string>
-    <string name="dark_theme_summary">Dunkles Thema verwenden</string>
     <string name="email_me_summary">Schreiben Sie mir eine Email für Vorschläge oder Fehlerberichte</string>
     <string name="email_me_title">Schreiben Sie mit an marienraat@riseup.net</string>
     <string name="ok_dialog">OK</string>
