@@ -44,6 +44,7 @@
     <string name="email_me_title">Schreiben Sie mit an marienraat@riseup.net</string>
     <string name="ok_dialog">OK</string>
     <string name="pref_title_automatic_filter">Automatischer Filter</string>
+    <string name="pref_title_contact">Kontakt</string>
     <string name="project_page_summary">Mehr Informationen, Feedback und eigener Beitrag</string>
     <string name="project_page_title">Homepage des Projektes</string>
     <string name="remove_profile_dialog_title">Dieses Profil löschen?</string>
