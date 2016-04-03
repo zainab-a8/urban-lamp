@@ -37,7 +37,6 @@
     <string name="shades_intensity_level">تراز شدّت</string>
     <string name="shades_color_temp">دمای رنگ</string>
     <string name="control_brightness_title">کاهش روشنایی</string>
-    <string name="control_brightness_summary">کاهش خودکار روشنایی هنگام روشن بودن پالایه</string>
 
     <string name="automatic_filter_title">روشن کردن خودکار پالایه</string>
     <string name="automatic_filter_summary">روشن و خاموش کردن خودکار پالایه در زمان‌های مشخّص</string>

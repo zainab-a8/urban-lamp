@@ -55,7 +55,6 @@
     <string name="shades_intensity_level">Intensyvumo lygis</string>
     <string name="shades_color_temp">Spalvų temperatūra</string>
     <string name="control_brightness_title">Sumažinti ryškumą</string>
-    <string name="control_brightness_summary">Automatiškai sumažinti ryškumą, kai filtras įjungtas</string>
 
     <string name="automatic_filter_title">Automatiškai įjungti filtrą</string>
     <string name="automatic_filter_summary">Įjungti ir išjungti filtrą automatiškai tam tikru laiku</string>

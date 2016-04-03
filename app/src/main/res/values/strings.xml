@@ -57,7 +57,6 @@
     <string name="shades_intensity_level">Intensity level</string>
     <string name="shades_color_temp">Color temperature</string>
     <string name="control_brightness_title">Lower brightness</string>
-    <string name="control_brightness_summary">Automatically lower brightness when the filter is running</string>
 
     <string name="automatic_filter_title">Toggle filter automatically</string>
     <string name="custom_start_time_title">Turn on time</string>

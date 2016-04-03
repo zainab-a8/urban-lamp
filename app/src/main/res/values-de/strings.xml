@@ -34,7 +34,6 @@
     <string name="button_add_profile">Hinzufügen</string>
     <string name="button_remove_profile">Löschen</string>
     <string name="cancel_dialog">Abbrechen</string>
-    <string name="control_brightness_summary">Helligkeit reduzieren, wenn Filter läuft</string>
     <string name="control_brightness_title">Helligkeit reduzieren</string>
     <string name="custom_end_time_summary">Auswählen, wann der Filter ausgeschaltet werden soll</string>
     <string name="custom_end_time_title">Ausschaltzeit</string>
