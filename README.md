@@ -45,6 +45,8 @@ Moon" is licensed under the
 [GNU General Public License version 3](https://www.gnu.org/licenses/gpl-3.0.html),
 or (at your option) any later version by Marien Raat.
 
+[![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)
+
 All used artwork is released into the public domain. Some of the icons
 use cliparts from [openclipart.org](https://openclipart.org/), which
 are all released in the public domain, namely:
