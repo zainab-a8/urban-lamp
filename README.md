@@ -1,3 +1,4 @@
+<img align="right" height="256" src="https://lut.im/3IqLwsAZWH/piFLRMOgNLWmiqB8.png">
 # Red Moon
 
 Red Moon is a screen filter app for night time phone use. When the
