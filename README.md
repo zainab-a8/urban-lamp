@@ -36,8 +36,13 @@ homescreen
 
 ## License
 
-The source code of Red Moon is distributed under the MIT License (see
-the LICENSE file in the root folder of the project).
+"Red Moon" is a derivative of
+"[Shades](https://github.com/cngu/shades)" by
+[Chris Nguyen](https://github.com/cngu) used under the
+[MIT License](https://github.com/cngu/shades/blob/e240edc1df3e6dd319cd475a739570ff8367d7f8/LICENSE). "Red
+Moon" is licensed under the
+[GNU General Public License version 3](https://www.gnu.org/licenses/gpl-3.0.html),
+or (at your option) any later version by Marien Raat.
 
 All used artwork is released into the public domain. Some of the icons
 use cliparts from [openclipart.org](https://openclipart.org/), which
@@ -46,9 +51,6 @@ are all released in the public domain, namely:
 * https://openclipart.org/detail/213998/nexus-5-flat
 * https://openclipart.org/detail/219211/option-button-symbol-minimal-svg-markup
 * https://openclipart.org/detail/20806/wolf-head-howl-1
-
-Red Moon is based on [Shades](https://github.com/cngu/shades), by
-Chris Nguyen.
 
 ## Building
 
