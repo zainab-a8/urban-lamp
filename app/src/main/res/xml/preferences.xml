@@ -78,7 +78,12 @@
         android:defaultValue="06:00" />
   </PreferenceCategory>
 
-  <PreferenceCategory android:title="@string/pref_title_contact">
+  <PreferenceCategory android:title="@string/pref_title_other">
+    <SwitchPreference
+        android:key="@string/pref_key_dark_theme"
+        android:title="@string/dark_theme"
+        android:defaultValue="false" />
+
     <Preference
         android:title="@string/project_page_title"
         android:summary="@string/project_page_summary" >
@@ -94,12 +99,5 @@
           android:action="android.intent.action.VIEW"
           android:data="@string/contact_email_adress" />
     </Preference>
-  </PreferenceCategory>
-
-  <PreferenceCategory android:title="@string/pref_title_other">
-    <SwitchPreference
-        android:key="@string/pref_key_dark_theme"
-        android:title="@string/dark_theme"
-        android:defaultValue="false" />
   </PreferenceCategory>
 </PreferenceScreen>

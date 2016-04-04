@@ -48,7 +48,6 @@
     <string name="pref_title_appearance">Filtras</string>
     <string name="pref_title_automatic_filter">Automatinis filtras</string>
     <string name="pref_title_startup">Paleistis</string>
-    <string name="pref_title_contact">Susiekiti</string>
 
     <string name="button_add_profile">Pridėti</string>
     <string name="button_remove_profile">Ištrinti</string>
