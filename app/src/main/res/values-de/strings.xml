@@ -29,15 +29,12 @@
     <string name="toast_warning_install">Sie können keine APKs installieren während der Filter läuft.</string>
     <string name="add_new_profile_dialog_title">Name für das Profil eingeben</string>
     <string name="add_new_profile_edit_hint">Profilname</string>
-    <string name="automatic_filter_summary">Filter zu bestimmten Zeiten automatische ein- und ausschalten</string>
     <string name="automatic_filter_title">Filter automatisch einschalten</string>
     <string name="button_add_profile">Hinzufügen</string>
     <string name="button_remove_profile">Löschen</string>
     <string name="cancel_dialog">Abbrechen</string>
     <string name="control_brightness_title">Helligkeit reduzieren</string>
-    <string name="custom_end_time_summary">Auswählen, wann der Filter ausgeschaltet werden soll</string>
     <string name="custom_end_time_title">Ausschaltzeit</string>
-    <string name="custom_start_time_summary">Auswählen, wann der Filter eingeschaltet werden soll</string>
     <string name="custom_start_time_title">Einschaltzeit</string>
     <string name="dark_theme">Dunkles Thema</string>
     <string name="email_me_summary">Schreiben Sie mir eine Email für Vorschläge oder Fehlerberichte</string>

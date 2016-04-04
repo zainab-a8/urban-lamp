@@ -58,11 +58,8 @@
     <string name="control_brightness_title">Sumažinti ryškumą</string>
 
     <string name="automatic_filter_title">Automatiškai įjungti filtrą</string>
-    <string name="automatic_filter_summary">Įjungti ir išjungti filtrą automatiškai tam tikru laiku</string>
     <string name="custom_start_time_title">Automatiškai įjungti laiką</string>
-    <string name="custom_start_time_summary">Pasirinkti kada automatiškai įjungti filtrą</string>
     <string name="custom_end_time_title">Automatiškai išjungti laiką</string>
-    <string name="custom_end_time_summary">Pasirinkti kada automatiškai išjungti filtrą</string>
 
     <string name="always_open_on_startup">Visada atidaryti įjungus įranginį</string>
     <string name="keep_running_after_reboot">Veikti net ir po įrenginio perkrovimo</string>

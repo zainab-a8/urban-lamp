@@ -40,11 +40,8 @@
     <string name="control_brightness_title">کاهش روشنایی</string>
 
     <string name="automatic_filter_title">روشن کردن خودکار پالایه</string>
-    <string name="automatic_filter_summary">روشن و خاموش کردن خودکار پالایه در زمان‌های مشخّص</string>
     <string name="custom_start_time_title">زمان روشن شدن خودکار</string>
-    <string name="custom_start_time_summary">انتخاب کنید چه زمانی پالایه به صورت خودکار روشن شود</string>
     <string name="custom_end_time_title">زمان خاموش شدن خودکار</string>
-    <string name="custom_end_time_summary">نتخاب کنید چه زمانی پالایه به صورت خودکار خاموش شود</string>
 
     <string name="always_open_on_startup">همیشه هنگام روشن شدن گشوده شود</string>
     <string name="keep_running_after_reboot">ادامهٔ اجرا پس از راه‌اندازی دوباره</string>
