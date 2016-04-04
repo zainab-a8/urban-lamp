@@ -43,9 +43,6 @@
     <string name="custom_start_time_title">زمان روشن شدن خودکار</string>
     <string name="custom_end_time_title">زمان خاموش شدن خودکار</string>
 
-    <string name="always_open_on_startup">همیشه هنگام روشن شدن گشوده شود</string>
-    <string name="keep_running_after_reboot">ادامهٔ اجرا پس از راه‌اندازی دوباره</string>
-
     <string name="dark_theme">زمینهٔ تیره</string>
 
     <string name="email_me_title">‫به من در marienraat@riseup.net رایانامه بزنید‬</string>

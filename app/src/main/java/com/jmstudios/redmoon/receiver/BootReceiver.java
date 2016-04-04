@@ -68,7 +68,7 @@ public class BootReceiver extends BroadcastReceiver {
         boolean pausedBeforeReboot = settingsModel.getShadesPauseState();
 
         // Handle "Always open on startup" flag
-        boolean alwaysOpenOnBoot = settingsModel.getOpenOnBootFlag();
+        boolean alwaysOpenOnBoot = false;
         if (alwaysOpenOnBoot) {
             if (DEBUG) Log.i(TAG, "\"Always open on startup\" flag was set; starting now.");
 
@@ -77,7 +77,7 @@ public class BootReceiver extends BroadcastReceiver {
         }
 
         // Handle "Keep running after reboot" flag
-        boolean resumeAfterReboot = settingsModel.getResumeAfterRebootFlag();
+        boolean resumeAfterReboot = true;
         if (resumeAfterReboot) {
             if (DEBUG) Log.i(TAG, "\"Keep running after reboot\" flag was set.");
 

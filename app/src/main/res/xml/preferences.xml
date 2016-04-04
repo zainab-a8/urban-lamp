@@ -101,10 +101,5 @@
         android:key="@string/pref_key_dark_theme"
         android:title="@string/dark_theme"
         android:defaultValue="false" />
-
-    <CheckBoxPreference
-        android:key="@string/pref_key_keep_running_after_reboot"
-        android:title="@string/keep_running_after_reboot"
-        android:defaultValue="false" />
   </PreferenceCategory>
 </PreferenceScreen>

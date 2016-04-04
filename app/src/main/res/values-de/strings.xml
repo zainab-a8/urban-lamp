@@ -17,8 +17,6 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="always_open_on_startup">Beim Hochfahren automatisch starten</string>
-    <string name="keep_running_after_reboot">Nach Neustart weiterlaufen lassen</string>
     <string name="paused">Pausiert</string>
     <string name="running">Läuft. Pausieren Sie, wenn Sie APKs installieren möchten.</string>
     <string name="shades_color_temp">Farbtemperatur</string>

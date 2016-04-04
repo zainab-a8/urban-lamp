@@ -63,9 +63,6 @@
     <string name="custom_start_time_title">Turn on time</string>
     <string name="custom_end_time_title">Turn off time</string>
 
-    <string name="always_open_on_startup">Always open on startup</string>
-    <string name="keep_running_after_reboot">Keep running after reboot</string>
-
     <string name="dark_theme">Dark theme</string>
 
     <string name="email_me_title">Email me at marienraat@riseup.net</string>
