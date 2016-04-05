@@ -48,5 +48,6 @@
   <string name="pref_key_automatic_filter">pref_key_automatic_filter</string>
   <string name="pref_key_custom_start_time">pref_key_custom_start_time</string>
   <string name="pref_key_custom_end_time">pref_key_custom_end_time</string>
+  <string name="pref_key_location">pref_key_location</string>
 
 </resources>

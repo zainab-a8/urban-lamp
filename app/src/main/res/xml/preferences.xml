@@ -76,6 +76,11 @@
         android:key="@string/pref_key_custom_end_time"
         android:title="@string/custom_end_time_title"
         android:defaultValue="06:00" />
+
+    <com.jmstudios.redmoon.preference.LocationPreference
+        android:key="@string/pref_key_location"
+        android:title="@string/location_title"
+        android:defaultValue="not set" />
   </PreferenceCategory>
 
   <PreferenceCategory android:title="@string/pref_title_other">

@@ -61,6 +61,10 @@
     <string name="automatic_filter_title">Toggle filter automatically</string>
     <string name="custom_start_time_title">Turn on time</string>
     <string name="custom_end_time_title">Turn off time</string>
+    <string name="location_title">Location</string>
+    <string name="location_not_set">Not set</string>
+    <string name="latitude_short">Lat</string>
+    <string name="longitude_short">Long</string>
 
     <string name="dark_theme">Dark theme</string>
 
@@ -73,7 +77,7 @@
 
     <!-- Toasts -->
     <string name="toast_warning_install">You won\'t be able to install APKs while the filter is running.</string>
-    <string name="toast_warning_no_location">Location service isn\'t enabled, custom times will be used. Please enable the location services to use sunrise and sunset times.</string>
+    <string name="toast_warning_no_location">Enable location services to update location</string>
 
     <!-- Dialog -->
     <string name="add_new_profile_dialog_title">Enter profile name</string>

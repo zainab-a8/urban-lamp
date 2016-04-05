@@ -62,6 +62,7 @@ import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.presenter.ShadesPresenter;
 import com.jmstudios.redmoon.activity.ShadesActivity;
 import com.jmstudios.redmoon.preference.TimePickerPreference;
+import com.jmstudios.redmoon.preference.LocationPreference;
 
 public class ShadesFragment extends PreferenceFragment {
     private static final String TAG = "ShadesFragment";
@@ -69,6 +70,16 @@ public class ShadesFragment extends PreferenceFragment {
 
     private ShadesPresenter mPresenter;
     private int mShadesFabIconResId = -1;
+
+    // Preferences
+    private SwitchPreference darkThemePref;
+    private CheckBoxPreference lowerBrightnessPref;
+    private ListPreference automaticFilterPref;
+    private TimePickerPreference automaticTurnOnPref;
+    private TimePickerPreference automaticTurnOffPref;
+    private LocationPreference locationPref;
+
+    private boolean searchingLocation;
 
     public ShadesFragment() {
         // Android Fragments require an explicit public default constructor for re-creation
@@ -85,18 +96,15 @@ public class ShadesFragment extends PreferenceFragment {
         String automaticFilterPrefKey = getString(R.string.pref_key_automatic_filter);
         String automaticTurnOnPrefKey = getString(R.string.pref_key_custom_start_time);
         String automaticTurnOffPrefKey = getString(R.string.pref_key_custom_end_time);
+        String locationPrefKey = getString(R.string.pref_key_location);
 
         PreferenceScreen prefScreen = getPreferenceScreen();
-        final SwitchPreference darkThemePref = (SwitchPreference)
-            prefScreen.findPreference(darkThemePrefKey);
-        final CheckBoxPreference lowerBrightnessPref = (CheckBoxPreference)
-            prefScreen.findPreference(lowerBrightnessPrefKey);
-        final ListPreference automaticFilterPref = (ListPreference)
-            prefScreen.findPreference(automaticFilterPrefKey);
-        final TimePickerPreference automaticTurnOnPref = (TimePickerPreference)
-            prefScreen.findPreference(automaticTurnOnPrefKey);
-        final TimePickerPreference automaticTurnOffPref = (TimePickerPreference)
-            prefScreen.findPreference(automaticTurnOffPrefKey);
+        darkThemePref = (SwitchPreference) prefScreen.findPreference(darkThemePrefKey);
+        lowerBrightnessPref = (CheckBoxPreference) prefScreen.findPreference(lowerBrightnessPrefKey);
+        automaticFilterPref = (ListPreference) prefScreen.findPreference(automaticFilterPrefKey);
+        automaticTurnOnPref = (TimePickerPreference) prefScreen.findPreference(automaticTurnOnPrefKey);
+        automaticTurnOffPref = (TimePickerPreference) prefScreen.findPreference(automaticTurnOffPrefKey);
+        locationPref = (LocationPreference) prefScreen.findPreference(locationPrefKey);
 
         darkThemePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -127,23 +135,24 @@ public class ShadesFragment extends PreferenceFragment {
             }
         });
 
-        if (!automaticFilterPref.getValue().toString().equals("custom")) {
-            automaticTurnOnPref.setEnabled(false);
-            automaticTurnOffPref.setEnabled(false);
-        }
+        boolean custom = automaticFilterPref.getValue().toString().equals("custom");
+        automaticTurnOnPref.setEnabled(custom);
+        automaticTurnOffPref.setEnabled(custom);
+        boolean sun = automaticFilterPref.getValue().toString().equals("sun");
+        locationPref.setEnabled(sun);
+
         automaticFilterPref.setSummary(automaticFilterPref.getEntry());
 
         automaticFilterPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    if (!newValue.toString().equals("custom")) {
-                        automaticTurnOnPref.setEnabled(false);
-                        automaticTurnOffPref.setEnabled(false);
-                    } else {
-                        automaticTurnOnPref.setEnabled(true);
-                        automaticTurnOffPref.setEnabled(true);
-                    }
+                    boolean custom = newValue.toString().equals("custom");
+                    automaticTurnOnPref.setEnabled(custom);
+                    automaticTurnOffPref.setEnabled(custom);
 
+                    boolean sun = newValue.toString().equals("sun");
+                    locationPref.setEnabled(sun);
+                    
                     if (newValue.toString().equals("sun") && ContextCompat.checkSelfPermission
                         (getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) !=
                         PackageManager.PERMISSION_GRANTED) {
@@ -159,7 +168,6 @@ public class ShadesFragment extends PreferenceFragment {
                     return true;
                 }
             });
-
     }
 
     @Override
