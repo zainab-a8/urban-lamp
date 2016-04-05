@@ -27,13 +27,11 @@ import android.app.AlarmManager;
 import android.os.Build.VERSION;
 import android.net.Uri;
 import android.location.LocationManager;
-import android.widget.Toast;
+import android.location.LocationListener;
 
 import java.util.GregorianCalendar;
 import java.util.Calendar;
 import java.util.TimeZone;
-
-import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
 
 import com.jmstudios.redmoon.R;
 
@@ -41,7 +39,7 @@ import com.jmstudios.redmoon.helper.FilterCommandFactory;
 import com.jmstudios.redmoon.helper.FilterCommandSender;
 import com.jmstudios.redmoon.model.SettingsModel;
 import com.jmstudios.redmoon.service.ScreenFilterService;
-import com.jmstudios.redmoon.receiver.LocationSunCommandListener;
+import com.jmstudios.redmoon.receiver.LocationUpdateListener;
 
 public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
     private static final String TAG = "AutomaticFilterChange";
@@ -69,6 +67,15 @@ public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
             cancelPauseAlarm(context);
             scheduleNextPauseCommand(context);
         }
+
+        // Update times for the next time (fails silently)
+        LocationManager locationManager = (LocationManager)
+            context.getSystemService(Context.LOCATION_SERVICE);
+        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            LocationListener listener = new LocationUpdateListener(context);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                                                   0, 0, listener);
+        }
     }
 
     public static void scheduleNextOnCommand(Context context) {
@@ -77,36 +84,13 @@ public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
 
         if (!settingsModel.getAutomaticFilterMode().equals("never")) {
             String time;
-            boolean timeInUtc;
-            if (settingsModel.getAutomaticFilterMode().equals("custom")) {
-                timeInUtc = false;
-                time = settingsModel.getAutomaticTurnOnTime();
-            } else {
-                LocationManager manager = (LocationManager)
-                    context.getSystemService(context.LOCATION_SERVICE);
-                if (manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                    manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,
-                                                   new LocationSunCommandListener(context, true, manager));
-                    return;
-                } else {
-                    android.location.Location lastLocation = manager
-                        .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                    if (lastLocation != null) {
-                        SunriseSunsetCalculator calculator = getLocationCalculator(context, lastLocation);
-                        time = calculator.getOfficialSunsetForDate(Calendar.getInstance());
-                        timeInUtc = true;
-                    } else {
-                        displayNoLocationWarningToast(context);
-                        timeInUtc = false;
-                        time = settingsModel.getAutomaticTurnOnTime();
-                    }
-                }
-            }
+            time = settingsModel.getAutomaticTurnOnTime();
+
             Intent turnOnIntent = new Intent(context, AutomaticFilterChangeReceiver.class);
             turnOnIntent.setData(Uri.parse("turnOnIntent"));
             turnOnIntent.putExtra("turn_on", true);
 
-            scheduleNextAlarm(context, time, turnOnIntent, timeInUtc);
+            scheduleNextAlarm(context, time, turnOnIntent, false);
         }
     }
 
@@ -115,37 +99,13 @@ public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
         SettingsModel settingsModel = new SettingsModel(context.getResources(), sharedPreferences);
 
         if (!settingsModel.getAutomaticFilterMode().equals("never")) {
-            String time;
-            boolean timeInUtc;
-            if (settingsModel.getAutomaticFilterMode().equals("custom")) {
-                timeInUtc = false;
-                time = settingsModel.getAutomaticTurnOffTime();
-            } else {
-                LocationManager manager = (LocationManager)
-                    context.getSystemService(context.LOCATION_SERVICE);
-                if (manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                    manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,
-                                                   new LocationSunCommandListener(context, false, manager));
-                    return;
-                } else {
-                    android.location.Location lastLocation = manager
-                        .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                    if (lastLocation != null) {
-                        SunriseSunsetCalculator calculator = getLocationCalculator(context, lastLocation);
-                        time = calculator.getOfficialSunriseForDate(Calendar.getInstance());
-                        timeInUtc = true;
-                    } else {
-                        displayNoLocationWarningToast(context);
-                        timeInUtc = false;
-                        time = settingsModel.getAutomaticTurnOffTime();
-                    }
-                }
-            }
+            String time = settingsModel.getAutomaticTurnOffTime();
+
             Intent pauseIntent = new Intent(context, AutomaticFilterChangeReceiver.class);
             pauseIntent.putExtra("turn_on", false);
             pauseIntent.setData(Uri.parse("pauseIntent"));
 
-            scheduleNextAlarm(context, time, pauseIntent, timeInUtc);
+            scheduleNextAlarm(context, time, pauseIntent, false);
         }
     }
 
@@ -194,18 +154,5 @@ public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, commands, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
-    }
-
-    public static SunriseSunsetCalculator getLocationCalculator(Context context, android.location.Location location) {
-        com.luckycatlabs.sunrisesunset.dto.Location sunriseSunsetLocation =
-            new com.luckycatlabs.sunrisesunset.dto.Location(location.getLatitude(), location.getLongitude());
-        return new SunriseSunsetCalculator(sunriseSunsetLocation, "GMT");
-    }
-
-    public static void displayNoLocationWarningToast(Context context) {
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText
-            (context, context.getString(R.string.toast_warning_no_location), duration);
-        toast.show();
     }
 }

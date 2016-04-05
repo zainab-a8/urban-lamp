@@ -65,6 +65,7 @@
     <string name="location_not_set">Not set</string>
     <string name="latitude_short">Lat</string>
     <string name="longitude_short">Long</string>
+    <string name="searching_location">Searching for location</string>
 
     <string name="dark_theme">Dark theme</string>
 

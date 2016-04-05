@@ -67,12 +67,12 @@
         android:entryValues="@array/automatic_filter_values_array"
         android:defaultValue="never" />
 
-    <com.jmstudios.redmoon.preference.TimePickerPreference
+    <com.jmstudios.redmoon.preference.FilterTimePreference
         android:key="@string/pref_key_custom_start_time"
         android:title="@string/custom_start_time_title"
         android:defaultValue="22:00" />
 
-    <com.jmstudios.redmoon.preference.TimePickerPreference
+    <com.jmstudios.redmoon.preference.FilterTimePreference
         android:key="@string/pref_key_custom_end_time"
         android:title="@string/custom_end_time_title"
         android:defaultValue="06:00" />

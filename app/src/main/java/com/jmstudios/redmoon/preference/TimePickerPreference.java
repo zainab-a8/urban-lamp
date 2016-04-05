@@ -36,7 +36,7 @@ public class TimePickerPreference extends DialogPreference {
     private static final boolean DEBUG = true;
 
     private TimePicker mTimePicker;
-    private String mTime;
+    protected String mTime;
 
     public TimePickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);

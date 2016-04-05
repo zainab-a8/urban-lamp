@@ -57,11 +57,13 @@ import android.support.v4.content.ContextCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.location.Location;
+import android.location.LocationManager;
 
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.presenter.ShadesPresenter;
 import com.jmstudios.redmoon.activity.ShadesActivity;
-import com.jmstudios.redmoon.preference.TimePickerPreference;
+import com.jmstudios.redmoon.preference.FilterTimePreference;
 import com.jmstudios.redmoon.preference.LocationPreference;
 
 public class ShadesFragment extends PreferenceFragment {
@@ -75,8 +77,8 @@ public class ShadesFragment extends PreferenceFragment {
     private SwitchPreference darkThemePref;
     private CheckBoxPreference lowerBrightnessPref;
     private ListPreference automaticFilterPref;
-    private TimePickerPreference automaticTurnOnPref;
-    private TimePickerPreference automaticTurnOffPref;
+    private FilterTimePreference automaticTurnOnPref;
+    private FilterTimePreference automaticTurnOffPref;
     private LocationPreference locationPref;
 
     private boolean searchingLocation;
@@ -102,8 +104,8 @@ public class ShadesFragment extends PreferenceFragment {
         darkThemePref = (SwitchPreference) prefScreen.findPreference(darkThemePrefKey);
         lowerBrightnessPref = (CheckBoxPreference) prefScreen.findPreference(lowerBrightnessPrefKey);
         automaticFilterPref = (ListPreference) prefScreen.findPreference(automaticFilterPrefKey);
-        automaticTurnOnPref = (TimePickerPreference) prefScreen.findPreference(automaticTurnOnPrefKey);
-        automaticTurnOffPref = (TimePickerPreference) prefScreen.findPreference(automaticTurnOffPrefKey);
+        automaticTurnOnPref = (FilterTimePreference) prefScreen.findPreference(automaticTurnOnPrefKey);
+        automaticTurnOffPref = (FilterTimePreference) prefScreen.findPreference(automaticTurnOffPrefKey);
         locationPref = (LocationPreference) prefScreen.findPreference(locationPrefKey);
 
         darkThemePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -143,31 +145,85 @@ public class ShadesFragment extends PreferenceFragment {
 
         automaticFilterPref.setSummary(automaticFilterPref.getEntry());
 
+        onAutomaticFilterPreferenceChange(automaticFilterPref,
+                                          automaticFilterPref.getValue().toString());
+
         automaticFilterPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    boolean custom = newValue.toString().equals("custom");
-                    automaticTurnOnPref.setEnabled(custom);
-                    automaticTurnOffPref.setEnabled(custom);
-
-                    boolean sun = newValue.toString().equals("sun");
-                    locationPref.setEnabled(sun);
-                    
-                    if (newValue.toString().equals("sun") && ContextCompat.checkSelfPermission
-                        (getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                        PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(getActivity(), new String[]
-                            {Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
-                        return false;
-                    }
-
-                    ListPreference lp = (ListPreference) preference;
-                    String entry = lp.getEntries()[lp.findIndexOfValue(newValue.toString())].toString();
-                    lp.setSummary(entry);
-
-                    return true;
+                    return onAutomaticFilterPreferenceChange(preference, newValue);
                 }
             });
+
+        locationPref.setOnLocationChangedListener(new LocationPreference.OnLocationChangedListener() {
+                @Override
+                public void onLocationChange() {
+                    if (automaticFilterPref.getValue().equals("sun")) {
+                        updateFilterTimesFromSun();
+                    }
+                }
+            });
+
+    }
+
+    private boolean onAutomaticFilterPreferenceChange(Preference preference, Object newValue) {
+        if (newValue.toString().equals("sun") && ContextCompat.checkSelfPermission
+            (getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) !=
+            PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]
+                {Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
+            return false;
+        }
+
+        boolean custom = newValue.toString().equals("custom");
+        automaticTurnOnPref.setEnabled(custom);
+        automaticTurnOffPref.setEnabled(custom);
+
+        boolean sun = newValue.toString().equals("sun");
+        locationPref.setEnabled(sun);
+
+        // From something to sun
+        if (newValue.toString().equals("sun")) {
+            // Update the FilterTimePreferences
+            updateFilterTimesFromSun();
+
+            // Attempt to get a new location
+            locationPref.searchLocation(false);
+        }
+
+        // From sun to something
+        String oldValue = preference.getSharedPreferences().getString
+            (preference.getKey(), "never");
+        if (oldValue.equals("sun") && !newValue.equals("sun")) {
+            automaticTurnOnPref.setToCustomTime();
+            automaticTurnOffPref.setToCustomTime();
+        }
+
+        ListPreference lp = (ListPreference) preference;
+        String entry = lp.getEntries()[lp.findIndexOfValue(newValue.toString())].toString();
+        lp.setSummary(entry);
+
+        return true;
+    }
+
+    private void updateFilterTimesFromSun() {
+        String location = locationPref.getLocation();
+        if (location.equals("not set")) {
+            automaticTurnOnPref.setToSunTime("19:30");
+            automaticTurnOffPref.setToSunTime("06:30");
+        } else {
+            Location androidLocation = new Location(LocationManager.NETWORK_PROVIDER);
+            androidLocation.setLatitude(Double.parseDouble(location.split(",")[0]));
+            androidLocation.setLongitude(Double.parseDouble(location.split(",")[1]));
+
+            String sunsetTime = FilterTimePreference.getSunTimeFromLocation
+                (androidLocation, true);
+            automaticTurnOnPref.setToSunTime(sunsetTime);
+
+            String sunriseTime = FilterTimePreference.getSunTimeFromLocation
+                (androidLocation, false);
+            automaticTurnOffPref.setToSunTime(sunriseTime);
+        }
     }
 
     @Override
