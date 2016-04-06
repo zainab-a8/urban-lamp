@@ -100,6 +100,14 @@ public class ShadesPresenter implements SettingsModel.OnSettingsChangedListener 
     @Override
     public void onShadesPowerStateChanged(boolean powerState) {
         setShadesFabIcon(powerState, mSettingsModel.getShadesPauseState());
+
+        if (!powerState) {
+            AutomaticFilterChangeReceiver.cancelAlarms(mContext);
+        } else {
+            AutomaticFilterChangeReceiver.cancelAlarms(mContext);
+            AutomaticFilterChangeReceiver.scheduleNextOnCommand(mContext);
+            AutomaticFilterChangeReceiver.scheduleNextPauseCommand(mContext);
+        }
     }
 
     @Override

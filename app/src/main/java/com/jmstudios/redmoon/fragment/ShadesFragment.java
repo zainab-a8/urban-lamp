@@ -277,9 +277,7 @@ public class ShadesFragment extends PreferenceFragment {
             setPreferencesEnabled();
         }
 
-        Log.d(TAG, powerState + " " + pauseState);
         if (powerState && !pauseState) {
-            Log.d(TAG, "warning toast");
             activity.displayInstallWarningToast();
         }
     }
