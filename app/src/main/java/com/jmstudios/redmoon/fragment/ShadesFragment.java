@@ -62,6 +62,7 @@ import android.location.LocationManager;
 import android.support.design.widget.FloatingActionButton;
 import android.view.ViewTreeObserver;
 import android.widget.ListView;
+import android.preference.PreferenceScreen;
 
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.presenter.ShadesPresenter;
@@ -69,6 +70,7 @@ import com.jmstudios.redmoon.activity.ShadesActivity;
 import com.jmstudios.redmoon.preference.FilterTimePreference;
 import com.jmstudios.redmoon.preference.LocationPreference;
 import com.jmstudios.redmoon.model.SettingsModel;
+import com.jmstudios.redmoon.service.ScreenFilterService;
 
 public class ShadesFragment extends PreferenceFragment {
     private static final String TAG = "ShadesFragment";
@@ -239,10 +241,17 @@ public class ShadesFragment extends PreferenceFragment {
         mToggleFab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    SettingsModel settingsModel = ((ShadesActivity) getActivity()).getSettingsModel();
+                    boolean poweredOn = settingsModel.getShadesPowerState();
+                    boolean paused = settingsModel.getShadesPauseState();
 
+                    if (!poweredOn || paused) {
+                        mPresenter.sendCommand(ScreenFilterService.COMMAND_ON);
+                    } else {
+                        mPresenter.sendCommand(ScreenFilterService.COMMAND_PAUSE);
+                    }
                 }
             });
-        updateFabIcon();
 
         return v;
     }
@@ -253,12 +262,25 @@ public class ShadesFragment extends PreferenceFragment {
         if (DEBUG) Log.i(TAG, "Registered Presenter");
     }
 
-    public void setSwitchOn(boolean on, boolean paused) {
+    public void setSwitchOn(boolean powerState, boolean pauseState) {
         ShadesActivity activity = (ShadesActivity) getActivity();
         SwitchCompat filterSwitch = activity.getSwitch();
         if (filterSwitch != null) {
-            activity.setIgnoreNextSwitchChange(paused);
-            filterSwitch.setChecked(!on);
+            activity.setIgnoreNextSwitchChange(powerState != filterSwitch.isChecked());
+            filterSwitch.setChecked(powerState);
+        }
+        updateFabIcon();
+
+        if (!powerState) {
+            disableAllPreferences();
+        } else {
+            setPreferencesEnabled();
+        }
+
+        Log.d(TAG, powerState + " " + pauseState);
+        if (powerState && !pauseState) {
+            Log.d(TAG, "warning toast");
+            activity.displayInstallWarningToast();
         }
     }
 
@@ -271,6 +293,30 @@ public class ShadesFragment extends PreferenceFragment {
             mToggleFab.setImageResource(R.drawable.fab_start);
         } else {
             mToggleFab.setImageResource(R.drawable.fab_pause);
+        }
+    }
+
+    private void disableAllPreferences() {
+        PreferenceScreen root = getPreferenceScreen();
+        for (int i = 0; i < root.getPreferenceCount(); i++) {
+            root.getPreference(i).setEnabled(false);
+        }
+    }
+
+    private void setPreferencesEnabled() {
+        enableAllPreferences();
+
+        boolean custom = automaticFilterPref.getValue().toString().equals("custom");
+        automaticTurnOnPref.setEnabled(custom);
+        automaticTurnOffPref.setEnabled(custom);
+        boolean sun = automaticFilterPref.getValue().toString().equals("sun");
+        locationPref.setEnabled(sun);
+    }
+
+    private void enableAllPreferences() {
+        PreferenceScreen root = getPreferenceScreen();
+        for (int i = 0; i < root.getPreferenceCount(); i++) {
+            root.getPreference(i).setEnabled(true);
         }
     }
 }

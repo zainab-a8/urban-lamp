@@ -77,7 +77,7 @@ public class ShadesPresenter implements SettingsModel.OnSettingsChangedListener 
     }
 
     private void setShadesFabIcon(boolean poweredOn, boolean pauseState) {
-        mView.setSwitchOn(!poweredOn || pauseState, pauseState);
+        mView.setSwitchOn(poweredOn, pauseState);
     }
 
     public void onShadesFabClicked() {

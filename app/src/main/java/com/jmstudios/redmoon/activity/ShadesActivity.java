@@ -135,8 +135,7 @@ public class ShadesActivity extends AppCompatActivity {
 
         final MenuItem item = menu.findItem(R.id.screen_filter_switch);
         mSwitch = (SwitchCompat) item.getActionView();
-        mSwitch.setChecked(mSettingsModel.getShadesPowerState() &&
-                           !mSettingsModel.getShadesPauseState());
+        mSwitch.setChecked(mSettingsModel.getShadesPowerState());
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -156,19 +155,15 @@ public class ShadesActivity extends AppCompatActivity {
 
                         if (Settings.canDrawOverlays(context)) {
                             mPresenter.sendCommand(isChecked ?
-                                                   ScreenFilterService.COMMAND_ON :
+                                                   ScreenFilterService.COMMAND_PAUSE :
                                                    ScreenFilterService.COMMAND_OFF);
-                            if (isChecked)
-                                displayInstallWarningToast();
                         } else {
                             buttonView.setChecked(false);
                         }
                     } else {
                         mPresenter.sendCommand(isChecked ?
-                                               ScreenFilterService.COMMAND_ON :
+                                               ScreenFilterService.COMMAND_PAUSE :
                                                ScreenFilterService.COMMAND_OFF);
-                        if (isChecked)
-                            displayInstallWarningToast();
                     }
                 }
             });
