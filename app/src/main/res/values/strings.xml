@@ -59,8 +59,8 @@
     <string name="control_brightness_title">Lower brightness</string>
 
     <string name="automatic_filter_title">Toggle filter automatically</string>
-    <string name="custom_start_time_title">Turn on time</string>
-    <string name="custom_end_time_title">Turn off time</string>
+    <string name="custom_start_time_title">Resume at</string>
+    <string name="custom_end_time_title">Pause at</string>
     <string name="location_title">Location</string>
     <string name="location_not_set">Not set</string>
     <string name="latitude_short">Lat</string>
