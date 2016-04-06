@@ -155,9 +155,6 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
         Intent shadesActivityIntent = new Intent(context, ShadesActivity.class);
         shadesActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-        PendingIntent stopPI = PendingIntent.getService(context,
-                REQUEST_CODE_ACTION_STOP, offCommand, PendingIntent.FLAG_UPDATE_CURRENT);
-
         PendingIntent pauseOrResumePI = PendingIntent.getService(context, REQUEST_CODE_ACTION_PAUSE_OR_RESUME,
                 pauseOrResumeCommand, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -171,8 +168,6 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                             .setColor(color)
                             .setContentIntent(settingsPI)
                             .addAction(pauseOrResumeDrawableResId, "", pauseOrResumePI)
-                            .addAction(R.drawable.ic_stop, "", stopPI)
-                            .addAction(R.drawable.ic_settings, "", settingsPI)
                             .setPriority(Notification.PRIORITY_MIN);
 
         mServiceController.startForeground(NOTIFICATION_ID, mNotificationBuilder.build());
