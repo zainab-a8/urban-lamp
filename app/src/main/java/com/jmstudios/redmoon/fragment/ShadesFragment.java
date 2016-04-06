@@ -59,19 +59,23 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.location.Location;
 import android.location.LocationManager;
+import android.support.design.widget.FloatingActionButton;
+import android.view.ViewTreeObserver;
+import android.widget.ListView;
 
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.presenter.ShadesPresenter;
 import com.jmstudios.redmoon.activity.ShadesActivity;
 import com.jmstudios.redmoon.preference.FilterTimePreference;
 import com.jmstudios.redmoon.preference.LocationPreference;
+import com.jmstudios.redmoon.model.SettingsModel;
 
 public class ShadesFragment extends PreferenceFragment {
     private static final String TAG = "ShadesFragment";
     private static final boolean DEBUG = true;
 
     private ShadesPresenter mPresenter;
-    private int mShadesFabIconResId = -1;
+    private FloatingActionButton mToggleFab;
 
     // Preferences
     private SwitchPreference darkThemePref;
@@ -231,6 +235,15 @@ public class ShadesFragment extends PreferenceFragment {
                              Bundle savedInstanceState) {
         final View v = super.onCreateView(inflater, container, savedInstanceState);
 
+        mToggleFab = (FloatingActionButton) getActivity().findViewById(R.id.toggle_fab);
+        mToggleFab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+        updateFabIcon();
+
         return v;
     }
 
@@ -246,6 +259,18 @@ public class ShadesFragment extends PreferenceFragment {
         if (filterSwitch != null) {
             activity.setIgnoreNextSwitchChange(paused);
             filterSwitch.setChecked(!on);
+        }
+    }
+
+    private void updateFabIcon() {
+        SettingsModel settingsModel = ((ShadesActivity) getActivity()).getSettingsModel();
+        boolean poweredOn = settingsModel.getShadesPowerState();
+        boolean paused = settingsModel.getShadesPauseState();
+
+        if (!poweredOn || paused) {
+            mToggleFab.setImageResource(R.drawable.fab_start);
+        } else {
+            mToggleFab.setImageResource(R.drawable.fab_pause);
         }
     }
 }
