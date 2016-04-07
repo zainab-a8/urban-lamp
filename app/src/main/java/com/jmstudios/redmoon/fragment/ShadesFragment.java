@@ -86,6 +86,7 @@ public class ShadesFragment extends PreferenceFragment {
     private FilterTimePreference automaticTurnOnPref;
     private FilterTimePreference automaticTurnOffPref;
     private LocationPreference locationPref;
+    private Preference otherPrefCategory;
 
     private boolean searchingLocation;
 
@@ -105,6 +106,7 @@ public class ShadesFragment extends PreferenceFragment {
         String automaticTurnOnPrefKey = getString(R.string.pref_key_custom_start_time);
         String automaticTurnOffPrefKey = getString(R.string.pref_key_custom_end_time);
         String locationPrefKey = getString(R.string.pref_key_location);
+        String otherCategoryPrefKey = getString(R.string.pref_key_other);
 
         PreferenceScreen prefScreen = getPreferenceScreen();
         darkThemePref = (SwitchPreference) prefScreen.findPreference(darkThemePrefKey);
@@ -113,6 +115,7 @@ public class ShadesFragment extends PreferenceFragment {
         automaticTurnOnPref = (FilterTimePreference) prefScreen.findPreference(automaticTurnOnPrefKey);
         automaticTurnOffPref = (FilterTimePreference) prefScreen.findPreference(automaticTurnOffPrefKey);
         locationPref = (LocationPreference) prefScreen.findPreference(locationPrefKey);
+        otherPrefCategory = prefScreen.findPreference(otherCategoryPrefKey);
 
         darkThemePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -272,7 +275,7 @@ public class ShadesFragment extends PreferenceFragment {
         updateFabIcon();
 
         if (!powerState) {
-            disableAllPreferences();
+            disableFilterPreferences();
         } else {
             setPreferencesEnabled();
         }
@@ -292,6 +295,11 @@ public class ShadesFragment extends PreferenceFragment {
         } else {
             mToggleFab.setImageResource(R.drawable.fab_pause);
         }
+    }
+
+    private void disableFilterPreferences() {
+        disableAllPreferences();
+        otherPrefCategory.setEnabled(true);
     }
 
     private void disableAllPreferences() {

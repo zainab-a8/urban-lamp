@@ -83,13 +83,15 @@
         android:defaultValue="not set" />
   </PreferenceCategory>
 
-  <PreferenceCategory android:title="@string/pref_title_other">
+  <PreferenceCategory android:title="@string/pref_title_other"
+                      android:key="pref_key_other" >
     <SwitchPreference
         android:key="@string/pref_key_dark_theme"
         android:title="@string/dark_theme"
         android:defaultValue="false" />
 
     <Preference
+        android:key="pref_key_github"
         android:title="@string/project_page_title"
         android:summary="@string/project_page_summary" >
       <intent
@@ -98,6 +100,7 @@
     </Preference>
 
     <Preference
+        android:key="pref_key_email"
         android:title="@string/email_me_title"
         android:summary="@string/email_me_summary">
       <intent
