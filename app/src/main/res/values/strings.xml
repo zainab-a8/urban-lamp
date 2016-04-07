@@ -100,15 +100,15 @@
 
     <!-- Automatic filter -->
     <string-array name="automatic_filter_options_array">
-      <item>Never</item>
-      <item>Sun</item>
-      <item>Custom times</item>
+      <item>Manual</item>
+      <item>Automatic (sun)</item>
+      <item>Automatic (custom)</item>
     </string-array>
 
     <string-array name="automatic_filter_values_array"
                   translatable="false">
-      <item>Manual</item>
-      <item>Automatic (sun)</item>
-      <item>Automatic (custom)</item>
+      <item>never</item>
+      <item>sun</item>
+      <item>custom</item>
     </string-array>
 </resources>
