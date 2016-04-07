@@ -525,6 +525,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                     refreshForegroundNotification();
 
                     mView.setFilterDimLevel(ScreenFilterView.MIN_DIM);
+                    mView.setFilterIntensityLevel(ScreenFilterView.MIN_INTENSITY);
                     mView.setColorTempProgress(mSettingsModel.getShadesColor());
 
                     break;

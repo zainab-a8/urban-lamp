@@ -276,8 +276,10 @@ public class ShadesFragment extends PreferenceFragment {
 
         if (!powerState) {
             disableFilterPreferences();
+            mToggleFab.hide();
         } else {
             setPreferencesEnabled();
+            mToggleFab.show();
         }
 
         if (powerState && !pauseState) {
