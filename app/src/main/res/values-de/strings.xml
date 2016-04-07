@@ -60,4 +60,9 @@
         <item>Sonnenstand</item>
         <item>Benutzerdefinierte Zeiten</item>
     </string-array>
+    <string name="location_not_set">Standort nicht gesetzt.</string>
+    <string name="location_title">Standort</string>
+    <string name="latitude_short">geograph. Breite</string>
+    <string name="longitude_short">geograph. Länge</string>
+    <string name="pref_title_other">Andere</string>
 </resources>
