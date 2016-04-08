@@ -41,4 +41,6 @@
     <color name="color_accent">#009688</color>
     <color name="fab_color">#FFF44336</color>
     <color name="text_disabled">#909090</color>
+    <color name="snackbar_color_dark_theme">#FAFAFA</color>
+    <color name="text_color_dark_theme">#DE000000</color>
 </resources>

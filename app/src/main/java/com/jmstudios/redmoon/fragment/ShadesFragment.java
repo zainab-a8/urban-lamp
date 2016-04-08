@@ -64,6 +64,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ListView;
 import android.preference.PreferenceScreen;
 import android.support.design.widget.Snackbar;
+import android.widget.TextView;
 
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.presenter.ShadesPresenter;
@@ -333,6 +334,16 @@ public class ShadesFragment extends PreferenceFragment {
         mHelpSnackbar = Snackbar.make
             (mView, getActivity().getString(R.string.help_snackbar_text),
              Snackbar.LENGTH_INDEFINITE);
+
+        if (((ShadesActivity) getActivity()).getSettingsModel().getDarkThemeFlag()) {
+            ViewGroup group = (ViewGroup) mHelpSnackbar.getView();
+            group.setBackgroundColor(getActivity().getResources().getColor(R.color.snackbar_color_dark_theme));
+
+            int snackbarTextId = android.support.design.R.id.snackbar_text;
+            TextView textView = (TextView) group.findViewById(snackbarTextId);
+            textView.setTextColor(getActivity().getResources().getColor(R.color.text_color_dark_theme));
+        }
+
         mHelpSnackbar.show();
     }
 }
