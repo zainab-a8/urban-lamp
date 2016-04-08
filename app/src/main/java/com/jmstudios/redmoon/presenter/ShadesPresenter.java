@@ -73,22 +73,7 @@ public class ShadesPresenter implements SettingsModel.OnSettingsChangedListener 
     public void onStart() {
         boolean poweredOn = mSettingsModel.getShadesPowerState();
         boolean paused = mSettingsModel.getShadesPauseState();
-        setShadesFabIcon(poweredOn, paused);
-    }
-
-    private void setShadesFabIcon(boolean poweredOn, boolean pauseState) {
-        mView.setSwitchOn(poweredOn, pauseState);
-    }
-
-    public void onShadesFabClicked() {
-        Intent command;
-        if (mSettingsModel.getShadesPowerState() && !mSettingsModel.getShadesPauseState()) {
-            command = mFilterCommandFactory.createCommand(ScreenFilterService.COMMAND_OFF);
-        } else {
-            command = mFilterCommandFactory.createCommand(ScreenFilterService.COMMAND_ON);
-        }
-
-        mFilterCommandSender.send(command);
+        mView.setSwitchOn(poweredOn, paused);
     }
 
     public void sendCommand(int command) {
@@ -99,7 +84,7 @@ public class ShadesPresenter implements SettingsModel.OnSettingsChangedListener 
     //region OnSettingsChangedListener
     @Override
     public void onShadesPowerStateChanged(boolean powerState) {
-        setShadesFabIcon(powerState, mSettingsModel.getShadesPauseState());
+        mView.setSwitchOn(powerState, mSettingsModel.getShadesPauseState());
 
         if (!powerState) {
             AutomaticFilterChangeReceiver.cancelAlarms(mContext);
@@ -112,7 +97,7 @@ public class ShadesPresenter implements SettingsModel.OnSettingsChangedListener 
 
     @Override
     public void onShadesPauseStateChanged(boolean pauseState) {
-        setShadesFabIcon(mSettingsModel.getShadesPowerState(), pauseState);
+        mView.setSwitchOn(mSettingsModel.getShadesPowerState(), pauseState);
     }
 
     @Override
