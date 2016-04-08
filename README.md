@@ -21,11 +21,6 @@ leaving the application you're using
 * Control the filter with a widget or a shortcut, right from your
 homescreen
 
-## Planned feature
-
-* Base turn on and off times on sunset and sunrise times at the user's
-  location (issue #5)
-
 ## Screenshots
 
 <img src="https://lut.im/vmFN3vnhn7/anZettuas7khW5l9.png" width="180" height="320" />
