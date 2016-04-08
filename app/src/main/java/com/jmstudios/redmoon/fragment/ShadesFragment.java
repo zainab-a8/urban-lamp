@@ -63,6 +63,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.ViewTreeObserver;
 import android.widget.ListView;
 import android.preference.PreferenceScreen;
+import android.support.design.widget.Snackbar;
 
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.presenter.ShadesPresenter;
@@ -78,6 +79,8 @@ public class ShadesFragment extends PreferenceFragment {
 
     private ShadesPresenter mPresenter;
     private FloatingActionButton mToggleFab;
+    private View mView;
+    private Snackbar mHelpSnackbar;
 
     // Preferences
     private SwitchPreference darkThemePref;
@@ -256,6 +259,8 @@ public class ShadesFragment extends PreferenceFragment {
                 }
             });
 
+        mView = v;
+
         return v;
     }
 
@@ -277,8 +282,11 @@ public class ShadesFragment extends PreferenceFragment {
         if (!powerState) {
             disableFilterPreferences();
             mToggleFab.hide();
+            showHelpSnackbar();
         } else {
             setPreferencesEnabled();
+            if (mHelpSnackbar != null)
+                mHelpSnackbar.dismiss();
             mToggleFab.show();
         }
 
@@ -319,5 +327,12 @@ public class ShadesFragment extends PreferenceFragment {
         for (int i = 0; i < root.getPreferenceCount(); i++) {
             root.getPreference(i).setEnabled(enabled);
         }
+    }
+
+    private void showHelpSnackbar() {
+        mHelpSnackbar = Snackbar.make
+            (mView, getActivity().getString(R.string.help_snackbar_text),
+             Snackbar.LENGTH_INDEFINITE);
+        mHelpSnackbar.show();
     }
 }
