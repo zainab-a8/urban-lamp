@@ -21,18 +21,21 @@ import android.content.res.TypedArray;
 import android.preference.Preference;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.PorterDuff;
+import android.graphics.Color;
 
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.view.ScreenFilterView;
 
 public class ColorSeekBarPreference extends Preference {
     private static final String TAG = "ColorSeekBarPreference";
+    private static final boolean DEBUG = true;
     // Changes to DEFAULT_VALUE should be reflected in preferences.xml
     public static final int DEFAULT_VALUE = 10;
 
@@ -96,6 +99,8 @@ public class ColorSeekBarPreference extends Preference {
     }
 
     private void updateMoonIconColor() {
+        if (!isEnabled()) return;
+
         int color = ScreenFilterView.rgbFromColorProgress(mProgress);
 
         ImageView moonIcon = (ImageView) mView.findViewById(R.id.moon_icon_color);

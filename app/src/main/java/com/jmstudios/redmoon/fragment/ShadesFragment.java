@@ -300,19 +300,12 @@ public class ShadesFragment extends PreferenceFragment {
     }
 
     private void disableFilterPreferences() {
-        disableAllPreferences();
+        setAllPreferencesEnabled(false);
         otherPrefCategory.setEnabled(true);
     }
 
-    private void disableAllPreferences() {
-        PreferenceScreen root = getPreferenceScreen();
-        for (int i = 0; i < root.getPreferenceCount(); i++) {
-            root.getPreference(i).setEnabled(false);
-        }
-    }
-
     private void setPreferencesEnabled() {
-        enableAllPreferences();
+        setAllPreferencesEnabled(true);
 
         boolean custom = automaticFilterPref.getValue().toString().equals("custom");
         automaticTurnOnPref.setEnabled(custom);
@@ -321,10 +314,10 @@ public class ShadesFragment extends PreferenceFragment {
         locationPref.setEnabled(sun);
     }
 
-    private void enableAllPreferences() {
+    private void setAllPreferencesEnabled(boolean enabled) {
         PreferenceScreen root = getPreferenceScreen();
         for (int i = 0; i < root.getPreferenceCount(); i++) {
-            root.getPreference(i).setEnabled(true);
+            root.getPreference(i).setEnabled(enabled);
         }
     }
 }

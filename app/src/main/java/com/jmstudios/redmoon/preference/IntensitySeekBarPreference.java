@@ -44,7 +44,7 @@ public class IntensitySeekBarPreference extends Preference {
 
         setLayoutResource(R.layout.preference_intensity_seekbar);
     }
-    
+
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
         return a.getInteger(index, DEFAULT_VALUE);
@@ -95,6 +95,8 @@ public class IntensitySeekBarPreference extends Preference {
     }
 
     public void updateMoonIconColor() {
+        if (!isEnabled()) return;
+
         int colorTempProgress = ((ShadesActivity) getContext()).getColorTempProgress();
 
         int color = ScreenFilterView.getIntensityColor(mIntensityLevel, colorTempProgress);

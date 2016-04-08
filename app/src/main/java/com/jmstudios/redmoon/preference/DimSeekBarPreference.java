@@ -114,6 +114,8 @@ public class DimSeekBarPreference extends Preference {
     }
 
     private void updateMoonIconColor() {
+        if (!isEnabled()) return;
+
         int lightness = 102 + (int) (((float) (100 - mDimLevel)) * (2.55f * 0.6f));
         int color = Color.rgb(lightness, lightness, lightness);
 
