@@ -72,6 +72,9 @@ public class BootReceiver extends BroadcastReceiver {
         if (alwaysOpenOnBoot) {
             if (DEBUG) Log.i(TAG, "\"Always open on startup\" flag was set; starting now.");
 
+            AutomaticFilterChangeReceiver.scheduleNextOnCommand(context);
+            AutomaticFilterChangeReceiver.scheduleNextPauseCommand(context);
+
             commandSender.send(onCommand);
             return;
         }
@@ -84,6 +87,9 @@ public class BootReceiver extends BroadcastReceiver {
             if (poweredOnBeforeReboot) {
                 if (DEBUG) Log.i(TAG, "Shades was on before reboot; resuming state.");
 
+                AutomaticFilterChangeReceiver.scheduleNextOnCommand(context);
+                AutomaticFilterChangeReceiver.scheduleNextPauseCommand(context);
+
                 commandSender.send(pausedBeforeReboot ? pauseCommand : onCommand);
             } else {
                 if (DEBUG) Log.i(TAG, "Shades was off before reboot; no state to resume from.");
@@ -94,8 +100,5 @@ public class BootReceiver extends BroadcastReceiver {
         // Allow ScreenFilterService to sync its state and any shared preferences to "off" mode
         Intent offCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_OFF);
         commandSender.send(offCommand);
-
-        AutomaticFilterChangeReceiver.scheduleNextOnCommand(context);
-        AutomaticFilterChangeReceiver.scheduleNextPauseCommand(context);
     }
 }
