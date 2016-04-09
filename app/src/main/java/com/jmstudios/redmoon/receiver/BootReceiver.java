@@ -42,6 +42,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import java.util.Calendar;
+
 import com.jmstudios.redmoon.helper.FilterCommandFactory;
 import com.jmstudios.redmoon.helper.FilterCommandSender;
 import com.jmstudios.redmoon.model.SettingsModel;
@@ -90,7 +92,8 @@ public class BootReceiver extends BroadcastReceiver {
                 AutomaticFilterChangeReceiver.scheduleNextOnCommand(context);
                 AutomaticFilterChangeReceiver.scheduleNextPauseCommand(context);
 
-                commandSender.send(pausedBeforeReboot ? pauseCommand : onCommand);
+                commandSender.send(getPredictedPauseState(pausedBeforeReboot, settingsModel) ?
+                                   pauseCommand : onCommand);
             } else {
                 if (DEBUG) Log.i(TAG, "Shades was off before reboot; no state to resume from.");
             }
@@ -100,5 +103,42 @@ public class BootReceiver extends BroadcastReceiver {
         // Allow ScreenFilterService to sync its state and any shared preferences to "off" mode
         Intent offCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_OFF);
         commandSender.send(offCommand);
+    }
+
+    private static boolean getPredictedPauseState(boolean pausedBeforeReboot,
+                                                  SettingsModel model) {
+        if (model.getAutomaticFilterMode() == "never") {
+            return pausedBeforeReboot;
+        } else {
+            Calendar now = Calendar.getInstance();
+
+            String onTime = model.getAutomaticTurnOnTime();
+            int onHour = Integer.parseInt(onTime.split(":")[0]);
+            int onMinute = Integer.parseInt(onTime.split(":")[1]);
+            Calendar on = Calendar.getInstance();
+            on.set(Calendar.HOUR_OF_DAY, onHour);
+            on.set(Calendar.MINUTE, onMinute);
+
+            if (on.after(now))
+                on.add(Calendar.DATE, -1);
+
+            String offTime = model.getAutomaticTurnOffTime();
+            int offHour = Integer.parseInt(offTime.split(":")[0]);
+            int offMinute = Integer.parseInt(offTime.split(":")[1]);
+            Calendar off = Calendar.getInstance();
+            off.set(Calendar.HOUR_OF_DAY, offHour);
+            off.set(Calendar.MINUTE, offMinute);
+
+            while (off.before(on))
+                off.add(Calendar.DATE, 1);
+
+            if (DEBUG) {
+                Log.d(TAG, "On: " + onTime + ", off: " + offTime);
+                Log.d(TAG, "On DAY_OF_MONTH: " + Integer.toString(on.get(Calendar.DAY_OF_MONTH)));
+                Log.d(TAG, "Off DAY_OF_MONTH: " + Integer.toString(off.get(Calendar.DAY_OF_MONTH)));
+            }
+
+            return !(now.after(on) && now.before(off));
+        }
     }
 }
