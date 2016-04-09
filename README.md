@@ -23,12 +23,13 @@ homescreen
 
 ## Screenshots
 
-<img src="https://lut.im/vmFN3vnhn7/anZettuas7khW5l9.png" width="180" height="320" />
-<img src="https://lut.im/oymEd1HoVK/YWEpkIPVNOzPfm0O.png" width="180" height="320" />
-<img src="https://lut.im/XDgAt3mSOx/WZO1rmwVaM1gS4Qk.png" width="180" height="320" />
-<img src="https://lut.im/mBVVEtCZj6/tUNoPKUPoXOc29es.png" width="180" height="320" />
-<img src="https://lut.im/EmFrykMlFy/ZIdJvWfV9w7PuVb4.png" width="180" height="320" />
-<img src="https://lut.im/WrQySHuyyB/Z6Hy5x22gw9XZNFn.png" width="180" height="320" />
+<img src="https://lut.im/OiN16OuV2i/8Q3EWSlBTusiIYy6.png" width="180" height="320" />
+<img src="https://lut.im/jtnrvFKcg7/P2qXtOeIFehZiquu.png" width="180" height="320" />
+<img src="https://lut.im/Wfol7UhVJc/GQ7MkuNhg5mKjcxg.png" width="180" height="320" />
+<img src="https://lut.im/5bxAfD7nwF/x4K5KR9yBTNqqxC5.png" width="180" height="320" />
+<img src="https://lut.im/MpAf2riWO1/evmCy7ZdnLq5ol3w.png" width="180" height="320" />
+<img src="https://lut.im/fmyFJXPj7h/iPi9QoFhjZATSqzH.png" width="180" height="320" />
+<img src="https://lut.im/n43HkAuKDH/hQHSONsBjJRRZKDE.png" width="180" height="320" />
 
 ## License
 
