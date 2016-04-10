@@ -48,6 +48,7 @@
     <string name="pref_title_appearance">Filtras</string>
     <string name="pref_title_automatic_filter">Automatinis filtras</string>
     <string name="pref_title_startup">Paleistis</string>
+	<string name="pref_title_other">Kita</string>
 
     <string name="button_add_profile">Pridėti</string>
     <string name="button_remove_profile">Ištrinti</string>
@@ -57,8 +58,13 @@
     <string name="control_brightness_title">Sumažinti ryškumą</string>
 
     <string name="automatic_filter_title">Automatiškai įjungti filtrą</string>
-    <string name="custom_start_time_title">Automatiškai įjungti laiką</string>
-    <string name="custom_end_time_title">Automatiškai išjungti laiką</string>
+    <string name="custom_start_time_title">Automatinio įjungimo laikas</string>
+    <string name="custom_end_time_title">Automatinio išjungimo laikas</string>
+	<string name="location_title">Vieta</string>
+    <string name="location_not_set">Nenustatyta</string>
+    <string name="latitude_short">Platuma</string>
+    <string name="longitude_short">Ilguma</string>
+    <string name="searching_location">Ieškoma vieta</string>
 
     <string name="dark_theme">Tamsi tema</string>
 
