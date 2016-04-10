@@ -9,6 +9,8 @@ will have a healthier sleep.
 
 [![F-Droid](https://f-droid.org/wiki/images/0/06/F-Droid-button_get-it-on.png)](https://f-droid.org/repository/browse/?fdid=com.jmstudios.redmoon)
 
+[Direct download](https://github.com/raatmarien/red-moon/releases/download/v2.7.1/red-moon-v2.7.1.apk)
+
 ## Features
 
 * Control the filter with separate color, intensity and dim settings
@@ -47,7 +49,6 @@ All used artwork is released into the public domain. Some of the icons
 use cliparts from [openclipart.org](https://openclipart.org/), which
 are all released in the public domain, namely:
 * https://openclipart.org/detail/121903/full-moon
-* https://openclipart.org/detail/213998/nexus-5-flat
 * https://openclipart.org/detail/219211/option-button-symbol-minimal-svg-markup
 * https://openclipart.org/detail/20806/wolf-head-howl-1
 
