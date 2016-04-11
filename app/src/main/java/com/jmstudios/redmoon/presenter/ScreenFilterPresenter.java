@@ -54,6 +54,7 @@ import android.content.ContentResolver;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.os.Build.VERSION;
+import android.app.NotificationManager;
 
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.activity.ShadesActivity;
@@ -170,7 +171,13 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                             .addAction(pauseOrResumeDrawableResId, "", pauseOrResumePI)
                             .setPriority(Notification.PRIORITY_MIN);
 
-        mServiceController.startForeground(NOTIFICATION_ID, mNotificationBuilder.build());
+        if (isPaused()) {
+            NotificationManager mNotificationManager =
+                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotificationManager.notify(NOTIFICATION_ID, mNotificationBuilder.build());
+        } else {
+            mServiceController.startForeground(NOTIFICATION_ID, mNotificationBuilder.build());
+        }
     }
 
     public void onScreenFilterCommand(Intent command) {
