@@ -15,4 +15,17 @@
     <string name="shades_dim_level">Niveau luminosité</string>
     <string name="shades_intensity_level">Niveau intensité</string>
     <string name="shades_color_temp">Température couleur</string>
+    <string name="control_brightness_title">Luminosité minimale</string>
+
+    <string name="automatic_filter_title">Mode d\'activation</string>
+    <string name="custom_start_time_title">Reprendre à</string>
+    <string name="custom_end_time_title">Suspendre à</string>
+    <string name="location_title">Localisation</string>
+    <string name="location_not_set">Non défini</string>
+    <string name="latitude_short">Lat</string>
+    <string name="longitude_short">Long</string>
+    <string name="searching_location">Recherche de localisation</string>
+
+    <string name="dark_theme">Thème sombre</string>
+
     </resources>
