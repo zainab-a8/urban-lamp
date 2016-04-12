@@ -1,5 +1,5 @@
 <img align="right" height="256" src="https://lut.im/3IqLwsAZWH/piFLRMOgNLWmiqB8.png">
-# Red Moon
+# Red Moon 
 
 Red Moon is a screen filter app for night time phone use. When the
 lowest brightness setting of your phone won't do the trick, Red Moon
@@ -10,6 +10,8 @@ will have a healthier sleep.
 [![F-Droid](https://f-droid.org/wiki/images/0/06/F-Droid-button_get-it-on.png)](https://f-droid.org/repository/browse/?fdid=com.jmstudios.redmoon)
 
 [Direct download](https://github.com/raatmarien/red-moon/releases/download/v2.7.1/red-moon-v2.7.1.apk)
+
+[![Translation status](https://hosted.weblate.org/widgets/red-moon/-/svg-badge.svg)](https://hosted.weblate.org/engage/red-moon/?utm_source=widget)
 
 ## Features
 
