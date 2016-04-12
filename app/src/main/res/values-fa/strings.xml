@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
  * Copyright (c) 2016 Danial Behzadi <dani.behzi@ubuntu.com>
  * Copyright (c) 2016 Marien Raat <marienraat@riseup.net>
@@ -16,8 +16,7 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App Name and Activity Labels -->
     <string name="app_name">رد مون</string>
     <string name="shades_settings">رد مون</string>
@@ -57,8 +56,8 @@
     <string name="project_page_summary">اطّلاعات بیش‌تری بگیرید، بازخورد دهید و مشارکت کنید</string>
 
     <!-- Toasts -->
-    <string name="toast_warning_install">هنگام روشن بودن پالایه نخواهید توانست بسته‌ای را نصب کنید</string>
-    <string name="toast_warning_no_location">خدمت موقعیّت فعّال نشده است، پس زمان‌های شخصی استفاده خواهند شد. لطفاً برای استفاده از زمان‌های طلوع و غروب، خدمات موقعیّت را فعّال کنید.</string>
+    <string name="toast_warning_install">هنگام روشن بودن پالایه، نخواهید توانست بسته‌ای را نصب کنید.</string>
+    <string name="toast_warning_no_location">برای به‌روز رسانی موقعیّت، خدمات موقعیّت را فعّال کنید</string>
 
     <!-- Snackbar -->
     <string name="help_snackbar_text">برای فعّال سازی رد مون، دستگیره را فشار دهید</string>
