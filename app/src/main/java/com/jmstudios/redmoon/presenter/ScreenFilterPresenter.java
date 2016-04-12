@@ -251,6 +251,19 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
     @Override
     public void onShadesAutomaticTurnOffChanged(String turnOffTime) { }
 
+    @Override
+    public void onLowerBrightnessChanged(boolean lowerBrightness) {
+        if (DEBUG) Log.i(TAG, "Lower brightness flag changed to: " + lowerBrightness);
+        if (!isOff() && !isPaused()) {
+            if (lowerBrightness) {
+                saveOldBrightnessState();
+                setBrightnessState(0, false);
+            } else {
+                setBrightnessState(oldScreenBrightness, oldIsAutomaticBrightness);
+            }
+        }
+    }
+
     private void animateShadesColor(int toColor) {
         cancelRunningAnimator(mColorAnimator);
 
@@ -354,8 +367,8 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
     private void setBrightnessState(int brightness, boolean automatic) {
         if (android.os.Build.VERSION.SDK_INT >= 23 &&
             !Settings.System.canWrite(mContext)) return;
-        if (mSettingsModel.getBrightnessControlFlag() &&
-            brightness >= 0) {
+        if (DEBUG) Log.i(TAG, "Setting brightness to: " + brightness + ", automatic: " + automatic);
+        if (brightness >= 0) {
             ContentResolver resolver = mContext.getContentResolver();
             Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, brightness);
             Settings.System.putInt(resolver, "screen_brightness_mode", (automatic ? 1 : 0));
@@ -444,7 +457,9 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                         }
                     });
 
+                    if (mSettingsModel.getBrightnessControlFlag()) {
                     setBrightnessState(oldScreenBrightness, oldIsAutomaticBrightness);
+                    }
 
                     break;
 
@@ -465,7 +480,9 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                         }
                     });
 
-                    setBrightnessState(oldScreenBrightness, oldIsAutomaticBrightness);
+                    if (mSettingsModel.getBrightnessControlFlag()) {
+                        setBrightnessState(oldScreenBrightness, oldIsAutomaticBrightness);
+                    }
 
                     break;
             }
@@ -485,8 +502,10 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                     animateDimLevel(mSettingsModel.getShadesDimLevel(), null);
                     animateIntensityLevel(mSettingsModel.getShadesIntensityLevel(), null);
 
-                    saveOldBrightnessState();
-                    setBrightnessState(0, false);
+                    if (mSettingsModel.getBrightnessControlFlag()) {
+                        saveOldBrightnessState();
+                        setBrightnessState(0, false);
+                    }
 
                     break;
 
@@ -522,8 +541,10 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                     animateDimLevel(toDim, null);
                     animateIntensityLevel(toIntensity, null);
 
-                    saveOldBrightnessState();
-                    setBrightnessState(0, false);
+                    if (mSettingsModel.getBrightnessControlFlag()) {
+                        saveOldBrightnessState();
+                        setBrightnessState(0, false);
+                    }
 
                     break;
 

@@ -36,7 +36,7 @@
 package com.jmstudios.redmoon.fragment;
 
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
+import android.preference.SwitchPreference;
 import android.preference.SwitchPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -85,7 +85,7 @@ public class ShadesFragment extends PreferenceFragment {
 
     // Preferences
     private SwitchPreference darkThemePref;
-    private CheckBoxPreference lowerBrightnessPref;
+    private SwitchPreference lowerBrightnessPref;
     private ListPreference automaticFilterPref;
     private FilterTimePreference automaticTurnOnPref;
     private FilterTimePreference automaticTurnOffPref;
@@ -114,7 +114,7 @@ public class ShadesFragment extends PreferenceFragment {
 
         PreferenceScreen prefScreen = getPreferenceScreen();
         darkThemePref = (SwitchPreference) prefScreen.findPreference(darkThemePrefKey);
-        lowerBrightnessPref = (CheckBoxPreference) prefScreen.findPreference(lowerBrightnessPrefKey);
+        lowerBrightnessPref = (SwitchPreference) prefScreen.findPreference(lowerBrightnessPrefKey);
         automaticFilterPref = (ListPreference) prefScreen.findPreference(automaticFilterPrefKey);
         automaticTurnOnPref = (FilterTimePreference) prefScreen.findPreference(automaticTurnOnPrefKey);
         automaticTurnOffPref = (FilterTimePreference) prefScreen.findPreference(automaticTurnOffPrefKey);

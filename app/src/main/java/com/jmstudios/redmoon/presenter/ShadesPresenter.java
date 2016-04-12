@@ -132,5 +132,8 @@ public class ShadesPresenter implements SettingsModel.OnSettingsChangedListener 
         AutomaticFilterChangeReceiver.cancelPauseAlarm(mContext);
         AutomaticFilterChangeReceiver.scheduleNextPauseCommand(mContext);
     }
+
+    @Override
+    public void onLowerBrightnessChanged(boolean lowerBrightness) { }
     //endregion
 }

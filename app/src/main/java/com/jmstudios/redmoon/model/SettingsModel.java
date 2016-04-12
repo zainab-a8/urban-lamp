@@ -51,7 +51,7 @@ import com.jmstudios.redmoon.preference.IntensitySeekBarPreference;
  * This class provides access to get and set Shades settings, and also listen to settings changes.
  *
  * <p>In order to listen to settings changes, invoke
- * {@link SettingsModel#setOnSettingsChangedListener(OnSettingsChangedListener)} and
+ * {@link SettingsModel#addOnSettingsChangedListener(OnSettingsChangedListener)} and
  * {@link SettingsModel#openSettingsChangeListener()}.
  *
  * <p><b>You must call {@link SettingsModel#closeSettingsChangeListener()} when you are done
@@ -225,6 +225,10 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
             String turnOffTime = getAutomaticTurnOffTime();
             for (OnSettingsChangedListener mSettingsChangedListener : mSettingsChangedListeners)
                 mSettingsChangedListener.onShadesAutomaticTurnOffChanged(turnOffTime);
+        } else if (key.equals(mBrightnessControlPrefKey)) {
+            boolean brightnessControlFlag = getBrightnessControlFlag();
+            for (OnSettingsChangedListener mSettingsChangedListener : mSettingsChangedListeners)
+                mSettingsChangedListener.onLowerBrightnessChanged(brightnessControlFlag);
         }
     }
     //endregion
@@ -238,5 +242,6 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
         void onShadesAutomaticFilterModeChanged(String automaticFilterMode);
         void onShadesAutomaticTurnOnChanged(String turnOnTime);
         void onShadesAutomaticTurnOffChanged(String turnOffTime);
+        void onLowerBrightnessChanged(boolean lowerBrightness);
     }
 }

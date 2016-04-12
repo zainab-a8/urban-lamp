@@ -53,7 +53,7 @@
         android:key="@string/pref_key_shades_dim_level"
         android:defaultValue="50" />
 
-    <CheckBoxPreference
+    <SwitchPreference
         android:key="@string/pref_key_control_brightness"
         android:title="@string/control_brightness_title"
         android:defaultValue="true" />
