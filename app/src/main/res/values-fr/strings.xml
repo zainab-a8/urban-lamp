@@ -28,4 +28,22 @@
 
     <string name="dark_theme">Thème sombre</string>
 
+    <string name="email_me_title">E-mail : marienraat@riseup.net</string>
+    <string name="email_me_summary">Envoyer un e-mail pour signaler un problème ou une suggestion</string>
+    <string name="project_page_title">Accéder au projet</string>
+    <string name="project_page_summary">Pour trouver plus d\'informations, laisser un commentaire et contribuer</string>
+    <string name="toast_warning_install">Impossible d\'installer des fichiers APK quand le filtre est en cours d\'exécution.</string>
+    <string name="toast_warning_no_location">Activer les services de localisation pour actualiser la position</string>
+
+    <string name="help_snackbar_text">Appuyer sur le bouton pour activer Red Moon</string>
+
+    <string name="add_new_profile_dialog_title">Entrez un nom de profil</string>
+    <string name="add_new_profile_edit_hint">Nom de profil</string>
+    <string name="remove_profile_dialog_title">Supprimer ce profil ?</string>
+    <string name="set_dialog">OK</string>
+    <string name="ok_dialog">OK</string>
+    <string name="cancel_dialog">Annuler</string>
+
+    <string name="toggle_shortcut_title">Activer</string>
+
     </resources>
