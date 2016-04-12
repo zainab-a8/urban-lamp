@@ -81,3 +81,9 @@ feature, just
 [open a new issue](https://github.com/raatmarien/red-moon/issues/new). If
 you can implement it yourself, simply fork this repository, make your
 changes and open a pull request.
+
+## Translating
+
+Translating is very much appreciated! Just go to
+[Weblate](https://hosted.weblate.org/projects/red-moon/strings/), create
+an account and start a new translation or update an existing one.
