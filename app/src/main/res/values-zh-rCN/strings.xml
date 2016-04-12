@@ -1,2 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="app_name">紅月</string>
+    <string name="shades_settings">紅月</string>
+    <string name="shortcut_activity">紅月切換鍵</string>
+
+    <string name="paused">暂停</string>
+
+    <string name="pref_title_other">其他</string>
+
+    <string name="button_remove_profile">删除</string>
+    <string name="location_title">位置</string>
+    <string name="latitude_short">纬度</string>
+    <string name="longitude_short">长</string>
+    </resources>
