@@ -6,7 +6,7 @@
     <string name="shortcut_activity">تغییر حالت رد مون</string>
 
     <!-- Notification -->
-    <string name="running">در حال تجرا. برای نصب بسته‌ها مکث کنید</string>
+    <string name="running">در حال اجرا. برای نصب بسته‌ها مکث کنید</string>
     <string name="paused">مکث شده</string>
 
     <!-- Preference -->
