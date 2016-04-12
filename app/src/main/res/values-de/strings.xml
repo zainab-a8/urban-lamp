@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
  * Copyright (c) 2016  twckr <https://github.com/twckr>
  * Copyright (c) 2016  Marien Raat <marienraat@riseup.net>
@@ -65,4 +65,5 @@
     <string name="latitude_short">geograph. Breite</string>
     <string name="longitude_short">geograph. Länge</string>
     <string name="pref_title_other">Andere</string>
-</resources>
+<string name="app_name"></string>
+    </resources>
