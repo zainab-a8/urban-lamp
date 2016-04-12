@@ -20,16 +20,18 @@
     tools:ignore="MissingTranslation">
     <!-- App Name and Activity Labels -->
     <string name="app_name">رد مون</string>
+    <string name="shades_settings">رد مون</string>
     <string name="shortcut_activity">تغییر حالت رد مون</string>
 
     <!-- Notification -->
-    <string name="running">در حال تجرا. برای نصب بسته‌ها مکث کنید</string>
+    <string name="running">در حال اجرا. برای نصب بسته‌ها مکث کنید</string>
     <string name="paused">مکث شده</string>
 
     <!-- Preference -->
     <string name="pref_title_appearance">پالایه</string>
-    <string name="pref_title_automatic_filter">پالایهٔ خودکار</string>
+    <string name="pref_title_automatic_filter">زمان‌های پالایه</string>
     <string name="pref_title_startup">روشن شدن</string>
+    <string name="pref_title_other">دیگر</string>
 
     <string name="button_add_profile">افزودن</string>
     <string name="button_remove_profile">حذف</string>
@@ -38,13 +40,18 @@
     <string name="shades_color_temp">دمای رنگ</string>
     <string name="control_brightness_title">کاهش روشنایی</string>
 
-    <string name="automatic_filter_title">روشن کردن خودکار پالایه</string>
-    <string name="custom_start_time_title">زمان روشن شدن خودکار</string>
-    <string name="custom_end_time_title">زمان خاموش شدن خودکار</string>
+    <string name="automatic_filter_title">روش تغییر حالت</string>
+    <string name="custom_start_time_title">از سر گیری در</string>
+    <string name="custom_end_time_title">مکث در</string>
+    <string name="location_title">موقعیّت</string>
+    <string name="location_not_set">تنظیم نشده</string>
+    <string name="latitude_short">عرض جغرافیایی</string>
+    <string name="longitude_short">طول جغرافیایی</string>
+    <string name="searching_location">در حال جست‌وجو برای موقعیّت</string>
 
     <string name="dark_theme">زمینهٔ تیره</string>
 
-    <string name="email_me_title">‫به من در marienraat@riseup.net رایانامه بزنید‬</string>
+    <string name="email_me_title">‫رایانامه به marienraat@riseup.net‬</string>
     <string name="email_me_summary">مشکلات یا پیشنهادهایتان را به من رایانامه کنید</string>
     <string name="project_page_title">از صفحهٔ پروژه بازدید کنید</string>
     <string name="project_page_summary">اطّلاعات بیش‌تری بگیرید، بازخورد دهید و مشارکت کنید</string>
@@ -52,6 +59,9 @@
     <!-- Toasts -->
     <string name="toast_warning_install">هنگام روشن بودن پالایه نخواهید توانست بسته‌ای را نصب کنید</string>
     <string name="toast_warning_no_location">خدمت موقعیّت فعّال نشده است، پس زمان‌های شخصی استفاده خواهند شد. لطفاً برای استفاده از زمان‌های طلوع و غروب، خدمات موقعیّت را فعّال کنید.</string>
+
+    <!-- Snackbar -->
+    <string name="help_snackbar_text">برای فعّال سازی رد مون، دستگیره را فشار دهید</string>
 
     <!-- Dialog -->
     <string name="add_new_profile_dialog_title">ورود نام نمایه</string>
@@ -73,8 +83,8 @@
 
     <!-- Automatic filter -->
     <string-array name="automatic_filter_options_array">
-      <item>هرگز</item>
-      <item>خورشید</item>
-      <item>زمان‌های شخصی</item>
+      <item>دستی</item>
+      <item>(خودکار (خورشید</item>
+      <item>(خودکار (شخصی</item>
     </string-array>
 </resources>
