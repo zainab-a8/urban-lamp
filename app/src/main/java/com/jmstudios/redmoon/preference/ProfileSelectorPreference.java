@@ -354,6 +354,9 @@ public class ProfileSelectorPreference extends Preference
 
                 @Override
                 public void onShadesAutomaticTurnOffChanged(String turnOffTime) {}
+
+                @Override
+                public void onLowerBrightnessChanged(boolean lowerBrightness) { }
             });
     }
 }
