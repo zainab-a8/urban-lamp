@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
  * Copyright (c) 2016  Marien Raat <marienraat@riseup.net>
  *
@@ -34,8 +34,7 @@
  *     NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  *     CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  -->
- <resources xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App Name and Activity Labels -->
     <string name="app_name">Red Moon</string>
     <string name="shortcut_activity">Red Moon pasirinkti</string>
@@ -75,7 +74,7 @@
 
     <!-- Toasts -->
     <string name="toast_warning_install">negalima instaliuoti programėlių, kai filtras įjungtas.</string>
-    <string name="toast_warning_no_location">Vietos nustatymo paslauga neįjungta, bus naudojamas pritaikytas laikas. Prašome įjungti vietos nustatymo paslaugą, kad nustatyti saulėtekio ir saulėlydžio laiką.</string>
+    <string name="toast_warning_no_location">Vietos nustatymo paslauga neįjungta, bus naudojamas pritaikytas laikas. Prašome įjungti vietos nustatymo paslaugą, kad nustatyti saulėtekio ir saulėlydžio laiką</string>
 
     <!-- Dialog -->
     <string name="add_new_profile_dialog_title">Įvesti profilio pavadinimo</string>
@@ -101,4 +100,5 @@
       <item>Saulė</item>
       <item>Pritaikytas laikas</item>
     </string-array>
-</resources>
+<string name="shades_settings">Red Moon</string>
+    </resources>
