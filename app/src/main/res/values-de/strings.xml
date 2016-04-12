@@ -18,7 +18,7 @@
 -->
 <resources>
     <string name="paused">Pausiert</string>
-    <string name="running">Läuft. Pausieren Sie, wenn Sie APKs installieren möchten.</string>
+    <string name="running">Red Moon läuft. Pausieren Sie, wenn Sie APKs installieren möchten.</string>
     <string name="shades_color_temp">Farbtemperatur</string>
     <string name="pref_title_appearance">Filter</string>
     <string name="shades_dim_level">Grad der Abblendung</string>
@@ -36,7 +36,7 @@
     <string name="custom_start_time_title">Einschaltzeit</string>
     <string name="dark_theme">Dunkles Thema</string>
     <string name="email_me_summary">Schreiben Sie mir eine Email für Vorschläge oder Fehlerberichte</string>
-    <string name="email_me_title">Schreiben Sie mit an marienraat@riseup.net</string>
+    <string name="email_me_title">Schreiben Sie an marienraat@riseup.net</string>
     <string name="ok_dialog">OK</string>
     <string name="pref_title_automatic_filter">Automatischer Filter</string>
     <string name="project_page_summary">Mehr Informationen, Feedback und eigener Beitrag</string>
@@ -64,5 +64,5 @@
     <string name="location_title">Standort</string>
     <string name="latitude_short">geograph. Breite</string>
     <string name="longitude_short">geograph. Länge</string>
-    <string name="pref_title_other">Andere</string>
+    <string name="pref_title_other">Weitere</string>
 </resources>
