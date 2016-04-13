@@ -52,7 +52,7 @@
     <string name="standard_profiles_array_2">Lecture</string>
 
     <string name="automatic_filter_options_array_0">Manuel</string>
-    <string name="automatic_filter_options_array_1">Automatique (soleil)</string>
+    <string name="automatic_filter_options_array_1">Automatique (localisation)</string>
     <string name="automatic_filter_options_array_2">Automatique (personnalisé)</string>
 
     </resources>
