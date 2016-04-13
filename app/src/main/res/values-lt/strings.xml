@@ -88,17 +88,15 @@
     <string name="toggle_shortcut_title">Pasirinkti</string>
 
     <!-- Profiles -->
-    <string-array name="standard_profiles_array">
-      <item>Pritaikytas</item>
-      <item>Numatytasis</item>
-      <item>Skaitymui</item>
-    </string-array>
+    <!-- standard_profiles_array -->
+    <string name="standard_profiles_array_0">Pritaikytas</string>
+    <string name="standard_profiles_array_1">Numatytasis</string>
+    <string name="standard_profiles_array_2">Skaitymui</string>
 
     <!-- Automatic filter -->
-    <string-array name="automatic_filter_options_array">
-      <item>Niekada</item>
-      <item>Saulė</item>
-      <item>Pritaikytas laikas</item>
-    </string-array>
+    <!-- automatic_filter_options_array -->
+    <string name="automatic_filter_options_array_0">Niekada</string>
+    <string name="automatic_filter_options_array_1">Saulė</string>
+    <string name="automatic_filter_options_array_2">Pritaikytas laikas</string>
 <string name="shades_settings">Red Moon</string>
     </resources>

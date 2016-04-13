@@ -95,18 +95,16 @@
     <string name="toggle_shortcut_title">Toggle</string>
 
     <!-- Profiles -->
-    <string-array name="standard_profiles_array">
-      <item>Custom</item>
-      <item>Default</item>
-      <item>Reading</item>
-    </string-array>
+    <!-- standard_profiles_array -->
+    <string name="standard_profiles_array_0">Custom</string>
+    <string name="standard_profiles_array_1">Default</string>
+    <string name="standard_profiles_array_2">Reading</string>
 
     <!-- Automatic filter -->
-    <string-array name="automatic_filter_options_array">
-      <item>Manual</item>
-      <item>Automatic (sun)</item>
-      <item>Automatic (custom)</item>
-    </string-array>
+    <!-- automatic_filter_options_array -->
+    <string name="automatic_filter_options_array_0">Manual</string>
+    <string name="automatic_filter_options_array_1">Automatic (sun)</string>
+    <string name="automatic_filter_options_array_2">Automatic (custom)</string>
 
     <string-array name="automatic_filter_values_array"
                   translatable="false">

@@ -48,18 +48,16 @@
     <string name="shortcut_activity">Umschalter für Red Moon</string>
 
     <!-- Profiles -->
-    <string-array name="standard_profiles_array">
-        <item>Benutzerdefiniert</item>
-        <item>Standard</item>
-        <item>Lesen</item>
-    </string-array>
+    <!-- standard_profiles_array -->
+    <string name="standard_profiles_array_0">Benutzerdefiniert</string>
+    <string name="standard_profiles_array_1">Standard</string>
+    <string name="standard_profiles_array_2">Lesen</string>
 
     <!-- Automatic filter -->
-    <string-array name="automatic_filter_options_array">
-        <item>Niemals</item>
-        <item>Sonnenstand</item>
-        <item>Benutzerdefinierte Zeiten</item>
-    </string-array>
+    <!-- automatic_filter_options_array -->
+    <string name="automatic_filter_options_array_0">Niemals</string>
+    <string name="automatic_filter_options_array_1">Sonnenstand</string>
+    <string name="automatic_filter_options_array_2">Benutzerdefinierte Zeiten</string>
     <string name="location_not_set">Standort nicht gesetzt</string>
     <string name="location_title">Standort</string>
     <string name="latitude_short">geograph. Breite</string>

@@ -74,16 +74,14 @@
     <string name="toggle_shortcut_title">تغییر حالت</string>
 
     <!-- Profiles -->
-    <string-array name="standard_profiles_array">
-      <item>شخصی</item>
-      <item>پیش‌گزیده</item>
-      <item>مطالعه</item>
-    </string-array>
+    <!-- standard_profiles_array -->
+    <string name="standard_profiles_array_0">شخصی</string>
+    <string name="standard_profiles_array_1">پیش‌گزیده</string>
+    <string name="standard_profiles_array_2">مطالعه</string>
 
     <!-- Automatic filter -->
-    <string-array name="automatic_filter_options_array">
-      <item>دستی</item>
-      <item>(خودکار (خورشید</item>
-      <item>(خودکار (شخصی</item>
-    </string-array>
+    <!-- automatic_filter_options_array -->
+    <string name="automatic_filter_options_array_0">دستی</string>
+    <string name="automatic_filter_options_array_1">(خودکار (خورشید</string>
+    <string name="automatic_filter_options_array_2">(خودکار (شخصی</string>
 </resources>
