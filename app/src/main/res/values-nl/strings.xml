@@ -47,4 +47,12 @@
     <string name="shortcut_activity">Red Moon schakelaar</string>
 
     <string name="shades_settings">Red Moon</string>
+    <string name="standard_profiles_array_0">Aangepast</string>
+    <string name="standard_profiles_array_1">Standaard</string>
+    <string name="standard_profiles_array_2">Lezen</string>
+
+    <string name="automatic_filter_options_array_0">Handmatig</string>
+    <string name="automatic_filter_options_array_1">Automatisch (zon)</string>
+    <string name="automatic_filter_options_array_2">Automatisch (aangepast)</string>
+
     </resources>
