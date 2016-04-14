@@ -49,10 +49,10 @@
     <string name="shades_settings">レッドムーン</string>
     <string name="standard_profiles_array_0">カスタム</string>
     <string name="standard_profiles_array_1">デフォルト</string>
-    <string name="standard_profiles_array_2">読み込み中</string>
+    <string name="standard_profiles_array_2">読書</string>
 
     <string name="automatic_filter_options_array_0">手動</string>
-    <string name="automatic_filter_options_array_1">自動 (sun)</string>
+    <string name="automatic_filter_options_array_1">自動 (太陽)</string>
     <string name="automatic_filter_options_array_2">自動 (カスタム)</string>
 
     </resources>
