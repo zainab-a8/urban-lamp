@@ -82,6 +82,6 @@
     <!-- Automatic filter -->
     <!-- automatic_filter_options_array -->
     <string name="automatic_filter_options_array_0">دستی</string>
-    <string name="automatic_filter_options_array_1">(خودکار (خورشید</string>
-    <string name="automatic_filter_options_array_2">(خودکار (شخصی</string>
+    <string name="automatic_filter_options_array_1">‫خودکار (خورشید)‬</string>
+    <string name="automatic_filter_options_array_2">‫خودکار (شخصی)‬</string>
 </resources>
