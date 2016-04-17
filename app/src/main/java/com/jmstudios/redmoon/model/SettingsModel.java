@@ -78,6 +78,7 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
     private String mAutomaticFilterModePrefKey;
     private String mAutomaticTurnOnPrefKey;
     private String mAutomaticTurnOffPrefKey;
+    private String mDimButtonsPrefKey;
 
     public SettingsModel(@NonNull Resources resources, @NonNull SharedPreferences sharedPreferences) {
         mSharedPreferences = sharedPreferences;
@@ -95,6 +96,7 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
         mAutomaticFilterModePrefKey = resources.getString(R.string.pref_key_automatic_filter);
         mAutomaticTurnOnPrefKey = resources.getString(R.string.pref_key_custom_start_time);
         mAutomaticTurnOffPrefKey = resources.getString(R.string.pref_key_custom_end_time);
+        mDimButtonsPrefKey = resources.getString(R.string.pref_key_dim_buttons);
     }
 
     public boolean getShadesPowerState() {
@@ -151,6 +153,10 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
 
     public String getAutomaticTurnOffTime() {
         return mSharedPreferences.getString(mAutomaticTurnOffPrefKey, "06:00");
+    }
+
+    public boolean getDimButtonsFlag() {
+        return mSharedPreferences.getBoolean(mDimButtonsPrefKey, true);
     }
 
     public void addOnSettingsChangedListener(OnSettingsChangedListener listener) {

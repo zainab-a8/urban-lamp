@@ -391,6 +391,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                 PixelFormat.TRANSLUCENT);
 
         wlp.gravity = Gravity.TOP | Gravity.START;
+        wlp.buttonBrightness = mSettingsModel.getDimButtonsFlag() ? 0 : -1;
 
         return wlp;
     }
