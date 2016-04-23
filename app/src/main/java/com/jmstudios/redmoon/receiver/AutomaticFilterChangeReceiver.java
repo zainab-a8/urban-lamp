@@ -28,6 +28,7 @@ import android.os.Build.VERSION;
 import android.net.Uri;
 import android.location.LocationManager;
 import android.location.LocationListener;
+import android.os.Handler;
 
 import java.util.GregorianCalendar;
 import java.util.Calendar;
@@ -37,8 +38,10 @@ import com.jmstudios.redmoon.R;
 
 import com.jmstudios.redmoon.helper.FilterCommandFactory;
 import com.jmstudios.redmoon.helper.FilterCommandSender;
+import com.jmstudios.redmoon.helper.DismissNotificationRunnable;
 import com.jmstudios.redmoon.model.SettingsModel;
 import com.jmstudios.redmoon.service.ScreenFilterService;
+import com.jmstudios.redmoon.presenter.ScreenFilterPresenter;
 import com.jmstudios.redmoon.receiver.LocationUpdateListener;
 
 public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
@@ -66,6 +69,17 @@ public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
             commandSender.send(pauseCommand);
             cancelPauseAlarm(context);
             scheduleNextPauseCommand(context);
+
+            // We want to dismiss the notification if the filter is paused
+            // automatically.
+            // However, the filter fades out and the notification is only
+            // refreshed when this animation has been completed.  To make sure
+            // that the new notification is removed we create a new runnable to
+            // be excecuted 100 ms after the filter has faded out.
+            Handler handler = new Handler();
+
+            DismissNotificationRunnable runnable = new DismissNotificationRunnable(context);
+            handler.postDelayed(runnable, ScreenFilterPresenter.FADE_DURATION_MS + 100);
         }
 
         // Update times for the next time (fails silently)

@@ -75,12 +75,12 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
     private static final String TAG = "ScreenFilterPresenter";
     private static final boolean DEBUG = true;
 
-    private static final int NOTIFICATION_ID = 1;
+    public static final int NOTIFICATION_ID = 1;
     private static final int REQUEST_CODE_ACTION_SETTINGS = 1000;
     private static final int REQUEST_CODE_ACTION_STOP = 2000;
     private static final int REQUEST_CODE_ACTION_PAUSE_OR_RESUME = 3000;
 
-    private static final int FADE_DURATION_MS = 1000;
+    public static final int FADE_DURATION_MS = 1000;
 
     private ScreenFilterView mView;
     private SettingsModel mSettingsModel;
