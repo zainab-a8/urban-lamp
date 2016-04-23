@@ -76,6 +76,9 @@
     <string name="toast_warning_install">negalima instaliuoti programėlių, kai filtras įjungtas.</string>
     <string name="toast_warning_no_location">Vietos nustatymo paslauga neįjungta, bus naudojamas pritaikytas laikas. Prašome įjungti vietos nustatymo paslaugą, kad nustatyti saulėtekio ir saulėlydžio laiką</string>
 
+	 <!-- Snackbar -->
+    <string name="help_snackbar_text">Paslinkite įjungimo slinktuką, kad įgalintumėte Red Moon</string>
+
     <!-- Dialog -->
     <string name="add_new_profile_dialog_title">Įvesti profilio pavadinimo</string>
     <string name="add_new_profile_edit_hint">Profilio pavadinimas</string>
