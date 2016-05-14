@@ -65,6 +65,8 @@ public class ShadesActivity extends AppCompatActivity {
     private static final boolean DEBUG = true;
     private static final String FRAGMENT_TAG_SHADES = "jmstudios.fragment.tag.SHADES";
 
+    // Only for compatibility with older shortcuts; new shortcuts will launch ShortcutToggleActivity
+    @Deprecated
     public static final String EXTRA_FROM_SHORTCUT_BOOL =
         "com.jmstudios.redmoon.activity.ShadesActivity.EXTRA_FROM_SHORTCUT_BOOL";
     public static int OVERLAY_PERMISSION_REQ_CODE = 1234;
@@ -84,7 +86,7 @@ public class ShadesActivity extends AppCompatActivity {
         if (DEBUG) Log.i(TAG, "Got intent");
         boolean fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false);
         if (fromShortcut) {
-            toggleAndFinish();
+            ShortcutToggleActivity.toggleAndFinish(this);
         }
 
         // Wire MVP classes
@@ -182,7 +184,7 @@ public class ShadesActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         boolean fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false);
         if (fromShortcut) {
-            toggleAndFinish();
+            ShortcutToggleActivity.toggleAndFinish(this);
         }
     }
 
@@ -230,25 +232,5 @@ public class ShadesActivity extends AppCompatActivity {
 
     public SettingsModel getSettingsModel() {
         return mSettingsModel;
-    }
-
-    private void toggleAndFinish() {
-        FilterCommandSender commandSender = new FilterCommandSender(this);
-        FilterCommandFactory commandFactory = new FilterCommandFactory(this);
-        Intent onCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_ON);
-        Intent pauseCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_PAUSE);
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SettingsModel settingsModel = new SettingsModel(getResources(), sharedPreferences);
-        boolean poweredOn = settingsModel.getShadesPowerState();
-        boolean paused = settingsModel.getShadesPauseState();
-
-        if (!poweredOn || paused) {
-            commandSender.send(onCommand);
-        } else {
-            commandSender.send(pauseCommand);
-        }
-
-        finish();
     }
 }

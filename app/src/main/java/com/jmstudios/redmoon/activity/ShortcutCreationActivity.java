@@ -38,8 +38,7 @@ public class ShortcutCreationActivity extends Activity {
         if (DEBUG) Log.i(TAG, "Create ShortcutCreationActivity");
         super.onCreate(savedInstanceState);
 
-        Intent shortcutIntent = new Intent(this, ShadesActivity.class);
-        shortcutIntent.putExtra(ShadesActivity.EXTRA_FROM_SHORTCUT_BOOL, true);
+        Intent shortcutIntent = new Intent(this, ShortcutToggleActivity.class);
         shortcutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                                 Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
