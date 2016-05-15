@@ -79,11 +79,21 @@
 
         <activity
             android:name="com.jmstudios.redmoon.activity.ShortcutCreationActivity"
-            android:label="@string/shortcut_activity" >
+            android:label="@string/shortcut_activity"
+            android:theme="@style/TransparentTheme" >
           <intent-filter>
             <action android:name="android.intent.action.CREATE_SHORTCUT"/>
             <category android:name="android.intent.category.DEFAULT"/>
           </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.jmstudios.redmoon.activity.ShortcutToggleActivity"
+            android:label="@string/shortcut_activity"
+            android:theme="@style/TransparentTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
         </activity>
 
         <service

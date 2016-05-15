@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+/*
  * Copyright (c) 2016  Marien Raat <marienraat@riseup.net>
  *
  *  This file is free software: you may copy, redistribute and/or modify it
@@ -33,34 +32,46 @@
  *     OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
  *     NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  *     CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
--->
-<resources>
-    <!-- App Themes -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-      <item name="colorPrimary">@color/color_primary</item>
-      <item name="colorPrimaryDark">@color/color_primary_dark</item>
-    </style>
+ */
+package com.jmstudios.redmoon.activity;
 
-    <style name="AppThemeDark" parent="Theme.AppCompat">
-      <item name="colorPrimary">@color/color_primary</item>
-      <item name="colorPrimaryDark">@color/color_primary_dark</item>
-    </style>
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 
-    <!-- Preference TextView Style -->
-    <style name="PreferenceTextStyle">
-      <item name="android:textAppearance">@android:style/TextAppearance.Holo.Medium</item>
-      <item name="android:singleLine">true</item>
-      <item name="android:ellipsize">marquee</item>
-    </style>
+import com.jmstudios.redmoon.helper.FilterCommandFactory;
+import com.jmstudios.redmoon.helper.FilterCommandSender;
+import com.jmstudios.redmoon.model.SettingsModel;
+import com.jmstudios.redmoon.service.ScreenFilterService;
 
-    <style name="PreferenceSecundaryTextStyle">
-      <item name="android:textAppearance">@android:style/TextAppearance.Holo.Small</item>
-      <item name="android:singleLine">true</item>
-      <item name="android:ellipsize">marquee</item>
-    </style>
+public class ShortcutToggleActivity extends Activity {
 
-    <style name="TransparentTheme" parent="android:Theme">
-        <item name="android:windowIsTranslucent">true</item>
-    </style>
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        toggleAndFinish(this);
+    }
 
-</resources>
+    public static void toggleAndFinish(Activity activity) {
+        FilterCommandSender commandSender = new FilterCommandSender(activity);
+        FilterCommandFactory commandFactory = new FilterCommandFactory(activity);
+        Intent onCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_ON);
+        Intent pauseCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_PAUSE);
+
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(activity);
+        SettingsModel settingsModel = new SettingsModel(activity.getResources(), sharedPreferences);
+        boolean poweredOn = settingsModel.getShadesPowerState();
+        boolean paused = settingsModel.getShadesPauseState();
+
+        if (!poweredOn || paused) {
+            commandSender.send(onCommand);
+        } else {
+            commandSender.send(pauseCommand);
+        }
+
+        activity.finish();
+    }
+}
