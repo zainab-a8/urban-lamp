@@ -107,7 +107,7 @@ public class BootReceiver extends BroadcastReceiver {
 
     private static boolean getPredictedPauseState(boolean pausedBeforeReboot,
                                                   SettingsModel model) {
-        if (model.getAutomaticFilterMode() == "never") {
+        if (model.getAutomaticFilterMode().equals("never")) {
             return pausedBeforeReboot;
         } else {
             Calendar now = Calendar.getInstance();
