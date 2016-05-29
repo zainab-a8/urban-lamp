@@ -55,4 +55,7 @@
     <string name="automatic_filter_options_array_1">Automatisch (zon)</string>
     <string name="automatic_filter_options_array_2">Automatisch (aangepast)</string>
 
+    <string name="resume_action">Hervat</string>
+    <string name="pause_action">Pauzeer</string>
+
     </resources>
