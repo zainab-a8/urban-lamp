@@ -44,6 +44,8 @@
     <!-- Notification -->
     <string name="running">Running. Pause to install apks</string>
     <string name="paused">Paused</string>
+    <string name="resume_action">Resume</string>
+    <string name="pause_action">Pause</string>
 
     <!-- Preference -->
     <string name="pref_title_appearance">Filter</string>

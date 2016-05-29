@@ -140,17 +140,20 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
         String contentText;
         int pauseOrResumeDrawableResId;
         Intent pauseOrResumeCommand;
+        String pauseOrResumeActionText;
 
         if (isPaused()) {
             Log.d(TAG, "Creating notification while in pause state");
             contentText = context.getString(R.string.paused);
             pauseOrResumeDrawableResId = R.drawable.ic_play;
             pauseOrResumeCommand = mFilterCommandFactory.createCommand(ScreenFilterService.COMMAND_ON);
+            pauseOrResumeActionText = context.getString(R.string.resume_action);
         } else {
             Log.d(TAG, "Creating notification while NOT in pause state");
             contentText = context.getString(R.string.running);
             pauseOrResumeDrawableResId = R.drawable.ic_pause;
             pauseOrResumeCommand = mFilterCommandFactory.createCommand(ScreenFilterService.COMMAND_PAUSE);
+            pauseOrResumeActionText = context.getString(R.string.pause_action);
         }
 
         Intent shadesActivityIntent = new Intent(context, ShadesActivity.class);
@@ -168,7 +171,9 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                             .setContentText(contentText)
                             .setColor(color)
                             .setContentIntent(settingsPI)
-                            .addAction(pauseOrResumeDrawableResId, "", pauseOrResumePI)
+                            .addAction(pauseOrResumeDrawableResId,
+                                       pauseOrResumeActionText,
+                                       pauseOrResumePI)
                             .setPriority(Notification.PRIORITY_MIN);
 
         if (isPaused()) {
