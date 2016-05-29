@@ -48,6 +48,7 @@ import com.jmstudios.redmoon.helper.FilterCommandFactory;
 import com.jmstudios.redmoon.helper.FilterCommandSender;
 import com.jmstudios.redmoon.model.SettingsModel;
 import com.jmstudios.redmoon.service.ScreenFilterService;
+import com.jmstudios.redmoon.presenter.ScreenFilterPresenter;
 import com.jmstudios.redmoon.receiver.AutomaticFilterChangeReceiver;
 
 public class BootReceiver extends BroadcastReceiver {
@@ -88,6 +89,17 @@ public class BootReceiver extends BroadcastReceiver {
 
             if (poweredOnBeforeReboot) {
                 if (DEBUG) Log.i(TAG, "Shades was on before reboot; resuming state.");
+
+                // If the filter was on when the device was powered down and the
+                // automatic brightness setting is on, then it still uses the
+                // dimmed brightness and we need to restore the saved brightness
+                // before proceeding.
+                if (!pausedBeforeReboot && settingsModel.getBrightnessControlFlag()) {
+                    ScreenFilterPresenter.setBrightnessState
+                        (settingsModel.getBrightnessLevel(),
+                         settingsModel.getBrightnessAutomatic(),
+                         context);
+                }
 
                 AutomaticFilterChangeReceiver.scheduleNextOnCommand(context);
                 AutomaticFilterChangeReceiver.scheduleNextPauseCommand(context);

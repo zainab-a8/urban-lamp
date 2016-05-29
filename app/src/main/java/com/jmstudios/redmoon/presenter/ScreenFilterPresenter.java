@@ -257,9 +257,9 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
         if (!isOff() && !isPaused()) {
             if (lowerBrightness) {
                 saveOldBrightnessState();
-                setBrightnessState(0, false);
+                setBrightnessState(0, false, mContext);
             } else {
-                setBrightnessState(oldScreenBrightness, oldIsAutomaticBrightness);
+                restoreBrightnessState();
             }
         }
     }
@@ -362,17 +362,26 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
         } else {
             oldScreenBrightness = -1;
         }
+        mSettingsModel.setBrightnessAutomatic(oldIsAutomaticBrightness);
+        mSettingsModel.setBrightnessLevel(oldScreenBrightness);
     }
 
-    private void setBrightnessState(int brightness, boolean automatic) {
+    // Statically used by BootReceiver
+    public static void setBrightnessState(int brightness, boolean automatic, Context context) {
         if (android.os.Build.VERSION.SDK_INT >= 23 &&
-            !Settings.System.canWrite(mContext)) return;
+            !Settings.System.canWrite(context)) return;
         if (DEBUG) Log.i(TAG, "Setting brightness to: " + brightness + ", automatic: " + automatic);
         if (brightness >= 0) {
-            ContentResolver resolver = mContext.getContentResolver();
+            ContentResolver resolver = context.getContentResolver();
             Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, brightness);
             Settings.System.putInt(resolver, "screen_brightness_mode", (automatic ? 1 : 0));
         }
+    }
+
+    private void restoreBrightnessState() {
+        setBrightnessState(mSettingsModel.getBrightnessLevel(),
+                           mSettingsModel.getBrightnessAutomatic(),
+                           mContext);
     }
 
     private WindowManager.LayoutParams createFilterLayoutParams() {
@@ -459,7 +468,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                     });
 
                     if (mSettingsModel.getBrightnessControlFlag()) {
-                    setBrightnessState(oldScreenBrightness, oldIsAutomaticBrightness);
+                        restoreBrightnessState();
                     }
 
                     break;
@@ -482,7 +491,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                     });
 
                     if (mSettingsModel.getBrightnessControlFlag()) {
-                        setBrightnessState(oldScreenBrightness, oldIsAutomaticBrightness);
+                        restoreBrightnessState();
                     }
 
                     break;
@@ -505,7 +514,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
 
                     if (mSettingsModel.getBrightnessControlFlag()) {
                         saveOldBrightnessState();
-                        setBrightnessState(0, false);
+                        setBrightnessState(0, false, mContext);
                     }
 
                     break;
@@ -544,7 +553,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
 
                     if (mSettingsModel.getBrightnessControlFlag()) {
                         saveOldBrightnessState();
-                        setBrightnessState(0, false);
+                        setBrightnessState(0, false, mContext);
                     }
 
                     break;

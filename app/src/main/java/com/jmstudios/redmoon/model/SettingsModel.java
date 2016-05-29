@@ -79,6 +79,8 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
     private String mAutomaticTurnOnPrefKey;
     private String mAutomaticTurnOffPrefKey;
     private String mDimButtonsPrefKey;
+    private String mBrightnessAutomaticPrefKey;
+    private String mBrightnessLevelPrefKey;
 
     public SettingsModel(@NonNull Resources resources, @NonNull SharedPreferences sharedPreferences) {
         mSharedPreferences = sharedPreferences;
@@ -97,6 +99,8 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
         mAutomaticTurnOnPrefKey = resources.getString(R.string.pref_key_custom_start_time);
         mAutomaticTurnOffPrefKey = resources.getString(R.string.pref_key_custom_end_time);
         mDimButtonsPrefKey = resources.getString(R.string.pref_key_dim_buttons);
+        mBrightnessAutomaticPrefKey = resources.getString(R.string.pref_key_brightness_automatic);
+        mBrightnessLevelPrefKey = resources.getString(R.string.pref_key_brightness_level);
     }
 
     public boolean getShadesPowerState() {
@@ -113,6 +117,14 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
 
     public void setShadesPauseState(boolean state) {
         mSharedPreferences.edit().putBoolean(mPauseStatePrefKey, state).apply();
+    }
+
+    public void setBrightnessAutomatic(boolean automatic) {
+        mSharedPreferences.edit().putBoolean(mBrightnessAutomaticPrefKey, automatic).apply();
+    }
+
+    public void setBrightnessLevel(int level) {
+        mSharedPreferences.edit().putInt(mBrightnessLevelPrefKey, level).apply();
     }
 
     public int getShadesDimLevel() {
@@ -157,6 +169,14 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
 
     public boolean getDimButtonsFlag() {
         return mSharedPreferences.getBoolean(mDimButtonsPrefKey, true);
+    }
+
+    public boolean getBrightnessAutomatic() {
+        return mSharedPreferences.getBoolean(mBrightnessAutomaticPrefKey, true);
+    }
+
+    public int getBrightnessLevel() {
+        return mSharedPreferences.getInt(mBrightnessLevelPrefKey, 0);
     }
 
     public void addOnSettingsChangedListener(OnSettingsChangedListener listener) {
