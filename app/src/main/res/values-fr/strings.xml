@@ -55,4 +55,7 @@
     <string name="automatic_filter_options_array_1">Automatique (localisation)</string>
     <string name="automatic_filter_options_array_2">Automatique (personnalisé)</string>
 
+    <string name="resume_action">Reprendre</string>
+    <string name="pause_action">Suspendre</string>
+
     </resources>
