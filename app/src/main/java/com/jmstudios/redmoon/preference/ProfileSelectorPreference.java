@@ -42,6 +42,7 @@ import com.jmstudios.redmoon.model.SettingsModel;
 import com.jmstudios.redmoon.activity.ShadesActivity;
 import com.jmstudios.redmoon.fragment.ShadesFragment;
 import com.jmstudios.redmoon.preference.ColorSeekBarPreference;
+import com.jmstudios.redmoon.model.SettingsModel;
 
 public class ProfileSelectorPreference extends Preference
     implements OnItemSelectedListener {
@@ -50,7 +51,7 @@ public class ProfileSelectorPreference extends Preference
     private static final String TAG = "ProfileSelectorPref";
     private static final boolean DEBUG = true;
 
-    private static final int DEFAULT_OPERATIONS_AM = 3;
+    public static final int DEFAULT_OPERATIONS_AM = 3;
 
     private Spinner mProfileSpinner;
     private Button mProfileActionButton;
@@ -67,6 +68,9 @@ public class ProfileSelectorPreference extends Preference
 
     private boolean mIsListenerRegistered;
 
+    // Settings model from the activity to save the ammount of profiles
+    private SettingsModel mSettingsModel;
+
     public ProfileSelectorPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         setLayoutResource(R.layout.preference_profile_selector);
@@ -76,6 +80,8 @@ public class ProfileSelectorPreference extends Preference
         mProfilesModel = new ProfilesModel(context);
 
         mIsListenerRegistered = false;
+
+        mSettingsModel = ((ShadesActivity) getContext()).getSettingsModel();
     }
 
     @Override
@@ -204,6 +210,8 @@ public class ProfileSelectorPreference extends Preference
                         mProfilesModel.removeProfile(mProfile - DEFAULT_OPERATIONS_AM);
                         mProfile = 0;
                         initLayout();
+
+                        updateAmmountProfiles();
                 }
             });
 
@@ -245,6 +253,8 @@ public class ProfileSelectorPreference extends Preference
 
                          mProfileSpinner.setSelection
                             (mProfilesModel.getProfiles().size() - 1 + DEFAULT_OPERATIONS_AM);
+
+                         updateAmmountProfiles();
                     } else {
                         dialog.cancel();
                     }
@@ -315,6 +325,15 @@ public class ProfileSelectorPreference extends Preference
         }
     }
 
+    /**
+     * Updates the ammount of profiles in the shared preferences
+     */
+    private void updateAmmountProfiles() {
+        int ammountProfiles = mProfilesModel.getProfiles().size() + DEFAULT_OPERATIONS_AM;
+        if (DEBUG) Log.i(TAG, "There are now " + ammountProfiles + " profiles.");
+        mSettingsModel.setAmmountProfiles(ammountProfiles);
+    }
+
     //Section: onSettingsChangedListener
     private void addSettingsChangedListener() {
         if (mIsListenerRegistered) return;
@@ -342,7 +361,6 @@ public class ProfileSelectorPreference extends Preference
                 @Override
                 public void onShadesColorChanged(int color) {
                     if (color == currentColor) return;
-
                     mProfileSpinner.setSelection(0);
                 }
 

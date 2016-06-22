@@ -82,6 +82,7 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
     private String mBrightnessAutomaticPrefKey;
     private String mBrightnessLevelPrefKey;
     private String mProfilePrefKey;
+    private String mAmmountProfilesPrefKey;
 
     public SettingsModel(@NonNull Resources resources, @NonNull SharedPreferences sharedPreferences) {
         mSharedPreferences = sharedPreferences;
@@ -103,6 +104,7 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
         mBrightnessAutomaticPrefKey = resources.getString(R.string.pref_key_brightness_automatic);
         mBrightnessLevelPrefKey = resources.getString(R.string.pref_key_brightness_level);
         mProfilePrefKey = resources.getString(R.string.pref_key_profile_spinner);
+        mAmmountProfilesPrefKey = resources.getString(R.string.pref_key_ammount_profiles);
     }
 
     public boolean getShadesPowerState() {
@@ -131,6 +133,10 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
 
     public void setProfile(int profile) {
         mSharedPreferences.edit().putInt(mProfilePrefKey, profile).apply();
+    }
+
+    public void setAmmountProfiles(int ammountProfiles) {
+        mSharedPreferences.edit().putInt(mAmmountProfilesPrefKey, ammountProfiles).apply();
     }
 
     public int getShadesDimLevel() {
@@ -187,6 +193,10 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
 
     public int getProfile() {
         return mSharedPreferences.getInt(mProfilePrefKey, 1);
+    }
+
+    public int getAmmountProfiles() {
+        return mSharedPreferences.getInt(mAmmountProfilesPrefKey, 3);
     }
 
     public void addOnSettingsChangedListener(OnSettingsChangedListener listener) {

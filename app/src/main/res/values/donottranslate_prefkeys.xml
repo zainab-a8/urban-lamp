@@ -55,5 +55,6 @@
   <string name="pref_key_dim_buttons" translatable="false">pref_key_dim_buttons</string>
   <string name="pref_key_brightness_automatic" translatable="false">pref_key_brightness_automatic</string>
   <string name="pref_key_brightness_level" translatable="false">pref_key_brightness_level</string>
+  <string name="pref_key_ammount_profiles" translatable="false">pref_key_ammount_profiles</string>
 
 </resources>
