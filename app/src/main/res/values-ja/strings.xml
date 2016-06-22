@@ -55,4 +55,7 @@
     <string name="automatic_filter_options_array_1">自動 (太陽)</string>
     <string name="automatic_filter_options_array_2">自動 (カスタム)</string>
 
+    <string name="resume_action">再開</string>
+    <string name="pause_action">一時停止</string>
+
     </resources>

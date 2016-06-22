@@ -48,4 +48,7 @@
     <string name="toast_warning_no_location">启用位置服务来更新位置</string>
     <string name="toast_warning_install">滤镜运行时无法安装APK</string>
 
-</resources>
+<string name="resume_action">恢复</string>
+    <string name="pause_action">暂停</string>
+
+    </resources>

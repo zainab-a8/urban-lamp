@@ -55,4 +55,7 @@
 
     <string name="latitude_short">Breddegrad</string>
     <string name="longitude_short">Lengdegrad</string>
+    <string name="resume_action">Fortsett</string>
+    <string name="pause_action">Pause</string>
+
     </resources>
