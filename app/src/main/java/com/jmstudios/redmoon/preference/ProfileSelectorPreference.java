@@ -375,6 +375,9 @@ public class ProfileSelectorPreference extends Preference
 
                 @Override
                 public void onLowerBrightnessChanged(boolean lowerBrightness) { }
+
+                @Override
+                public void onProfileChanged(int profile) { }
             });
     }
 }

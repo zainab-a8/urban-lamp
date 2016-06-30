@@ -135,5 +135,8 @@ public class ShadesPresenter implements SettingsModel.OnSettingsChangedListener 
 
     @Override
     public void onLowerBrightnessChanged(boolean lowerBrightness) { }
+
+    @Override
+    public void onProfileChanged(int profile) { }
     //endregion
 }

@@ -275,6 +275,10 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
             boolean brightnessControlFlag = getBrightnessControlFlag();
             for (OnSettingsChangedListener mSettingsChangedListener : mSettingsChangedListeners)
                 mSettingsChangedListener.onLowerBrightnessChanged(brightnessControlFlag);
+        } else if (key.equals(mProfilePrefKey)) {
+            int profile = getProfile();
+            for (OnSettingsChangedListener mSettingsChangedListener : mSettingsChangedListeners)
+                mSettingsChangedListener.onProfileChanged(profile);
         }
     }
     //endregion
@@ -289,5 +293,6 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
         void onShadesAutomaticTurnOnChanged(String turnOnTime);
         void onShadesAutomaticTurnOffChanged(String turnOffTime);
         void onLowerBrightnessChanged(boolean lowerBrightness);
+        void onProfileChanged(int profile);
     }
 }

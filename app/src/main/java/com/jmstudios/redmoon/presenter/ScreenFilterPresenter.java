@@ -61,11 +61,14 @@ import com.jmstudios.redmoon.activity.ShadesActivity;
 import com.jmstudios.redmoon.helper.AbstractAnimatorListener;
 import com.jmstudios.redmoon.helper.FilterCommandFactory;
 import com.jmstudios.redmoon.helper.FilterCommandParser;
+import com.jmstudios.redmoon.helper.ProfilesHelper;
 import com.jmstudios.redmoon.manager.ScreenManager;
 import com.jmstudios.redmoon.manager.WindowViewManager;
 import com.jmstudios.redmoon.model.SettingsModel;
+import com.jmstudios.redmoon.model.ProfilesModel;
 import com.jmstudios.redmoon.receiver.OrientationChangeReceiver;
 import com.jmstudios.redmoon.receiver.SwitchAppWidgetProvider;
+import com.jmstudios.redmoon.receiver.NextProfileCommandReceiver;
 import com.jmstudios.redmoon.service.ScreenFilterService;
 import com.jmstudios.redmoon.service.ServiceLifeCycleController;
 import com.jmstudios.redmoon.view.ScreenFilterView;
@@ -79,6 +82,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
     private static final int REQUEST_CODE_ACTION_SETTINGS = 1000;
     private static final int REQUEST_CODE_ACTION_STOP = 2000;
     private static final int REQUEST_CODE_ACTION_PAUSE_OR_RESUME = 3000;
+    private static final int REQUEST_CODE_NEXT_PROFILE = 4000;
 
     public static final int FADE_DURATION_MS = 1000;
 
@@ -132,6 +136,8 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
     private void refreshForegroundNotification() {
         Context context = mView.getContext();
 
+        ProfilesModel profilesModel = new ProfilesModel(context);
+
         String title = context.getString(R.string.app_name);
         int color = context.getResources().getColor(R.color.color_primary);
         Intent offCommand = mFilterCommandFactory.createCommand(ScreenFilterService.COMMAND_OFF);
@@ -165,16 +171,24 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
         PendingIntent settingsPI = PendingIntent.getActivity(context, REQUEST_CODE_ACTION_SETTINGS,
                 shadesActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        Intent nextProfileIntent = new Intent(context, NextProfileCommandReceiver.class);
+
+        PendingIntent nextProfilePI = PendingIntent.getBroadcast(context, REQUEST_CODE_NEXT_PROFILE,
+                                                                 nextProfileIntent, 0);
+
         mNotificationBuilder = new NotificationCompat.Builder(mContext);
         mNotificationBuilder.setSmallIcon(smallIconResId)
-                            .setContentTitle(title)
-                            .setContentText(contentText)
-                            .setColor(color)
-                            .setContentIntent(settingsPI)
-                            .addAction(pauseOrResumeDrawableResId,
-                                       pauseOrResumeActionText,
-                                       pauseOrResumePI)
-                            .setPriority(Notification.PRIORITY_MIN);
+            .setContentTitle(title)
+            .setContentText(contentText)
+            .setColor(color)
+            .setContentIntent(settingsPI)
+            .addAction(pauseOrResumeDrawableResId,
+                       pauseOrResumeActionText,
+                       pauseOrResumePI)
+            .addAction(R.drawable.ic_next_profile,
+                       ProfilesHelper.getProfileName(profilesModel, mSettingsModel.getProfile(), context),
+                       nextProfilePI)
+            .setPriority(Notification.PRIORITY_MIN);
 
         if (isPaused()) {
             NotificationManager mNotificationManager =
@@ -267,6 +281,11 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                 restoreBrightnessState();
             }
         }
+    }
+
+    @Override
+    public void onProfileChanged(int profile) {
+        refreshForegroundNotification();
     }
 
     private void animateShadesColor(int toColor) {

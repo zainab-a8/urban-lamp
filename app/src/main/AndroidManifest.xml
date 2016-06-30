@@ -77,6 +77,9 @@
         <receiver android:name="com.jmstudios.redmoon.receiver.AutomaticFilterChangeReceiver">
         </receiver>
 
+        <receiver android:name="com.jmstudios.redmoon.receiver.NextProfileCommandReceiver">
+        </receiver>
+
         <activity
             android:name="com.jmstudios.redmoon.activity.ShortcutCreationActivity"
             android:label="@string/shortcut_activity"
