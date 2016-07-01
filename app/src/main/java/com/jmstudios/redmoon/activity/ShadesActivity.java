@@ -181,6 +181,34 @@ public class ShadesActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        // When the activity is not on the screen, but the user
+        // updates the profile through the notification. the
+        // notification spinner and the seekbars will have missed this
+        // change. To update them correctly, we artificially change
+        // these settings.
+        int intensity = mSettingsModel.getShadesIntensityLevel();
+        mSettingsModel.setShadesIntensityLevel(intensity == 0 ? 1 : 0);
+        mSettingsModel.setShadesIntensityLevel(intensity);
+
+        int dim = mSettingsModel.getShadesDimLevel();
+        mSettingsModel.setShadesDimLevel(dim == 0 ? 1 : 0);
+        mSettingsModel.setShadesDimLevel(dim);
+
+        int color = mSettingsModel.getShadesColor();
+        mSettingsModel.setShadesColor(color == 0 ? 1 : 0);
+        mSettingsModel.setShadesColor(color);
+
+        // The profile HAS to be updated last, otherwise the spinner
+        // will switched to custom.
+        int profile = mSettingsModel.getProfile();
+        mSettingsModel.setProfile(profile == 0 ? 1 : 0);
+        mSettingsModel.setProfile(profile);
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         boolean fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false);
         if (fromShortcut) {

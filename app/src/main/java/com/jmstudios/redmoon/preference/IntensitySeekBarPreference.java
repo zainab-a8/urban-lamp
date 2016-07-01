@@ -45,6 +45,14 @@ public class IntensitySeekBarPreference extends Preference {
         setLayoutResource(R.layout.preference_intensity_seekbar);
     }
 
+    public void setProgress(int progress) {
+        if (mIntensityLevelSeekBar != null) {
+            mIntensityLevelSeekBar.setProgress(progress);
+        } else {
+            mIntensityLevel = progress;
+        }
+    }
+
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
         return a.getInteger(index, DEFAULT_VALUE);

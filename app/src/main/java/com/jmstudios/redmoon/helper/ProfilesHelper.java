@@ -30,4 +30,31 @@ public class ProfilesHelper {
             return model.getProfile(profile - ProfileSelectorPreference.DEFAULT_OPERATIONS_AM).mProfileName;
         }
     }
+
+    public static ProfilesModel.Profile getProfile(ProfilesModel model, int profile, Context context) {
+        if (profile < ProfileSelectorPreference.DEFAULT_OPERATIONS_AM) {
+            String name = context.getResources().getStringArray(R.array.standard_profiles_array)[profile];
+            int color, intensity, dim;
+            switch (profile) {
+            case 1:
+                color = 10;
+                intensity = 30;
+                dim = 40;
+                break;
+            case 2:
+                color = 20;
+                intensity = 60;
+                dim = 78;
+                break;
+            default:
+                color = 0;
+                intensity = 0;
+                dim = 0;
+                break;
+            }
+            return new ProfilesModel.Profile(name, color, intensity, dim);
+        } else {
+            return model.getProfile(profile - ProfileSelectorPreference.DEFAULT_OPERATIONS_AM);
+        }
+    }
 }

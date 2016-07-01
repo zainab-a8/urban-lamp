@@ -139,6 +139,18 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
         mSharedPreferences.edit().putInt(mAmmountProfilesPrefKey, ammountProfiles).apply();
     }
 
+    public void setShadesDimLevel(int dimLevel) {
+        mSharedPreferences.edit().putInt(mDimPrefKey, dimLevel).apply();
+    }
+
+    public void setShadesIntensityLevel(int intensityLevel) {
+        mSharedPreferences.edit().putInt(mIntensityPrefKey, intensityLevel).apply();
+    }
+
+    public void setShadesColor(int color) {
+        mSharedPreferences.edit().putInt(mColorPrefKey, color).apply();
+    }
+
     public int getShadesDimLevel() {
         return mSharedPreferences.getInt(mDimPrefKey, DimSeekBarPreference.DEFAULT_VALUE);
     }

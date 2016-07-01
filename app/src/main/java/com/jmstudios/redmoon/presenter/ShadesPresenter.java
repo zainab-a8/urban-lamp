@@ -48,6 +48,10 @@ import com.jmstudios.redmoon.model.SettingsModel;
 import com.jmstudios.redmoon.service.ScreenFilterService;
 import com.jmstudios.redmoon.receiver.AutomaticFilterChangeReceiver;
 
+import com.jmstudios.redmoon.preference.ColorSeekBarPreference;
+import com.jmstudios.redmoon.preference.IntensitySeekBarPreference;
+import com.jmstudios.redmoon.preference.DimSeekBarPreference;
+
 public class ShadesPresenter implements SettingsModel.OnSettingsChangedListener {
     private static final String TAG = "ShadesPresenter";
     private static final boolean DEBUG = true;
@@ -101,13 +105,25 @@ public class ShadesPresenter implements SettingsModel.OnSettingsChangedListener 
     }
 
     @Override
-    public void onShadesDimLevelChanged(int dimLevel) {/* do nothing */}
+    public void onShadesDimLevelChanged(int dimLevel) {
+        DimSeekBarPreference pref = (DimSeekBarPreference) mView.getPreferenceScreen()
+            .findPreference(mContext.getString(R.string.pref_key_shades_dim_level));
+        pref.setProgress(dimLevel);
+    }
 
     @Override
-    public void onShadesIntensityLevelChanged(int dimLevel) {/* do nothing */}
+    public void onShadesIntensityLevelChanged(int intensityLevel) {
+        IntensitySeekBarPreference pref = (IntensitySeekBarPreference) mView.getPreferenceScreen()
+            .findPreference(mContext.getString(R.string.pref_key_shades_intensity_level));
+        pref.setProgress(intensityLevel);
+    }
 
     @Override
-    public void onShadesColorChanged(int color) {/* do nothing */}
+    public void onShadesColorChanged(int color) {
+        ColorSeekBarPreference pref = (ColorSeekBarPreference) mView.getPreferenceScreen()
+            .findPreference(mContext.getString(R.string.pref_key_shades_color_temp));
+        pref.setProgress(color);
+    }
 
     @Override
     public void onShadesAutomaticFilterModeChanged(String automaticFilterMode) {

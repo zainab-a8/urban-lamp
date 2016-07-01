@@ -43,6 +43,7 @@ import com.jmstudios.redmoon.activity.ShadesActivity;
 import com.jmstudios.redmoon.fragment.ShadesFragment;
 import com.jmstudios.redmoon.preference.ColorSeekBarPreference;
 import com.jmstudios.redmoon.model.SettingsModel;
+import com.jmstudios.redmoon.helper.ProfilesHelper;
 
 public class ProfileSelectorPreference extends Preference
     implements OnItemSelectedListener {
@@ -59,6 +60,7 @@ public class ProfileSelectorPreference extends Preference
     private int mProfile;
     private View mView;
     private ProfilesModel mProfilesModel;
+    private Context mContext;
 
     private ArrayList<CharSequence> mDefaultOperations;
 
@@ -82,6 +84,8 @@ public class ProfileSelectorPreference extends Preference
         mIsListenerRegistered = false;
 
         mSettingsModel = ((ShadesActivity) getContext()).getSettingsModel();
+
+        mContext = context;
     }
 
     @Override
@@ -167,29 +171,17 @@ public class ProfileSelectorPreference extends Preference
         persistInt(mProfile);
         updateButtonSetup();
 
-        if (mProfile > (DEFAULT_OPERATIONS_AM - 1)) {
-            ProfilesModel.Profile currentProfile = mProfilesModel.getProfile(mProfile - DEFAULT_OPERATIONS_AM);
-            setColorTemperatureProgress(currentProfile.mColorProgress);
-            setIntensityLevelProgress(currentProfile.mIntensityProgress);
-            setDimLevelProgress(currentProfile.mDimProgress);
-        } else if (mProfile != 0) {
-            int color = 0, intensity = 0, dim = 0;
-            switch (mProfile) {
-            case 1:
-                color = 10;
-                intensity = 30;
-                dim = 40;
-                break;
-            case 2:
-                color = 20;
-                intensity = 60;
-                dim = 78;
-                break;
-            }
+        // Update the dependent settings
+        if (mProfile != 0) {
+            // We need a ProfilesModel to get the properties of the
+            // profile from the index
+            ProfilesModel profilesModel = new ProfilesModel(mContext);
+            ProfilesModel.Profile profileObject = ProfilesHelper.getProfile
+                (profilesModel, mProfile, mContext);
 
-            setColorTemperatureProgress(color);
-            setIntensityLevelProgress(intensity);
-            setDimLevelProgress(dim);
+            mSettingsModel.setShadesDimLevel(profileObject.mDimProgress);
+            mSettingsModel.setShadesIntensityLevel(profileObject.mIntensityProgress);
+            mSettingsModel.setShadesColor(profileObject.mColorProgress);
         }
     }
 
@@ -377,7 +369,19 @@ public class ProfileSelectorPreference extends Preference
                 public void onLowerBrightnessChanged(boolean lowerBrightness) { }
 
                 @Override
-                public void onProfileChanged(int profile) { }
+                public void onProfileChanged(int profile) {
+                    mProfile = profile;
+                    mProfileSpinner.setSelection(mProfile);
+
+                    if (mProfile != 0) {
+                        ProfilesModel.Profile newProfile = ProfilesHelper.getProfile
+                            (mProfilesModel, mProfile, mContext);
+
+                        currentDim = newProfile.mDimProgress;
+                        currentIntensity = newProfile.mIntensityProgress;
+                        currentColor = newProfile.mColorProgress;
+                    }
+                }
             });
     }
 }

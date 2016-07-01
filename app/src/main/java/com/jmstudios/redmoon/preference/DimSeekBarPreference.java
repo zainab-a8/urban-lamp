@@ -64,6 +64,14 @@ public class DimSeekBarPreference extends Preference {
         setLayoutResource(R.layout.preference_dim_seekbar);
     }
 
+    public void setProgress(int progress) {
+        if (mDimLevelSeekBar != null) {
+            mDimLevelSeekBar.setProgress(progress);
+        } else {
+            mDimLevel = progress;
+        }
+    }
+
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
         return a.getInteger(index, DEFAULT_VALUE);

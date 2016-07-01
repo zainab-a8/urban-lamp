@@ -49,6 +49,14 @@ public class ColorSeekBarPreference extends Preference {
         setLayoutResource(R.layout.preference_color_seekbar);
     }
 
+    public void setProgress(int progress) {
+        if (mColorTempSeekBar != null) {
+            mColorTempSeekBar.setProgress(progress);
+        } else {
+            mProgress = progress;
+        }
+    }
+
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
         return a.getInteger(index, DEFAULT_VALUE);

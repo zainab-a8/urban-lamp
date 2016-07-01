@@ -20,13 +20,46 @@ import android.content.Context;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.util.Log;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import com.jmstudios.redmoon.model.SettingsModel;
+import com.jmstudios.redmoon.model.ProfilesModel;
+import com.jmstudios.redmoon.helper.ProfilesHelper;
 
 public class NextProfileCommandReceiver extends BroadcastReceiver {
     public static final boolean DEBUG = true;
     public static final String TAG = "NextProfileCommandRcv";
 
+    private SettingsModel mSettingsModel;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if (DEBUG) Log.i(TAG, "Next profile requested");
+
+        SharedPreferences standardSp = PreferenceManager.getDefaultSharedPreferences(context);
+        mSettingsModel = new SettingsModel(context.getResources(), standardSp);
+
+        // Here we just change the profile (cycles back to default
+        // when it reaches the max).
+        int profile = mSettingsModel.getProfile();
+        int amProfiles = mSettingsModel.getAmmountProfiles();
+        int newProfile = (profile + 1) >= amProfiles ?
+            1 : (profile + 1);
+        mSettingsModel.setProfile(newProfile);
+
+        // Next update the other settings that are based on the
+        // profile
+        if (newProfile != 0) {
+            // We need a ProfilesModel to get the properties of the
+            // profile from the index
+            ProfilesModel profilesModel = new ProfilesModel(context);
+            ProfilesModel.Profile profileObject = ProfilesHelper.getProfile
+                (profilesModel, newProfile, context);
+
+            mSettingsModel.setShadesDimLevel(profileObject.mDimProgress);
+            mSettingsModel.setShadesIntensityLevel(profileObject.mIntensityProgress);
+            mSettingsModel.setShadesColor(profileObject.mColorProgress);
+        }
     }
 }
