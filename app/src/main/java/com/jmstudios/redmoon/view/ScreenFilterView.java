@@ -61,9 +61,12 @@ public class ScreenFilterView extends View {
     private int mIntensityLevel = IntensitySeekBarPreference.DEFAULT_VALUE;
     private int mColorTempProgress = ColorSeekBarPreference.DEFAULT_VALUE;
     private int mRgbColor = rgbFromColorTemperature(mColorTempProgress);
+    private int mFilterColor;
 
     public ScreenFilterView(Context context) {
         super(context);
+
+        updateFilterColor();
     }
 
     public int getFilterDimLevel() {
@@ -88,6 +91,7 @@ public class ScreenFilterView extends View {
     public void setFilterDimLevel(int dimLevel) {
         mDimLevel = dimLevel;
         invalidate();
+        updateFilterColor();
     }
 
     /**
@@ -100,6 +104,7 @@ public class ScreenFilterView extends View {
     public void setFilterIntensityLevel(int intensityLevel) {
         mIntensityLevel = intensityLevel;
         invalidate();
+        updateFilterColor();
     }
 
     /**
@@ -112,13 +117,12 @@ public class ScreenFilterView extends View {
 
         mRgbColor = rgbFromColorTemperature(colorTemperature);
         invalidate();
+        updateFilterColor();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        int filterColor = getFilterColor(mRgbColor, mDimLevel, mIntensityLevel);
-
-        canvas.drawColor(filterColor);
+        canvas.drawColor(mFilterColor);
     }
 
     public static int rgbFromColorProgress(int colorTempProgress) {
@@ -197,6 +201,10 @@ public class ScreenFilterView extends View {
                                           Color.blue(rgbColor));
         int dimColor = Color.argb(floatToColorBits(((float) dimLevel / 100.0f)), 0, 0, 0);
         return addColors(dimColor, intensityColor);
+    }
+
+    private void updateFilterColor() {
+        mFilterColor = getFilterColor(mRgbColor, mDimLevel, mIntensityLevel);
     }
 
     private int addColors(int color1, int color2) {
