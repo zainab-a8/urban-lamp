@@ -194,10 +194,12 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
             .setPriority(Notification.PRIORITY_MIN);
 
         if (isPaused()) {
+            Log.d(TAG, "Creating a dismissible notification");
             NotificationManager mNotificationManager =
                 (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
             mNotificationManager.notify(NOTIFICATION_ID, mNotificationBuilder.build());
         } else {
+            Log.d(TAG, "Creating a persistent notification");
             mServiceController.startForeground(NOTIFICATION_ID, mNotificationBuilder.build());
         }
     }
@@ -485,6 +487,17 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                     animateIntensityLevel(ScreenFilterView.MIN_INTENSITY, null);
                     animateDimLevel(ScreenFilterView.MIN_DIM, new AbstractAnimatorListener() {
                         @Override
+                        public void onAnimationCancel(Animator animator) {
+                            closeScreenFilter();
+
+                            moveToState(mPauseState);
+
+                            mServiceController.stopForeground(false);
+
+                            refreshForegroundNotification();
+                        }
+
+                        @Override
                         public void onAnimationEnd(Animator animator) {
                             closeScreenFilter();
 
@@ -507,6 +520,15 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
 
                     animateIntensityLevel(ScreenFilterView.MIN_INTENSITY, null);
                     animateDimLevel(ScreenFilterView.MIN_DIM, new AbstractAnimatorListener() {
+                        @Override
+                        public void onAnimationCancel(Animator animator) {
+                            closeScreenFilter();
+
+                            moveToState(mOffState);
+
+                            mServiceController.stop();
+                        }
+
                         @Override
                         public void onAnimationEnd(Animator animator) {
                             closeScreenFilter();
