@@ -40,6 +40,8 @@
     <string name="app_name">Red Moon</string>
     <string name="shades_settings">Red Moon</string>
     <string name="shortcut_activity">Red Moon Toggle</string>
+    <string name="intro_label">Intro</string>
+    <string name="show_intro_text">Show intro</string>
 
     <!-- Notification -->
     <string name="running">Running. Pause to install apks</string>
@@ -95,6 +97,10 @@
 
     <!-- Shortcuts -->
     <string name="toggle_shortcut_title">Toggle</string>
+
+    <!-- Intro -->
+    <string name="intro_slide_1_title">Welcome!</string>
+    <string name="intro_slide_1_text">Welcome to Red Moon!</string>
 
     <!-- Profiles -->
     <!-- standard_profiles_array -->

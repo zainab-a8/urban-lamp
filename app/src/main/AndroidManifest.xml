@@ -59,6 +59,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.jmstudios.redmoon.activity.Intro"
+            android:label="@string/intro_label"
+            android:theme="@style/AppThemeNoActionBar" />
+
         <receiver android:name="com.jmstudios.redmoon.receiver.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

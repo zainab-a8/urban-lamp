@@ -41,6 +41,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -59,6 +60,7 @@ import com.jmstudios.redmoon.helper.FilterCommandSender;
 import com.jmstudios.redmoon.model.SettingsModel;
 import com.jmstudios.redmoon.presenter.ShadesPresenter;
 import com.jmstudios.redmoon.service.ScreenFilterService;
+import com.jmstudios.redmoon.activity.Intro;
 
 public class ShadesActivity extends AppCompatActivity {
     private static final String TAG = "ShadesActivity";
@@ -128,6 +130,10 @@ public class ShadesActivity extends AppCompatActivity {
         mSettingsModel.addOnSettingsChangedListener(mPresenter);
 
         mFragment = view;
+
+        if (!mSettingsModel.getIntroShown()) {
+            startIntro();
+        }
     }
 
     @Override
@@ -222,6 +228,19 @@ public class ShadesActivity extends AppCompatActivity {
         super.onStop();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+        case R.id.show_intro_button:
+            startIntro();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+
     public void displayInstallWarningToast() {
         if (hasShownWarningToast) return;
 
@@ -232,6 +251,13 @@ public class ShadesActivity extends AppCompatActivity {
         toast.show();
 
         hasShownWarningToast = true;
+    }
+
+    private void startIntro() {
+        Intent introIntent = new Intent(this, Intro.class);
+        startActivity(introIntent);
+
+        mSettingsModel.setIntroShown(true);
     }
 
     public SwitchCompat getSwitch() {
