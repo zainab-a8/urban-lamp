@@ -112,6 +112,10 @@
     get a good night\'s rest by filtering the blue out from your phone
     screen.</string>
 
+    <string name="intro_slide_4_title">Get started!</string>
+    <string name="intro_slide_4_text">To enable Red Moon, press the
+    switch in the top right corner.</string>
+
     <!-- Profiles -->
     <!-- standard_profiles_array -->
     <string name="standard_profiles_array_0">Custom</string>
