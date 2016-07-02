@@ -102,6 +102,16 @@
     <string name="intro_slide_1_title">Welcome!</string>
     <string name="intro_slide_1_text">Welcome to Red Moon!</string>
 
+    <string name="intro_slide_2_title">Protecting your eyes</string>
+    <string name="intro_slide_2_text">At night, when looking at your
+    phone hurts your eyes, you can use Red Moon to dim your screen.</string>
+
+    <string name="intro_slide_3_title">Blue light hurts your sleep</string>
+    <string name="intro_slide_3_text">Studies have found that blue
+    light before going to bed disrupts your sleep. Red Moon helps you
+    get a good night\'s rest by filtering the blue out from your phone
+    screen.</string>
+
     <!-- Profiles -->
     <!-- standard_profiles_array -->
     <string name="standard_profiles_array_0">Custom</string>
