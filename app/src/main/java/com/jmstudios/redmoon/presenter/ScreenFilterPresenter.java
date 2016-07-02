@@ -134,6 +134,9 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
     }
 
     private void refreshForegroundNotification() {
+        if (isOff()) {
+            return;
+        }
         Context context = mView.getContext();
 
         ProfilesModel profilesModel = new ProfilesModel(context);
@@ -546,6 +549,12 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                 case ScreenFilterService.COMMAND_OFF:
                     moveToState(mOffState);
                     mServiceController.stopForeground(true);
+
+                    // We need to cancel the current notification
+                    NotificationManager mNotificationManager =
+                        (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+                    mNotificationManager.cancel(ScreenFilterPresenter.NOTIFICATION_ID);
+
 
                     break;
             }
