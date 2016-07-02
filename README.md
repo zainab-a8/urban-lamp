@@ -53,6 +53,7 @@ are all released in the public domain, namely:
 * https://openclipart.org/detail/121903/full-moon
 * https://openclipart.org/detail/219211/option-button-symbol-minimal-svg-markup
 * https://openclipart.org/detail/20806/wolf-head-howl-1
+* https://openclipart.org/detail/213998/nexus-5-flat
 
 ## Building
 
