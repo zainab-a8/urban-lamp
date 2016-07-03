@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">Rød måne</string>
-    <string name="shades_settings">Rød måne</string>
-    <string name="shortcut_activity">Veksle Rød måne</string>
+<resources><string name="app_name">Rød Måne</string>
+    <string name="shades_settings">Rød Måne</string>
+    <string name="shortcut_activity">Veksle Rød Måne</string>
 
-    <string name="running">Kjører. Pause for å installere APK-er</string>
+    <string name="running">Kjører. Sett på pause for å installere APK-er</string>
     <string name="paused">Satt på pause</string>
 
     <string name="pref_title_appearance">Filter</string>
@@ -25,16 +25,16 @@
     <string name="location_not_set">Ikke satt</string>
     <string name="searching_location">Søker etter plassering</string>
 
-    <string name="dark_theme">Mørk drakt</string>
+    <string name="dark_theme">Mørkt tema</string>
 
     <string name="email_me_title">Send meg epost på marienraat@riseup.net</string>
     <string name="email_me_summary">Send epost om feilrettinger og forslag</string>
     <string name="project_page_title">Besøk prosjektsiden</string>
-    <string name="project_page_summary">Finn mer info, gi tilbakemelding og bidra</string>
-    <string name="toast_warning_install">Du vil ikke kunne installere APK-er mens filteret kjører.</string>
-    <string name="toast_warning_no_location">Skru på plasseringstjenester for å bestemme plassering</string>
+    <string name="project_page_summary">Finn mer informasjon, gi tilbakemelding og bidra</string>
+    <string name="toast_warning_install">Du vil ikke kunne installere APK-er mens filteret er aktivert.</string>
+    <string name="toast_warning_no_location">Skru på lokasjonstjenester for å bestemme plassering</string>
 
-    <string name="help_snackbar_text">Trykk på bryteren for å skru på den Røde månen</string>
+    <string name="help_snackbar_text">Trykk på bryteren for å skru på Rød Måne</string>
 
     <string name="add_new_profile_dialog_title">Skriv inn profilnavn</string>
     <string name="add_new_profile_edit_hint">Profilnavn</string>
@@ -46,7 +46,7 @@
     <string name="toggle_shortcut_title">Veksle</string>
 
     <string name="standard_profiles_array_0">Egendefinert</string>
-    <string name="standard_profiles_array_1">Forvalg</string>
+    <string name="standard_profiles_array_1">Original verdi</string>
     <string name="standard_profiles_array_2">Leser</string>
 
     <string name="automatic_filter_options_array_0">Manuell</string>
@@ -55,22 +55,22 @@
 
     <string name="latitude_short">Breddegrad</string>
     <string name="longitude_short">Lengdegrad</string>
-    <string name="resume_action">Fortsett</string>
-    <string name="pause_action">Pause</string>
+    <string name="resume_action">Gjenoppta</string>
+    <string name="pause_action">Sett på pause</string>
 
     <string name="intro_label">Introduksjon</string>
     <string name="show_intro_text">Vis introduksjon</string>
 
     <string name="intro_slide_1_title">Velkommen!</string>
-    <string name="intro_slide_1_text">Velkommen til Red Moon!</string>
+    <string name="intro_slide_1_text">Velkommen til Rød Måne!</string>
 
     <string name="intro_slide_2_title">Beskytter øynene dine</string>
-    <string name="intro_slide_2_text">Om kvelden, når du får vondt i øynene av å se på mobilskjermen kan du bruke Red Moon for å gjøre skjermen mer behagelig å se på.</string>
+    <string name="intro_slide_2_text">Om kvelden, når du får vondt i øynene av å se på mobilskjermen kan du bruke Rød Måne for å gjøre skjermen mer behagelig å se på.</string>
 
     <string name="intro_slide_3_title">Forbedrer søvnen din</string>
-    <string name="intro_slide_3_text">Blått lys reduserer produksjonen av Melatonin, et hormon som hjelper deg å sovne. Red Moon fjerner det blå lyset fra mobilen, hvilket gjør at du sovner enklere.</string>
+    <string name="intro_slide_3_text">Blått lys reduserer produksjonen av Melatonin, et hormon som hjelper deg å sovne. Rød Måne fjerner det blå lyset fra mobilen, hvilket gjør at du sovner enklere.</string>
 
     <string name="intro_slide_4_title">Kom i gang!</string>
-    <string name="intro_slide_4_text">For å aktivere Red Moon, trykk på knappen øverst i høyre hjørne.</string>
+    <string name="intro_slide_4_text">For å aktivere Rød Måne, trykk på knappen øverst i høyre hjørne.</string>
 
     </resources>
