@@ -9,7 +9,7 @@ will have a healthier sleep.
 
 [![F-Droid](https://f-droid.org/wiki/images/0/06/F-Droid-button_get-it-on.png)](https://f-droid.org/repository/browse/?fdid=com.jmstudios.redmoon)
 
-[Direct download](https://github.com/raatmarien/red-moon/releases/download/v2.7.4/red-moon-v2.7.4.apk)
+[Direct download](https://github.com/raatmarien/red-moon/releases/download/v2.8.0/red-moon-v2.8.0.apk)
 
 [![Translation status](https://hosted.weblate.org/widgets/red-moon/-/svg-badge.svg)](https://hosted.weblate.org/engage/red-moon/?utm_source=widget)
 
@@ -27,13 +27,17 @@ homescreen
 
 ## Screenshots
 
-<img src="https://lut.im/OiN16OuV2i/8Q3EWSlBTusiIYy6.png" width="180" height="320" />
-<img src="https://lut.im/jtnrvFKcg7/P2qXtOeIFehZiquu.png" width="180" height="320" />
-<img src="https://lut.im/Wfol7UhVJc/GQ7MkuNhg5mKjcxg.png" width="180" height="320" />
-<img src="https://lut.im/5bxAfD7nwF/x4K5KR9yBTNqqxC5.png" width="180" height="320" />
-<img src="https://lut.im/MpAf2riWO1/evmCy7ZdnLq5ol3w.png" width="180" height="320" />
-<img src="https://lut.im/fmyFJXPj7h/iPi9QoFhjZATSqzH.png" width="180" height="320" />
-<img src="https://lut.im/n43HkAuKDH/hQHSONsBjJRRZKDE.png" width="180" height="320" />
+<img src="https://lut.im/UCDOb028ya/L8Tr7OH2tFedCecr.png" width="180" height="320" />
+<img src="https://lut.im/fHFiGVkVCE/GyYBXwlMqF1a0P0Y.png" width="180" height="320" />
+<img src="https://lut.im/qpg8N8dOre/dyyaoAOxAiBCecXE.png" width="180" height="320" />
+<img src="https://lut.im/xGoZSEqAmv/oUJt4aYuURbaMn4z.png" width="180" height="320" />
+<img src="https://lut.im/UWimrSsPP9/HkyHR2pu7OWli3PI.png" width="180" height="320" />
+<img src="https://lut.im/tpijkCL6XC/JSBUepBbw2NTdcPj.png" width="180" height="320" />
+<img src="https://lut.im/caWHk3pqNt/dXcbHtO2PGwtl4de.png" width="180" height="320" />
+<img src="https://lut.im/ZeTGZaex3n/hbaoW1ELBbUiHF5T.png" width="180" height="320" />
+<img src="https://lut.im/uMRoVV8iKl/j8TNR31acQhVovZc.png" width="180" height="320" />
+<img src="https://lut.im/pGb91isyUa/jXIIGKXV64UbMyYO.png" width="180" height="320" />
+<img src="https://lut.im/hrMQXPXu60/awPk41FXTGtgkUp8.png" width="180" height="320" />
 
 ## License
 
