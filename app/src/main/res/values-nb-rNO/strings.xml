@@ -58,4 +58,19 @@
     <string name="resume_action">Fortsett</string>
     <string name="pause_action">Pause</string>
 
+    <string name="intro_label">Introduksjon</string>
+    <string name="show_intro_text">Vis introduksjon</string>
+
+    <string name="intro_slide_1_title">Velkommen!</string>
+    <string name="intro_slide_1_text">Velkommen til Red Moon!</string>
+
+    <string name="intro_slide_2_title">Beskytter øynene dine</string>
+    <string name="intro_slide_2_text">Om kvelden, når du får vondt i øynene av å se på mobilskjermen kan du bruke Red Moon for å gjøre skjermen mer behagelig å se på.</string>
+
+    <string name="intro_slide_3_title">Forbedrer søvnen din</string>
+    <string name="intro_slide_3_text">Blått lys reduserer produksjonen av Melatonin, et hormon som hjelper deg å sovne. Red Moon fjerner det blå lyset fra mobilen, hvilket gjør at du sovner enklere.</string>
+
+    <string name="intro_slide_4_title">Kom i gang!</string>
+    <string name="intro_slide_4_text">For å aktivere Red Moon, trykk på knappen øverst i høyre hjørne.</string>
+
     </resources>
