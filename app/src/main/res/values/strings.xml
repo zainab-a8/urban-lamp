@@ -106,11 +106,11 @@
     <string name="intro_slide_2_text">At night, when looking at your
     phone hurts your eyes, you can use Red Moon to dim your screen.</string>
 
-    <string name="intro_slide_3_title">Red filter</string>
-    <string name="intro_slide_3_text">Studies have found that blue
-    light before going to bed disrupts your sleep. Red Moon helps you
-    get a good night\'s rest by filtering the blue out from your phone
-    screen.</string>
+    <string name="intro_slide_3_title">Improving your sleep</string>
+    <string name="intro_slide_3_text">Blue light suppresses the
+    production of Melatonin, a hormone that helps you fall asleep at
+    night. Red Moon removes the blue light from your screen, ensuring
+    you can fall asleep easily.</string>
 
     <string name="intro_slide_4_title">Get started!</string>
     <string name="intro_slide_4_text">To enable Red Moon, press the
