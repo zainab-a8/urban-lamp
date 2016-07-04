@@ -58,4 +58,19 @@
     <string name="resume_action">再開</string>
     <string name="pause_action">一時停止</string>
 
+    <string name="intro_slide_1_title">ようこそ!</string>
+    <string name="intro_slide_1_text">Red Moon へようこそ!</string>
+
+    <string name="intro_slide_2_title">あなたの目を保護します</string>
+    <string name="intro_slide_2_text">夜間、携帯電話を見ていて目が痛いとき、Red Moon を使用して画面を暗くすることができます。</string>
+
+    <string name="intro_slide_3_title">あなたの睡眠を改善します</string>
+    <string name="intro_slide_3_text">ブルーライトは、夜眠りに落ちるために役立つホルモン、メラトニンの生産を抑制します。 Red Moon は、画面から青い光を除去して、容易に眠りに落ちることができるようにします。</string>
+
+    <string name="intro_slide_4_title">はじめましょう!</string>
+    <string name="intro_slide_4_text">Red Moon を有効にするには、右上のスイッチを押してください。</string>
+
+    <string name="intro_label">イントロ</string>
+    <string name="show_intro_text">イントロを表示</string>
+
     </resources>
