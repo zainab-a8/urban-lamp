@@ -18,7 +18,7 @@
 -->
 <resources>
     <string name="paused">Pausiert</string>
-    <string name="running">Red Moon läuft. Pausieren Sie, wenn Sie APKs installieren möchten.</string>
+    <string name="running">Red Moon läuft. Pausiere Red Moon, wenn du APKs installieren möchtest</string>
     <string name="shades_color_temp">Farbtemperatur</string>
     <string name="pref_title_appearance">Filter</string>
     <string name="shades_dim_level">Grad der Abblendung</string>
