@@ -39,7 +39,7 @@
     <string name="add_new_profile_dialog_title">Унесите назив профила</string>
     <string name="add_new_profile_edit_hint">Назив профила</string>
     <string name="set_dialog">Постави</string>
-    <string name="remove_profile_dialog_title">Обрисати овај профил</string>
+    <string name="remove_profile_dialog_title">Обрисати овај профил?</string>
     <string name="ok_dialog">У реду</string>
     <string name="cancel_dialog">Одустани</string>
 
