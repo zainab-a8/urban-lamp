@@ -58,4 +58,19 @@
     <string name="resume_action">Hervat</string>
     <string name="pause_action">Pauzeer</string>
 
+    <string name="intro_label">Intro</string>
+    <string name="show_intro_text">Bekijk de intro</string>
+
+    <string name="intro_slide_1_title">Welkom!</string>
+    <string name="intro_slide_1_text">Welkom in Red Moon!</string>
+
+    <string name="intro_slide_2_title">Uw ogen beschermen</string>
+    <string name="intro_slide_2_text">In de nacht, wanneer naar je telefoon kijken pijn doet aan je ogen, kan je Red Moon gebruiken om je scherm donkerder te maken.</string>
+
+    <string name="intro_slide_3_title">Uw slaap verbeteren</string>
+    <string name="intro_slide_3_text">Blauw licht onderdrukt de productie van Melatonine, een hormoon dat helpt bij het in slaap vallen in de avond. Red Moon filtert het blauwe licht uit uw scherm, waardoor het makkelijker wordt om \'s avonds in slaap te vallen.</string>
+
+    <string name="intro_slide_4_title">Aan de slag!</string>
+    <string name="intro_slide_4_text">Klik op de schakelaar in de rechter bovenhoek om Red Moon aan te zetten.</string>
+
     </resources>
