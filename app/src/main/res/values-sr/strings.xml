@@ -1,2 +1,74 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="app_name">Црвени месец</string>
+    <string name="shades_settings">Црвени месец</string>
+    <string name="intro_label">Увод</string>
+    <string name="show_intro_text">Прикажи увод</string>
+
+    <string name="running">Покренут. Паузирај за инсталацију апликација</string>
+    <string name="paused">Паузиран</string>
+    <string name="resume_action">Настави</string>
+    <string name="pause_action">Паузирај</string>
+
+    <string name="pref_title_appearance">Филтер</string>
+    <string name="pref_title_startup">Покретање</string>
+    <string name="pref_title_other">Остало</string>
+
+    <string name="button_add_profile">Додај</string>
+    <string name="button_remove_profile">Обриши</string>
+    <string name="shades_dim_level">Затамњење</string>
+    <string name="shades_intensity_level">Интензитет</string>
+    <string name="shades_color_temp">Температура боје</string>
+    <string name="control_brightness_title">Умањи осветљеље</string>
+
+    <string name="custom_start_time_title">Настави у</string>
+    <string name="custom_end_time_title">Паузирај у</string>
+    <string name="location_title">Локација</string>
+    <string name="location_not_set">Није постављена</string>
+    <string name="latitude_short">Ширина</string>
+    <string name="longitude_short">Дужина</string>
+    <string name="searching_location">Тражим локацију</string>
+
+    <string name="dark_theme">Тамна тема</string>
+
+    <string name="email_me_title">Пошаљите ми е-поруку на marienraat@riseup.net</string>
+    <string name="project_page_title">Посетите страницу пројекта</string>
+    <string name="toast_warning_no_location">Укључите услугу лоцирања да бисте ажурирали локацију</string>
+
+    <string name="help_snackbar_text">Притисните прекидач да укључите Црвени месец</string>
+
+    <string name="add_new_profile_dialog_title">Унесите назив профила</string>
+    <string name="add_new_profile_edit_hint">Назив профила</string>
+    <string name="set_dialog">Постави</string>
+    <string name="remove_profile_dialog_title">Обрисати овај профил</string>
+    <string name="ok_dialog">У реду</string>
+    <string name="cancel_dialog">Одустани</string>
+
+    <string name="intro_slide_1_title">Добро дошли!</string>
+    <string name="intro_slide_1_text">Добро дошли у Црвени месец!</string>
+
+    <string name="intro_slide_2_title">Штити ваше очи</string>
+    <string name="intro_slide_3_title">Побољшава вам сан</string>
+    <string name="intro_slide_4_title">Почните!</string>
+    <string name="standard_profiles_array_0">Прилагођено</string>
+    <string name="standard_profiles_array_1">Подразумеван</string>
+    <string name="standard_profiles_array_2">Читање</string>
+
+    <string name="automatic_filter_options_array_0">Ручно</string>
+    <string name="automatic_filter_options_array_1">Аутоматски (сунце)</string>
+    <string name="automatic_filter_options_array_2">Аутоматски (прилагођено)</string>
+
+    <string name="intro_slide_4_text">Да укључите Црвени месец притисните прекидач у горњем десном углу.</string>
+
+    <string name="intro_slide_3_text">Плаво светло потискује производњу мелатонина, хормона који помаже да заспите ноћу. Црвени месец уклања плаво светло са екрана, омогућујући тиме да лакше заспите.</string>
+
+    <string name="toggle_shortcut_title">Прекидач</string>
+
+    <string name="intro_slide_2_text">Ако вам ноћу екран заслепљује очи, затамните екран помоћу Црвеног месеца.</string>
+
+    <string name="toast_warning_install">Нећете моћи да инсталирате апликације док је филтер покренут.</string>
+    <string name="project_page_summary">Пронађите још информација, оставите повратне информације и допринесите</string>
+    <string name="email_me_summary">Пошаљите ми е-поруку са извештајем о грешкама или предлозима</string>
+    <string name="automatic_filter_title">Режим прекидача</string>
+    <string name="pref_title_automatic_filter">Време филтера</string>
+    <string name="shortcut_activity">Прекидач Црвеног месеца</string>
+    </resources>
