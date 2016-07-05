@@ -67,4 +67,22 @@
     <string name="shades_settings">Red Moon</string>
     <string name="help_snackbar_text">Tippen Sie den Schalter, um Red Moon einzuschalten</string>
     <string name="searching_location">Suche Standort</string>
-</resources>
+<string name="intro_label">Einführung</string>
+    <string name="show_intro_text">Zeige die Einführung</string>
+
+    <string name="resume_action">Fortsetzen</string>
+    <string name="pause_action">Pause</string>
+
+    <string name="intro_slide_1_title">Willkommen!</string>
+    <string name="intro_slide_1_text">Willkommen bei Red Moon!</string>
+
+    <string name="intro_slide_2_title">Schützt deine Augen</string>
+    <string name="intro_slide_2_text">Wenn du nachts auf dein Handy schaust und deine Augen weh tun, kannst du Red Moon verwenden, um das Display zu verdunkeln.</string>
+
+    <string name="intro_slide_3_title">Verbessert deinen Schlaf</string>
+    <string name="intro_slide_3_text">Blaues Licht unterdrückt die Produktion von Melatonin, einem Hormon, welches dir dabei hilft nachts einzuschlafen. Red Moon entfernt das blaue Licht aus deinem Bildschirm und stellt so sicher, dass du gut einschlafen kannst.</string>
+
+    <string name="intro_slide_4_title">Fange an!</string>
+    <string name="intro_slide_4_text">Um Red Moon einzuschalten, drücke den Schalter in der Ecke rechts oben.</string>
+
+    </resources>
