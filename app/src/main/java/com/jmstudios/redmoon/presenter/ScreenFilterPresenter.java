@@ -131,6 +131,9 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
         mFilterCommandFactory = filterCommandFactory;
         mFilterCommandParser = filterCommandParser;
         oldScreenBrightness = -1;
+
+        if (model.getShadesPowerState())
+            mCurrentState.onScreenFilterCommand(ScreenFilterService.COMMAND_PAUSE);
     }
 
     private void refreshForegroundNotification() {
