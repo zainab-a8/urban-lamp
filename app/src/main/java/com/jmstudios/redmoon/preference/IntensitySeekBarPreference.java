@@ -31,6 +31,7 @@ import android.graphics.PorterDuff;
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.view.ScreenFilterView;
 import com.jmstudios.redmoon.activity.ShadesActivity;
+import com.jmstudios.redmoon.helper.SeekBarTouchListener;
 
 public class IntensitySeekBarPreference extends Preference {
     public static final int DEFAULT_VALUE = 50;
@@ -97,6 +98,8 @@ public class IntensitySeekBarPreference extends Preference {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
+
+        mIntensityLevelSeekBar.setOnTouchListener(new SeekBarTouchListener());
 
         updateMoonIconColor();
         updateProgressText();

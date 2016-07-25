@@ -32,6 +32,7 @@ import android.graphics.Color;
 
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.view.ScreenFilterView;
+import com.jmstudios.redmoon.helper.SeekBarTouchListener;
 
 public class ColorSeekBarPreference extends Preference {
     private static final String TAG = "ColorSeekBarPreference";
@@ -101,6 +102,8 @@ public class ColorSeekBarPreference extends Preference {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
+
+        mColorTempSeekBar.setOnTouchListener(new SeekBarTouchListener());
 
         updateMoonIconColor();
         updateProgressText();
