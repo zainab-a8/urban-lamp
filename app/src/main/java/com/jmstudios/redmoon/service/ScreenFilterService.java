@@ -63,7 +63,9 @@ public class ScreenFilterService extends Service implements ServiceLifeCycleCont
     public static final int COMMAND_ON = 0;
     public static final int COMMAND_OFF = 1;
     public static final int COMMAND_PAUSE = 2;
-    public static final int VALID_COMMAND_END = 2;
+    public static final int COMMAND_SHOW_PREVIEW = 3;
+    public static final int COMMAND_HIDE_PREVIEW = 4;
+    public static final int VALID_COMMAND_END = 4;
 
     public static final String BUNDLE_KEY_COMMAND = "jmstudios.bundle.key.COMMAND";
 

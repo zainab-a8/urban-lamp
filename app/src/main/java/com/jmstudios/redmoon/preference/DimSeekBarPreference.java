@@ -51,6 +51,7 @@ import android.graphics.Color;
 
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.view.ScreenFilterView;
+import com.jmstudios.redmoon.helper.SeekBarTouchListener;
 
 public class DimSeekBarPreference extends Preference {
     public static final int DEFAULT_VALUE = 50;
@@ -116,6 +117,8 @@ public class DimSeekBarPreference extends Preference {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
+
+        mDimLevelSeekBar.setOnTouchListener(new SeekBarTouchListener());
 
         updateMoonIconColor();
         updateProgressText();
