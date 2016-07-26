@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingTranslation">
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App Name and Activity Labels -->
     <string name="app_name">Red Moon</string>
     <string name="shades_settings">Red Moon</string>
@@ -69,4 +68,10 @@
     <string name="automatic_filter_options_array_1">Солнце</string>
     <string name="automatic_filter_options_array_2">Свой</string>
 
-</resources>
+<string name="intro_label">Интро</string>
+    <string name="show_intro_text">Показать интро</string>
+
+    <string name="pause_action">Пауза</string>
+
+    <string name="resume_action">Продолжить</string>
+    </resources>
