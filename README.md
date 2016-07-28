@@ -9,6 +9,8 @@ will have a healthier sleep.
 
 [![F-Droid](https://f-droid.org/wiki/images/0/06/F-Droid-button_get-it-on.png)](https://f-droid.org/repository/browse/?fdid=com.jmstudios.redmoon)
 
+<a href='https://play.google.com/store/apps/details?id=com.jmstudios.redmoon'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width="200" height="100"/></a> *
+
 [Direct download](https://github.com/raatmarien/red-moon/releases/download/v2.8.1/red-moon-v2.8.1.apk)
 
 [![Translation status](https://hosted.weblate.org/widgets/red-moon/-/svg-badge.svg)](https://hosted.weblate.org/engage/red-moon/?utm_source=widget)
@@ -95,3 +97,7 @@ changes and open a pull request.
 Translating is very much appreciated! Just go to
 [Weblate](https://hosted.weblate.org/projects/red-moon/strings/), create
 an account and start a new translation or update an existing one.
+
+## Footnotes
+
+\* Google Play and the Google Play logo are trademarks of Google Inc.
