@@ -46,6 +46,13 @@
     <string name="email_me_summary">發郵件給我報告Bug或者提意見</string>
     <string name="project_page_summary">檢視更多資訊，提交反饋和貢獻</string>
     <string name="toast_warning_no_location">啟用位置服務來更新位置</string>
-    <string name="toast_warning_install">濾鏡運行時無法安裝APK</string>
+    <string name="toast_warning_install">濾鏡運行時無法安裝APK。</string>
 
-</resources>
+<string name="intro_label">簡介</string>
+    <string name="show_intro_text">觀看簡介</string>
+
+    <string name="resume_action">恢復</string>
+    <string name="pause_action">暫停</string>
+
+    <string name="intro_slide_1_title">歡迎！</string>
+    </resources>
