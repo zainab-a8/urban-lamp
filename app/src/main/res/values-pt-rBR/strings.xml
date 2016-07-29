@@ -1,2 +1,79 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="app_name">Red Moon</string>
+    <string name="shades_settings">Red Moon</string>
+    <string name="intro_label">Introdução</string>
+    <string name="show_intro_text">Mostrar introdução</string>
+
+    <string name="running">Rodando. Pause para instalar APKs</string>
+    <string name="paused">Pausado</string>
+    <string name="resume_action">Retomar</string>
+    <string name="pause_action">Pausar</string>
+
+    <string name="pref_title_appearance">Filtro</string>
+    <string name="shortcut_activity">Alternar Red Moon</string>
+    <string name="pref_title_startup">Início</string>
+    <string name="pref_title_other">Outros</string>
+
+    <string name="button_add_profile">Adicionar</string>
+    <string name="button_remove_profile">Excluir</string>
+    <string name="pref_title_automatic_filter">Horários de funcionamento</string>
+    <string name="shades_intensity_level">Nível de intensidade</string>
+    <string name="control_brightness_title">Diminuir brilho</string>
+
+    <string name="automatic_filter_title">Modo de alternância</string>
+    <string name="shades_color_temp">Temperatura da cor</string>
+    <string name="custom_start_time_title">Retomar às</string>
+    <string name="custom_end_time_title">Pausar às</string>
+    <string name="location_title">Localização</string>
+    <string name="location_not_set">Não definido</string>
+    <string name="latitude_short">Lat</string>
+    <string name="searching_location">Procurando por localização</string>
+
+    <string name="dark_theme">Tema escuro</string>
+
+    <string name="email_me_title">Envie um e-mail para marienraat@riseup.net</string>
+    <string name="email_me_summary">Me envie um e-mail com bugs e sugestões</string>
+    <string name="project_page_title">Visitar a página do projeto</string>
+    <string name="project_page_summary">Encontre mais informações, deixe um feedback e contribua</string>
+    <string name="toast_warning_install">Você não poderá instalar APKs enquanto o filtro estiver rodando.</string>
+    <string name="toast_warning_no_location">Ative os serviços de localização para atualizar a sua localização</string>
+
+    <string name="help_snackbar_text">Pressione o botão para ativar Red Moon</string>
+
+    <string name="add_new_profile_dialog_title">Insira o nome do perfil</string>
+    <string name="add_new_profile_edit_hint">Nome do perfil</string>
+    <string name="remove_profile_dialog_title">Gostaria de excluir esse perfil?</string>
+    <string name="set_dialog">Ativar</string>
+    <string name="ok_dialog">Aceitar</string>
+    <string name="cancel_dialog">Cancelar</string>
+
+    <string name="toggle_shortcut_title">Alternar</string>
+
+    <string name="intro_slide_1_title">Bem-vindo!</string>
+    <string name="intro_slide_1_text">Bem-vindo ao Red Moon!</string>
+
+    <string name="intro_slide_2_title">Protegendo seus olhos</string>
+    <string name="intro_slide_2_text">À noite, olhar para seu celular
+machucam seus olhos. Você pode utilizar o Red Moon para escurecer a sua tela.</string>
+
+    <string name="intro_slide_3_title">Melhorando seu sono</string>
+    <string name="intro_slide_3_text">Luz azul suprime a
+produção de Melatonina, o hormônio responsável por te ajudar a 
+adormecer de noite. O Red Moon remove a luz azul da sua tela, garantindo
+que você adormeça mais facilmente.</string>
+
+    <string name="intro_slide_4_title">Vamos começar!</string>
+    <string name="intro_slide_4_text">Para ativar o Red Moon, pressione o
+interruptor no canto superior direito.</string>
+
+    <string name="standard_profiles_array_0">Personalizado</string>
+    <string name="standard_profiles_array_1">Padrão</string>
+    <string name="standard_profiles_array_2">Leitura</string>
+
+    <string name="automatic_filter_options_array_0">Manual</string>
+    <string name="automatic_filter_options_array_1">Automático (sol)</string>
+    <string name="automatic_filter_options_array_2">Automático (personalizado)</string>
+
+    <string name="shades_dim_level">Nível de escurecimento</string>
+    <string name="longitude_short">Long</string>
+    </resources>
