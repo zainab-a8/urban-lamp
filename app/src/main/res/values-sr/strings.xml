@@ -57,13 +57,19 @@
     <string name="automatic_filter_options_array_1">Аутоматски (сунце)</string>
     <string name="automatic_filter_options_array_2">Аутоматски (прилагођено)</string>
 
-    <string name="intro_slide_4_text">Да укључите Црвени месец притисните прекидач у горњем десном углу.</string>
+    <string name="intro_slide_4_text">Да укључите Црвени месец
+ притисните прекидач у горњем
+ десном углу.</string>
 
-    <string name="intro_slide_3_text">Плаво светло потискује производњу мелатонина, хормона који помаже да заспите ноћу. Црвени месец уклања плаво светло са екрана, омогућујући тиме да лакше заспите.</string>
+    <string name="intro_slide_3_text">Плаво светло потискује
+ производњу мелатонина, хормона који помаже да заспите ноћу.
+ Црвени месец уклања плаво светло са екрана, омогућујући тиме
+ да лакше заспите.</string>
 
     <string name="toggle_shortcut_title">Прекидач</string>
 
-    <string name="intro_slide_2_text">Ако вам ноћу екран заслепљује очи, затамните екран помоћу Црвеног месеца.</string>
+    <string name="intro_slide_2_text">Ако вам ноћу екран заслепљује
+ очи, затамните га помоћу Црвеног месеца.</string>
 
     <string name="toast_warning_install">Нећете моћи да инсталирате апликације док је филтер покренут.</string>
     <string name="project_page_summary">Пронађите још информација, оставите повратне информације и допринесите</string>
