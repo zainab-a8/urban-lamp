@@ -44,7 +44,7 @@
     <string name="ok_dialog">OK</string>
     <string name="cancel_dialog">キャンセル</string>
 
-    <string name="toggle_shortcut_title">切り替え</string>
+    <string name="toggle_shortcut_title">フィルターの切り替え</string>
 
     <string name="shades_settings">レッドムーン</string>
     <string name="standard_profiles_array_0">カスタム</string>
@@ -62,13 +62,17 @@
     <string name="intro_slide_1_text">Red Moon へようこそ!</string>
 
     <string name="intro_slide_2_title">あなたの目を保護します</string>
-    <string name="intro_slide_2_text">夜間、携帯電話を見ていて目が痛いとき、Red Moon を使用して画面を暗くすることができます。</string>
+    <string name="intro_slide_2_text">夜間、携帯電話を見ていて目が痛いとき、
+Red Moon を使用して画面を暗くすることができます。</string>
 
     <string name="intro_slide_3_title">あなたの睡眠を改善します</string>
-    <string name="intro_slide_3_text">ブルーライトは、夜眠りに落ちるために役立つホルモン、メラトニンの生産を抑制します。 Red Moon は、画面から青い光を除去して、容易に眠りに落ちることができるようにします。</string>
+    <string name="intro_slide_3_text">ブルーライトは、夜眠りに落ちるために役立つホルモン、
+メラトニンの生産を抑制します。 Red Moon は、画面から青い光を除去して、
+容易に眠りに落ちることができるようにします。</string>
 
     <string name="intro_slide_4_title">はじめましょう!</string>
-    <string name="intro_slide_4_text">Red Moon を有効にするには、右上のスイッチを押してください。</string>
+    <string name="intro_slide_4_text">Red Moon を有効にするには、
+右上のスイッチを押してください。</string>
 
     <string name="intro_label">イントロ</string>
     <string name="show_intro_text">イントロを表示</string>
