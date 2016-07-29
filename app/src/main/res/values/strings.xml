@@ -96,7 +96,7 @@
     <string name="cancel_dialog">Cancel</string>
 
     <!-- Shortcuts -->
-    <string name="toggle_shortcut_title">Toggle</string>
+    <string name="toggle_shortcut_title">Toggle Filter</string>
 
     <!-- Intro -->
     <string name="intro_slide_1_title">Welcome!</string>
