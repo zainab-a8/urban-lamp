@@ -40,6 +40,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.jmstudios.redmoon.helper.FilterCommandFactory;
 import com.jmstudios.redmoon.helper.FilterCommandSender;
@@ -47,14 +48,18 @@ import com.jmstudios.redmoon.model.SettingsModel;
 import com.jmstudios.redmoon.service.ScreenFilterService;
 
 public class ShortcutToggleActivity extends Activity {
+    private static final String TAG = "ShortcutToggleActivity";
+    private static final boolean DEBUG = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (DEBUG) Log.i(TAG, "ShortcutToggleActivity created");
         toggleAndFinish(this);
     }
 
     public static void toggleAndFinish(Activity activity) {
+        if (DEBUG) Log.i(TAG, "toggleAndFinish called.");
         FilterCommandSender commandSender = new FilterCommandSender(activity);
         FilterCommandFactory commandFactory = new FilterCommandFactory(activity);
         Intent onCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_ON);
