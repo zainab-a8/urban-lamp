@@ -49,7 +49,7 @@
     <string name="ok_dialog">OK</string>
     <string name="cancel_dialog">Cancel</string>
 
-    <string name="toggle_shortcut_title">Toggle</string>
+    <string name="toggle_shortcut_title">Toggle Filter</string>
 
     <string name="intro_slide_1_title">Welcome!</string>
     <string name="intro_slide_1_text">Welcome to Red Moon!</string>
