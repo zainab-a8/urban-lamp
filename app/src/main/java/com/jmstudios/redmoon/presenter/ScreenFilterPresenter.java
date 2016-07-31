@@ -107,8 +107,11 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
     private final State mOffState = new OffState();
     private final State mPauseState = new PauseState();
     private final State mPreviewState = new PreviewState();
-    private final PreviewState mPreviewStateCast = (PreviewState) mPreviewState;
+    private final State mSuspendState = new SuspendState();
     private State mCurrentState = mOffState;
+
+    private final PreviewState mPreviewStateCast = (PreviewState) mPreviewState;
+    private final SuspendState mSuspendStateCast = (SuspendState) mSuspendState;
 
     // Screen brightness state
     private int oldScreenBrightness;
@@ -564,6 +567,20 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                     moveToState(mPreviewState);
 
                     break;
+
+                case ScreenFilterService.COMMAND_START_SUSPEND:
+                    mSuspendStateCast.stateToReturnTo  =
+                        mSuspendStateCast.stateOnStart = ScreenFilterService.COMMAND_ON;
+
+                    mServiceController.stopForeground(false);
+
+                    closeScreenFilter();
+
+                    moveToState(mSuspendState);
+
+                    refreshForegroundNotification();
+
+                    break;
             }
         }
     }
@@ -617,6 +634,14 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                     mView.setColorTempProgress(filterColor);
 
                     openScreenFilter();
+
+                    break;
+
+                case ScreenFilterService.COMMAND_START_SUSPEND:
+                    mSuspendStateCast.stateToReturnTo  =
+                        mSuspendStateCast.stateOnStart = ScreenFilterService.COMMAND_PAUSE;
+
+                    moveToState(mSuspendState);
 
                     break;
             }
@@ -761,6 +786,86 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                 moveToState(mOffState);
 
                 mServiceController.stop();
+
+                if (stateOnStart == ScreenFilterService.COMMAND_ON) {
+                    if (mSettingsModel.getBrightnessControlFlag()) {
+                        restoreBrightnessState();
+                    }
+                }
+
+                break;
+            }
+        }
+    }
+
+    /* This state is used when the filter is suspended temporarily,
+     * because the user is in an excluded app (for example the package
+     * installer). It stops the filter like in the PauseState, but
+     * doesn't change the UI, switch or brightness state just like the
+     * PreviewState. Like the PreviewState, it logs changes to the
+     * state and applies them when the suspend state is deactivated.
+     */
+    private class SuspendState extends State {
+        public int stateOnStart;
+        public int stateToReturnTo;
+
+        @Override
+        public void onScreenFilterCommand(int commandFlag) {
+            switch (commandFlag) {
+            case ScreenFilterService.COMMAND_ON:
+            case ScreenFilterService.COMMAND_PAUSE:
+            case ScreenFilterService.COMMAND_OFF:
+                stateToReturnTo = commandFlag;
+                break;
+            case ScreenFilterService.COMMAND_SHOW_PREVIEW:
+            case ScreenFilterService.COMMAND_HIDE_PREVIEW:
+                // Preview is ignored when the filter is suspended
+                break;
+            case ScreenFilterService.COMMAND_STOP_SUSPEND:
+                moveBackToState(stateToReturnTo);
+                break;
+            }
+        }
+
+        private void moveBackToState(int commandFlag) {
+            switch (commandFlag) {
+            case ScreenFilterService.COMMAND_ON:
+                moveToState(mOnState);
+                refreshForegroundNotification();
+
+                openScreenFilter();
+
+                mView.setFilterDimLevel(mSettingsModel.getShadesDimLevel());
+                mView.setFilterIntensityLevel(mSettingsModel.getShadesIntensityLevel());
+                mView.setColorTempProgress(mSettingsModel.getShadesColor());
+
+                if (stateOnStart == ScreenFilterService.COMMAND_OFF ||
+                    stateOnStart == ScreenFilterService.COMMAND_PAUSE) {
+                    if (mSettingsModel.getBrightnessControlFlag()) {
+                        saveOldBrightnessState();
+                        setBrightnessState(0, false, mContext);
+                    }
+                }
+
+                break;
+            case ScreenFilterService.COMMAND_PAUSE:
+                moveToState(mPauseState);
+
+                if (stateOnStart == ScreenFilterService.COMMAND_ON) {
+                    if (mSettingsModel.getBrightnessControlFlag()) {
+                        restoreBrightnessState();
+                    }
+                }
+
+                break;
+            case ScreenFilterService.COMMAND_OFF:
+                moveToState(mOffState);
+                mServiceController.stopForeground(true);
+
+                // We need to cancel the current notification
+                NotificationManager mNotificationManager =
+                    (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+                mNotificationManager.cancel(ScreenFilterPresenter.NOTIFICATION_ID);
 
                 if (stateOnStart == ScreenFilterService.COMMAND_ON) {
                     if (mSettingsModel.getBrightnessControlFlag()) {
