@@ -1,2 +1,67 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="pause_action">Durdur</string>
+
+    <string name="button_add_profile">Ekle</string>
+    <string name="button_remove_profile">Sil</string>
+    <string name="shades_color_temp">Renk sıcaklığı</string>
+    <string name="project_page_title">Proje sayfasını ziyaret et</string>
+    <string name="add_new_profile_edit_hint">Profil ismi</string>
+    <string name="intro_slide_1_title">Hoş geldiniz!</string>
+    <string name="intro_slide_3_text">Mavi ışık geceleri uyumanı sağlayan Melatonin hormonu üretimini önler.Red Moon daha rahat uyumanız için ekranınızdaki mavi ışığı kaldırır.</string>
+
+    <string name="standard_profiles_array_0">Özel</string>
+    <string name="standard_profiles_array_1">Varsayılan</string>
+    <string name="pref_title_appearance">Filtre</string>
+    <string name="resume_action">Devam et</string>
+    <string name="pref_title_other">Diğer</string>
+
+    <string name="paused">Durduruldu</string>
+    <string name="shades_dim_level">Karartma düzeyi</string>
+    <string name="shades_intensity_level">Yoğunluk düzeyi</string>
+    <string name="add_new_profile_dialog_title">Profil ismini gir</string>
+    <string name="cancel_dialog">İptal</string>
+
+    <string name="ok_dialog">Tamam</string>
+    <string name="automatic_filter_options_array_0">Manuel</string>
+    <string name="standard_profiles_array_2">Okuma</string>
+
+    <string name="running">Çalışıyor.Apk kurmak için durdurun</string>
+    <string name="app_name">"Red  Moon"</string>
+    <string name="shades_settings">"Red  Moon"</string>
+    <string name="pref_title_automatic_filter">Filtre zamanları</string>
+    <string name="custom_start_time_title">Devam et</string>
+    <string name="custom_end_time_title">Durdur</string>
+    <string name="dark_theme">Siyah tema</string>
+
+    <string name="toast_warning_no_location">Konumu güncellemek için konum hizmetlerini aç</string>
+
+    <string name="toast_warning_install">Filtre çalışırken apk yükleyemezsin.</string>
+    <string name="intro_label">İntro</string>
+    <string name="show_intro_text">İntroyu göster</string>
+
+    <string name="location_not_set">Ayarlanmamış</string>
+    <string name="location_title">Konum</string>
+    <string name="email_me_title">Bana marienraat@riseup.net adresinden e-posta gönder</string>
+    <string name="longitude_short">Uzun</string>
+    <string name="searching_location">Konum aranıyor</string>
+
+    <string name="project_page_summary">Daha fazla bilgi bul,geri bilidirim gönder ve katkıda bulun</string>
+    <string name="set_dialog">Ayarla</string>
+    <string name="intro_slide_1_text">Hoş Geldiniz!</string>
+
+    <string name="intro_slide_2_title">Gözlerinizi koruyun</string>
+    <string name="intro_slide_3_title">Uyku kalitenizi arttırın</string>
+    <string name="automatic_filter_options_array_1">Otomatik (güneş)</string>
+    <string name="automatic_filter_options_array_2">Otomatik (özel)</string>
+
+    <string name="control_brightness_title">Düşük parlaklık</string>
+
+    <string name="automatic_filter_title">Geçiş modu</string>
+    <string name="intro_slide_4_text">Red Moon\'u etkinleştirmek için sağ üst köşedeki düğmeyi açın.</string>
+
+    <string name="help_snackbar_text">Red Moon\'u etkinleştirmek için duğmeye bas</string>
+
+    <string name="remove_profile_dialog_title">Bu profili sil?</string>
+    <string name="intro_slide_2_text">Gece telefonuna bakmak gözlerine zarar verir,Red Moon\'u kullanıp ekranını karartabilirsin.</string>
+
+    </resources>
