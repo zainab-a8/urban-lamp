@@ -51,7 +51,7 @@
     <string name="ok_dialog">Aceptar</string>
     <string name="cancel_dialog">Cancelar</string>
 
-    <string name="toggle_shortcut_title">Des/activar</string>
+    <string name="toggle_shortcut_title">Des/activar filtro</string>
 
     <string name="shortcut_activity">Des/activar Red Moon</string>
     <string name="running">En ejecución, pausa para instalar apks</string>
