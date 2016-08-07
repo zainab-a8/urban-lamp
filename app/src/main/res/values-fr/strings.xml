@@ -44,7 +44,7 @@
     <string name="ok_dialog">OK</string>
     <string name="cancel_dialog">Annuler</string>
 
-    <string name="toggle_shortcut_title">Activer</string>
+    <string name="toggle_shortcut_title">Activer le filtre</string>
 
     <string name="shades_settings">Red Moon</string>
     <string name="standard_profiles_array_0">Personnalisé</string>
@@ -65,10 +65,12 @@
     <string name="intro_slide_1_text">Bienvenue dans Red Moon !</string>
 
     <string name="intro_slide_2_title">Protéger vos yeux</string>
-    <string name="intro_slide_2_text">La nuit, quand fixer votre téléphone vous fait mal aux yeux, vous pouvez utiliser Red Moon pour assombrir votre écran.</string>
+    <string name="intro_slide_2_text">La nuit, quand fixer votre téléphone vous fait mal aux yeux,
+vous pouvez utiliser Red Moon pour assombrir votre écran.</string>
 
     <string name="intro_slide_3_title">Améliorer votre sommeil</string>
-    <string name="intro_slide_3_text">La lumière bleue empêche la production de mélatonine, une hormone qui vous aide à vous endormir la nuit. Red Moon bloque la lumière bleue produite par votre écran, ce qui vous permet de vous endormir plus facilement.</string>
+    <string name="intro_slide_3_text">La lumière bleue empêche la production de mélatonine, une hormone qui vous aide à vous endormir la nuit.
+Red Moon bloque la lumière bleue produite par votre écran, ce qui vous permet de vous endormir plus facilement.</string>
 
     <string name="intro_slide_4_title">Commencer !</string>
     <string name="intro_slide_4_text">Pour activer Red Moon, appuyez sur le bouton dans le coin supérieur droit.</string>
