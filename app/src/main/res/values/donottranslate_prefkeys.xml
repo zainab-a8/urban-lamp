@@ -57,5 +57,6 @@
   <string name="pref_key_brightness_level" translatable="false">pref_key_brightness_level</string>
   <string name="pref_key_ammount_profiles" translatable="false">pref_key_ammount_profiles</string>
   <string name="pref_key_intro_shown" translatable="false">pref_key_intro_shown</string>
+  <string name="pref_key_automatic_suspend" translatable="false">pref_key_automatic_suspend</string>
 
 </resources>

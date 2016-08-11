@@ -301,6 +301,9 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
         refreshForegroundNotification();
     }
 
+    @Override
+    public void onAutomaticSuspendChanged(boolean automaticSuspend) { }
+
     private void animateShadesColor(int toColor) {
         cancelRunningAnimator(mColorAnimator);
 

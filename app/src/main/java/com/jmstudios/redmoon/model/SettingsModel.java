@@ -84,6 +84,7 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
     private String mProfilePrefKey;
     private String mAmmountProfilesPrefKey;
     private String mIntroShownPrefKey;
+    private String mAutomaticSuspendPrefKey;
 
     public SettingsModel(@NonNull Resources resources, @NonNull SharedPreferences sharedPreferences) {
         mSharedPreferences = sharedPreferences;
@@ -107,6 +108,7 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
         mProfilePrefKey = resources.getString(R.string.pref_key_profile_spinner);
         mAmmountProfilesPrefKey = resources.getString(R.string.pref_key_ammount_profiles);
         mIntroShownPrefKey = resources.getString(R.string.pref_key_intro_shown);
+        mAutomaticSuspendPrefKey = resources.getString(R.string.pref_key_automatic_suspend);
     }
 
     public boolean getShadesPowerState() {
@@ -221,6 +223,10 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
         return mSharedPreferences.getBoolean(mIntroShownPrefKey, false);
     }
 
+    public boolean getAutomaticSuspend() {
+        return mSharedPreferences.getBoolean(mAutomaticSuspendPrefKey, false);
+    }
+
     public void addOnSettingsChangedListener(OnSettingsChangedListener listener) {
         mSettingsChangedListeners.add(listener);
     }
@@ -301,6 +307,10 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
             int profile = getProfile();
             for (OnSettingsChangedListener mSettingsChangedListener : mSettingsChangedListeners)
                 mSettingsChangedListener.onProfileChanged(profile);
+        } else if (key.equals(mAutomaticSuspendPrefKey)) {
+            boolean automaticSuspend = getAutomaticSuspend();
+            for (OnSettingsChangedListener mSettingsChangedListener : mSettingsChangedListeners)
+                mSettingsChangedListener.onAutomaticSuspendChanged(automaticSuspend);
         }
     }
     //endregion
@@ -316,5 +326,6 @@ public class SettingsModel implements SharedPreferences.OnSharedPreferenceChange
         void onShadesAutomaticTurnOffChanged(String turnOffTime);
         void onLowerBrightnessChanged(boolean lowerBrightness);
         void onProfileChanged(int profile);
+        void onAutomaticSuspendChanged(boolean automaticSuspend);
     }
 }

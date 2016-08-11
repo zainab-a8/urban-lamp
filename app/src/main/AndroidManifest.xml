@@ -109,6 +109,23 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.jmstudios.redmoon.activity.AutomaticSuspendPreferenceActivity"
+            android:label="@string/automatic_suspend_preference_activity"
+            android:theme="@style/AppTheme"
+            android:parentActivityName="com.jmstudios.redmoon.activity.ShadesActivity" >
+
+          <!-- Parent activity meta-data to support 4.0 and lower -->
+          <meta-data
+              android:name="android.support.PARENT_ACTIVITY"
+              android:value="com.jmstudios.redmoon.activity.ShadesActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <service
             android:name="com.jmstudios.redmoon.service.ScreenFilterService"
             android:enabled="true" >

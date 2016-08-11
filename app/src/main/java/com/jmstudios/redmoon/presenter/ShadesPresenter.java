@@ -154,5 +154,8 @@ public class ShadesPresenter implements SettingsModel.OnSettingsChangedListener 
 
     @Override
     public void onProfileChanged(int profile) { }
+
+    @Override
+    public void onAutomaticSuspendChanged(boolean automaticSuspend) { }
     //endregion
 }
