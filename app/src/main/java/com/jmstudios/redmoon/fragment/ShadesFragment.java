@@ -91,6 +91,7 @@ public class ShadesFragment extends PreferenceFragment {
     private FilterTimePreference automaticTurnOffPref;
     private LocationPreference locationPref;
     private Preference otherPrefCategory;
+    private Preference automaticSuspendPref;
 
     private boolean searchingLocation;
 
@@ -111,6 +112,7 @@ public class ShadesFragment extends PreferenceFragment {
         String automaticTurnOffPrefKey = getString(R.string.pref_key_custom_end_time);
         String locationPrefKey = getString(R.string.pref_key_location);
         String otherCategoryPrefKey = getString(R.string.pref_key_other);
+        String automaticSuspendPrefKey = getString(R.string.pref_key_automatic_suspend);
 
         PreferenceScreen prefScreen = getPreferenceScreen();
         darkThemePref = (SwitchPreference) prefScreen.findPreference(darkThemePrefKey);
@@ -120,6 +122,7 @@ public class ShadesFragment extends PreferenceFragment {
         automaticTurnOffPref = (FilterTimePreference) prefScreen.findPreference(automaticTurnOffPrefKey);
         locationPref = (LocationPreference) prefScreen.findPreference(locationPrefKey);
         otherPrefCategory = prefScreen.findPreference(otherCategoryPrefKey);
+        automaticSuspendPref = prefScreen.findPreference(automaticSuspendPrefKey);
 
         darkThemePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -177,6 +180,21 @@ public class ShadesFragment extends PreferenceFragment {
                 }
             });
 
+        // Automatic suspend
+        boolean automaticSuspendOn = ((ShadesActivity) getActivity()).getSettingsModel()
+            .getAutomaticSuspend();
+        automaticSuspendPref.setSummary(automaticSuspendOn ?
+                                        R.string.text_switch_on : R.string.text_switch_off);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        boolean automaticSuspendOn = ((ShadesActivity) getActivity()).getSettingsModel()
+            .getAutomaticSuspend();
+        automaticSuspendPref.setSummary(automaticSuspendOn ?
+                                        R.string.text_switch_on : R.string.text_switch_off);
     }
 
     private boolean onAutomaticFilterPreferenceChange(Preference preference, Object newValue) {
@@ -311,10 +329,12 @@ public class ShadesFragment extends PreferenceFragment {
     private void disableFilterPreferences() {
         setAllPreferencesEnabled(false);
         otherPrefCategory.setEnabled(true);
+        automaticSuspendPref.setEnabled(false);
     }
 
     private void setPreferencesEnabled() {
         setAllPreferencesEnabled(true);
+        automaticSuspendPref.setEnabled(true);
 
         boolean custom = automaticFilterPref.getValue().toString().equals("custom");
         automaticTurnOnPref.setEnabled(custom);

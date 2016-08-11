@@ -42,6 +42,11 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:allowBackup="true"
@@ -101,6 +106,23 @@
             android:theme="@style/TransparentTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.jmstudios.redmoon.activity.AutomaticSuspendPreferenceActivity"
+            android:label="@string/automatic_suspend_preference_activity"
+            android:theme="@style/AppTheme"
+            android:parentActivityName="com.jmstudios.redmoon.activity.ShadesActivity" >
+
+          <!-- Parent activity meta-data to support 4.0 and lower -->
+          <meta-data
+              android:name="android.support.PARENT_ACTIVITY"
+              android:value="com.jmstudios.redmoon.activity.ShadesActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 

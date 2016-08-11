@@ -382,6 +382,9 @@ public class ProfileSelectorPreference extends Preference
                         currentColor = newProfile.mColorProgress;
                     }
                 }
+
+                @Override
+                public void onAutomaticSuspendChanged(boolean automaticSuspend) { }
             });
     }
 }
