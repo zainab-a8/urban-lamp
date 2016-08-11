@@ -77,4 +77,10 @@
     <string name="automatic_filter_title">Режим прекидача</string>
     <string name="pref_title_automatic_filter">Време филтера</string>
     <string name="shortcut_activity">Прекидач Црвеног месеца</string>
+    <string name="text_switch_on">Укљ</string>
+    <string name="text_switch_off">Иск</string>
+    <string name="usage_stats_dialog_title">Дозволи приступ статистикама</string>
+    <string name="automatic_suspend_preference_activity">Аутоматско обустављање</string>
+
+    <string name="automatic_suspend_title">Аутоматско обустављање филтера у безбедним апликацијама</string>
     </resources>
