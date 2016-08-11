@@ -31,6 +31,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.annotation.Nullable;
 import android.support.annotation.LayoutRes;
+import android.content.Intent;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatDelegate;
@@ -42,6 +43,8 @@ import com.jmstudios.redmoon.preference.SwitchBarPreference;
 import com.jmstudios.redmoon.R;
 
 public class AutomaticSuspendPreferenceActivity extends PreferenceActivity {
+    public static final int RESULT_USAGE_ACCESS = 1;
+
     private AppCompatDelegate mDelegate;
 
     private Preference mSummaryPreference;
@@ -59,7 +62,7 @@ public class AutomaticSuspendPreferenceActivity extends PreferenceActivity {
             .createPreferenceScreen(this);
         setPreferenceScreen(preferenceScreen);
 
-        mSwitchBarPreference = new SwitchBarPreference(this);
+        mSwitchBarPreference = new SwitchBarPreference(this, this);
         mSwitchBarPreference.setKey(getResources().getString(R.string.pref_key_automatic_suspend));
         preferenceScreen.addPreference(mSwitchBarPreference);
 
@@ -79,6 +82,15 @@ public class AutomaticSuspendPreferenceActivity extends PreferenceActivity {
             super.onApplyThemeResource(theme, R.style.AppThemeDark, first);
         else
             super.onApplyThemeResource(theme, resid, first);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+        case RESULT_USAGE_ACCESS:
+            mSwitchBarPreference.usageStatsPermissionAttempted();
+            break;
+        }
     }
 
     @Override

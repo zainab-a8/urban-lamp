@@ -62,7 +62,7 @@ public class CurrentAppMonitoringThread extends Thread {
 
         try {
             while (!interrupted()) {
-                String currentApp = getCurrentApp();
+                String currentApp = getCurrentApp(mContext);
 
                 if (DEBUG) Log.d(TAG, String.format("Current app is: %s", currentApp));
 
@@ -80,41 +80,50 @@ public class CurrentAppMonitoringThread extends Thread {
         if (DEBUG) Log.i(TAG, "Shutting down CurrentAppMonitoringThread");
     }
 
-    private String getCurrentApp() {
+    public static boolean isAppMonitoringWorking(Context context) {
+        return !getCurrentApp(context).equals("");
+    }
+
+    private static String getCurrentApp(Context context) {
         // http://stackoverflow.com/q/33581311
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            return getCurrentAppUsingUsageStats();
+            return getCurrentAppUsingUsageStats(context);
         } else {
-            return getCurrentAppUsingActivityManager();
+            return getCurrentAppUsingActivityManager(context);
         }
     }
 
-    private String getCurrentAppUsingUsageStats() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            UsageStatsManager usm = (UsageStatsManager) mContext.getSystemService("usagestats");
-            long time = System.currentTimeMillis();
-            List<UsageStats> appList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
-                                                           time - 1000 * 1000, time);
+    private static String getCurrentAppUsingUsageStats(Context context) {
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                UsageStatsManager usm = (UsageStatsManager) context.getSystemService("usagestats");
+                long time = System.currentTimeMillis();
+                List<UsageStats> appList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
+                                                               time - 1000 * 1000, time);
 
-            if (appList != null && appList.size() > 0) {
-                SortedMap<Long, UsageStats> mySortedMap = new TreeMap<Long, UsageStats>();
-                for (UsageStats usageStats : appList) {
-                    mySortedMap.put(usageStats.getLastTimeUsed(),
-                                    usageStats);
-                }
-                if (mySortedMap != null && !mySortedMap.isEmpty()) {
-                    return mySortedMap.get(mySortedMap.lastKey()).getPackageName();
+                if (appList != null && appList.size() > 0) {
+                    SortedMap<Long, UsageStats> mySortedMap = new TreeMap<Long, UsageStats>();
+                    for (UsageStats usageStats : appList) {
+                        mySortedMap.put(usageStats.getLastTimeUsed(),
+                                        usageStats);
+                    }
+                    if (mySortedMap != null && !mySortedMap.isEmpty()) {
+                        return mySortedMap.get(mySortedMap.lastKey()).getPackageName();
+                    }
                 }
             }
+        } catch (Exception e) {
+            // Ignore exceptions to allow the user to determine if it
+            // works him/herself
         }
 
         return "";
     }
 
-    private String getCurrentAppUsingActivityManager() {
+    private static String getCurrentAppUsingActivityManager(Context context) {
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
-            ActivityManager am = (ActivityManager) (new ContextWrapper(mContext))
-                .getBaseContext().getSystemService(mContext.ACTIVITY_SERVICE);
+            ActivityManager am = (ActivityManager) (new ContextWrapper(context))
+                .getBaseContext().getSystemService(context.ACTIVITY_SERVICE);
             return am.getRunningTasks(1).get(0).topActivity.getPackageName();
         }
         return "";
