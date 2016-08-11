@@ -56,57 +56,84 @@ public class CurrentAppMonitoringThread extends Thread {
             (ScreenFilterService.COMMAND_STOP_SUSPEND);
     }
 
+    @Override
     public void run() {
         if (DEBUG) Log.i(TAG, "CurrentAppMonitoringThread running");
-        while (true) {
-            String currentApp = "";
 
-            // http://stackoverflow.com/q/33581311
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                UsageStatsManager usm = (UsageStatsManager) mContext.getSystemService("usagestats");
-                long time = System.currentTimeMillis();
-                List<UsageStats> appList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
-                                                               time - 1000 * 1000, time);
+        try {
+            while (!interrupted()) {
+                String currentApp = getCurrentApp();
 
-                if (appList != null && appList.size() > 0) {
-                    SortedMap<Long, UsageStats> mySortedMap = new TreeMap<Long, UsageStats>();
-                    for (UsageStats usageStats : appList) {
-                        mySortedMap.put(usageStats.getLastTimeUsed(),
-                                        usageStats);
-                    }
-                    if (mySortedMap != null && !mySortedMap.isEmpty()) {
-                        currentApp = mySortedMap.get(
-                                                     mySortedMap.lastKey()).getPackageName();
-                    }
-                }
-            } else {
-                ActivityManager am = (ActivityManager) (new ContextWrapper(mContext))
-                    .getBaseContext().getSystemService(mContext.ACTIVITY_SERVICE);
-                currentApp = am.getRunningTasks(1).get(0).topActivity.getPackageName();
-            }
+                if (DEBUG) Log.d(TAG, String.format("Current app is: %s", currentApp));
 
-            if (DEBUG) Log.d(TAG, String.format("Current app is: %s", currentApp));
+                if (isAppSecured(currentApp))
+                    sendStartSuspendCommand();
+                else
+                    sendStopSuspendCommand();
 
-            if (currentApp.equals("com.android.packageinstaller"))
-                sendStartSuspendCommand();
-            else
-                sendStopSuspendCommand();
-
-            try {
                 sleep(1000);
-            } catch(Exception e) {
-                e.printStackTrace();
             }
+        } catch (InterruptedException e) {
+
+        }
+
+        if (DEBUG) Log.i(TAG, "Shutting down CurrentAppMonitoringThread");
+    }
+
+    private String getCurrentApp() {
+        // http://stackoverflow.com/q/33581311
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            return getCurrentAppUsingUsageStats();
+        } else {
+            return getCurrentAppUsingActivityManager();
         }
     }
 
-    public void sendStartSuspendCommand() {
+    private String getCurrentAppUsingUsageStats() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            UsageStatsManager usm = (UsageStatsManager) mContext.getSystemService("usagestats");
+            long time = System.currentTimeMillis();
+            List<UsageStats> appList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
+                                                           time - 1000 * 1000, time);
+
+            if (appList != null && appList.size() > 0) {
+                SortedMap<Long, UsageStats> mySortedMap = new TreeMap<Long, UsageStats>();
+                for (UsageStats usageStats : appList) {
+                    mySortedMap.put(usageStats.getLastTimeUsed(),
+                                    usageStats);
+                }
+                if (mySortedMap != null && !mySortedMap.isEmpty()) {
+                    return mySortedMap.get(mySortedMap.lastKey()).getPackageName();
+                }
+            }
+        }
+
+        return "";
+    }
+
+    private String getCurrentAppUsingActivityManager() {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
+            ActivityManager am = (ActivityManager) (new ContextWrapper(mContext))
+                .getBaseContext().getSystemService(mContext.ACTIVITY_SERVICE);
+            return am.getRunningTasks(1).get(0).topActivity.getPackageName();
+        }
+        return "";
+    }
+
+    private boolean isAppSecured(String app) {
+        return app.equals("com.android.packageinstaller") ||
+            app.equals("eu.chainfire.supersu") ||
+            app.equals("com.koushikdutta.superuser") ||
+            app.equals("me.phh.superuser");
+    }
+
+    private void sendStartSuspendCommand() {
         if (DEBUG) Log.i(TAG, "Send a start suspend command");
 
         commandSender.send(startSuspendCommand);
     }
 
-    public void sendStopSuspendCommand() {
+    private void sendStopSuspendCommand() {
         if (DEBUG) Log.i(TAG, "Send a stop suspend command");
 
         commandSender.send(stopSuspendCommand);

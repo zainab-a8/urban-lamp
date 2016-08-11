@@ -54,7 +54,9 @@ import android.content.ContentResolver;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.os.Build.VERSION;
+import android.os.PowerManager;
 import android.app.NotificationManager;
+import android.content.IntentFilter;
 
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.activity.ShadesActivity;
@@ -72,9 +74,12 @@ import com.jmstudios.redmoon.receiver.NextProfileCommandReceiver;
 import com.jmstudios.redmoon.service.ScreenFilterService;
 import com.jmstudios.redmoon.service.ServiceLifeCycleController;
 import com.jmstudios.redmoon.view.ScreenFilterView;
+import com.jmstudios.redmoon.thread.CurrentAppMonitoringThread;
+import com.jmstudios.redmoon.receiver.ScreenStateReceiver;
 
 public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrientationChangeListener,
-                                              SettingsModel.OnSettingsChangedListener {
+                                              SettingsModel.OnSettingsChangedListener,
+                                              ScreenStateReceiver.ScreenStateListener {
     private static final String TAG = "ScreenFilterPresenter";
     private static final boolean DEBUG = true;
 
@@ -95,6 +100,9 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
     private NotificationCompat.Builder mNotificationBuilder;
     private FilterCommandFactory mFilterCommandFactory;
     private FilterCommandParser mFilterCommandParser;
+    private CurrentAppMonitoringThread mCamThread;
+    private ScreenStateReceiver mScreenStateReceiver;
+    private boolean screenOff;
 
     private boolean mShuttingDown = false;
     private boolean mScreenFilterOpen = false;
@@ -135,6 +143,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
         mNotificationBuilder = notificationBuilder;
         mFilterCommandFactory = filterCommandFactory;
         mFilterCommandParser = filterCommandParser;
+        mScreenStateReceiver = new ScreenStateReceiver(this);
         oldScreenBrightness = -1;
 
         if (model.getShadesPowerState())
@@ -302,7 +311,15 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
     }
 
     @Override
-    public void onAutomaticSuspendChanged(boolean automaticSuspend) { }
+    public void onAutomaticSuspendChanged(boolean automaticSuspend) {
+        if (mCurrentState == mOnState) {
+            if (automaticSuspend) {
+                startAppMonitoring();
+            } else {
+                stopAppMonitoring();
+            }
+        }
+    }
 
     private void animateShadesColor(int toColor) {
         cancelRunningAnimator(mColorAnimator);
@@ -430,6 +447,62 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                            mContext);
     }
 
+    public void startAppMonitoring() {
+        if (DEBUG) Log.i(TAG, "Starting app monitoring");
+        PowerManager powerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT_WATCH) {
+            screenOff = !powerManager.isInteractive();
+        } else {
+            screenOff = !powerManager.isScreenOn();
+        }
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        filter.addAction(Intent.ACTION_SCREEN_ON);
+        mContext.registerReceiver(mScreenStateReceiver, filter);
+
+        if (mCamThread == null && !screenOff) {
+            mCamThread = new CurrentAppMonitoringThread(mContext);
+            mCamThread.start();
+        }
+    }
+
+    public void stopAppMonitoring() {
+        if (DEBUG) Log.i(TAG, "Stopping app monitoring");
+        if (mCamThread != null) {
+            if (!mCamThread.interrupted()) {
+                mCamThread.interrupt();
+            }
+            mCamThread = null;
+        }
+
+        mContext.unregisterReceiver(mScreenStateReceiver);
+    }
+
+    @Override
+    public void onScreenTurnedOn() {
+        if (DEBUG) Log.i(TAG, "Screen turn on received");
+        screenOff = false;
+
+        if (mCamThread == null) {
+            mCamThread = new CurrentAppMonitoringThread(mContext);
+            mCamThread.start();
+        }
+    }
+
+    @Override
+    public void onScreenTurnedOff() {
+        if (DEBUG) Log.i(TAG, "Screen turn off received");
+        screenOff = true;
+
+        if (mCamThread != null) {
+            if (!mCamThread.interrupted()) {
+                mCamThread.interrupt();
+            }
+            mCamThread = null;
+        }
+    }
+
     private WindowManager.LayoutParams createFilterLayoutParams() {
         WindowManager.LayoutParams wlp = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
@@ -528,6 +601,10 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                         restoreBrightnessState();
                     }
 
+                    if (mSettingsModel.getAutomaticSuspend()) {
+                        stopAppMonitoring();
+                    }
+
                     break;
 
                 case ScreenFilterService.COMMAND_OFF:
@@ -558,6 +635,10 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
 
                     if (mSettingsModel.getBrightnessControlFlag()) {
                         restoreBrightnessState();
+                    }
+
+                    if (mSettingsModel.getAutomaticSuspend()) {
+                        stopAppMonitoring();
                     }
 
                     break;
@@ -604,6 +685,10 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                     if (mSettingsModel.getBrightnessControlFlag()) {
                         saveOldBrightnessState();
                         setBrightnessState(0, false, mContext);
+                    }
+
+                    if (mSettingsModel.getAutomaticSuspend()) {
+                        startAppMonitoring();
                     }
 
                     break;
@@ -677,6 +762,10 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                     if (mSettingsModel.getBrightnessControlFlag()) {
                         saveOldBrightnessState();
                         setBrightnessState(0, false, mContext);
+                    }
+
+                    if (mSettingsModel.getAutomaticSuspend()) {
+                        startAppMonitoring();
                     }
 
                     break;
@@ -759,6 +848,10 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                         saveOldBrightnessState();
                         setBrightnessState(0, false, mContext);
                     }
+
+                    if (mSettingsModel.getAutomaticSuspend()) {
+                        startAppMonitoring();
+                    }
                 }
 
                 break;
@@ -777,6 +870,10 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                     if (mSettingsModel.getBrightnessControlFlag()) {
                         restoreBrightnessState();
                     }
+
+                    if (mSettingsModel.getAutomaticSuspend()) {
+                        stopAppMonitoring();
+                    }
                 }
 
                 break;
@@ -793,6 +890,10 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                 if (stateOnStart == ScreenFilterService.COMMAND_ON) {
                     if (mSettingsModel.getBrightnessControlFlag()) {
                         restoreBrightnessState();
+                    }
+
+                    if (mSettingsModel.getAutomaticSuspend()) {
+                        stopAppMonitoring();
                     }
                 }
 
@@ -848,6 +949,10 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                         saveOldBrightnessState();
                         setBrightnessState(0, false, mContext);
                     }
+
+                    if (mSettingsModel.getAutomaticSuspend()) {
+                        startAppMonitoring();
+                    }
                 }
 
                 break;
@@ -857,6 +962,10 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                 if (stateOnStart == ScreenFilterService.COMMAND_ON) {
                     if (mSettingsModel.getBrightnessControlFlag()) {
                         restoreBrightnessState();
+                    }
+
+                    if (mSettingsModel.getAutomaticSuspend()) {
+                        stopAppMonitoring();
                     }
                 }
 
@@ -873,6 +982,10 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                 if (stateOnStart == ScreenFilterService.COMMAND_ON) {
                     if (mSettingsModel.getBrightnessControlFlag()) {
                         restoreBrightnessState();
+                    }
+
+                    if (mSettingsModel.getAutomaticSuspend()) {
+                        stopAppMonitoring();
                     }
                 }
 
