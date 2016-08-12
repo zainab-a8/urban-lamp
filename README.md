@@ -11,7 +11,7 @@ will have a healthier sleep.
 
 <a href='https://play.google.com/store/apps/details?id=com.jmstudios.redmoon'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width="200" height="100"/></a> *
 
-[Direct download](https://github.com/raatmarien/red-moon/releases/download/v2.8.2/red-moon-v2.8.2.apk)
+[Direct download](https://github.com/raatmarien/red-moon/releases/download/v2.9.0/red-moon-v2.9.0.apk)
 
 [![Translation status](https://hosted.weblate.org/widgets/red-moon/-/svg-badge.svg)](https://hosted.weblate.org/engage/red-moon/?utm_source=widget)
 
