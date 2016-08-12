@@ -74,7 +74,7 @@
 
     <string name="automatic_suspend_title">Automatically suspend filter in secure apps</string>
     <!-- Automatic suspend subscreen -->
-    <string name="automatic_suspend_summary">Some features of Android are protected against screen overlays and won\'t work when Red Moon is enabled. For example installing APKs or granting permissions on Android 6.0+.\n\nWhen this feature is enabled Red Moon will automatically suspend when one of these features is opened and restore the filter when you are done. This way you don\'t have to worry about manually turning Red Moon on and off.\n\nThis feature may slightly lower the battery life of your device. Furthermore this feature doesn\'t work on some devices, specifically on some Samsung devices running Android 4.4+.</string>
+    <string name="automatic_suspend_summary">Some features of Android are protected against screen overlays and won\'t work when Red Moon is enabled. For example installing APKs or granting permissions on Android 6.0+.\n\nWhen this feature is enabled Red Moon will automatically suspend when one of these features is opened and restore the filter when you are done. This way you don\'t have to worry about manually turning Red Moon on and off.\n\nThis feature may slightly lower the battery life of your device. Furthermore this feature may not work on all devices.</string>
     <string name="text_switch_on">On</string>
     <string name="text_switch_off">Off</string>
     <string name="usage_stats_dialog_title">Allow usage access</string>
