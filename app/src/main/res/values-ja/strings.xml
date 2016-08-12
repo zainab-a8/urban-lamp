@@ -77,4 +77,19 @@ Red Moon を使用して画面を暗くすることができます。</string>
     <string name="intro_label">イントロ</string>
     <string name="show_intro_text">イントロを表示</string>
 
+    <string name="text_switch_on">オン</string>
+    <string name="text_switch_off">オフ</string>
+    <string name="automatic_suspend_summary">Android のいくつかの機能は、画面オーバーレイから保護され、Red Moon が有効な場合は動作しません。たとえば Android 6.0+ での、 APK のインストールまたはアクセス許可の付与。
+
+この機能を有効にすると、これらのいずれかの機能が開かれたときにRed Moon は自動的に中断し、終わったらフィルターを復元します。この方法で、Red Moon を手動でオン/オフすることについて心配する必要はありません。
+
+この機能は、お使いのデバイスのバッテリー寿命を少し減らすことがあります。さらにこの機能は、いくつかのデバイスで動作しません。特に、Android 4.4+ を実行している一部の Samsung デバイス。</string>
+    <string name="usage_stats_dialog_message">次の画面で、Red Moon にアプリの使用状況へのアクセスを許可して、この機能を有効にしてください。
+
+Red Moon は、何のアプリを使用しているかを参照して、セキュリティで保護されたアプリにフィルターを中断するため、使用状況にアクセスする必要があります。Red Moon は、必要なときにフィルターを中断するためだけにこのデータを使用します。</string>
+
+    <string name="automatic_suspend_preference_activity">自動中断</string>
+
+    <string name="automatic_suspend_title">セキュリティで保護されたアプリで、フィルターを自動的に中断します</string>
+    <string name="usage_stats_dialog_title">使用状況へのアクセスを許可</string>
     </resources>
