@@ -476,7 +476,12 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
             mCamThread = null;
         }
 
-        mContext.unregisterReceiver(mScreenStateReceiver);
+        try {
+            mContext.unregisterReceiver(mScreenStateReceiver);
+        } catch (IllegalArgumentException e) {
+            // Catch errors when receiver is unregistered more than
+            // once, it is not a problem, so we just ignore it.
+        }
     }
 
     @Override
