@@ -45,7 +45,7 @@ public class SwitchBarPreference extends Preference
     public static final boolean DEFAULT_VALUE = false;
 
     private static final String TAG = "SwitchBarPreference";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private boolean mValue;
 

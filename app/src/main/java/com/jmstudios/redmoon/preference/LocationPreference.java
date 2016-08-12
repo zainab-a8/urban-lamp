@@ -34,7 +34,7 @@ import com.jmstudios.redmoon.R;
 
 public class LocationPreference extends Preference {
     private static final String TAG = "LocationPreference";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     public static final String DEFAULT_VALUE = "not set";
 

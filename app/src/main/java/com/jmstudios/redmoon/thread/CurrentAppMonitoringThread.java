@@ -35,7 +35,7 @@ import com.jmstudios.redmoon.service.ScreenFilterService;
 
 public class CurrentAppMonitoringThread extends Thread {
     private static final String TAG = "CurrentAppMonitoring";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private Context mContext;
 

@@ -32,7 +32,7 @@ import com.jmstudios.redmoon.R;
 
 public class LocationUpdateListener implements LocationListener {
     private static final String TAG = "LocationUpdate";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private Context mContext;
     private LocationPreference mPreference;

@@ -36,7 +36,7 @@ import com.jmstudios.redmoon.helper.SeekBarTouchListener;
 
 public class ColorSeekBarPreference extends Preference {
     private static final String TAG = "ColorSeekBarPreference";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     // Changes to DEFAULT_VALUE should be reflected in preferences.xml
     public static final int DEFAULT_VALUE = 10;
 

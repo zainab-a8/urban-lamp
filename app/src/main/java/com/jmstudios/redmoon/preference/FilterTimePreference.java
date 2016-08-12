@@ -29,7 +29,7 @@ import com.jmstudios.redmoon.preference.TimePickerPreference;
 
 public class FilterTimePreference extends TimePickerPreference {
     public static final String TAG = "FilterTimePreference";
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
     private boolean mIsCustom = true;
 

@@ -33,7 +33,7 @@ public class TimePickerPreference extends DialogPreference {
     public static final String DEFAULT_VALUE = "00:00";
 
     private static final String TAG = "TimePickerPref";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private TimePicker mTimePicker;
     protected String mTime;

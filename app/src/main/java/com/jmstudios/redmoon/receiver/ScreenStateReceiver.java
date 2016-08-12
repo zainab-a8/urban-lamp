@@ -23,7 +23,7 @@ import android.util.Log;
 
 public class ScreenStateReceiver extends BroadcastReceiver {
     private static final String TAG = "ScreenStateReceiver";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private ScreenStateListener mListener;
 

@@ -72,7 +72,7 @@ public class ScreenFilterService extends Service implements ServiceLifeCycleCont
     public static final String BUNDLE_KEY_COMMAND = "jmstudios.bundle.key.COMMAND";
 
     private static final String TAG = "ScreenFilterService";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private ScreenFilterPresenter mPresenter;
     private SettingsModel mSettingsModel;

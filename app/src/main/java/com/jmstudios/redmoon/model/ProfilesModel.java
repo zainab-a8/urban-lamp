@@ -40,7 +40,7 @@ public class ProfilesModel {
     private static final int mode = Context.MODE_PRIVATE;
 
     private static final String TAG = "ProfilesModel";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private SharedPreferences mSharedPrefs;
     private SharedPreferences.Editor mEditor;

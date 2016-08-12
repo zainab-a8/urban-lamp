@@ -50,7 +50,7 @@ public class ProfileSelectorPreference extends Preference
     public static final int DEFAULT_VALUE = 1;
 
     private static final String TAG = "ProfileSelectorPref";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     public static final int DEFAULT_OPERATIONS_AM = 3;
 

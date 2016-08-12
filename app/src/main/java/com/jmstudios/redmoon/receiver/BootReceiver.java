@@ -53,7 +53,7 @@ import com.jmstudios.redmoon.receiver.AutomaticFilterChangeReceiver;
 
 public class BootReceiver extends BroadcastReceiver {
     private static final String TAG = "BootReceiver";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     @Override
     public void onReceive(Context context, Intent intent) {

@@ -46,7 +46,7 @@ import com.jmstudios.redmoon.receiver.LocationUpdateListener;
 
 public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
     private static final String TAG = "AutomaticFilterChange";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     @Override
     public void onReceive(Context context, Intent intent) {

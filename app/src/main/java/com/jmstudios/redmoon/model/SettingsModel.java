@@ -61,7 +61,7 @@ import com.jmstudios.redmoon.preference.IntensitySeekBarPreference;
  */
 public class SettingsModel implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String TAG = "SettingsModel";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private SharedPreferences mSharedPreferences;
     private ArrayList<OnSettingsChangedListener> mSettingsChangedListeners;

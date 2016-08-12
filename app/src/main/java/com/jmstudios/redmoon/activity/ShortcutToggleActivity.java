@@ -49,7 +49,7 @@ import com.jmstudios.redmoon.service.ScreenFilterService;
 
 public class ShortcutToggleActivity extends Activity {
     private static final String TAG = "ShortcutToggleActivity";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

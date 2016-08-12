@@ -33,7 +33,7 @@ import com.jmstudios.redmoon.service.ScreenFilterService;
  */
 public class SeekBarTouchListener implements View.OnTouchListener {
     private static final String TAG = "SeekBarTouchListener";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     @Override
     public boolean onTouch(View v, MotionEvent motionEvent) {

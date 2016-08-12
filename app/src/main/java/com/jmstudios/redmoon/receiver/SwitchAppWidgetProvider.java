@@ -57,7 +57,7 @@ public class SwitchAppWidgetProvider extends AppWidgetProvider {
     public final static String ACTION_UPDATE = "com.jmstudios.redmoon.action.APPWIDGET_UPDATE";
     public final static String EXTRA_POWER = "com.jmstudios.redmoon.action.APPWIDGET_EXTRA_POWER";
     private final static String TAG = "SwitchAppWidgetProvider";
-    private final static boolean DEBUG = true;
+    private final static boolean DEBUG = false;
 
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         if(DEBUG) Log.i(TAG, "Updating!");

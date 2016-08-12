@@ -81,7 +81,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
                                               SettingsModel.OnSettingsChangedListener,
                                               ScreenStateReceiver.ScreenStateListener {
     private static final String TAG = "ScreenFilterPresenter";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     public static final int NOTIFICATION_ID = 1;
     private static final int REQUEST_CODE_ACTION_SETTINGS = 1000;
