@@ -115,11 +115,6 @@
             android:theme="@style/AppTheme"
             android:parentActivityName="com.jmstudios.redmoon.activity.ShadesActivity" >
 
-          <!-- Parent activity meta-data to support 4.0 and lower -->
-          <meta-data
-              android:name="android.support.PARENT_ACTIVITY"
-              android:value="com.jmstudios.redmoon.activity.ShadesActivity" />
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
