@@ -92,4 +92,5 @@ Red Moon は、何のアプリを使用しているかを参照して、セキ�
 
     <string name="automatic_suspend_title">セキュリティで保護されたアプリで、フィルターを自動的に中断します</string>
     <string name="usage_stats_dialog_title">使用状況へのアクセスを許可</string>
+    <string name="running_no_warning">実行中</string>
     </resources>
