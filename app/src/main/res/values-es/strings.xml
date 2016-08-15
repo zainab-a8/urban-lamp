@@ -71,4 +71,17 @@
     <string name="latitude_short">Latitud</string>
     <string name="longitude_short">Longitud</string>
     <string name="automatic_filter_options_array_0">Manual</string>
+    <string name="automatic_suspend_preference_activity">Pausar automáticamente</string>
+
+    <string name="automatic_suspend_title">Desactiva el filtro en aplicaciones seguras</string>
+    <string name="automatic_suspend_summary">Algunas características de Android están protegidas contra superposiciones de pantalla y no funcionan con filtros como Red Moon. Principalmente al instalar APKs o conceder permisos en Android 6.0+.
+
+Al activar esta opción Red Moon se pausa momentáneamente si detecta este tipo de actividad y reanuda el filtro al terminar. Así puedes despreocuparte de tener que pausar el filtro de forma manual.
+
+Esta característica puede gastar un poco más de batería y puede no funcione del todo bien en algunos dispositivos.</string>
+    <string name="text_switch_on">Activado</string>
+    <string name="text_switch_off">Desactivado</string>
+    <string name="usage_stats_dialog_title">Permitir recopilar aplicaciones en ejecución</string>
+    <string name="usage_stats_dialog_message">Permite a Red Moon ver las estadísticas de uso de aplicaciones en la siguiente pantalla para activar esta función. Luna Roja necesita acceder a los datos de uso para ver qué aplicación se encuentra en primer plano y así poder suspender el filtro en aplicaciones protegidas. Red Moon utilizará estos datos para suspender el filtro cuando sea necesario.</string>
+
     </resources>
