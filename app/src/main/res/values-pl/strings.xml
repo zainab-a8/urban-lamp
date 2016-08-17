@@ -3,8 +3,8 @@
     <string name="shades_settings">Red Moon</string>
     <string name="shortcut_activity">Włącznik Red Moon</string>
 
-    <string name="running">Uruchomiono. Zatrzymaj aby instalować aplikacje</string>
-    <string name="paused">Zatrzymano</string>
+    <string name="running">Uruchomiono. Wstrzymaj aby instalować aplikacje</string>
+    <string name="paused">Wstrzymano</string>
 
     <string name="pref_title_appearance">Filtr</string>
     <string name="pref_title_automatic_filter">Czas filtrowania</string>
@@ -45,7 +45,7 @@
     <string name="ok_dialog">OK</string>
     <string name="cancel_dialog">Anuluj</string>
 
-    <string name="toggle_shortcut_title">Włącznik</string>
+    <string name="toggle_shortcut_title">Włącznik filtra</string>
 
     <string name="standard_profiles_array_0">Własny</string>
     <string name="standard_profiles_array_1">Domyślny</string>
@@ -54,5 +54,43 @@
     <string name="automatic_filter_options_array_0">Manualny</string>
     <string name="automatic_filter_options_array_1">Automatyczny (słońce)</string>
     <string name="automatic_filter_options_array_2">Automatyczny (własny)</string>
+
+    <string name="intro_label">Wprowadzenie</string>
+    <string name="show_intro_text">Pokaż wprowadzenie</string>
+    <string name="automatic_suspend_preference_activity">Automatyczne wstrzymywanie</string>
+
+    <string name="resume_action">Wznów</string>
+    <string name="pause_action">Wstrzymaj</string>
+
+    <string name="automatic_suspend_title">Automatycznie wstrzymaj filtr w zaufanych aplikacjach</string>
+    <string name="usage_stats_dialog_message">W następnym ekranie zezwól aplikacji Red Moon na użytkowanie danych monitorujących, by włączyć tą funkcję.
+
+Red Moon potrzebuje dostępu do użytkowania, żeby zobaczyć jaką aplikację masz włączoną i by wstrzymać działanie filtru w zaufanych aplikacjach. Red Moon będzie używał tych danych tylko w celu wstrzymywania filtru.</string>
+
+    <string name="usage_stats_dialog_title">Zezwól na dostęp do użykowania</string>
+    <string name="text_switch_on">Włączone</string>
+    <string name="text_switch_off">Wyłączone</string>
+    <string name="automatic_suspend_summary">"Niektóre funkcje Androida (np. instalowanie aplikacji czy przyznawanie uprawnień w Androidzie 6.0+)  są chronione przed nakładkami systemowymi i nie będą działać, gdy Red Moon jest włączony. 
+
+Kiedy ta funkcja jest włączona Red Moon będzie automatycznie wstrzymywany w przypadku, gdy te funkcje działają i wznowi działanie, kiedy skończysz. Dzięki temu nie musisz się martwić o ręczne włączanie i wyłączanie Red Moon.
+
+Ta funkcja może w niewielkim stopniu zmniejszyć żywotność baterii twojego telefonu. Dodatkowo może nie działać na wszystkich urządzeniach."</string>
+    <string name="intro_slide_1_title">Witaj!</string>
+    <string name="intro_slide_1_text">Witaj w Red Moon!</string>
+
+    <string name="intro_slide_2_title">Ochrona Twoich oczu</string>
+    <string name="intro_slide_2_text">W nocy, gdy używasz telefonu,
+ekran niszczy Twój wzrok.
+Możesz użyć Red Moon, żeby przyciemnić Twój ekran.</string>
+
+    <string name="intro_slide_3_title">Polepszanie Twojego snu</string>
+    <string name="intro_slide_3_text">Niebieskie światło blokuje
+produkcję melaniny, hormonu pomagającego Ci zasnąć w nocy.
+Red Moon usuwa niebieskie światło z Twojego ekranu,
+zapewniając Ci lepszy łatwiejsze zaśnięcie.</string>
+
+    <string name="intro_slide_4_title">Rozpocznij!</string>
+    <string name="intro_slide_4_text">Żeby włączyć Red Moon
+przesuń włącznik w prawym górnym rogu.</string>
 
     </resources>
