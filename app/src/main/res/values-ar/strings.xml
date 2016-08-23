@@ -2,7 +2,7 @@
 <resources><string name="pref_title_appearance">المُرشح</string>
     <string name="app_name">القمر الأحمر</string>
     <string name="shortcut_activity">تفعيل القمر الأحمر</string>
-    <string name="running">تم التفعيل. قم بإيقافه لتثبيت التطبيقات</string>
+    <string name="running">مٌفعل. قم بإيقافه لتثبيت التطبيقات</string>
     <string name="paused">مُوقف</string>
     <string name="resume_action">إستئناف</string>
     <string name="pause_action">إيقاف</string>
@@ -91,4 +91,5 @@
 
 التطبيق يحتاج إمكانية الوصول لرؤية على أي تطبيق تعمل لكي يقوم بإيقاف المرشح في التطبيقات الآمنة. التطبيق سيستخدم هذه البيانات فقط لإيقاف المرشح عند الحاجة.</string>
 
+    <string name="running_no_warning">مُفعل</string>
     </resources>
