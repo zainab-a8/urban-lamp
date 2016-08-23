@@ -46,6 +46,7 @@
 
     <!-- Notification -->
     <string name="running">Running. Pause to install apks</string>
+    <string name="running_no_warning">Running</string>
     <string name="paused">Paused</string>
     <string name="resume_action">Resume</string>
     <string name="pause_action">Pause</string>

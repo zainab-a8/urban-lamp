@@ -176,7 +176,8 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
             pauseOrResumeActionText = context.getString(R.string.resume_action);
         } else {
             Log.d(TAG, "Creating notification while NOT in pause state");
-            contentText = context.getString(R.string.running);
+            contentText = context.getString(mSettingsModel.getAutomaticSuspend() ?
+                                            R.string.running_no_warning : R.string.running);
             pauseOrResumeDrawableResId = R.drawable.ic_pause;
             pauseOrResumeCommand = mFilterCommandFactory.createCommand(ScreenFilterService.COMMAND_PAUSE);
             pauseOrResumeActionText = context.getString(R.string.pause_action);

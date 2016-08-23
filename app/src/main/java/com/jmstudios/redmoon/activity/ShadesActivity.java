@@ -240,7 +240,8 @@ public class ShadesActivity extends AppCompatActivity {
 
 
     public void displayInstallWarningToast() {
-        if (hasShownWarningToast) return;
+        if (hasShownWarningToast || mSettingsModel.getAutomaticSuspend())
+            return;
 
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(getApplicationContext(),
