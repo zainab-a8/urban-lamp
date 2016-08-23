@@ -8,8 +8,8 @@ android {
         applicationId "com.jmstudios.redmoon"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 23
-        versionName "2.9.0"
+        versionCode 24
+        versionName "2.9.1"
     }
     buildTypes {
         release {
