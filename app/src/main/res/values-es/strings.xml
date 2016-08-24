@@ -41,7 +41,7 @@
     <string name="intro_slide_3_title">Te ayuda a dormir bien</string>
     <string name="intro_slide_4_title">¡Empecemos!</string>
     <string name="standard_profiles_array_0">Personalizado</string>
-    <string name="standard_profiles_array_1">Modo normal</string>
+    <string name="standard_profiles_array_1">Predeterminado</string>
     <string name="standard_profiles_array_2">Modo lectura</string>
 
     <string name="automatic_filter_options_array_2">Automático (personalizado)</string>
@@ -60,13 +60,18 @@
     <string name="location_not_set">Sin establecer</string>
     <string name="project_page_summary">Infórmate y ayúdanos</string>
     <string name="set_dialog">Establecer</string>
-    <string name="intro_slide_2_text">No es bueno forzar la vista cuando es de noche. Puedes utilizar Red Moon para limitar el brillo de tu pantalla.</string>
+    <string name="intro_slide_2_text">De noche, cuando mirar al teléfono
+daña la vista, puedes utilizar Red Moon para limitar el brillo de tu pantalla.</string>
 
-    <string name="intro_slide_4_text">Para activar Red Moon utiliza el control de la esquina superior derecha.</string>
+    <string name="intro_slide_4_text">Para activar Red Moon utiliza el control
+ de la esquina superior derecha.</string>
 
     <string name="shades_intensity_level">Intensidad</string>
     <string name="shades_dim_level">Atenuar</string>
-    <string name="intro_slide_3_text">La luz azul inhibe la melatonina, una hormona que ayuda a que tengamos sueño. Red Moon filtra la pantalla para que normalicemos nuestro ciclo nocturno.</string>
+    <string name="intro_slide_3_text">La luz azul inhibe la
+producción de melatonina, una hormona que ayuda a que nos durmamos
+por la noche. Red Moon elimina la luz azul de la pantalla, asegurando
+que puedas dormirte fácilmente.</string>
 
     <string name="latitude_short">Latitud</string>
     <string name="longitude_short">Longitud</string>
@@ -82,7 +87,9 @@ Esta característica puede gastar un poco más de batería y puede no funcione d
     <string name="text_switch_on">Activado</string>
     <string name="text_switch_off">Desactivado</string>
     <string name="usage_stats_dialog_title">Permitir recopilar aplicaciones en ejecución</string>
-    <string name="usage_stats_dialog_message">Permite a Red Moon ver las estadísticas de uso de aplicaciones en la siguiente pantalla para activar esta función. Luna Roja necesita acceder a los datos de uso para ver qué aplicación se encuentra en primer plano y así poder suspender el filtro en aplicaciones protegidas. Red Moon utilizará estos datos para suspender el filtro cuando sea necesario.</string>
+    <string name="usage_stats_dialog_message">Permite a Red Moon ver las estadísticas de uso de aplicaciones en la siguiente pantalla para activar esta función.
+
+Red Moon necesita acceder a los datos de uso para ver qué aplicación se encuentra en primer plano y así poder suspender el filtro en aplicaciones protegidas. Red Moon utilizará estos datos para suspender el filtro cuando sea necesario.</string>
 
     <string name="running_no_warning">Funcionando</string>
     </resources>
