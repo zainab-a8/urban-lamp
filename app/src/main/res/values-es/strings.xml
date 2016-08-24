@@ -38,7 +38,7 @@
     <string name="intro_slide_1_text">Te damos la bienvenida a «Red Moon».</string>
 
     <string name="intro_slide_2_title">Protege tus ojos</string>
-    <string name="intro_slide_3_title">Te ayuda a dormir bien</string>
+    <string name="intro_slide_3_title">Te ayuda a dormir</string>
     <string name="intro_slide_4_title">¡Empecemos!</string>
     <string name="standard_profiles_array_0">Personalizado</string>
     <string name="standard_profiles_array_1">Predeterminado</string>
@@ -78,18 +78,18 @@ que puedas dormirte fácilmente.</string>
     <string name="automatic_filter_options_array_0">Manual</string>
     <string name="automatic_suspend_preference_activity">Pausar automáticamente</string>
 
-    <string name="automatic_suspend_title">Desactiva el filtro en aplicaciones seguras</string>
-    <string name="automatic_suspend_summary">Algunas características de Android están protegidas contra superposiciones de pantalla y no funcionan con filtros como Red Moon. Principalmente al instalar APKs o conceder permisos en Android 6.0+.
+    <string name="automatic_suspend_title">No filtrar aplicaciones seguras</string>
+    <string name="automatic_suspend_summary">Algunas características de Android están protegidas contra superposiciones de pantalla y no funcionan con filtros como Red Moon. Te las encontrarás al instalar APKs o conceder permisos en Android 6.0+.
 
-Al activar esta opción Red Moon se pausa momentáneamente si detecta este tipo de actividad y reanuda el filtro al terminar. Así puedes despreocuparte de tener que pausar el filtro de forma manual.
+Al activar esta opción Red Moon se pausa momentáneamente si detecta este tipo de actividad y reanuda el filtro al terminar. Así puedes despreocuparte de tener que quitar el filtro de forma manual.
 
-Esta característica puede gastar un poco más de batería y puede no funcione del todo bien en algunos dispositivos.</string>
+Esta característica puede gastar un poco más de batería y no funcionar del todo bien en algunos dispositivos.</string>
     <string name="text_switch_on">Activado</string>
     <string name="text_switch_off">Desactivado</string>
     <string name="usage_stats_dialog_title">Permitir recopilar aplicaciones en ejecución</string>
-    <string name="usage_stats_dialog_message">Permite a Red Moon ver las estadísticas de uso de aplicaciones en la siguiente pantalla para activar esta función.
+    <string name="usage_stats_dialog_message">Para activar esta función tienes que dejar que Red Moon vea las estadísticas de uso de aplicaciones en la siguiente pantalla.
 
-Red Moon necesita acceder a los datos de uso para ver qué aplicación se encuentra en primer plano y así poder suspender el filtro en aplicaciones protegidas. Red Moon utilizará estos datos para suspender el filtro cuando sea necesario.</string>
+Red Moon necesita acceder a los datos de uso para saber si la aplicación en primer plano está protegida y así poder suspender el filtro. Solo se utilizarán estos datos cuando sean necesarios.</string>
 
     <string name="running_no_warning">Funcionando</string>
     </resources>
