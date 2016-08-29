@@ -44,7 +44,8 @@
     <string name="remove_profile_dialog_title">Dieses Profil löschen?</string>
     <string name="set_dialog">Einstellen</string>
     <string name="toast_warning_no_location">Standortdienst ist nicht eingeschaltet. Es werden benutzerdefinierte Zeiten verwendet. Bitte den Standortdienst einschalten um Sonnenauf- und untergangszeiten verwenden zu können</string>
-    <string name="toggle_shortcut_title">Umschalten</string>
+    <string name="toggle_shortcut_title">Red Moon
+ein-/ausschalten</string>
     <string name="shortcut_activity">Umschalter für Red Moon</string>
 
     <!-- Profiles -->
@@ -80,9 +81,21 @@
     <string name="intro_slide_2_text">Wenn du nachts auf dein Handy schaust und deine Augen weh tun, kannst du Red Moon verwenden, um das Display zu verdunkeln.</string>
 
     <string name="intro_slide_3_title">Verbessert deinen Schlaf</string>
-    <string name="intro_slide_3_text">Blaues Licht unterdrückt die Produktion von Melatonin, einem Hormon, welches dir dabei hilft nachts einzuschlafen. Red Moon entfernt das blaue Licht aus deinem Bildschirm und stellt so sicher, dass du gut einschlafen kannst.</string>
+    <string name="intro_slide_3_text">Blaues Licht unterdrückt die Produktion von Melatonin, einem Hormon, welches dir dabei hilft, nachts einzuschlafen. Red Moon entfernt das blaue Licht von deinem Bildschirm und stellt so sicher, dass du gut einschlafen kannst.</string>
 
     <string name="intro_slide_4_title">Fange an!</string>
-    <string name="intro_slide_4_text">Um Red Moon einzuschalten, drücke den Schalter in der Ecke rechts oben.</string>
+    <string name="intro_slide_4_text">Um Red Moon einzuschalten, drücke den Schalter oben rechts.</string>
+
+    <string name="text_switch_on">An</string>
+    <string name="text_switch_off">Aus</string>
+    <string name="automatic_suspend_preference_activity">Automatisch pausieren</string>
+
+    <string name="running_no_warning">Laufend</string>
+    <string name="automatic_suspend_title">Filter für bestimmten Apps automatisch pausieren</string>
+    <string name="usage_stats_dialog_title">Zugriff auf Nutzungsstatistik erlauben</string>
+    <string name="automatic_suspend_summary">Einige Android-Funktionen sind gegen Bildschirm-Überlagerungen geschützt. Zum Beispiel \"Installation von Apps\", oder \"Erteilen von Berechtigungen\" auf Android 6.0+. Diese funktionieren nicht, wenn Red Moon gestartet ist. Aktiviere diese Einstellung, damit Red Moon diese Funktionen erkennt, den Filter automatisch pausiert und wieder anstartet, sobald die Funktion beendet wurde. Auf diese Weise muss du nicht manuell eingreifen. Diese Einstellung kann die Akkulaufzeit des Geräts verkürzen. Außerdem funktioniert es möglicherweise nicht auf allen Geräten.</string>
+    <string name="usage_stats_dialog_message">Erlaube Red Moon auf Nutzungsstatistiken zuzugreifen, indem du diese Eigenschaft aktivierst.
+
+Red Moon benötigt den Zugriff auf die Daten um festzustellen, welche App du gerade benutzt, um so ggf. automatisch den Filter pausieren zu können.</string>
 
     </resources>
