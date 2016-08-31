@@ -82,13 +82,15 @@ public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
             handler.postDelayed(runnable, ScreenFilterPresenter.FADE_DURATION_MS + 100);
         }
 
-        // Update times for the next time (fails silently)
-        LocationManager locationManager = (LocationManager)
-            context.getSystemService(Context.LOCATION_SERVICE);
-        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            LocationListener listener = new LocationUpdateListener(context);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                                                   0, 0, listener);
+        if (settingsModel.getAutomaticFilterMode().equals("sun")) {
+            // Update times for the next time (fails silently)
+            LocationManager locationManager = (LocationManager)
+                context.getSystemService(Context.LOCATION_SERVICE);
+            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                LocationListener listener = new LocationUpdateListener(context);
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                                                       0, 0, listener);
+            }
         }
     }
 
