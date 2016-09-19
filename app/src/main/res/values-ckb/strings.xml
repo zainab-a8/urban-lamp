@@ -1,2 +1,66 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="app_name">مانگی سوور</string>
+    <string name="shades_settings">مانگی سوور</string>
+    <string name="intro_label">پێشەکی</string>
+    <string name="show_intro_text">پیشاندانی پێشەکی</string>
+    <string name="paused">ڕاگیراو</string>
+    <string name="resume_action"/>
+    <string name="pause_action">ڕاگرتن</string>
+
+    <string name="pref_title_appearance"/>
+    <string name="pref_title_automatic_filter"/>
+    <string name="pref_title_startup"/>
+    <string name="pref_title_other">هی تر</string>
+
+    <string name="button_add_profile">زیادکرن</string>
+    <string name="button_remove_profile">سڕینەوە</string>
+    <string name="shades_dim_level"/>
+    <string name="shades_intensity_level"/>
+    <string name="shades_color_temp"/>
+    <string name="control_brightness_title"/>
+
+    <string name="automatic_filter_title"/>
+    <string name="custom_start_time_title"/>
+    <string name="custom_end_time_title"/>
+    <string name="location_title">شوێن</string>
+    <string name="location_not_set"/>
+    <string name="latitude_short"/>
+    <string name="longitude_short"/>
+    <string name="searching_location"/>
+
+    <string name="automatic_suspend_title"/>
+    <string name="automatic_suspend_summary"/>
+    <string name="text_switch_on">کارا</string>
+    <string name="text_switch_off">ناکارا</string>
+    <string name="project_page_title">سەردانکردنی پەڕەی پڕۆژە</string>
+    <string name="project_page_summary"/>
+    <string name="toast_warning_install"/>
+    <string name="toast_warning_no_location"/>
+
+    <string name="add_new_profile_dialog_title">ناوی پرۆفایل بنووسە</string>
+    <string name="add_new_profile_edit_hint">ناوی پرۆفایل</string>
+    <string name="remove_profile_dialog_title">دەتەوێت ئەم پرۆفایلە بسڕیتەوە؟</string>
+    <string name="set_dialog"/>
+    <string name="ok_dialog">باشە</string>
+    <string name="cancel_dialog">هەڵوەشاندنەوە</string>
+
+    <string name="toggle_shortcut_title"/>
+
+    <string name="intro_slide_1_title">بەخێربێت!</string>
+    <string name="intro_slide_1_text">بەخێربێت بۆ مانگی سوور!</string>
+
+    <string name="intro_slide_2_title"/>
+    <string name="intro_slide_2_text"/>
+
+    <string name="intro_slide_3_title"/>
+    <string name="intro_slide_3_text"/>
+
+    <string name="intro_slide_4_title">دەست پێبکەین!</string>
+    <string name="standard_profiles_array_1">بنەڕەت</string>
+    <string name="standard_profiles_array_2"/>
+
+    <string name="automatic_filter_options_array_0"/>
+    <string name="automatic_filter_options_array_1"/>
+    <string name="automatic_filter_options_array_2"></string>
+
+    </resources>
