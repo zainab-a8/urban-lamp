@@ -1,2 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="toast_warning_install">필터가 작동 중일 때는 APK를 설치할 수 없습니다.</string>
+    <string name="intro_label">소개</string>
+    <string name="show_intro_text">소개 보기</string>
+    <string name="running">작동 중. apk를 설치하려면 일시중지하세요.</string>
+    <string name="paused">일시중지됨</string>
+    <string name="running_no_warning">실행 중</string>
+    <string name="pause_action">일시 중지</string>
+
+    <string name="automatic_suspend_summary">Android의 일부 기능은 화면 오버레이로부터 보호되며 Red Moon이 작동 중일 때 작동하지 않습니다. 예를 들어 APK를 설치하거나 Android 6.0 이상에서 권한 부여하기가 있습니다.</string>
+    </resources>
