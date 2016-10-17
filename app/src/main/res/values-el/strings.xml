@@ -31,11 +31,17 @@
     <string name="searching_location">Αναζήτηση της τοποθεσίας σας</string>
 
     <string name="automatic_suspend_title">Αυτόματη αναστολή φίλτρου σε προστατευμένα apps</string>
-    <string name="automatic_suspend_summary"/>
+    <string name="automatic_suspend_summary">Μερικά χαρακτηριστικά του Android προστατεύονται από επικαλύψεις οθόνης και δεν μπορούν να λειτουργήσουν όταν είναι ενεργοποιημένο το Κόκκινο Φεγγάρι. Για παράδειγμα, η εγκατάσταση αρχείων APK ή η χορήγηση δικαιωμάτων στο Android 6.0+.
+
+Όταν ενεργοποιείται αυτή η λειτουργία το Κόκκινο Φεγγάρι θα ανασταλεί αυτόματα όταν ένα από αυτά τα χαρακτηριστικά ανοίγει και το φίλτρο επαναφέρετε όταν τελειώσει. Με αυτό τον τρόπο δεν έχετε να ανησυχείτε για το χειροκίνητο άνοιγμα και κλείσιμο του Κόκκινου Φεγγαριού.
+
+Αυτό το χαρακτηριστικό μπορεί ελαφρώς να μειώσει τη διάρκεια ζωής της μπαταρίας της συσκευής σας. Επιπλέον, αυτό το χαρακτηριστικό μπορεί να μην λειτουργεί σε όλες τις συσκευές.</string>
     <string name="text_switch_on">On</string>
     <string name="text_switch_off">Off</string>
-    <string name="usage_stats_dialog_title"/>
-    <string name="usage_stats_dialog_message"/>
+    <string name="usage_stats_dialog_title">Να επιτρέπεται η πρόσβαση της χρήσης</string>
+    <string name="usage_stats_dialog_message">Επιτρέψτε στο Κόκκινο Φεγγάρι να έχει πρόσβαση σε στατιστικά στοιχεία χρήσης της εφαρμογής, στην επόμενη οθόνη, μπορείτε να ενεργοποιήσετε αυτή τη λειτουργία.
+
+Το Κόκκινο Φεγγάρι χρειάζεται εξουσιοδότηση πρόσβασης για να δει τις εφαρμογές που έχετε έτσι ώστε να αναστείλει το φίλτρο στις προστατευμένες εφαρμογές. Το Κόκκινο Φεγγάρι θα χρησιμοποιήσει αυτά τα στοιχεία μόνο για να αναστείλει το φίλτρο όταν χρειάζεται.</string>
 
     <string name="dark_theme">Σκοτεινό θέμα</string>
 
@@ -46,7 +52,7 @@
     <string name="toast_warning_install">Δεν θα μπορείτε να εγκαταστήσετε APKs όσο το φίλτρο είναι σε λειτουργία.</string>
     <string name="toast_warning_no_location">Ενεργοποιήστε τις υπηρεσίες τοποθεσίας για ενημέρωση τοποθεσίας</string>
 
-    <string name="help_snackbar_text">Πιέστε τον διακόπτη για ενεργοποίηση του Red Moon</string>
+    <string name="help_snackbar_text">Πιέστε τον διακόπτη για ενεργοποίησετε το Κόκκινο Φεγγάρι</string>
 
     <string name="add_new_profile_dialog_title">Δώστε όνομα προφίλ</string>
     <string name="add_new_profile_edit_hint">Όνομα προφίλ</string>
@@ -58,17 +64,20 @@
     <string name="toggle_shortcut_title">Εναλλαγή φίλτρου</string>
 
     <string name="intro_slide_1_title">Καλωσόρισες!</string>
-    <string name="intro_slide_1_text">Καλωσόρισες στο Red Moon!</string>
+    <string name="intro_slide_1_text">Καλωσόρισες στο Κόκκινο Φεγγάρι!</string>
 
     <string name="intro_slide_2_title">Προστατεύστε τα μάτια σας</string>
     <string name="intro_slide_2_text">Το βράδυ, όταν κοιτάτε στο
-κινητό σας και τα πονάνε τα μάτια σας, μειώσετε την φωτεινότητα στην οθόνη με το Red Moon.</string>
+κινητό σας και τα πονάνε τα μάτια σας, μειώσετε την φωτεινότητα στην οθόνη με το Κόκκινο Φεγγάρι.</string>
 
     <string name="intro_slide_3_title">Βελτιώστε τον ύπνο σας</string>
-    <string name="intro_slide_3_text"/>
+    <string name="intro_slide_3_text">"Το μπλε φως καταστέλλει την
+  παραγωγή μελατονίνης, μια ορμόνη που σας βοηθά να κοιμηθείτε το
+  βράδυ. Το κόκκινο φεγγάρι αφαιρεί το μπλε φως από την οθόνη σας, εξασφαλίζοντας
+  ότι μπορείτε να κοιμηθείτε εύκολα."</string>
 
     <string name="intro_slide_4_title">Ξεκινήστε!</string>
-    <string name="intro_slide_4_text">Για να ενεργοποιήσετε το Red Moon, πατήστε
+    <string name="intro_slide_4_text">Για να ενεργοποιήσετε το Κόκκινο Φεγγάρι, πατήστε
 τον διακόπτη πάνω δεξιά στη γωνία.</string>
 
     <string name="standard_profiles_array_0">Εξατομίκευση</string>
@@ -79,4 +88,7 @@
     <string name="automatic_filter_options_array_1">Αυτόματο (ήλιος)</string>
     <string name="automatic_filter_options_array_2">Αυτόματο (εξατομικευμένο)</string>
 
+    <string name="app_name">Κόκκινο Φεγγάρι</string>
+    <string name="shades_settings">Κόκκινο Φεγγάρι</string>
+    <string name="shortcut_activity">Κόκκινο Φεγγάρι εναλλαγή</string>
     </resources>
