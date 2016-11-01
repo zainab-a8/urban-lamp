@@ -62,7 +62,7 @@ import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
  * To begin listening again, invoke [SettingsModel.openSettingsChangeListener].
  */
 class SettingsModel(resources: Resources, private val mSharedPreferences: SharedPreferences) : SharedPreferences.OnSharedPreferenceChangeListener {
-    private val mSettingsChangedListeners: ArrayList<OnSettingsChangedListener>
+    private val mSettingsChangedListeners: ArrayList<OnSettingsChangedListener?>
 
     private val mPowerStatePrefKey: String
     private val mPauseStatePrefKey: String
@@ -85,7 +85,7 @@ class SettingsModel(resources: Resources, private val mSharedPreferences: Shared
     private val mAutomaticSuspendPrefKey: String
 
     init {
-        mSettingsChangedListeners = ArrayList<OnSettingsChangedListener>()
+        mSettingsChangedListeners = ArrayList<OnSettingsChangedListener?>()
 
         mPowerStatePrefKey = resources.getString(R.string.pref_key_shades_power_state)
         mPauseStatePrefKey = resources.getString(R.string.pref_key_shades_pause_state)
@@ -193,56 +193,23 @@ class SettingsModel(resources: Resources, private val mSharedPreferences: Shared
 
     //region OnSharedPreferenceChangeListener
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        for (mSettingsChangedListener in mSettingsChangedListeners)
-            if (mSettingsChangedListener == null) {
-                mSettingsChangedListeners.removeAt(mSettingsChangedListeners.indexOf(mSettingsChangedListener))
+        for (listener in mSettingsChangedListeners) {
+            if (listener==null) {
+                val i = mSettingsChangedListeners.indexOf(listener)
+                mSettingsChangedListeners.removeAt(i)
+            } else when (key) {
+                mPowerStatePrefKey          -> listener.onShadesPowerStateChanged(shadesPowerState)
+                mPauseStatePrefKey          -> listener.onShadesPauseStateChanged(shadesPauseState)
+                mDimPrefKey                 -> listener.onShadesDimLevelChanged(shadesDimLevel)
+                mIntensityPrefKey           -> listener.onShadesIntensityLevelChanged(shadesIntensityLevel)
+                mColorPrefKey               -> listener.onShadesColorChanged(shadesColor)
+                mAutomaticFilterModePrefKey -> listener.onShadesAutomaticFilterModeChanged(automaticFilterMode)
+                mAutomaticTurnOnPrefKey     -> listener.onShadesAutomaticTurnOnChanged(automaticTurnOnTime)
+                mAutomaticTurnOffPrefKey    -> listener.onShadesAutomaticTurnOffChanged(automaticTurnOffTime)
+                mBrightnessControlPrefKey   -> listener.onLowerBrightnessChanged(brightnessControlFlag)
+                mProfilePrefKey             -> listener.onProfileChanged(profile)
+                mAutomaticSuspendPrefKey    -> listener.onAutomaticSuspendChanged(automaticSuspend)
             }
-
-        if (key == mPowerStatePrefKey) {
-            val powerState = shadesPowerState
-            for (mSettingsChangedListener in mSettingsChangedListeners)
-                mSettingsChangedListener.onShadesPowerStateChanged(powerState)
-        } else if (key == mPauseStatePrefKey) {
-            val pauseState = shadesPauseState
-            for (mSettingsChangedListener in mSettingsChangedListeners)
-                mSettingsChangedListener.onShadesPauseStateChanged(pauseState)
-        } else if (key == mDimPrefKey) {
-            val dimLevel = shadesDimLevel
-            for (mSettingsChangedListener in mSettingsChangedListeners)
-                mSettingsChangedListener.onShadesDimLevelChanged(dimLevel)
-        } else if (key == mIntensityPrefKey) {
-            val intensityLevel = shadesIntensityLevel
-            for (mSettingsChangedListener in mSettingsChangedListeners)
-                mSettingsChangedListener.onShadesIntensityLevelChanged(intensityLevel)
-        } else if (key == mColorPrefKey) {
-            val color = shadesColor
-            for (mSettingsChangedListener in mSettingsChangedListeners)
-                mSettingsChangedListener.onShadesColorChanged(color)
-        } else if (key == mAutomaticFilterModePrefKey) {
-            val automaticFilterMode = automaticFilterMode
-            for (mSettingsChangedListener in mSettingsChangedListeners) {
-                mSettingsChangedListener.onShadesAutomaticFilterModeChanged(automaticFilterMode)
-            }
-        } else if (key == mAutomaticTurnOnPrefKey) {
-            val turnOnTime = automaticTurnOnTime
-            for (mSettingsChangedListener in mSettingsChangedListeners)
-                mSettingsChangedListener.onShadesAutomaticTurnOnChanged(turnOnTime)
-        } else if (key == mAutomaticTurnOffPrefKey) {
-            val turnOffTime = automaticTurnOffTime
-            for (mSettingsChangedListener in mSettingsChangedListeners)
-                mSettingsChangedListener.onShadesAutomaticTurnOffChanged(turnOffTime)
-        } else if (key == mBrightnessControlPrefKey) {
-            val brightnessControlFlag = brightnessControlFlag
-            for (mSettingsChangedListener in mSettingsChangedListeners)
-                mSettingsChangedListener.onLowerBrightnessChanged(brightnessControlFlag)
-        } else if (key == mProfilePrefKey) {
-            val profile = profile
-            for (mSettingsChangedListener in mSettingsChangedListeners)
-                mSettingsChangedListener.onProfileChanged(profile)
-        } else if (key == mAutomaticSuspendPrefKey) {
-            val automaticSuspend = automaticSuspend
-            for (mSettingsChangedListener in mSettingsChangedListeners)
-                mSettingsChangedListener.onAutomaticSuspendChanged(automaticSuspend)
         }
     }
     //endregion
