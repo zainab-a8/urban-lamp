@@ -115,10 +115,11 @@ class ShadesFragment : PreferenceFragment() {
         otherPrefCategory = prefScreen.findPreference(otherCategoryPrefKey)
         automaticSuspendPref = prefScreen.findPreference(automaticSuspendPrefKey)
 
-        darkThemePref!!.onPreferenceChangeListener = { preference, newValue ->
-            activity.recreate()
-            true
-        }
+        darkThemePref!!.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { preference, newValue ->
+                    activity.recreate()
+                    true
+                }
 
         if (android.os.Build.VERSION.SDK_INT >= 23 && !Settings.System.canWrite(context))
             lowerBrightnessPref!!.isChecked = false
@@ -144,9 +145,9 @@ class ShadesFragment : PreferenceFragment() {
 
 
 
-        onAutomaticFilterPreferenceChange(automaticFilterPref, auto)
+        onAutomaticFilterPreferenceChange(automaticFilterPref!!, auto)
 
-        automaticFilterPref!!.onPreferenceChangeListener = { preference, newValue -> onAutomaticFilterPreferenceChange(preference, newValue) }
+        automaticFilterPref!!.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue -> onAutomaticFilterPreferenceChange(preference, newValue) }
 
         locationPref!!.setOnLocationChangedListener {
             if (true) {
