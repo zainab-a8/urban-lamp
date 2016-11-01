@@ -146,7 +146,7 @@ public class ShadesActivity extends AppCompatActivity {
 
         final MenuItem item = menu.findItem(R.id.screen_filter_switch);
         mSwitch = (Switch) item.getActionView();
-        mSwitch.setChecked(mSettingsModel.getShadesPauseState());
+        mSwitch.setChecked(mSettingsModel.getPauseState());
         mSwitch.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -213,17 +213,17 @@ public class ShadesActivity extends AppCompatActivity {
         // notification spinner and the seekbars will have missed this
         // change. To update them correctly, we artificially change
         // these settings.
-        int intensity = mSettingsModel.getShadesIntensityLevel();
-        mSettingsModel.setShadesIntensityLevel(intensity == 0 ? 1 : 0);
-        mSettingsModel.setShadesIntensityLevel(intensity);
+        int intensity = mSettingsModel.getIntensityLevel();
+        mSettingsModel.setIntensityLevel(intensity == 0 ? 1 : 0);
+        mSettingsModel.setIntensityLevel(intensity);
 
-        int dim = mSettingsModel.getShadesDimLevel();
-        mSettingsModel.setShadesDimLevel(dim == 0 ? 1 : 0);
-        mSettingsModel.setShadesDimLevel(dim);
+        int dim = mSettingsModel.getDimLevel();
+        mSettingsModel.setDimLevel(dim == 0 ? 1 : 0);
+        mSettingsModel.setDimLevel(dim);
 
-        int color = mSettingsModel.getShadesColor();
-        mSettingsModel.setShadesColor(color == 0 ? 1 : 0);
-        mSettingsModel.setShadesColor(color);
+        int color = mSettingsModel.getColor();
+        mSettingsModel.setColor(color == 0 ? 1 : 0);
+        mSettingsModel.setColor(color);
 
         // The profile HAS to be updated last, otherwise the spinner
         // will switched to custom.
@@ -290,15 +290,15 @@ public class ShadesActivity extends AppCompatActivity {
     }
 
     public int getColorTempProgress() {
-        return mSettingsModel.getShadesColor();
+        return mSettingsModel.getColor();
     }
 
     public int getIntensityLevelProgress() {
-        return mSettingsModel.getShadesIntensityLevel();
+        return mSettingsModel.getIntensityLevel();
     }
 
     public int getDimLevelProgress() {
-        return mSettingsModel.getShadesDimLevel();
+        return mSettingsModel.getDimLevel();
     }
 
     public ShadesFragment getFragment() {
@@ -310,7 +310,7 @@ public class ShadesActivity extends AppCompatActivity {
     }
 
     private void toggleAndFinish() {
-        boolean paused = mSettingsModel.getShadesPauseState();
+        boolean paused = mSettingsModel.getPauseState();
         sendCommand( paused ? ScreenFilterService.COMMAND_ON
                             : ScreenFilterService.COMMAND_PAUSE);
         finish();

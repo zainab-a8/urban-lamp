@@ -64,7 +64,6 @@ import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
 class SettingsModel(resources: Resources, private val mSharedPreferences: SharedPreferences) : SharedPreferences.OnSharedPreferenceChangeListener {
     private val mSettingsChangedListeners = ArrayList<OnSettingsChangedListener?>()
 
-    private val mPowerStatePrefKey = resources.getString(R.string.pref_key_shades_power_state)
     private val mPauseStatePrefKey = resources.getString(R.string.pref_key_shades_pause_state)
     private val mDimPrefKey = resources.getString(R.string.pref_key_shades_dim_level)
     private val mIntensityPrefKey = resources.getString(R.string.pref_key_shades_intensity_level)
@@ -73,7 +72,7 @@ class SettingsModel(resources: Resources, private val mSharedPreferences: Shared
     private val mKeepRunningAfterRebootPrefKey = resources.getString(R.string.pref_key_keep_running_after_reboot)
     private val mDarkThemePrefKey = resources.getString(R.string.pref_key_dark_theme)
     private val mBrightnessControlPrefKey = resources.getString(R.string.pref_key_control_brightness)
-    private val mAutomaticFilterModePrefKey = resources.getString(R.string.pref_key_automatic_filter)
+    private val mAutomaticFilterPrefKey = resources.getString(R.string.pref_key_automatic_filter)
     private val mAutomaticTurnOnPrefKey = resources.getString(R.string.pref_key_custom_start_time)
     private val mAutomaticTurnOffPrefKey = resources.getString(R.string.pref_key_custom_end_time)
     private val mDimButtonsPrefKey = resources.getString(R.string.pref_key_dim_buttons)
@@ -84,23 +83,19 @@ class SettingsModel(resources: Resources, private val mSharedPreferences: Shared
     private val mIntroShownPrefKey = resources.getString(R.string.pref_key_intro_shown)
     private val mAutomaticSuspendPrefKey = resources.getString(R.string.pref_key_automatic_suspend)
 
-    var shadesPowerState: Boolean
-        get() = mSharedPreferences.getBoolean(mPowerStatePrefKey, false)
-        set(state) = mSharedPreferences.edit().putBoolean(mPowerStatePrefKey, state).apply()
-
-    var shadesPauseState: Boolean
+    var pauseState: Boolean
         get() = mSharedPreferences.getBoolean(mPauseStatePrefKey, false)
         set(state) = mSharedPreferences.edit().putBoolean(mPauseStatePrefKey, state).apply()
 
-    var shadesDimLevel: Int
+    var dimLevel: Int
         get() = mSharedPreferences.getInt(mDimPrefKey, DimSeekBarPreference.DEFAULT_VALUE)
         set(dimLevel) = mSharedPreferences.edit().putInt(mDimPrefKey, dimLevel).apply()
 
-    var shadesIntensityLevel: Int
+    var intensityLevel: Int
         get() = mSharedPreferences.getInt(mIntensityPrefKey, IntensitySeekBarPreference.DEFAULT_VALUE)
         set(intensityLevel) = mSharedPreferences.edit().putInt(mIntensityPrefKey, intensityLevel).apply()
 
-    var shadesColor: Int
+    var color: Int
         get() = mSharedPreferences.getInt(mColorPrefKey, ColorSeekBarPreference.DEFAULT_VALUE)
         set(color) = mSharedPreferences.edit().putInt(mColorPrefKey, color).apply()
 
@@ -116,8 +111,8 @@ class SettingsModel(resources: Resources, private val mSharedPreferences: Shared
     val brightnessControlFlag: Boolean
         get() = mSharedPreferences.getBoolean(mBrightnessControlPrefKey, false)
 
-    val automaticFilterMode: String
-        get() = mSharedPreferences.getString(mAutomaticFilterModePrefKey, "never")
+    val automaticFilter: Boolean
+        get() = mSharedPreferences.getBoolean(mAutomaticFilterPrefKey, false)
 
     val automaticTurnOnTime: String
         get() = mSharedPreferences.getString(mAutomaticTurnOnPrefKey, "22:00")
@@ -174,31 +169,29 @@ class SettingsModel(resources: Resources, private val mSharedPreferences: Shared
                 val i = mSettingsChangedListeners.indexOf(listener)
                 mSettingsChangedListeners.removeAt(i)
             } else when (key) {
-                mPowerStatePrefKey          -> listener.onShadesPowerStateChanged(shadesPowerState)
-                mPauseStatePrefKey          -> listener.onShadesPauseStateChanged(shadesPauseState)
-                mDimPrefKey                 -> listener.onShadesDimLevelChanged(shadesDimLevel)
-                mIntensityPrefKey           -> listener.onShadesIntensityLevelChanged(shadesIntensityLevel)
-                mColorPrefKey               -> listener.onShadesColorChanged(shadesColor)
-                mAutomaticFilterModePrefKey -> listener.onShadesAutomaticFilterModeChanged(automaticFilterMode)
-                mAutomaticTurnOnPrefKey     -> listener.onShadesAutomaticTurnOnChanged(automaticTurnOnTime)
-                mAutomaticTurnOffPrefKey    -> listener.onShadesAutomaticTurnOffChanged(automaticTurnOffTime)
-                mBrightnessControlPrefKey   -> listener.onLowerBrightnessChanged(brightnessControlFlag)
-                mProfilePrefKey             -> listener.onProfileChanged(profile)
-                mAutomaticSuspendPrefKey    -> listener.onAutomaticSuspendChanged(automaticSuspend)
+                mPauseStatePrefKey        -> listener.onPauseStateChanged(pauseState)
+                mDimPrefKey               -> listener.onDimLevelChanged(dimLevel)
+                mIntensityPrefKey         -> listener.onIntensityLevelChanged(intensityLevel)
+                mColorPrefKey             -> listener.onColorChanged(color)
+                mAutomaticFilterPrefKey   -> listener.onAutomaticFilterChanged(automaticFilter)
+                mAutomaticTurnOnPrefKey   -> listener.onAutomaticTurnOnChanged(automaticTurnOnTime)
+                mAutomaticTurnOffPrefKey  -> listener.onAutomaticTurnOffChanged(automaticTurnOffTime)
+                mBrightnessControlPrefKey -> listener.onLowerBrightnessChanged(brightnessControlFlag)
+                mProfilePrefKey           -> listener.onProfileChanged(profile)
+                mAutomaticSuspendPrefKey  -> listener.onAutomaticSuspendChanged(automaticSuspend)
             }
         }
     }
     //endregion
 
     interface OnSettingsChangedListener {
-        fun onShadesPowerStateChanged(powerState: Boolean)
-        fun onShadesPauseStateChanged(pauseState: Boolean)
-        fun onShadesDimLevelChanged(dimLevel: Int)
-        fun onShadesIntensityLevelChanged(intensityLevel: Int)
-        fun onShadesColorChanged(color: Int)
-        fun onShadesAutomaticFilterModeChanged(automaticFilterMode: String)
-        fun onShadesAutomaticTurnOnChanged(turnOnTime: String)
-        fun onShadesAutomaticTurnOffChanged(turnOffTime: String)
+        fun onPauseStateChanged(pauseState: Boolean)
+        fun onDimLevelChanged(dimLevel: Int)
+        fun onIntensityLevelChanged(intensityLevel: Int)
+        fun onColorChanged(color: Int)
+        fun onAutomaticFilterChanged(automaticFilter: Boolean)
+        fun onAutomaticTurnOnChanged(turnOnTime: String)
+        fun onAutomaticTurnOffChanged(turnOffTime: String)
         fun onLowerBrightnessChanged(lowerBrightness: Boolean)
         fun onProfileChanged(profile: Int)
         fun onAutomaticSuspendChanged(automaticSuspend: Boolean)

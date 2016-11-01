@@ -57,9 +57,9 @@ public class NextProfileCommandReceiver extends BroadcastReceiver {
             ProfilesModel.Profile profileObject = ProfilesHelper.getProfile
                 (profilesModel, newProfile, context);
 
-            mSettingsModel.setShadesDimLevel(profileObject.mDimProgress);
-            mSettingsModel.setShadesIntensityLevel(profileObject.mIntensityProgress);
-            mSettingsModel.setShadesColor(profileObject.mColorProgress);
+            mSettingsModel.setDimLevel(profileObject.mDimProgress);
+            mSettingsModel.setIntensityLevel(profileObject.mIntensityProgress);
+            mSettingsModel.setColor(profileObject.mColorProgress);
         }
     }
 }

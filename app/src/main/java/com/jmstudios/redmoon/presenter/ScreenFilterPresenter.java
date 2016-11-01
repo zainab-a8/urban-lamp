@@ -232,7 +232,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
 
     //region OnSettingsChangedListener
     @Override
-    public void onShadesPauseStateChanged(boolean pauseState) {
+    public void onPauseStateChanged(boolean pauseState) {
         //Broadcast to keep appwidgets in sync
         if(DEBUG) Log.i(TAG, "Sending update broadcast");
         Intent updateAppWidgetIntent = new Intent(mContext, SwitchAppWidgetProvider.class);
@@ -242,7 +242,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
     }
 
     @Override
-    public void onShadesDimLevelChanged(int dimLevel) {
+    public void onDimLevelChanged(int dimLevel) {
         if (!isPaused() || isPreviewing()) {
             cancelRunningAnimator(mDimAnimator);
 
@@ -251,7 +251,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
     }
 
     @Override
-    public void onShadesIntensityLevelChanged(int intensityLevel) {
+    public void onIntensityLevelChanged(int intensityLevel) {
         if (!isPaused() || isPreviewing()) {
             cancelRunningAnimator(mIntensityAnimator);
 
@@ -260,20 +260,20 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
     }
 
     @Override
-    public void onShadesColorChanged(int color) {
+    public void onColorChanged(int color) {
         if (!isPaused() || isPreviewing()) {
             mView.setColorTempProgress(color);
         }
     }
 
     @Override
-    public void onShadesAutomaticFilterModeChanged(String automaticFilterMode) { }
+    public void onAutomaticFilterChanged(boolean automaticFilter) { }
 
     @Override
-    public void onShadesAutomaticTurnOnChanged(String turnOnTime) { }
+    public void onAutomaticTurnOnChanged(String turnOnTime) { }
 
     @Override
-    public void onShadesAutomaticTurnOffChanged(String turnOffTime) { }
+    public void onAutomaticTurnOffChanged(String turnOffTime) { }
 
     @Override
     public void onLowerBrightnessChanged(boolean lowerBrightness) {
@@ -560,7 +560,7 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
         mCurrentState = newState;
 
         mCurrentState.onActivation(oldState);
-        mSettingsModel.setShadesPauseState(isPaused());
+        mSettingsModel.setPauseState(isPaused());
     }
 
 
@@ -585,8 +585,8 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
 
             openScreenFilter();
 
-            animateDimLevel(mSettingsModel.getShadesDimLevel(), null);
-            animateIntensityLevel(mSettingsModel.getShadesIntensityLevel(), null);
+            animateDimLevel(mSettingsModel.getDimLevel(), null);
+            animateIntensityLevel(mSettingsModel.getIntensityLevel(), null);
 
             if (mSettingsModel.getBrightnessControlFlag()) {
                 saveOldBrightnessState();
@@ -655,9 +655,9 @@ public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrient
             refreshForegroundNotification();
             openScreenFilter();
 
-            int dim = mSettingsModel.getShadesDimLevel();
-            int intensity = mSettingsModel.getShadesIntensityLevel();
-            int filterColor = mSettingsModel.getShadesColor();
+            int dim = mSettingsModel.getDimLevel();
+            int intensity = mSettingsModel.getIntensityLevel();
+            int filterColor = mSettingsModel.getColor();
 
             mView.setFilterDimLevel(dim);
             mView.setFilterIntensityLevel(intensity);

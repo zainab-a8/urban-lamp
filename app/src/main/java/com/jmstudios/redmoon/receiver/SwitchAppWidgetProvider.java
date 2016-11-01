@@ -76,7 +76,7 @@ public class SwitchAppWidgetProvider extends AppWidgetProvider {
             views.setOnClickPendingIntent(R.id.widget_pause_play_button, togglePendingIntent);
 
             appWidgetManager.updateAppWidget(appWidgetId, views);
-            updateImage(context, settingsModel.getShadesPauseState());
+            updateImage(context, settingsModel.getPauseState());
         }
     }
 
@@ -95,7 +95,7 @@ public class SwitchAppWidgetProvider extends AppWidgetProvider {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SettingsModel settingsModel = new SettingsModel(context.getResources(), sharedPreferences);
 
-        if(settingsModel.getShadesPauseState()) {
+        if(settingsModel.getPauseState()) {
             context.startService(onCommand);
         } else {
             context.startService(pauseCommand);

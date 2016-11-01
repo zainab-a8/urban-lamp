@@ -68,7 +68,7 @@
     <string name="shades_color_temp">Color temperature</string>
     <string name="control_brightness_title">Lower brightness</string>
 
-    <string name="automatic_filter_title">Toggle mode</string>
+    <string name="automatic_filter_title">Automatic toggle</string>
     <string name="custom_start_time_title">Resume at</string>
     <string name="custom_end_time_title">Pause at</string>
     <string name="location_title">Location</string>

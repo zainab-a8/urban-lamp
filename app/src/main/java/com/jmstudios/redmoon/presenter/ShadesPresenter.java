@@ -78,13 +78,13 @@ public class ShadesPresenter implements SettingsModel.OnSettingsChangedListener 
     }
 
     public void onStart() {
-        boolean paused = mSettingsModel.getShadesPauseState();
+        boolean paused = mSettingsModel.getPauseState();
         mActivity.setSwitch(!paused);
     }
 
     //region OnSettingsChangedListener
     @Override
-    public void onShadesPauseStateChanged(boolean pauseState) {
+    public void onPauseStateChanged(boolean pauseState) {
         mActivity.setSwitch(!pauseState);
         if (!pauseState) {
             mActivity.displayInstallWarningToast();
@@ -92,46 +92,44 @@ public class ShadesPresenter implements SettingsModel.OnSettingsChangedListener 
     }
 
     @Override
-    public void onShadesDimLevelChanged(int dimLevel) {
+    public void onDimLevelChanged(int dimLevel) {
         DimSeekBarPreference pref = (DimSeekBarPreference) mView.getPreferenceScreen()
             .findPreference(mContext.getString(R.string.pref_key_shades_dim_level));
         pref.setProgress(dimLevel);
     }
 
     @Override
-    public void onShadesIntensityLevelChanged(int intensityLevel) {
+    public void onIntensityLevelChanged(int intensityLevel) {
         IntensitySeekBarPreference pref = (IntensitySeekBarPreference) mView.getPreferenceScreen()
             .findPreference(mContext.getString(R.string.pref_key_shades_intensity_level));
         pref.setProgress(intensityLevel);
     }
 
     @Override
-    public void onShadesColorChanged(int color) {
+    public void onColorChanged(int color) {
         ColorSeekBarPreference pref = (ColorSeekBarPreference) mView.getPreferenceScreen()
             .findPreference(mContext.getString(R.string.pref_key_shades_color_temp));
         pref.setProgress(color);
     }
 
     @Override
-    public void onShadesAutomaticFilterModeChanged(String automaticFilterMode) {
-        if (DEBUG) Log.i(TAG, "Filter mode changed to " + automaticFilterMode);
-        if (!automaticFilterMode.equals("never")) {
-            AutomaticFilterChangeReceiver.cancelAlarms(mContext);
+    public void onAutomaticFilterChanged(boolean automaticFilter) {
+        if (DEBUG) Log.i(TAG, "Filter mode changed to " + automaticFilter);
+        AutomaticFilterChangeReceiver.cancelAlarms(mContext);
+        if (automaticFilter) {
             AutomaticFilterChangeReceiver.scheduleNextOnCommand(mContext);
             AutomaticFilterChangeReceiver.scheduleNextPauseCommand(mContext);
-        } else {
-            AutomaticFilterChangeReceiver.cancelAlarms(mContext);
         }
     }
 
     @Override
-    public void onShadesAutomaticTurnOnChanged(String turnOnTime) {
+    public void onAutomaticTurnOnChanged(String turnOnTime) {
         AutomaticFilterChangeReceiver.cancelTurnOnAlarm(mContext);
         AutomaticFilterChangeReceiver.scheduleNextOnCommand(mContext);
     }
 
     @Override
-    public void onShadesAutomaticTurnOffChanged(String turnOffTime) {
+    public void onAutomaticTurnOffChanged(String turnOffTime) {
         AutomaticFilterChangeReceiver.cancelPauseAlarm(mContext);
         AutomaticFilterChangeReceiver.scheduleNextPauseCommand(mContext);
     }

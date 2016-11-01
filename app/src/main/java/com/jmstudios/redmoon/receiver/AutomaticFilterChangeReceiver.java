@@ -82,7 +82,8 @@ public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
             handler.postDelayed(runnable, ScreenFilterPresenter.FADE_DURATION_MS + 100);
         }
 
-        if (settingsModel.getAutomaticFilterMode().equals("sun")) {
+        // TODO: add "&& settingsModel.getUseLocation()"
+        if (settingsModel.getAutomaticFilter()) {
             // Update times for the next time (fails silently)
             LocationManager locationManager = (LocationManager)
                 context.getSystemService(Context.LOCATION_SERVICE);
@@ -98,7 +99,7 @@ public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SettingsModel settingsModel = new SettingsModel(context.getResources(), sharedPreferences);
 
-        if (!settingsModel.getAutomaticFilterMode().equals("never")) {
+        if (settingsModel.getAutomaticFilter()) {
             String time;
             time = settingsModel.getAutomaticTurnOnTime();
 
@@ -114,7 +115,7 @@ public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SettingsModel settingsModel = new SettingsModel(context.getResources(), sharedPreferences);
 
-        if (!settingsModel.getAutomaticFilterMode().equals("never")) {
+        if (settingsModel.getAutomaticFilter()) {
             String time = settingsModel.getAutomaticTurnOffTime();
 
             Intent pauseIntent = new Intent(context, AutomaticFilterChangeReceiver.class);

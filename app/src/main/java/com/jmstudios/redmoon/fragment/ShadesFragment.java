@@ -82,10 +82,11 @@ public class ShadesFragment extends PreferenceFragment {
     // Preferences
     private SwitchPreference darkThemePref;
     private SwitchPreference lowerBrightnessPref;
-    private ListPreference automaticFilterPref;
+    private SwitchPreference automaticFilterPref;
+    private SwitchPreference useLocationPref;
+    private LocationPreference locationPref;
     private FilterTimePreference automaticTurnOnPref;
     private FilterTimePreference automaticTurnOffPref;
-    private LocationPreference locationPref;
     private Preference otherPrefCategory;
     private Preference automaticSuspendPref;
 
@@ -107,16 +108,18 @@ public class ShadesFragment extends PreferenceFragment {
         String automaticTurnOnPrefKey = getString(R.string.pref_key_custom_start_time);
         String automaticTurnOffPrefKey = getString(R.string.pref_key_custom_end_time);
         String locationPrefKey = getString(R.string.pref_key_location);
+        String useLocationPrefKey = getString(R.string.pref_key_use_location);
         String otherCategoryPrefKey = getString(R.string.pref_key_other);
         String automaticSuspendPrefKey = getString(R.string.pref_key_automatic_suspend);
 
         PreferenceScreen prefScreen = getPreferenceScreen();
         darkThemePref = (SwitchPreference) prefScreen.findPreference(darkThemePrefKey);
         lowerBrightnessPref = (SwitchPreference) prefScreen.findPreference(lowerBrightnessPrefKey);
-        automaticFilterPref = (ListPreference) prefScreen.findPreference(automaticFilterPrefKey);
+        automaticFilterPref = (SwitchPreference) prefScreen.findPreference(automaticFilterPrefKey);
+        locationPref = (LocationPreference) prefScreen.findPreference(locationPrefKey);
+        useLocationPref = (SwitchPreference) prefScreen.findPreference(useLocationPrefKey);
         automaticTurnOnPref = (FilterTimePreference) prefScreen.findPreference(automaticTurnOnPrefKey);
         automaticTurnOffPref = (FilterTimePreference) prefScreen.findPreference(automaticTurnOffPrefKey);
-        locationPref = (LocationPreference) prefScreen.findPreference(locationPrefKey);
         otherPrefCategory = prefScreen.findPreference(otherCategoryPrefKey);
         automaticSuspendPref = prefScreen.findPreference(automaticSuspendPrefKey);
 
@@ -149,16 +152,15 @@ public class ShadesFragment extends PreferenceFragment {
             }
         });
 
-        boolean custom = automaticFilterPref.getValue().toString().equals("custom");
-        automaticTurnOnPref.setEnabled(custom);
-        automaticTurnOffPref.setEnabled(custom);
-        boolean sun = automaticFilterPref.getValue().toString().equals("sun");
-        locationPref.setEnabled(sun);
+        boolean auto = automaticFilterPref.isChecked();
+        useLocationPref.setEnabled(auto);
+        boolean sun = true;
+        automaticTurnOnPref.setEnabled(auto && !sun);
+        automaticTurnOffPref.setEnabled(auto && !sun);
 
-        automaticFilterPref.setSummary(automaticFilterPref.getEntry());
 
-        onAutomaticFilterPreferenceChange(automaticFilterPref,
-                                          automaticFilterPref.getValue().toString());
+
+        onAutomaticFilterPreferenceChange(automaticFilterPref, auto);
 
         automaticFilterPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
@@ -170,7 +172,7 @@ public class ShadesFragment extends PreferenceFragment {
         locationPref.setOnLocationChangedListener(new LocationPreference.OnLocationChangedListener() {
                 @Override
                 public void onLocationChange() {
-                    if (automaticFilterPref.getValue().equals("sun")) {
+                    if (true) {
                         updateFilterTimesFromSun();
                     }
                 }
@@ -194,7 +196,12 @@ public class ShadesFragment extends PreferenceFragment {
     }
 
     private boolean onAutomaticFilterPreferenceChange(Preference preference, Object newValue) {
-        if (newValue.toString().equals("sun") && ContextCompat.checkSelfPermission
+        boolean auto = (boolean) newValue;
+        locationPref.setEnabled(auto);
+        boolean sun = true;
+        automaticTurnOnPref.setEnabled(false);
+        automaticTurnOffPref.setEnabled(false);
+        if (auto && ContextCompat.checkSelfPermission
             (getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) !=
             PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]
@@ -202,15 +209,8 @@ public class ShadesFragment extends PreferenceFragment {
             return false;
         }
 
-        boolean custom = newValue.toString().equals("custom");
-        automaticTurnOnPref.setEnabled(custom);
-        automaticTurnOffPref.setEnabled(custom);
-
-        boolean sun = newValue.toString().equals("sun");
-        locationPref.setEnabled(sun);
-
         // From something to sun
-        if (newValue.toString().equals("sun")) {
+        if (auto) {
             // Update the FilterTimePreferences
             updateFilterTimesFromSun();
 
@@ -219,16 +219,10 @@ public class ShadesFragment extends PreferenceFragment {
         }
 
         // From sun to something
-        String oldValue = preference.getSharedPreferences().getString
-            (preference.getKey(), "never");
-        if (oldValue.equals("sun") && !newValue.equals("sun")) {
-            automaticTurnOnPref.setToCustomTime();
-            automaticTurnOffPref.setToCustomTime();
-        }
-
-        ListPreference lp = (ListPreference) preference;
-        String entry = lp.getEntries()[lp.findIndexOfValue(newValue.toString())].toString();
-        lp.setSummary(entry);
+        // if (!sun) {
+        //     automaticTurnOnPref.setToCustomTime();
+        //     automaticTurnOffPref.setToCustomTime();
+        // }
 
         return true;
     }
@@ -275,11 +269,12 @@ public class ShadesFragment extends PreferenceFragment {
         otherPrefCategory.setEnabled(true);
         automaticSuspendPref.setEnabled(enabled);
 
-        boolean custom = automaticFilterPref.getValue().toString().equals("custom");
-        automaticTurnOnPref.setEnabled(custom);
-        automaticTurnOffPref.setEnabled(custom);
-        boolean sun = automaticFilterPref.getValue().toString().equals("sun");
-        locationPref.setEnabled(sun);
+        boolean auto = automaticFilterPref.isChecked();
+        locationPref.setEnabled(auto);
+        boolean sun = true;
+        automaticTurnOnPref.setEnabled(auto && !sun);
+        automaticTurnOffPref.setEnabled(auto && !sun);
+
     }
 
     private void setAllPreferencesEnabled(boolean enabled) {

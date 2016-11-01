@@ -69,7 +69,7 @@ public class BootReceiver extends BroadcastReceiver {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SettingsModel settingsModel = new SettingsModel(context.getResources(), sharedPreferences);
 
-        boolean pausedBeforeReboot = settingsModel.getShadesPauseState();
+        boolean pausedBeforeReboot = settingsModel.getPauseState();
 
         // If the filter was on when the device was powered down and the
         // automatic brightness setting is on, then it still uses the
@@ -107,9 +107,7 @@ public class BootReceiver extends BroadcastReceiver {
 
     private static boolean getPredictedPauseState(boolean pausedBeforeReboot,
                                                   SettingsModel model) {
-        if (model.getAutomaticFilterMode().equals("never")) {
-            return pausedBeforeReboot;
-        } else {
+        if (model.getAutomaticFilter()) {
             Calendar now = Calendar.getInstance();
 
             String onTime = model.getAutomaticTurnOnTime();
@@ -139,6 +137,8 @@ public class BootReceiver extends BroadcastReceiver {
             }
 
             return !(now.after(on) && now.before(off));
+        } else {
+            return pausedBeforeReboot;
         }
     }
 }

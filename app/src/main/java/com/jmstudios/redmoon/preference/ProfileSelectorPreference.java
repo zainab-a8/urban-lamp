@@ -179,9 +179,9 @@ public class ProfileSelectorPreference extends Preference
             ProfilesModel.Profile profileObject = ProfilesHelper.getProfile
                 (profilesModel, mProfile, mContext);
 
-            mSettingsModel.setShadesDimLevel(profileObject.mDimProgress);
-            mSettingsModel.setShadesIntensityLevel(profileObject.mIntensityProgress);
-            mSettingsModel.setShadesColor(profileObject.mColorProgress);
+            mSettingsModel.setDimLevel(profileObject.mDimProgress);
+            mSettingsModel.setIntensityLevel(profileObject.mIntensityProgress);
+            mSettingsModel.setColor(profileObject.mColorProgress);
         }
     }
 
@@ -333,34 +333,34 @@ public class ProfileSelectorPreference extends Preference
         SettingsModel model = ((ShadesActivity) getContext()).getSettingsModel();
         model.addOnSettingsChangedListener(new SettingsModel.OnSettingsChangedListener() {
                 @Override
-                public void onShadesPauseStateChanged(boolean pauseState) { }
+                public void onPauseStateChanged(boolean pauseState) { }
 
                 @Override
-                public void onShadesDimLevelChanged(int dimLevel) {
+                public void onDimLevelChanged(int dimLevel) {
                     if (dimLevel == currentDim) return;
                     mProfileSpinner.setSelection(0);
                 }
 
                 @Override
-                public void onShadesIntensityLevelChanged(int intensityLevel) {
+                public void onIntensityLevelChanged(int intensityLevel) {
                     if (intensityLevel == currentIntensity) return;
                     mProfileSpinner.setSelection(0);
                 }
 
                 @Override
-                public void onShadesColorChanged(int color) {
+                public void onColorChanged(int color) {
                     if (color == currentColor) return;
                     mProfileSpinner.setSelection(0);
                 }
 
                 @Override
-                public void onShadesAutomaticFilterModeChanged(String automaticFilterMode) {}
+                public void onAutomaticFilterChanged(boolean automaticFilter) {}
 
                 @Override
-                public void onShadesAutomaticTurnOnChanged(String turnOnTime) {}
+                public void onAutomaticTurnOnChanged(String turnOnTime) {}
 
                 @Override
-                public void onShadesAutomaticTurnOffChanged(String turnOffTime) {}
+                public void onAutomaticTurnOffChanged(String turnOffTime) {}
 
                 @Override
                 public void onLowerBrightnessChanged(boolean lowerBrightness) { }
