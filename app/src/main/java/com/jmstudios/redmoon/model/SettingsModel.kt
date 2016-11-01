@@ -62,51 +62,27 @@ import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
  * To begin listening again, invoke [SettingsModel.openSettingsChangeListener].
  */
 class SettingsModel(resources: Resources, private val mSharedPreferences: SharedPreferences) : SharedPreferences.OnSharedPreferenceChangeListener {
-    private val mSettingsChangedListeners: ArrayList<OnSettingsChangedListener?>
+    private val mSettingsChangedListeners = ArrayList<OnSettingsChangedListener?>()
 
-    private val mPowerStatePrefKey: String
-    private val mPauseStatePrefKey: String
-    private val mDimPrefKey: String
-    private val mIntensityPrefKey: String
-    private val mColorPrefKey: String
-    private val mOpenOnBootPrefKey: String
-    private val mKeepRunningAfterRebootPrefKey: String
-    private val mDarkThemePrefKey: String
-    private val mBrightnessControlPrefKey: String
-    private val mAutomaticFilterModePrefKey: String
-    private val mAutomaticTurnOnPrefKey: String
-    private val mAutomaticTurnOffPrefKey: String
-    private val mDimButtonsPrefKey: String
-    private val mBrightnessAutomaticPrefKey: String
-    private val mBrightnessLevelPrefKey: String
-    private val mProfilePrefKey: String
-    private val mAmmountProfilesPrefKey: String
-    private val mIntroShownPrefKey: String
-    private val mAutomaticSuspendPrefKey: String
-
-    init {
-        mSettingsChangedListeners = ArrayList<OnSettingsChangedListener?>()
-
-        mPowerStatePrefKey = resources.getString(R.string.pref_key_shades_power_state)
-        mPauseStatePrefKey = resources.getString(R.string.pref_key_shades_pause_state)
-        mDimPrefKey = resources.getString(R.string.pref_key_shades_dim_level)
-        mIntensityPrefKey = resources.getString(R.string.pref_key_shades_intensity_level)
-        mColorPrefKey = resources.getString(R.string.pref_key_shades_color_temp)
-        mOpenOnBootPrefKey = resources.getString(R.string.pref_key_always_open_on_startup)
-        mKeepRunningAfterRebootPrefKey = resources.getString(R.string.pref_key_keep_running_after_reboot)
-        mDarkThemePrefKey = resources.getString(R.string.pref_key_dark_theme)
-        mBrightnessControlPrefKey = resources.getString(R.string.pref_key_control_brightness)
-        mAutomaticFilterModePrefKey = resources.getString(R.string.pref_key_automatic_filter)
-        mAutomaticTurnOnPrefKey = resources.getString(R.string.pref_key_custom_start_time)
-        mAutomaticTurnOffPrefKey = resources.getString(R.string.pref_key_custom_end_time)
-        mDimButtonsPrefKey = resources.getString(R.string.pref_key_dim_buttons)
-        mBrightnessAutomaticPrefKey = resources.getString(R.string.pref_key_brightness_automatic)
-        mBrightnessLevelPrefKey = resources.getString(R.string.pref_key_brightness_level)
-        mProfilePrefKey = resources.getString(R.string.pref_key_profile_spinner)
-        mAmmountProfilesPrefKey = resources.getString(R.string.pref_key_ammount_profiles)
-        mIntroShownPrefKey = resources.getString(R.string.pref_key_intro_shown)
-        mAutomaticSuspendPrefKey = resources.getString(R.string.pref_key_automatic_suspend)
-    }
+    private val mPowerStatePrefKey = resources.getString(R.string.pref_key_shades_power_state)
+    private val mPauseStatePrefKey = resources.getString(R.string.pref_key_shades_pause_state)
+    private val mDimPrefKey = resources.getString(R.string.pref_key_shades_dim_level)
+    private val mIntensityPrefKey = resources.getString(R.string.pref_key_shades_intensity_level)
+    private val mColorPrefKey = resources.getString(R.string.pref_key_shades_color_temp)
+    private val mOpenOnBootPrefKey = resources.getString(R.string.pref_key_always_open_on_startup)
+    private val mKeepRunningAfterRebootPrefKey = resources.getString(R.string.pref_key_keep_running_after_reboot)
+    private val mDarkThemePrefKey = resources.getString(R.string.pref_key_dark_theme)
+    private val mBrightnessControlPrefKey = resources.getString(R.string.pref_key_control_brightness)
+    private val mAutomaticFilterModePrefKey = resources.getString(R.string.pref_key_automatic_filter)
+    private val mAutomaticTurnOnPrefKey = resources.getString(R.string.pref_key_custom_start_time)
+    private val mAutomaticTurnOffPrefKey = resources.getString(R.string.pref_key_custom_end_time)
+    private val mDimButtonsPrefKey = resources.getString(R.string.pref_key_dim_buttons)
+    private val mBrightnessAutomaticPrefKey = resources.getString(R.string.pref_key_brightness_automatic)
+    private val mBrightnessLevelPrefKey = resources.getString(R.string.pref_key_brightness_level)
+    private val mProfilePrefKey = resources.getString(R.string.pref_key_profile_spinner)
+    private val mAmmountProfilesPrefKey = resources.getString(R.string.pref_key_ammount_profiles)
+    private val mIntroShownPrefKey = resources.getString(R.string.pref_key_intro_shown)
+    private val mAutomaticSuspendPrefKey = resources.getString(R.string.pref_key_automatic_suspend)
 
     var shadesPowerState: Boolean
         get() = mSharedPreferences.getBoolean(mPowerStatePrefKey, false)
