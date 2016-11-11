@@ -59,23 +59,18 @@
         android:defaultValue="true" />
   </PreferenceCategory>
 
-  <PreferenceCategory android:title="@string/pref_title_automatic_filter">
+  <PreferenceCategory
+      android:key="@+string/pref_key_automatic_filter_category"
+      android:title="@string/pref_title_automatic_filter" >
     <SwitchPreference
         android:key="@string/pref_key_automatic_filter"
         android:title="@string/automatic_filter_title"
         android:defaultValue="false" />
-
-    <SwitchPreference
+    <com.jmstudios.redmoon.preference.UseLocationPreference
         android:key="@string/pref_key_use_location"
         android:title="@string/location_title"
-        android:summary="@string/location_not_set"
         android:dependency="@string/pref_key_automatic_filter"
         android:defaultValue="false" />
-
-    <com.jmstudios.redmoon.preference.LocationPreference
-        android:key="@string/pref_key_location"
-        android:title="@string/location_title"
-        android:defaultValue="not set" />
 
     <com.jmstudios.redmoon.preference.FilterTimePreference
         android:key="@string/pref_key_custom_start_time"

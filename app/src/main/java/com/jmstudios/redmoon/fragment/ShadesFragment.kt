@@ -40,13 +40,14 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.Manifest
+import android.content.Context
 import android.net.Uri
 import android.os.Build.VERSION
 import android.os.Bundle
 import android.preference.ListPreference
 import android.preference.Preference
 import android.preference.PreferenceFragment
-import android.preference.PreferenceScreen
+import android.preference.PreferenceCategory
 import android.preference.SwitchPreference
 import android.provider.Settings
 import android.support.design.widget.FloatingActionButton
@@ -62,102 +63,109 @@ import android.widget.ListView
 import android.widget.Switch
 import android.widget.TextView
 
+import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
+
 import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.activity.ShadesActivity
 import com.jmstudios.redmoon.model.SettingsModel
 import com.jmstudios.redmoon.presenter.ShadesPresenter
 import com.jmstudios.redmoon.preference.FilterTimePreference
-import com.jmstudios.redmoon.preference.LocationPreference
+import com.jmstudios.redmoon.preference.UseLocationPreference
 import com.jmstudios.redmoon.service.ScreenFilterService
+import java.util.*
 
 class ShadesFragment : PreferenceFragment() {
 
-    private var mPresenter: ShadesPresenter? = null
-    private var mView: View? = null
-    private var mHelpSnackbar: Snackbar? = null
+    private val DEBUG = true;
+    private lateinit var mPresenter: ShadesPresenter
+    private lateinit var mView: View
+    private lateinit var mHelpSnackbar: Snackbar
 
     // Preferences
-    private var darkThemePref: SwitchPreference? = null
-    private var lowerBrightnessPref: SwitchPreference? = null
-    private var automaticFilterPref: SwitchPreference? = null
-    private var useLocationPref: SwitchPreference? = null
-    private var locationPref: LocationPreference? = null
-    private var automaticTurnOnPref: FilterTimePreference? = null
-    private var automaticTurnOffPref: FilterTimePreference? = null
-    private var otherPrefCategory: Preference? = null
-    private var automaticSuspendPref: Preference? = null
+    private val automaticFilterPrefCategory: PreferenceCategory
+        get() = (preferenceScreen.findPreference
+                (getString(R.string.pref_key_automatic_filter_category)) as PreferenceCategory)
 
-    private val searchingLocation: Boolean = false
+    private val darkThemePref: SwitchPreference
+        get() = (preferenceScreen.findPreference
+                (getString(R.string.pref_key_dark_theme)) as SwitchPreference)
+
+    private val lowerBrightnessPref: SwitchPreference
+        get() = (preferenceScreen.findPreference
+                (getString(R.string.pref_key_control_brightness)) as SwitchPreference)
+
+    private val automaticFilterPref: SwitchPreference
+        get() = (preferenceScreen.findPreference
+                (getString(R.string.pref_key_automatic_filter)) as SwitchPreference)
+
+    private val useLocationPref: UseLocationPreference
+        get() = (preferenceScreen.findPreference
+                (getString(R.string.pref_key_use_location)) as UseLocationPreference)
+
+    private val automaticTurnOnPref: FilterTimePreference
+        get() = (preferenceScreen.findPreference
+                (getString(R.string.pref_key_custom_start_time)) as FilterTimePreference)
+
+    private val automaticTurnOffPref: FilterTimePreference
+        get() = (preferenceScreen.findPreference
+                (getString(R.string.pref_key_custom_end_time)) as FilterTimePreference)
+
+    private val otherPrefCategory: Preference
+        get() = preferenceScreen.findPreference(getString(R.string.pref_key_other))
+
+    private val automaticSuspendPref: Preference
+        get() = preferenceScreen.findPreference(getString(R.string.pref_key_automatic_suspend))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         addPreferencesFromResource(R.xml.preferences)
 
-        val darkThemePrefKey = getString(R.string.pref_key_dark_theme)
-        val lowerBrightnessPrefKey = getString(R.string.pref_key_control_brightness)
-        val automaticFilterPrefKey = getString(R.string.pref_key_automatic_filter)
-        val automaticTurnOnPrefKey = getString(R.string.pref_key_custom_start_time)
-        val automaticTurnOffPrefKey = getString(R.string.pref_key_custom_end_time)
-        val locationPrefKey = getString(R.string.pref_key_location)
-        val useLocationPrefKey = getString(R.string.pref_key_use_location)
-        val otherCategoryPrefKey = getString(R.string.pref_key_other)
-        val automaticSuspendPrefKey = getString(R.string.pref_key_automatic_suspend)
-
-        val prefScreen = preferenceScreen
-        darkThemePref = prefScreen.findPreference(darkThemePrefKey) as SwitchPreference
-        lowerBrightnessPref = prefScreen.findPreference(lowerBrightnessPrefKey) as SwitchPreference
-        automaticFilterPref = prefScreen.findPreference(automaticFilterPrefKey) as SwitchPreference
-        locationPref = prefScreen.findPreference(locationPrefKey) as LocationPreference
-        useLocationPref = prefScreen.findPreference(useLocationPrefKey) as SwitchPreference
-        automaticTurnOnPref = prefScreen.findPreference(automaticTurnOnPrefKey) as FilterTimePreference
-        automaticTurnOffPref = prefScreen.findPreference(automaticTurnOffPrefKey) as FilterTimePreference
-        otherPrefCategory = prefScreen.findPreference(otherCategoryPrefKey)
-        automaticSuspendPref = prefScreen.findPreference(automaticSuspendPrefKey)
-
-        darkThemePref!!.onPreferenceChangeListener =
+        darkThemePref.onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { preference, newValue ->
                     activity.recreate()
                     true
                 }
 
         if (android.os.Build.VERSION.SDK_INT >= 23 && !Settings.System.canWrite(context))
-            lowerBrightnessPref!!.isChecked = false
+            lowerBrightnessPref.isChecked = false
 
-        lowerBrightnessPref!!.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
-            val checked = newValue as Boolean
-            if (checked && android.os.Build.VERSION.SDK_INT >= 23 &&
-                    !Settings.System.canWrite(context)) {
-                val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
-                        Uri.parse("package:" + context.packageName))
-                startActivityForResult(intent, -1)
-                return@OnPreferenceChangeListener false
-            }
+        lowerBrightnessPref.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { preference, newValue ->
+                    val checked = newValue as Boolean
+                    if (checked && getWriteSettingsPermission()) {
+                        return@OnPreferenceChangeListener false
+                    }
+                    true
+                }
 
-            true
-        }
+        automaticFilterPref.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { preference, newValue ->
+                    onAutomaticFilterPreferenceChange(newValue as Boolean)
+                    true
+                }
 
-        val auto = automaticFilterPref!!.isChecked
-        useLocationPref!!.isEnabled = auto
-        val sun = true
-        automaticTurnOnPref!!.isEnabled = auto && !sun
-        automaticTurnOffPref!!.isEnabled = auto && !sun
+            /* requestLocationPermission() */
+            /* updateFilterTimesFromSun() */
+            /* locationPref.searchLocation(true); */
+            /* locationPref.searchLocation(false) */
+            /* int duration = Toast.LENGTH_SHORT; */
+            /* Toast toast = Toast.makeText */
+            /*     (mContext, mContext.getString */
+            /*      (R.string.toast_warning_no_location), duration); */
+            /* toast.show(); */
 
+        useLocationPref.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { preference, newValue ->
+                    //TODO: Get location permission 
+                    updateLocationPrefs(newValue as Boolean)
+                    true
+                }
 
-
-        onAutomaticFilterPreferenceChange(automaticFilterPref!!, auto)
-
-        automaticFilterPref!!.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue -> onAutomaticFilterPreferenceChange(preference, newValue) }
-
-        locationPref!!.setOnLocationChangedListener {
-            if (true) {
-                updateFilterTimesFromSun()
-            }
-        }
 
         // Automatic suspend
         val automaticSuspendOn = (activity as ShadesActivity).settingsModel.automaticSuspend
-        automaticSuspendPref!!.setSummary(if (automaticSuspendOn)
+        automaticSuspendPref.setSummary(if (automaticSuspendOn)
             R.string.text_switch_on
         else
             R.string.text_switch_off)
@@ -167,56 +175,72 @@ class ShadesFragment : PreferenceFragment() {
         super.onResume()
 
         val automaticSuspendOn = (activity as ShadesActivity).settingsModel.automaticSuspend
-        automaticSuspendPref!!.setSummary(if (automaticSuspendOn)
+        automaticSuspendPref.setSummary(if (automaticSuspendOn)
             R.string.text_switch_on
         else
             R.string.text_switch_off)
     }
 
-    private fun onAutomaticFilterPreferenceChange(preference: Preference, newValue: Any): Boolean {
-        val auto = newValue as Boolean
-        locationPref!!.isEnabled = auto
-        val sun = true
-        automaticTurnOnPref!!.isEnabled = false
-        automaticTurnOffPref!!.isEnabled = false
-        if (auto && ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 0)
-            return false
+    private fun getWriteSettingsPermission():Boolean {
+        if (android.os.Build.VERSION.SDK_INT >= 23 && !Settings.System.canWrite(context)) {
+            val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
+                                Uri.parse("package:" + context.packageName))
+            startActivityForResult(intent, -1)
+        }
+        return ((android.os.Build.VERSION.SDK_INT >= 23 && Settings.System.canWrite(context))
+                || android.os.Build.VERSION.SDK_INT < 23)
         }
 
-        // From something to sun
-        if (auto) {
-            // Update the FilterTimePreferences
-            updateFilterTimesFromSun()
-
-            // Attempt to get a new location
-            locationPref!!.searchLocation(false)
+    private fun onAutomaticFilterPreferenceChange(auto: Boolean) {
+        useLocationPref.setEnabled(auto)
+        updateLocationPrefs(useLocationPref.isChecked)
+        if (!auto) {
+            automaticTurnOnPref.setEnabled(false)
+            automaticTurnOffPref.setEnabled(false)
         }
-
-        // From sun to something
-        // if (!sun) {
-        //     automaticTurnOnPref.setToCustomTime();
-        //     automaticTurnOffPref.setToCustomTime();
-        // }
-
-        return true
     }
 
-    private fun updateFilterTimesFromSun() {
-        val location = locationPref!!.location
-        if (location == "not set") {
-            automaticTurnOnPref!!.setToSunTime("19:30")
-            automaticTurnOffPref!!.setToSunTime("06:30")
+    private fun removePref(category: PreferenceCategory, pref: Preference?) {
+        if (pref != null) category.removePreference(pref)
+    }
+
+    private fun addPref(category: PreferenceCategory, pref: Preference?) {
+        if (pref == null) category.addPreference(pref)
+    }
+
+    private fun updateLocationPrefs(sun: Boolean) {
+        useLocationPref.updateSummary()
+        val location = useLocationPref.location
+        if (!sun) {
+            if (DEBUG) Log.i(TAG, "Location Disabled")
+            automaticTurnOnPref.setToCustomTime()
+            automaticTurnOffPref.setToCustomTime()
+        } else if (location == "not set") {
+            if (DEBUG) Log.i(TAG, "Location Not Set")
+            automaticTurnOnPref.setToSunTime("19:30")
+            automaticTurnOffPref.setToSunTime("06:30")
         } else {
-            val androidLocation = Location(LocationManager.NETWORK_PROVIDER)
-            androidLocation.latitude = java.lang.Double.parseDouble(location.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0])
-            androidLocation.longitude = java.lang.Double.parseDouble(location.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1])
+            if (DEBUG) Log.i(TAG, "Location Set")
+            val latitude = java.lang.Double.parseDouble(location.split(",")[0])
+            val longitude = java.lang.Double.parseDouble(location.split(",")[1])
 
-            val sunsetTime = FilterTimePreference.getSunTimeFromLocation(androidLocation, true)
-            automaticTurnOnPref!!.setToSunTime(sunsetTime)
+            val sunriseSunsetLocation = com.luckycatlabs.sunrisesunset.dto.Location(latitude, longitude)
+            val calculator = SunriseSunsetCalculator(sunriseSunsetLocation, TimeZone.getDefault());
 
-            val sunriseTime = FilterTimePreference.getSunTimeFromLocation(androidLocation, false)
-            automaticTurnOffPref!!.setToSunTime(sunriseTime)
+            val sunsetTime = calculator.getOfficialSunsetForDate(Calendar.getInstance())
+            automaticTurnOnPref.setToSunTime(sunsetTime)
+
+            val sunriseTime = calculator.getOfficialSunriseForDate(Calendar.getInstance())
+            automaticTurnOffPref.setToSunTime(sunriseTime)
+        }
+    }
+
+    private fun requestLocationPermission() {
+        if (ContextCompat.checkSelfPermission
+                (activity, Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity,
+                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 0)
         }
     }
 
@@ -238,14 +262,14 @@ class ShadesFragment : PreferenceFragment() {
         for (i in 0..root.preferenceCount - 1) {
             root.getPreference(i).isEnabled = enabled
         }
-        otherPrefCategory!!.isEnabled = true
-        automaticSuspendPref!!.isEnabled = enabled
+        otherPrefCategory.isEnabled = true
+        automaticSuspendPref.isEnabled = enabled
 
-        val auto = automaticFilterPref!!.isChecked
-        locationPref!!.isEnabled = auto
+        val auto = automaticFilterPref.isChecked
+        useLocationPref.isEnabled = auto
         val sun = true
-        automaticTurnOnPref!!.isEnabled = auto && !sun
-        automaticTurnOffPref!!.isEnabled = auto && !sun
+        automaticTurnOnPref.isEnabled = auto && !sun
+        automaticTurnOffPref.isEnabled = auto && !sun
 
     }
 
@@ -257,19 +281,19 @@ class ShadesFragment : PreferenceFragment() {
     }
 
     private fun showHelpSnackbar() {
-        mHelpSnackbar = Snackbar.make(mView!!, activity.getString(R.string.help_snackbar_text),
+        mHelpSnackbar = Snackbar.make(mView, activity.getString(R.string.help_snackbar_text),
                 Snackbar.LENGTH_INDEFINITE)
 
         if ((activity as ShadesActivity).settingsModel.darkThemeFlag) {
-            val group = mHelpSnackbar!!.view as ViewGroup
-            group.setBackgroundColor(activity.resources.getColor(R.color.snackbar_color_dark_theme))
+            val group = mHelpSnackbar.view as ViewGroup
+            group.setBackgroundColor(ContextCompat.getColor(activity, R.color.snackbar_color_dark_theme))
 
             val snackbarTextId = android.support.design.R.id.snackbar_text
             val textView = group.findViewById(snackbarTextId) as TextView
-            textView.setTextColor(activity.resources.getColor(R.color.text_color_dark_theme))
+            textView.setTextColor(ContextCompat.getColor(activity, R.color.text_color_dark_theme))
         }
 
-        mHelpSnackbar!!.show()
+        mHelpSnackbar.show()
     }
 
     companion object {
@@ -277,3 +301,5 @@ class ShadesFragment : PreferenceFragment() {
         private val DEBUG = true
     }
 }// Android Fragments require an explicit public default constructor for re-creation
+
+
