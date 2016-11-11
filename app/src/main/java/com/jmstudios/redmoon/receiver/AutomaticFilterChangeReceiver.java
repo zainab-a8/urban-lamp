@@ -29,6 +29,9 @@ import android.net.Uri;
 import android.location.LocationManager;
 import android.location.LocationListener;
 import android.os.Handler;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.content.ContextCompat;
 
 import java.util.GregorianCalendar;
 import java.util.Calendar;
@@ -86,7 +89,10 @@ public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
             // Update times for the next time (fails silently)
             LocationManager locationManager = (LocationManager)
                 context.getSystemService(Context.LOCATION_SERVICE);
-            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) &&
+                ContextCompat.checkSelfPermission
+                (context, Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
                 LocationListener listener = new LocationUpdateListener(context);
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
                                                        0, 0, listener);
