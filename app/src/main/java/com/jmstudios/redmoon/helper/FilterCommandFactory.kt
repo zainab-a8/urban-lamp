@@ -19,7 +19,6 @@ import android.content.Context
 import android.content.Intent
 
 import com.jmstudios.redmoon.service.ScreenFilterService
-import com.jmstudios.redmoon.service.ScreenFilterService.*
 
 /**
  * Factory class to construct a valid [Intent] commands that can be sent to
@@ -45,6 +44,6 @@ class FilterCommandFactory(private val mContext: Context) {
         } else ScreenFilterService.COMMAND_PAUSE
         
         return Intent(mContext, ScreenFilterService::class.java)
-                .putExtra(BUNDLE_KEY_COMMAND, command)
+                .putExtra(ScreenFilterService.BUNDLE_KEY_COMMAND, command)
     }
 }

@@ -95,7 +95,7 @@ class ShadesActivity : AppCompatActivity() {
         }
 
 
-        if (settingsModel!!.darkThemeFlag) setTheme(R.style.AppThemeDark)
+        if (settingsModel.darkThemeFlag) setTheme(R.style.AppThemeDark)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shades)
@@ -118,16 +118,16 @@ class ShadesActivity : AppCompatActivity() {
             view = fragmentManager.findFragmentByTag(FRAGMENT_TAG_SHADES) as ShadesFragment
         }
 
-        mPresenter = ShadesPresenter(view, settingsModel!!, mFilterCommandFactory!!,
+        mPresenter = ShadesPresenter(view, settingsModel, mFilterCommandFactory!!,
                 mFilterCommandSender!!, context)
         view.registerPresenter(mPresenter!!)
 
         // Make Presenter listen to settings changes
-        settingsModel!!.addOnSettingsChangedListener(mPresenter!!)
+        settingsModel.addOnSettingsChangedListener(mPresenter!!)
 
         fragment = view
 
-        if (!settingsModel!!.introShown) {
+        if (!settingsModel.introShown) {
             startIntro()
         }
     }
@@ -138,7 +138,7 @@ class ShadesActivity : AppCompatActivity() {
 
         val item = menu.findItem(R.id.screen_filter_switch)
         mSwitch = item.actionView as Switch
-        mSwitch!!.isChecked = settingsModel!!.pauseState
+        mSwitch!!.isChecked = settingsModel.pauseState
         mSwitch!!.setOnClickListener {
             if (getOverlayPermission()) {
                 sendCommand(if (mSwitch!!.isChecked)
@@ -187,7 +187,7 @@ class ShadesActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        settingsModel!!.openSettingsChangeListener()
+        settingsModel.openSettingsChangeListener()
         mPresenter!!.onStart()
     }
 
@@ -199,23 +199,23 @@ class ShadesActivity : AppCompatActivity() {
         // notification spinner and the seekbars will have missed this
         // change. To update them correctly, we artificially change
         // these settings.
-        val intensity = settingsModel!!.intensityLevel
-        settingsModel!!.intensityLevel = if (intensity == 0) 1 else 0
-        settingsModel!!.intensityLevel = intensity
+        val intensity = settingsModel.intensityLevel
+        settingsModel.intensityLevel = if (intensity == 0) 1 else 0
+        settingsModel.intensityLevel = intensity
 
-        val dim = settingsModel!!.dimLevel
-        settingsModel!!.dimLevel = if (dim == 0) 1 else 0
-        settingsModel!!.dimLevel = dim
+        val dim = settingsModel.dimLevel
+        settingsModel.dimLevel = if (dim == 0) 1 else 0
+        settingsModel.dimLevel = dim
 
-        val color = settingsModel!!.color
-        settingsModel!!.color = if (color == 0) 1 else 0
-        settingsModel!!.color = color
+        val color = settingsModel.color
+        settingsModel.color = if (color == 0) 1 else 0
+        settingsModel.color = color
 
         // The profile HAS to be updated last, otherwise the spinner
         // will switched to custom.
-        val profile = settingsModel!!.profile
-        settingsModel!!.profile = if (profile == 0) 1 else 0
-        settingsModel!!.profile = profile
+        val profile = settingsModel.profile
+        settingsModel.profile = if (profile == 0) 1 else 0
+        settingsModel.profile = profile
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -226,7 +226,7 @@ class ShadesActivity : AppCompatActivity() {
     }
 
     override fun onStop() {
-        settingsModel!!.closeSettingsChangeListener()
+        settingsModel.closeSettingsChangeListener()
         super.onStop()
     }
 
@@ -258,7 +258,7 @@ class ShadesActivity : AppCompatActivity() {
 
 
     fun displayInstallWarningToast() {
-        if (hasShownWarningToast || settingsModel!!.automaticSuspend)
+        if (hasShownWarningToast || settingsModel.automaticSuspend)
             return
 
         val duration = Toast.LENGTH_SHORT
@@ -274,20 +274,20 @@ class ShadesActivity : AppCompatActivity() {
         val introIntent = Intent(this, Intro::class.java)
         startActivity(introIntent)
 
-        settingsModel!!.introShown = true
+        settingsModel.introShown = true
     }
 
     val colorTempProgress: Int
-        get() = settingsModel!!.color
+        get() = settingsModel.color
 
     val intensityLevelProgress: Int
-        get() = settingsModel!!.intensityLevel
+        get() = settingsModel.intensityLevel
 
     val dimLevelProgress: Int
-        get() = settingsModel!!.dimLevel
+        get() = settingsModel.dimLevel
 
     private fun toggleAndFinish() {
-        val paused = settingsModel!!.pauseState
+        val paused = settingsModel.pauseState
         sendCommand(if (paused)
             ScreenFilterService.COMMAND_ON
         else
