@@ -21,6 +21,9 @@ import android.util.Log;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.content.SharedPreferences;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.content.ContextCompat;
 
 import android.location.Location;
 import android.location.LocationManager;
@@ -51,7 +54,10 @@ public class LocationUpdateListener implements LocationListener {
         if (DEBUG) Log.i(TAG, "Location search succeeded");
         LocationManager locationManager = (LocationManager)
             mContext.getSystemService(Context.LOCATION_SERVICE);
-        locationManager.removeUpdates(this);
+        if (ContextCompat.checkSelfPermission
+            (mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED)
+            locationManager.removeUpdates(this);
 
         String prefKey = mContext.getString(R.string.pref_key_location);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -75,7 +81,10 @@ public class LocationUpdateListener implements LocationListener {
         if (DEBUG) Log.i(TAG, "Location search failed");
         LocationManager locationManager = (LocationManager)
             mContext.getSystemService(Context.LOCATION_SERVICE);
-        locationManager.removeUpdates(this);
+        if (ContextCompat.checkSelfPermission
+            (mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED)
+            locationManager.removeUpdates(this);
 
         if (mPreference != null) mPreference.handleLocationSearchFailed();
     }

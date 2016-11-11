@@ -23,6 +23,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.util.Log;
 import android.widget.Toast;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.content.ContextCompat;
 
 import android.location.Location;
 import android.location.LocationManager;
@@ -122,7 +125,10 @@ public class LocationPreference extends Preference {
 
             LocationManager locationManager = (LocationManager)
                 mContext.getSystemService(Context.LOCATION_SERVICE);
-            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) &&
+                ContextCompat.checkSelfPermission
+                (mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
                 LocationListener listener = new LocationUpdateListener(mContext, this);
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
                                                        0, 0, listener);
