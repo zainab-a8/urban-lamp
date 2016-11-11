@@ -45,7 +45,10 @@ class LocationUpdater(private val mContext: Context?) : LocationListener {
         mHandler = handler
         val locationManager = mContext!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) &&
+            ActivityCompat.checkSelfPermission
+            (mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
                     0, 0f, this)
         } else
@@ -57,7 +60,9 @@ class LocationUpdater(private val mContext: Context?) : LocationListener {
         if (mHandler != null) mHandler!!.handleLocationFound()
         mContext?: return
         val locationManager = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        if (ActivityCompat.checkSelfPermission
+            (mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED)
             locationManager.removeUpdates(this)
 
         val prefKey = mContext.getString(R.string.pref_key_location)
@@ -77,12 +82,15 @@ class LocationUpdater(private val mContext: Context?) : LocationListener {
 
     override fun onProviderDisabled(provider: String) {
         if (DEBUG) Log.i(TAG, "Location search failed")
-        val locationManager = mContext!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        mContext?: return
+        val locationManager = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (ActivityCompat.checkSelfPermission
+            (mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
             locationManager.removeUpdates(this)
         }
 
-        if (mContext != null && mHandler != null) mHandler!!.handleLocationSearchFailed()
+        if (mHandler != null) mHandler!!.handleLocationSearchFailed()
     }
 
     companion object {

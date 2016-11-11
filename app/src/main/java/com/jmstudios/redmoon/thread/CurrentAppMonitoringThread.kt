@@ -109,7 +109,8 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
         private fun getCurrentAppUsingUsageStats(context: Context): String {
             try {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    val usm = context.getSystemService("usagestats") as UsageStatsManager
+                    val usm =
+                    context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
                     val time = System.currentTimeMillis()
                     val appList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
                             time - 1000 * 1000, time)
@@ -120,8 +121,9 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
                             mySortedMap.put(usageStats.lastTimeUsed,
                                     usageStats)
                         }
-                        if (mySortedMap != null && !mySortedMap.isEmpty()) {
-                            return mySortedMap[mySortedMap.lastKey()]!!.packageName
+                        if (!mySortedMap.isEmpty()) {
+                            val packageName = mySortedMap[mySortedMap.lastKey()]!!.packageName
+                            return packageName ?: ""
                         }
                     }
                 }
