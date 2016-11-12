@@ -17,39 +17,26 @@
 package com.jmstudios.redmoon.activity
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
 import android.preference.Preference
-import android.preference.PreferenceActivity
 import android.preference.PreferenceManager
-import android.support.annotation.LayoutRes
-import android.support.v7.app.ActionBar
-import android.support.v7.app.AppCompatDelegate
-import android.support.v7.widget.Toolbar
-import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.model.SettingsModel
 import com.jmstudios.redmoon.preference.SwitchBarPreference
 
-class AutomaticSuspendPreferenceActivity : PreferenceActivity() {
-
-    private var mDelegate: AppCompatDelegate? = null
+class AutomaticSuspendPreferenceActivity : AppCompatPreferenceActivity() {
 
     private var mSummaryPreference: Preference? = null
     private var mSwitchBarPreference: SwitchBarPreference? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
-        delegate.installViewFactory()
-        delegate.onCreate(savedInstanceState)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         super.onCreate(savedInstanceState)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val preferenceScreen = preferenceManager.createPreferenceScreen(this)
         setPreferenceScreen(preferenceScreen)
@@ -61,7 +48,6 @@ class AutomaticSuspendPreferenceActivity : PreferenceActivity() {
         mSummaryPreference = Preference(this)
         mSummaryPreference!!.layoutResource = R.layout.automatic_suspend_summary
         mSummaryPreference!!.isSelectable = false
-
         preferenceScreen.addPreference(mSummaryPreference)
     }
 
@@ -81,79 +67,11 @@ class AutomaticSuspendPreferenceActivity : PreferenceActivity() {
         }
     }
 
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-        delegate.onPostCreate(savedInstanceState)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // The only item is the home button
         finish()
         return true
     }
-
-    val supportActionBar: ActionBar?
-        get() = delegate.supportActionBar
-
-    fun setSupportActionBar(toolbar: Toolbar?) {
-        delegate.setSupportActionBar(toolbar)
-    }
-
-    override fun getMenuInflater(): MenuInflater {
-        return delegate.menuInflater
-    }
-
-    override fun setContentView(@LayoutRes layoutResID: Int) {
-        delegate.setContentView(layoutResID)
-    }
-
-    override fun setContentView(view: View) {
-        delegate.setContentView(view)
-    }
-
-    override fun setContentView(view: View, params: ViewGroup.LayoutParams) {
-        delegate.setContentView(view, params)
-    }
-
-    override fun addContentView(view: View, params: ViewGroup.LayoutParams) {
-        delegate.addContentView(view, params)
-    }
-
-    override fun onPostResume() {
-        super.onPostResume()
-        delegate.onPostResume()
-    }
-
-    override fun onTitleChanged(title: CharSequence, color: Int) {
-        super.onTitleChanged(title, color)
-        delegate.setTitle(title)
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        delegate.onConfigurationChanged(newConfig)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        delegate.onStop()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        delegate.onDestroy()
-    }
-
-    override fun invalidateOptionsMenu() {
-        delegate.invalidateOptionsMenu()
-    }
-
-    private val delegate: AppCompatDelegate
-        get() {
-            if (mDelegate == null) {
-                mDelegate = AppCompatDelegate.create(this, null)
-            }
-            return mDelegate!!
-        }
 
     companion object {
         val RESULT_USAGE_ACCESS = 1

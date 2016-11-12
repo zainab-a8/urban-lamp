@@ -36,6 +36,7 @@
 package com.jmstudios.redmoon.fragment
 
 import android.Manifest
+import android.annotation.TargetApi
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -61,13 +62,13 @@ import com.jmstudios.redmoon.preference.FilterTimePreference
 import com.jmstudios.redmoon.preference.UseLocationPreference
 import com.jmstudios.redmoon.presenter.ShadesPresenter
 
-import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
+import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
 
 import java.util.*
 
 class ShadesFragment : PreferenceFragment() {
 
-    private val DEBUG = true;
+    private val DEBUG = true
     private lateinit var mPresenter: ShadesPresenter
     private lateinit var mView: View
     private lateinit var mHelpSnackbar: Snackbar
@@ -118,8 +119,7 @@ class ShadesFragment : PreferenceFragment() {
                     true
                 }
 
-        if (android.os.Build.VERSION.SDK_INT >= 23 && !Settings.System.canWrite(context))
-            lowerBrightnessPref.isChecked = false
+        if (!hasWriteSettingsPermission) lowerBrightnessPref.isChecked = false
 
         lowerBrightnessPref.onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { preference, newValue ->
@@ -172,14 +172,18 @@ class ShadesFragment : PreferenceFragment() {
             R.string.text_switch_off)
     }
 
-    private fun getWriteSettingsPermission():Boolean {
-        if (android.os.Build.VERSION.SDK_INT >= 23 && !Settings.System.canWrite(context)) {
+    private val hasWriteSettingsPermission: Boolean
+        get() = if (android.os.Build.VERSION.SDK_INT < 23) true
+                else Settings.System.canWrite(context)
+
+    @TargetApi(23) // Safe to call on all APIs but Android Studio doesn't know
+    private fun getWriteSettingsPermission(): Boolean {
+        if (!hasWriteSettingsPermission) {
             val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
                                 Uri.parse("package:" + context.packageName))
             startActivityForResult(intent, -1)
         }
-        return ((android.os.Build.VERSION.SDK_INT >= 23 && Settings.System.canWrite(context))
-                || android.os.Build.VERSION.SDK_INT < 23)
+        return (hasWriteSettingsPermission)
         }
 
     private fun onAutomaticFilterPreferenceChange(auto: Boolean) {
@@ -216,7 +220,7 @@ class ShadesFragment : PreferenceFragment() {
             val longitude = java.lang.Double.parseDouble(location.split(",")[1])
 
             val sunriseSunsetLocation = com.luckycatlabs.sunrisesunset.dto.Location(latitude, longitude)
-            val calculator = SunriseSunsetCalculator(sunriseSunsetLocation, TimeZone.getDefault());
+            val calculator = SunriseSunsetCalculator(sunriseSunsetLocation, TimeZone.getDefault())
 
             val sunsetTime = calculator.getOfficialSunsetForDate(Calendar.getInstance())
             automaticTurnOnPref.setToSunTime(sunsetTime)

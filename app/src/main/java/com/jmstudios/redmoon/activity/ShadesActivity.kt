@@ -37,28 +37,20 @@ package com.jmstudios.redmoon.activity
 
 import android.annotation.TargetApi
 import android.app.AlertDialog
-import android.app.FragmentManager
-import android.content.DialogInterface
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
-import android.os.Build.VERSION
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.provider.Settings
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
-import android.view.View.OnClickListener
 import android.widget.Switch
 import android.widget.Toast
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.activity.Intro
 import com.jmstudios.redmoon.fragment.ShadesFragment
 import com.jmstudios.redmoon.helper.FilterCommandFactory
 import com.jmstudios.redmoon.helper.FilterCommandSender
@@ -119,8 +111,8 @@ class ShadesActivity : AppCompatActivity() {
             view = fragmentManager.findFragmentByTag(FRAGMENT_TAG_SHADES) as ShadesFragment
         }
 
-        mPresenter = ShadesPresenter(view, settingsModel, mFilterCommandFactory!!,
-                mFilterCommandSender!!, context)
+        mPresenter = ShadesPresenter(view, settingsModel,
+                context)
         view.registerPresenter(mPresenter!!)
 
         // Make Presenter listen to settings changes

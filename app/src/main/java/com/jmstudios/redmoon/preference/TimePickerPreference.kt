@@ -31,10 +31,19 @@ open class TimePickerPreference(context: Context, attrs: AttributeSet) : DialogP
     private var mTimePicker: TimePicker? = null
     protected var mTime: String = DEFAULT_VALUE
 
-    init {
-        positiveButtonText = getContext().resources.getString(R.string.set_dialog)
-        negativeButtonText = getContext().resources.getString(R.string.cancel_dialog)
-    }
+    @Suppress("DEPRECATION") // Need deprecated 'currentMinute' for API<23
+    private var currentMinute: Int
+        get() = if (android.os.Build.VERSION.SDK_INT >= 23) mTimePicker!!.minute
+                else mTimePicker!!.currentMinute
+        set(m) = if (android.os.Build.VERSION.SDK_INT >= 23) mTimePicker!!.minute = m
+                 else mTimePicker!!.currentMinute = m
+
+    @Suppress("DEPRECATION") // Need deprecated 'currentHour' for API<23
+    private var currentHour: Int
+        get() = if (android.os.Build.VERSION.SDK_INT >= 23) mTimePicker!!.hour
+                else mTimePicker!!.currentHour
+        set(h) = if (android.os.Build.VERSION.SDK_INT >= 23) mTimePicker!!.hour = h
+                 else mTimePicker!!.currentHour = h
 
     override fun onGetDefaultValue(a: TypedArray, index: Int): Any {
         return a.getString(index)
@@ -55,43 +64,31 @@ open class TimePickerPreference(context: Context, attrs: AttributeSet) : DialogP
     }
 
     override fun onCreateDialogView(): View {
+        positiveButtonText = context.resources.getString(R.string.set_dialog)
+        negativeButtonText = context.resources.getString(R.string.cancel_dialog)
         mTimePicker = TimePicker(context)
         mTimePicker!!.setIs24HourView(DateFormat.is24HourFormat(context))
         return mTimePicker!!
     }
 
+
+    // on API 23, getCurrentHour() is replaced with getHour(), but there is not
+    // yet an appcompat way to call that, so sticking with currentHour for now
     override fun onBindDialogView(v: View) {
         super.onBindDialogView(v)
-
-        val hour = Integer.parseInt(mTime.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0])
-        val minute = Integer.parseInt(mTime.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1])
-        if (android.os.Build.VERSION.SDK_INT >= 23) {
-            mTimePicker!!.hour = hour
-            mTimePicker!!.minute = minute
-        } else {
-            mTimePicker!!.currentHour = hour
-            mTimePicker!!.currentMinute = minute
-        }
+        currentHour = Integer.parseInt(mTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0])
+        currentMinute = Integer.parseInt(mTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[1])
     }
 
     override fun onDialogClosed(positiveResult: Boolean) {
         super.onDialogClosed(positiveResult)
 
-        if (positiveResult) {
-            var hour = 0
-            var minute = 0
-            if (android.os.Build.VERSION.SDK_INT >= 23) {
-                hour = mTimePicker!!.hour
-                minute = mTimePicker!!.minute
-            } else {
-                hour = mTimePicker!!.currentHour
-                minute = mTimePicker!!.currentMinute
-            }
+        val hour = currentHour
+        val minute = currentMinute
+        mTime = (if (hour < 10) "0" else "") + Integer.toString(hour) + ":" +
+                (if (minute < 10) "0" else "") + Integer.toString(minute)
 
-            mTime = (if (hour < 10) "0" else "") + Integer.toString(hour) + ":" +
-                    (if (minute < 10) "0" else "") + Integer.toString(minute)
-            persistString(mTime)
-        }
+        persistString(mTime)
         summary = mTime
     }
 

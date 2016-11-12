@@ -16,6 +16,7 @@
  */
 package com.jmstudios.redmoon.thread
 
+import android.annotation.TargetApi
 import android.app.ActivityManager
 import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
@@ -98,7 +99,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 
         private fun getCurrentApp(context: Context): String {
             // http://stackoverflow.com/q/33581311
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            if (android.os.Build.VERSION.SDK_INT >= 21) {
                 return getCurrentAppUsingUsageStats(context)
             } else {
                 return getCurrentAppUsingActivityManager(context)
@@ -107,9 +108,9 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 
         private fun getCurrentAppUsingUsageStats(context: Context): String {
             try {
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    val usm =
-                    context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+                if (android.os.Build.VERSION.SDK_INT >= 22) {
+                    val usm = context.getSystemService(Context.USAGE_STATS_SERVICE)
+                                                                as UsageStatsManager
                     val time = System.currentTimeMillis()
                     val appList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
                             time - 1000 * 1000, time)
@@ -134,9 +135,11 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
             return ""
         }
 
+        @Suppress("DEPRECATION") // Needed for pre-lollipop compatibility
         private fun getCurrentAppUsingActivityManager(context: Context): String {
-            if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
-                val am = ContextWrapper(context).baseContext.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+            if (android.os.Build.VERSION.SDK_INT < 21) {
+                val am = ContextWrapper(context).baseContext
+                          .getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
                 return am.getRunningTasks(1)[0].topActivity.packageName
             }
             return ""

@@ -51,6 +51,7 @@ import android.os.PowerManager
 import android.provider.Settings
 import android.provider.Settings.SettingNotFoundException
 import android.support.v4.app.NotificationCompat
+import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.Gravity
 import android.view.WindowManager
@@ -101,9 +102,6 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     private val mSuspendState = SuspendState()
     private var mCurrentState: State = mPauseState
 
-    private val mPreviewStateCast = mPreviewState
-    private val mSuspendStateCast = mSuspendState
-
     // Screen brightness state
     private var oldScreenBrightness: Int = 0
     private var oldIsAutomaticBrightness: Boolean = false
@@ -121,7 +119,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         val profilesModel = ProfilesModel(context)
 
         val title = context.getString(R.string.app_name)
-        val color = context.resources.getColor(R.color.color_primary)
+        val color = ContextCompat.getColor(context, R.color.color_primary)
 
         val smallIconResId = R.drawable.notification_icon_half_moon
         val contentText: String
@@ -356,6 +354,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT_WATCH) {
             screenOff = !powerManager.isInteractive
         } else {
+            @Suppress("DEPRECATION")
             screenOff = !powerManager.isScreenOn
         }
 
@@ -373,7 +372,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     fun stopAppMonitoring() {
         if (DEBUG) Log.i(TAG, "Stopping app monitoring")
         if (mCamThread != null) {
-            if (!mCamThread!!.isInterrupted()) {
+            if (!mCamThread!!.isInterrupted) {
                 mCamThread!!.interrupt()
             }
             mCamThread = null
@@ -403,7 +402,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         screenOff = true
 
         if (mCamThread != null) {
-            if (!mCamThread!!.isInterrupted()) {
+            if (!mCamThread!!.isInterrupted) {
                 mCamThread!!.interrupt()
             }
             mCamThread = null
@@ -655,7 +654,6 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
 
         val NOTIFICATION_ID = 1
         private val REQUEST_CODE_ACTION_SETTINGS = 1000
-        private val REQUEST_CODE_ACTION_STOP = 2000
         private val REQUEST_CODE_ACTION_PAUSE_OR_RESUME = 3000
         private val REQUEST_CODE_NEXT_PROFILE = 4000
 

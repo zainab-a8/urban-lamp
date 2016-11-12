@@ -69,8 +69,6 @@ class SettingsModel(resources: Resources, private val mSharedPreferences: Shared
     private val mDimPrefKey = resources.getString(R.string.pref_key_shades_dim_level)
     private val mIntensityPrefKey = resources.getString(R.string.pref_key_shades_intensity_level)
     private val mColorPrefKey = resources.getString(R.string.pref_key_shades_color_temp)
-    private val mOpenOnBootPrefKey = resources.getString(R.string.pref_key_always_open_on_startup)
-    private val mKeepRunningAfterRebootPrefKey = resources.getString(R.string.pref_key_keep_running_after_reboot)
     private val mDarkThemePrefKey = resources.getString(R.string.pref_key_dark_theme)
     private val mBrightnessControlPrefKey = resources.getString(R.string.pref_key_control_brightness)
     private val mAutomaticFilterPrefKey = resources.getString(R.string.pref_key_automatic_filter)
@@ -99,12 +97,6 @@ class SettingsModel(resources: Resources, private val mSharedPreferences: Shared
     var color: Int
         get() = mSharedPreferences.getInt(mColorPrefKey, ColorSeekBarPreference.DEFAULT_VALUE)
         set(color) = mSharedPreferences.edit().putInt(mColorPrefKey, color).apply()
-
-    val openOnBootFlag: Boolean
-        get() = mSharedPreferences.getBoolean(mOpenOnBootPrefKey, false)
-
-    val resumeAfterRebootFlag: Boolean
-        get() = mSharedPreferences.getBoolean(mKeepRunningAfterRebootPrefKey, false)
 
     val darkThemeFlag: Boolean
         get() = mSharedPreferences.getBoolean(mDarkThemePrefKey, false)

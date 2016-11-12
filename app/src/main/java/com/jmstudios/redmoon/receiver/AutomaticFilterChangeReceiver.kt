@@ -122,8 +122,8 @@ class AutomaticFilterChangeReceiver : BroadcastReceiver() {
 
         fun scheduleNextAlarm(context: Context, time: String, operation: Intent, timeInUtc: Boolean) {
             val calendar = GregorianCalendar()
-            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]))
-            calendar.set(Calendar.MINUTE, Integer.parseInt(time.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]))
+            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0]))
+            calendar.set(Calendar.MINUTE, Integer.parseInt(time.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[1]))
 
             val now = GregorianCalendar()
             now.add(Calendar.SECOND, 1)

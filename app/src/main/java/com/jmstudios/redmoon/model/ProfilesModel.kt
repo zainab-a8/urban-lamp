@@ -25,7 +25,7 @@ import java.util.ArrayList
  * This class manages the SharedPreference that store all custom
  * filter profiles added by the user.
 
- * The profiles are stored in a seperate SharedPreference, with per
+ * The profiles are stored in a separate SharedPreference, with per
  * profile a key given by "$PROFILE_NAME_$ID", where $PROFILE_NAME is
  * the name given to the profile by the user and $ID is the position
  * of the list of profiles, starting with 0 for the first custom
@@ -35,7 +35,6 @@ import java.util.ArrayList
 class ProfilesModel(context: Context) {
 
     private val mSharedPrefs: SharedPreferences
-    private var mEditor: SharedPreferences.Editor? = null
     private val mPrefsContentsMap: Map<String, *>
     var profiles: ArrayList<Profile>? = null
         private set
@@ -135,17 +134,14 @@ class ProfilesModel(context: Context) {
 
     private fun updateSharedPreferences() {
         if (DEBUG) Log.i(TAG, "Updating SharedPreferences")
-        mEditor = mSharedPrefs.edit()
-        mEditor!!.clear()
+        val editor = mSharedPrefs.edit()
+        editor.clear()
 
-        var i = 0
-        for (profile in profiles!!) {
-            mEditor!!.putString(profile.getKey(i), profile.values)
-
-            i++
+        for ((i, profile) in profiles!!.withIndex()) {
+            editor.putString(profile.getKey(i), profile.values)
         }
 
-        mEditor!!.apply()
+        editor.apply()
         if (DEBUG) Log.d(TAG, "Done updating SharedPreferences")
     }
 

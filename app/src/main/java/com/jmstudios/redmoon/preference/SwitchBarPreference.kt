@@ -23,6 +23,7 @@ import android.content.Intent
 import android.content.res.TypedArray
 import android.preference.Preference
 import android.provider.Settings
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.FrameLayout
@@ -64,7 +65,7 @@ class SwitchBarPreference(private val mContext: Context, private val mActivity: 
         mTextView!!.setText(if (mValue) R.string.text_switch_on else R.string.text_switch_off)
 
         val bar = view.findViewById(R.id.frame_layout_switch_bar) as FrameLayout
-        bar.setBackgroundColor(mContext.resources.getColor(R.color.switch_bar_background))
+        bar.setBackgroundColor(ContextCompat.getColor(mContext, R.color.switch_bar_background))
         bar.setOnClickListener(this)
 
         mSwitch = view.findViewById(R.id.switch_bar_switch) as Switch
@@ -97,6 +98,7 @@ class SwitchBarPreference(private val mContext: Context, private val mActivity: 
         }
     }
 
+    // TODO: Fix on API < 21
     private fun createEnableUsageStatsDialog() {
         val builder = AlertDialog.Builder(mContext)
 

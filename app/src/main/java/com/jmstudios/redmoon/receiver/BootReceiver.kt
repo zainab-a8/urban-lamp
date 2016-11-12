@@ -110,8 +110,8 @@ class BootReceiver : BroadcastReceiver() {
                 val now = Calendar.getInstance()
 
                 val onTime = model.automaticTurnOnTime
-                val onHour = Integer.parseInt(onTime.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0])
-                val onMinute = Integer.parseInt(onTime.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1])
+                val onHour = Integer.parseInt(onTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0])
+                val onMinute = Integer.parseInt(onTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[1])
                 val on = Calendar.getInstance()
                 on.set(Calendar.HOUR_OF_DAY, onHour)
                 on.set(Calendar.MINUTE, onMinute)
@@ -120,8 +120,8 @@ class BootReceiver : BroadcastReceiver() {
                     on.add(Calendar.DATE, -1)
 
                 val offTime = model.automaticTurnOffTime
-                val offHour = Integer.parseInt(offTime.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0])
-                val offMinute = Integer.parseInt(offTime.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1])
+                val offHour = Integer.parseInt(offTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0])
+                val offMinute = Integer.parseInt(offTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[1])
                 val off = Calendar.getInstance()
                 off.set(Calendar.HOUR_OF_DAY, offHour)
                 off.set(Calendar.MINUTE, offMinute)

@@ -30,9 +30,8 @@ class FilterCommandParser {
 
      * @param intent that was constructed by [FilterCommandFactory].
      * *
-     * @return one of [ScreenFilterService.COMMAND_OFF], [ScreenFilterService.COMMAND_ON],
-     * *         [ScreenFilterService.COMMAND_PAUSE], or -1 if `intent` doesn't contain a
-     * *         valid command.
+     * @return one of [ScreenFilterService.COMMAND_ON], [ScreenFilterService.COMMAND_PAUSE],
+     * *           or -1 if `intent` doesn't contain a valid command.
      */
     fun parseCommandFlag(intent: Intent?): Int {
         val errorCode = -1

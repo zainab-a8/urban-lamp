@@ -36,15 +36,12 @@
 package com.jmstudios.redmoon.presenter
 
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.activity.ShadesActivity
 import com.jmstudios.redmoon.fragment.ShadesFragment
-import com.jmstudios.redmoon.helper.FilterCommandFactory
-import com.jmstudios.redmoon.helper.FilterCommandSender
 import com.jmstudios.redmoon.model.SettingsModel
 import com.jmstudios.redmoon.preference.ColorSeekBarPreference
 import com.jmstudios.redmoon.preference.DimSeekBarPreference
@@ -53,8 +50,6 @@ import com.jmstudios.redmoon.receiver.AutomaticFilterChangeReceiver
 
 class ShadesPresenter(private val mView: ShadesFragment,
                       private val mSettingsModel: SettingsModel,
-                      private val mFilterCommandFactory: FilterCommandFactory,
-                      private val mFilterCommandSender: FilterCommandSender,
                       private val mContext: Context) : SettingsModel.OnSettingsChangedListener {
     private val mActivity: ShadesActivity
 

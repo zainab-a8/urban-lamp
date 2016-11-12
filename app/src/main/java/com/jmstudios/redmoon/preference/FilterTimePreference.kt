@@ -28,7 +28,7 @@ class FilterTimePreference(context: Context, attrs: AttributeSet) : TimePickerPr
             // Backup custom times
             val editor = sharedPreferences.edit()
             editor.putString(key + "_custom", mTime)
-            editor.commit()
+            editor.apply()
         }
         isEnabled = false
         mTime = time
