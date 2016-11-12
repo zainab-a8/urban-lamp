@@ -16,8 +16,8 @@
  */
 package com.jmstudios.redmoon.helper
 
-import android.content.Context
 import android.app.NotificationManager
+import android.content.Context
 
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 

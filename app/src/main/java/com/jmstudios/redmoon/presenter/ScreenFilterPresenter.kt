@@ -41,23 +41,22 @@ import android.animation.Animator
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.app.Notification
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.PixelFormat
+import android.os.PowerManager
+import android.provider.Settings
+import android.provider.Settings.SettingNotFoundException
 import android.support.v4.app.NotificationCompat
 import android.util.Log
 import android.view.Gravity
 import android.view.WindowManager
-import android.content.ContentResolver
-import android.provider.Settings
-import android.provider.Settings.SettingNotFoundException
-import android.os.Build.VERSION
-import android.os.PowerManager
-import android.app.NotificationManager
-import android.content.IntentFilter
 
 import com.jmstudios.redmoon.R
+
 import com.jmstudios.redmoon.activity.ShadesActivity
 import com.jmstudios.redmoon.helper.AbstractAnimatorListener
 import com.jmstudios.redmoon.helper.FilterCommandFactory
@@ -65,16 +64,16 @@ import com.jmstudios.redmoon.helper.FilterCommandParser
 import com.jmstudios.redmoon.helper.ProfilesHelper
 import com.jmstudios.redmoon.manager.ScreenManager
 import com.jmstudios.redmoon.manager.WindowViewManager
-import com.jmstudios.redmoon.model.SettingsModel
 import com.jmstudios.redmoon.model.ProfilesModel
-import com.jmstudios.redmoon.receiver.OrientationChangeReceiver
-import com.jmstudios.redmoon.receiver.SwitchAppWidgetProvider
+import com.jmstudios.redmoon.model.SettingsModel
 import com.jmstudios.redmoon.receiver.NextProfileCommandReceiver
+import com.jmstudios.redmoon.receiver.OrientationChangeReceiver
+import com.jmstudios.redmoon.receiver.ScreenStateReceiver
+import com.jmstudios.redmoon.receiver.SwitchAppWidgetProvider
 import com.jmstudios.redmoon.service.ScreenFilterService
 import com.jmstudios.redmoon.service.ServiceLifeCycleController
-import com.jmstudios.redmoon.view.ScreenFilterView
 import com.jmstudios.redmoon.thread.CurrentAppMonitoringThread
-import com.jmstudios.redmoon.receiver.ScreenStateReceiver
+import com.jmstudios.redmoon.view.ScreenFilterView
 
 class ScreenFilterPresenter(private val mView: ScreenFilterView,
                             private val mSettingsModel: SettingsModel,

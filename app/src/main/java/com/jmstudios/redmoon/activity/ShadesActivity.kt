@@ -48,15 +48,16 @@ import android.preference.PreferenceManager
 import android.provider.Settings
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.View
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Switch
 import android.widget.Toast
 
 import com.jmstudios.redmoon.R
+
 import com.jmstudios.redmoon.activity.Intro
 import com.jmstudios.redmoon.fragment.ShadesFragment
 import com.jmstudios.redmoon.helper.FilterCommandFactory

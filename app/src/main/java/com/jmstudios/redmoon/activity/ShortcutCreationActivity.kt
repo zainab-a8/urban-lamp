@@ -17,17 +17,11 @@
 package com.jmstudios.redmoon.activity
 
 import android.app.Activity
-import android.util.Log
-import android.os.Bundle
 import android.content.Intent
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import android.os.Bundle
+import android.util.Log
 
 import com.jmstudios.redmoon.R
-import com.jmstudios.redmoon.helper.FilterCommandFactory
-import com.jmstudios.redmoon.model.SettingsModel
-import com.jmstudios.redmoon.service.ScreenFilterService
-import com.jmstudios.redmoon.activity.ShadesActivity
 
 class ShortcutCreationActivity : Activity() {
 

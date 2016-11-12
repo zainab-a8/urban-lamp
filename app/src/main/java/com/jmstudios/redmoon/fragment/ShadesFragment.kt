@@ -35,43 +35,34 @@
  */
 package com.jmstudios.redmoon.fragment
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationManager
-import android.Manifest
-import android.content.Context
 import android.net.Uri
-import android.os.Build.VERSION
 import android.os.Bundle
-import android.preference.ListPreference
 import android.preference.Preference
-import android.preference.PreferenceFragment
 import android.preference.PreferenceCategory
+import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
 import android.provider.Settings
-import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
 import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
-import android.widget.ListView
-import android.widget.Switch
 import android.widget.TextView
+
+import com.jmstudios.redmoon.R
+
+import com.jmstudios.redmoon.activity.ShadesActivity
+import com.jmstudios.redmoon.preference.FilterTimePreference
+import com.jmstudios.redmoon.preference.UseLocationPreference
+import com.jmstudios.redmoon.presenter.ShadesPresenter
 
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
 
-import com.jmstudios.redmoon.R
-import com.jmstudios.redmoon.activity.ShadesActivity
-import com.jmstudios.redmoon.model.SettingsModel
-import com.jmstudios.redmoon.presenter.ShadesPresenter
-import com.jmstudios.redmoon.preference.FilterTimePreference
-import com.jmstudios.redmoon.preference.UseLocationPreference
-import com.jmstudios.redmoon.service.ScreenFilterService
 import java.util.*
 
 class ShadesFragment : PreferenceFragment() {

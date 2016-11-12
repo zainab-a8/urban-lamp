@@ -38,20 +38,18 @@ package com.jmstudios.redmoon.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
+import android.os.Handler
 import android.preference.PreferenceManager
 import android.util.Log
-import android.os.Handler
 
-import java.util.Calendar
-
+import com.jmstudios.redmoon.helper.DismissNotificationRunnable
 import com.jmstudios.redmoon.helper.FilterCommandFactory
 import com.jmstudios.redmoon.helper.FilterCommandSender
 import com.jmstudios.redmoon.model.SettingsModel
-import com.jmstudios.redmoon.service.ScreenFilterService
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
-import com.jmstudios.redmoon.receiver.AutomaticFilterChangeReceiver
-import com.jmstudios.redmoon.helper.DismissNotificationRunnable
+import com.jmstudios.redmoon.service.ScreenFilterService
+
+import java.util.Calendar
 
 class BootReceiver : BroadcastReceiver() {
 

@@ -16,33 +16,26 @@
  */
 package com.jmstudios.redmoon.receiver
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.app.PendingIntent
-import android.content.SharedPreferences
+import android.net.Uri
+import android.os.Handler
 import android.preference.PreferenceManager
 import android.util.Log
-import android.app.AlarmManager
-import android.os.Build.VERSION
-import android.net.Uri
-import android.location.LocationManager
-import android.location.LocationListener
-import android.os.Handler
 
-import java.util.GregorianCalendar
-import java.util.Calendar
-import java.util.TimeZone
-
-import com.jmstudios.redmoon.R
-
+import com.jmstudios.redmoon.helper.DismissNotificationRunnable
 import com.jmstudios.redmoon.helper.FilterCommandFactory
 import com.jmstudios.redmoon.helper.FilterCommandSender
-import com.jmstudios.redmoon.helper.DismissNotificationRunnable
 import com.jmstudios.redmoon.model.SettingsModel
-import com.jmstudios.redmoon.service.ScreenFilterService
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
-import com.jmstudios.redmoon.receiver.LocationUpdater
+import com.jmstudios.redmoon.service.ScreenFilterService
+
+import java.util.Calendar
+import java.util.GregorianCalendar
+import java.util.TimeZone
 
 class AutomaticFilterChangeReceiver : BroadcastReceiver() {
 

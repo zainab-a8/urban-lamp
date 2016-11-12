@@ -17,23 +17,22 @@
 package com.jmstudios.redmoon.preference
 
 import android.content.Context
-import android.content.Intent
 import android.content.res.TypedArray
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.preference.Preference
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
-import android.widget.SeekBar
 import android.widget.ImageView
+import android.widget.SeekBar
 import android.widget.TextView
+
+import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.helper.FilterCommandFactory
 import com.jmstudios.redmoon.helper.FilterCommandSender
 import com.jmstudios.redmoon.service.ScreenFilterService
-import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.view.ScreenFilterView
 
 class ColorSeekBarPreference(context: Context, attrs: AttributeSet) : Preference(context, attrs) {

@@ -16,30 +16,26 @@
  */
 package com.jmstudios.redmoon.activity
 
-import android.preference.Preference
-import android.preference.PreferenceActivity
-import android.preference.PreferenceScreen
-import android.preference.PreferenceManager
-import android.content.SharedPreferences
-import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.os.Bundle
+import android.preference.Preference
+import android.preference.PreferenceActivity
+import android.preference.PreferenceManager
 import android.support.annotation.LayoutRes
-import android.content.Intent
-
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.Toolbar
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+
+import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.model.SettingsModel
 import com.jmstudios.redmoon.preference.SwitchBarPreference
-
-import com.jmstudios.redmoon.R
 
 class AutomaticSuspendPreferenceActivity : PreferenceActivity() {
 

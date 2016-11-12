@@ -18,13 +18,9 @@
 package com.jmstudios.redmoon.preference
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.preference.SwitchPreference
 import android.util.AttributeSet
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Switch
 
 import com.jmstudios.redmoon.R
 

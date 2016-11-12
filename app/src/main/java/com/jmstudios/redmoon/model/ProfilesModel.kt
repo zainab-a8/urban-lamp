@@ -16,8 +16,8 @@
  */
 package com.jmstudios.redmoon.model
 
-import android.content.SharedPreferences
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import java.util.ArrayList
 

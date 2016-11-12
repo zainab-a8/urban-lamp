@@ -16,32 +16,30 @@
  */
 package com.jmstudios.redmoon.preference
 
-import android.preference.Preference
-import android.widget.Spinner
-import android.widget.Button
-import android.view.View
-import android.util.AttributeSet
+import android.app.AlertDialog
 import android.content.Context
 import android.content.res.TypedArray
-import android.widget.ArrayAdapter
+import android.preference.Preference
+import android.text.InputType
+import android.util.AttributeSet
+import android.util.Log
+import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
-import android.app.AlertDialog
-import android.content.DialogInterface
+import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.EditText
-import android.text.InputType
-import android.util.Log
+import android.widget.Spinner
+
+import com.jmstudios.redmoon.R
+
+import com.jmstudios.redmoon.activity.ShadesActivity
+import com.jmstudios.redmoon.helper.ProfilesHelper
+import com.jmstudios.redmoon.model.ProfilesModel
+import com.jmstudios.redmoon.model.SettingsModel
 
 import java.util.ArrayList
 import java.util.Arrays
-
-import com.jmstudios.redmoon.R
-import com.jmstudios.redmoon.model.ProfilesModel
-import com.jmstudios.redmoon.model.SettingsModel
-import com.jmstudios.redmoon.activity.ShadesActivity
-import com.jmstudios.redmoon.fragment.ShadesFragment
-import com.jmstudios.redmoon.preference.ColorSeekBarPreference
-import com.jmstudios.redmoon.helper.ProfilesHelper
 
 class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeSet) : Preference(mContext, attrs), OnItemSelectedListener {
 

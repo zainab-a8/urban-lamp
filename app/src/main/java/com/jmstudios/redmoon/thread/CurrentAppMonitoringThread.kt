@@ -16,21 +16,20 @@
  */
 package com.jmstudios.redmoon.thread
 
-import android.content.Context
-import android.app.usage.UsageStatsManager
 import android.app.ActivityManager
-import android.util.Log
 import android.app.usage.UsageStats
+import android.app.usage.UsageStatsManager
+import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
-
-import java.util.SortedMap
-import java.util.TreeMap
-import java.lang.Thread
+import android.util.Log
 
 import com.jmstudios.redmoon.helper.FilterCommandFactory
 import com.jmstudios.redmoon.helper.FilterCommandSender
 import com.jmstudios.redmoon.service.ScreenFilterService
+
+import java.lang.Thread
+import java.util.TreeMap
 
 class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 

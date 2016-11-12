@@ -44,7 +44,6 @@ import com.jmstudios.redmoon.preference.ColorSeekBarPreference
 import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
 
-
 class ScreenFilterView(context: Context) : View(context) {
 
     /**

@@ -18,14 +18,6 @@ package com.jmstudios.redmoon.preference
 
 import android.content.Context
 import android.util.AttributeSet
-import android.content.SharedPreferences
-
-import java.util.TimeZone
-import java.util.Calendar
-
-import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
-
-import com.jmstudios.redmoon.preference.TimePickerPreference
 
 class FilterTimePreference(context: Context, attrs: AttributeSet) : TimePickerPreference(context, attrs) {
 

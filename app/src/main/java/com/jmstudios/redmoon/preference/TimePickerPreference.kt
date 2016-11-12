@@ -19,12 +19,10 @@ package com.jmstudios.redmoon.preference
 import android.content.Context
 import android.content.res.TypedArray
 import android.preference.DialogPreference
+import android.text.format.DateFormat
 import android.util.AttributeSet
 import android.view.View
 import android.widget.TimePicker
-import android.util.Log
-import android.os.Build.VERSION
-import android.text.format.DateFormat
 
 import com.jmstudios.redmoon.R
 

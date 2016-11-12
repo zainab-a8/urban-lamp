@@ -17,7 +17,6 @@
 package com.jmstudios.redmoon.preference
 
 import android.content.Context
-import android.content.Intent
 import android.content.res.TypedArray
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
@@ -29,12 +28,13 @@ import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 
+import com.jmstudios.redmoon.R
+
+import com.jmstudios.redmoon.activity.ShadesActivity
 import com.jmstudios.redmoon.helper.FilterCommandFactory
 import com.jmstudios.redmoon.helper.FilterCommandSender
 import com.jmstudios.redmoon.service.ScreenFilterService
-import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.view.ScreenFilterView
-import com.jmstudios.redmoon.activity.ShadesActivity
 
 class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : Preference(context, attrs) {
 

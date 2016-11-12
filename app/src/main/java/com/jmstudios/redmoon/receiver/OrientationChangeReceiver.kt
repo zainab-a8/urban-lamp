@@ -19,7 +19,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import android.content.res.Resources
 
 class OrientationChangeReceiver(private val mContext: Context,
                                 private val mListener: OrientationChangeReceiver.OnOrientationChangeListener) : BroadcastReceiver() {

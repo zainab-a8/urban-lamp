@@ -39,12 +39,13 @@ import android.content.SharedPreferences
 import android.content.res.Resources
 import android.util.Log
 
-import java.util.ArrayList
-
 import com.jmstudios.redmoon.R
+
 import com.jmstudios.redmoon.preference.ColorSeekBarPreference
 import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
+
+import java.util.ArrayList
 
 /**
  * This class provides access to get and set Shades settings, and also listen to settings changes.

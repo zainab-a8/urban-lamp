@@ -19,8 +19,9 @@ package com.jmstudios.redmoon.helper
 import android.content.Context
 
 import com.jmstudios.redmoon.R
-import com.jmstudios.redmoon.preference.ProfileSelectorPreference
+
 import com.jmstudios.redmoon.model.ProfilesModel
+import com.jmstudios.redmoon.preference.ProfileSelectorPreference
 
 object ProfilesHelper {
     fun getProfileName(model: ProfilesModel, profile: Int, context: Context): String {

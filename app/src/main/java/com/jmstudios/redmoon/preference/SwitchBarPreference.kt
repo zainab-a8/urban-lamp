@@ -16,27 +16,23 @@
  */
 package com.jmstudios.redmoon.preference
 
-import android.preference.Preference
-import android.util.AttributeSet
-import android.content.Context
-import android.content.res.TypedArray
-import android.view.View
-import android.widget.TextView
-import android.widget.FrameLayout
-import android.util.Log
-import android.widget.CompoundButton
-import android.app.AlertDialog
-import android.content.DialogInterface
-import android.content.Intent
-import android.provider.Settings
 import android.app.Activity
-import android.net.Uri
-
+import android.app.AlertDialog
+import android.content.Context
+import android.content.Intent
+import android.content.res.TypedArray
+import android.preference.Preference
+import android.provider.Settings
+import android.view.View
+import android.widget.CompoundButton
+import android.widget.FrameLayout
 import android.widget.Switch
+import android.widget.TextView
 
-import com.jmstudios.redmoon.thread.CurrentAppMonitoringThread
-import com.jmstudios.redmoon.activity.AutomaticSuspendPreferenceActivity
 import com.jmstudios.redmoon.R
+
+import com.jmstudios.redmoon.activity.AutomaticSuspendPreferenceActivity
+import com.jmstudios.redmoon.thread.CurrentAppMonitoringThread
 
 class SwitchBarPreference(private val mContext: Context, private val mActivity: Activity) : Preference(mContext), CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 

@@ -16,16 +16,15 @@
  */
 package com.jmstudios.redmoon.receiver
 
-import android.content.Context
 import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
-import android.util.Log
-import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import android.util.Log
 
-import com.jmstudios.redmoon.model.SettingsModel
-import com.jmstudios.redmoon.model.ProfilesModel
 import com.jmstudios.redmoon.helper.ProfilesHelper
+import com.jmstudios.redmoon.model.ProfilesModel
+import com.jmstudios.redmoon.model.SettingsModel
 
 class NextProfileCommandReceiver : BroadcastReceiver() {
 
