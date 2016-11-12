@@ -79,11 +79,11 @@ class DimSeekBarPreference(context: Context, attrs: AttributeSet) : Preference(c
         return a.getInteger(index, DEFAULT_VALUE)
     }
 
-    override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any) {
+    override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any?) {
         if (restorePersistedValue) {
             mDimLevel = getPersistedInt(DEFAULT_VALUE)
         } else {
-            mDimLevel = defaultValue as Int
+            mDimLevel = (defaultValue as Int?)?: 0
             persistInt(mDimLevel)
         }
     }

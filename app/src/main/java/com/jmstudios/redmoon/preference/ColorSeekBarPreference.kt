@@ -60,11 +60,11 @@ class ColorSeekBarPreference(context: Context, attrs: AttributeSet) : Preference
         return a.getInteger(index, DEFAULT_VALUE)
     }
 
-    override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any) {
+    override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any?) {
         if (restorePersistedValue) {
             mProgress = getPersistedInt(DEFAULT_VALUE)
         } else {
-            mProgress = defaultValue as Int
+            mProgress = (defaultValue as Int?)?:0
             persistInt(mProgress)
         }
     }

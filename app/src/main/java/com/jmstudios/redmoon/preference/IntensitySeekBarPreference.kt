@@ -61,11 +61,11 @@ class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
         return a.getInteger(index, DEFAULT_VALUE)
     }
 
-    override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any) {
+    override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any?) {
         if (restorePersistedValue) {
             mIntensityLevel = getPersistedInt(DEFAULT_VALUE)
         } else {
-            mIntensityLevel = defaultValue as Int
+            mIntensityLevel = (defaultValue as Int?)?: 0
             persistInt(mIntensityLevel)
         }
     }

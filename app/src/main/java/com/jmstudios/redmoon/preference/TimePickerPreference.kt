@@ -40,11 +40,11 @@ open class TimePickerPreference(context: Context, attrs: AttributeSet) : DialogP
         return a.getString(index)
     }
 
-    override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any) {
+    override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any?) {
         if (restorePersistedValue) {
             mTime = getPersistedString(DEFAULT_VALUE)
         } else {
-            mTime = defaultValue as String
+            mTime = (defaultValue as String?)?: DEFAULT_VALUE
             persistString(mTime)
         }
         summary = mTime

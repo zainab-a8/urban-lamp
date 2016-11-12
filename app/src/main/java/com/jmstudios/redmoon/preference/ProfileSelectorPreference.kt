@@ -72,11 +72,11 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         return a.getInteger(index, DEFAULT_VALUE)
     }
 
-    override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any) {
+    override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any?) {
         if (restorePersistedValue) {
             mProfile = getPersistedInt(DEFAULT_VALUE)
         } else {
-            mProfile = defaultValue as Int
+            mProfile = (defaultValue as Int?)?: 0
             persistInt(mProfile)
         }
     }

@@ -48,11 +48,11 @@ class SwitchBarPreference(private val mContext: Context, private val mActivity: 
         return a.getBoolean(index, DEFAULT_VALUE)
     }
 
-    override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any) {
+    override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any?) {
         if (restorePersistedValue) {
             mValue = getPersistedBoolean(DEFAULT_VALUE)
         } else {
-            mValue = defaultValue as Boolean
+            mValue = (defaultValue as Boolean?)?: false
             persistBoolean(mValue)
         }
     }
