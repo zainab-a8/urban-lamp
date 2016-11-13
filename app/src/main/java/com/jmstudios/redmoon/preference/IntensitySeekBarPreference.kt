@@ -38,11 +38,11 @@ import com.jmstudios.redmoon.view.ScreenFilterView
 
 class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : Preference(context, attrs) {
 
-    var mIntensityLevelSeekBar: SeekBar? = null
+    lateinit var mIntensityLevelSeekBar: SeekBar
     private var mIntensityLevel: Int = 0
-    private var mView: View? = null
-    private var mCommandSender: FilterCommandSender? = null
-    private var mCommandFactory: FilterCommandFactory? = null
+    lateinit private var mView: View
+    lateinit private var mCommandSender: FilterCommandSender
+    lateinit private var mCommandFactory: FilterCommandFactory
 
     init {
 
@@ -50,11 +50,7 @@ class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
     }
 
     fun setProgress(progress: Int) {
-        if (mIntensityLevelSeekBar != null) {
-            mIntensityLevelSeekBar!!.progress = progress
-        } else {
-            mIntensityLevel = progress
-        }
+        mIntensityLevelSeekBar.progress = progress
     }
 
     override fun onGetDefaultValue(a: TypedArray, index: Int): Any {
@@ -80,11 +76,11 @@ class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
     }
 
     private fun initLayout() {
-        mCommandSender = FilterCommandSender(mView!!.context)
-        mCommandFactory = FilterCommandFactory(mView!!.context)
-        mIntensityLevelSeekBar!!.progress = mIntensityLevel
+        mCommandSender = FilterCommandSender(mView.context)
+        mCommandFactory = FilterCommandFactory(mView.context)
+        mIntensityLevelSeekBar.progress = mIntensityLevel
 
-        mIntensityLevelSeekBar!!.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        mIntensityLevelSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 mIntensityLevel = progress
                 persistInt(mIntensityLevel)
@@ -96,15 +92,15 @@ class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 Log.i(TAG, "Touch down on a seek bar")
 
-                val showPreviewCommand = mCommandFactory!!.createCommand(ScreenFilterService.COMMAND_SHOW_PREVIEW)
-                mCommandSender!!.send(showPreviewCommand)
+                val showPreviewCommand = mCommandFactory.createCommand(ScreenFilterService.COMMAND_SHOW_PREVIEW)
+                mCommandSender.send(showPreviewCommand)
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 Log.d(TAG, "Released a seek bar")
 
-                val hidePreviewCommand = mCommandFactory!!.createCommand(ScreenFilterService.COMMAND_HIDE_PREVIEW)
-                mCommandSender!!.send(hidePreviewCommand)
+                val hidePreviewCommand = mCommandFactory.createCommand(ScreenFilterService.COMMAND_HIDE_PREVIEW)
+                mCommandSender.send(hidePreviewCommand)
             }
         })
 
@@ -119,7 +115,7 @@ class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
 
         val color = ScreenFilterView.getIntensityColor(mIntensityLevel, colorTempProgress)
 
-        val moonIcon = mView!!.findViewById(R.id.moon_icon_intensity) as ImageView
+        val moonIcon = mView.findViewById(R.id.moon_icon_intensity) as ImageView
 
         val colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY)
 
@@ -130,7 +126,7 @@ class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
         val progress = Integer.toString(mIntensityLevel)
         val suffix = "%"
 
-        val progressText = mView!!.findViewById(R.id.current_intensity_level) as TextView
+        val progressText = mView.findViewById(R.id.current_intensity_level) as TextView
         progressText.text = progress + suffix
     }
 

@@ -59,8 +59,8 @@ import com.jmstudios.redmoon.view.ScreenFilterView
 
 class ScreenFilterService : Service(), ServiceLifeCycleController {
 
-    private var mPresenter: ScreenFilterPresenter? = null
-    private var mSettingsModel: SettingsModel? = null
+    lateinit private var mPresenter: ScreenFilterPresenter
+    lateinit private var mSettingsModel: SettingsModel
     private var mOrientationReceiver: OrientationChangeReceiver? = null
 
     override fun onCreate() {
@@ -83,19 +83,19 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         mSettingsModel = SettingsModel(context.resources, sharedPreferences)
 
-        mPresenter = ScreenFilterPresenter(view, mSettingsModel!!, this, context, wvm, sm, nb, fcf, fcp)
+        mPresenter = ScreenFilterPresenter(view, mSettingsModel, this, context, wvm, sm, nb, fcf, fcp)
 
         // Make Presenter listen to settings changes and orientation changes
-        mSettingsModel!!.openSettingsChangeListener()
-        mSettingsModel!!.addOnSettingsChangedListener(mPresenter!!)
+        mSettingsModel.openSettingsChangeListener()
+        mSettingsModel.addOnSettingsChangedListener(mPresenter)
 
-        registerOrientationReceiver(mPresenter!!)
+        registerOrientationReceiver(mPresenter)
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         if (DEBUG) Log.i(TAG, String.format("onStartCommand(%s, %d, %d", intent, flags, startId))
 
-        mPresenter!!.onScreenFilterCommand(intent)
+        mPresenter.onScreenFilterCommand(intent)
 
         // Do not attempt to restart if the hosting process is killed by Android
         return Service.START_NOT_STICKY
@@ -109,7 +109,7 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
     override fun onDestroy() {
         if (DEBUG) Log.i(TAG, "onDestroy")
 
-        mSettingsModel!!.closeSettingsChangeListener()
+        mSettingsModel.closeSettingsChangeListener()
         unregisterOrientationReceiver()
 
         //Broadcast to keep appwidgets in sync

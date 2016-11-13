@@ -43,11 +43,11 @@ import java.util.Arrays
 
 class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeSet) : Preference(mContext, attrs), OnItemSelectedListener {
 
-    private var mProfileSpinner: Spinner? = null
-    private var mProfileActionButton: Button? = null
+    lateinit private var mProfileSpinner: Spinner
+    lateinit private var mProfileActionButton: Button
     lateinit internal var mArrayAdapter: ArrayAdapter<CharSequence>
     private var mProfile: Int = 0
-    private var mView: View? = null
+    lateinit private var mView: View
     private val mProfilesModel: ProfilesModel
 
     private var mDefaultOperations: ArrayList<CharSequence>? = null
@@ -103,26 +103,26 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         // which doesn't support certain actions, like adding elements.
         // See: http://stackoverflow.com/a/3200631
         mDefaultOperations = ArrayList<CharSequence>(Arrays.asList(*context.resources.getStringArray(R.array.standard_profiles_array)))
-        mArrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, mDefaultOperations!!)
+        mArrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, mDefaultOperations)
         mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         readProfiles()
 
-        mProfileSpinner!!.adapter = mArrayAdapter
-        mProfileSpinner!!.setSelection(mProfile)
-        mProfileSpinner!!.onItemSelectedListener = this
+        mProfileSpinner.adapter = mArrayAdapter
+        mProfileSpinner.setSelection(mProfile)
+        mProfileSpinner.onItemSelectedListener = this
     }
 
     private fun updateButtonSetup() {
         if (mProfile > DEFAULT_OPERATIONS_AM - 1) {
             if (DEBUG) Log.i(TAG, "Setting remove button")
-            mProfileActionButton!!.text = context.resources.getString(R.string.button_remove_profile)
-            mProfileActionButton!!.setOnClickListener { openRemoveProfileDialog() }
+            mProfileActionButton.text = context.resources.getString(R.string.button_remove_profile)
+            mProfileActionButton.setOnClickListener { openRemoveProfileDialog() }
 
         } else {
             if (DEBUG) Log.i(TAG, "Setting add button")
-            mProfileActionButton!!.text = context.resources.getString(R.string.button_add_profile)
-            mProfileActionButton!!.setOnClickListener { openAddNewProfileDialog() }
+            mProfileActionButton.text = context.resources.getString(R.string.button_add_profile)
+            mProfileActionButton.setOnClickListener { openAddNewProfileDialog() }
         }
     }
 
@@ -192,7 +192,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
                 mProfilesModel.addProfile(profile)
                 mArrayAdapter.add(profile.mProfileName as CharSequence)
 
-                mProfileSpinner!!.setSelection(mProfilesModel.profiles!!.size - 1 + DEFAULT_OPERATIONS_AM)
+                mProfileSpinner.setSelection(mProfilesModel.profiles.size - 1 + DEFAULT_OPERATIONS_AM)
 
                 updateAmmountProfiles()
             } else {
@@ -212,9 +212,9 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         set(progress) {
             currentColor = progress
             val fragment = (context as ShadesActivity).fragment
-            val colorPref = fragment!!.findPreference(context.resources.getString(R.string.pref_key_shades_color_temp)) as ColorSeekBarPreference
+            val colorPref = fragment.findPreference(context.resources.getString(R.string.pref_key_shades_color_temp)) as ColorSeekBarPreference
 
-            colorPref.mColorTempSeekBar!!.progress = progress
+            colorPref.mColorTempSeekBar.progress = progress
         }
 
     private var intensityLevelProgress: Int
@@ -222,9 +222,9 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         set(progress) {
             currentIntensity = progress
             val fragment = (context as ShadesActivity).fragment
-            val intensityPref = fragment!!.findPreference(context.resources.getString(R.string.pref_key_shades_intensity_level)) as IntensitySeekBarPreference
+            val intensityPref = fragment.findPreference(context.resources.getString(R.string.pref_key_shades_intensity_level)) as IntensitySeekBarPreference
 
-            intensityPref.mIntensityLevelSeekBar!!.progress = progress
+            intensityPref.mIntensityLevelSeekBar.progress = progress
         }
 
     private var dimLevelProgress: Int
@@ -232,9 +232,9 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         set(progress) {
             currentDim = progress
             val fragment = (context as ShadesActivity).fragment
-            val dimPref = fragment!!.findPreference(context.resources.getString(R.string.pref_key_shades_dim_level)) as DimSeekBarPreference
+            val dimPref = fragment.findPreference(context.resources.getString(R.string.pref_key_shades_dim_level)) as DimSeekBarPreference
 
-            dimPref.mDimLevelSeekBar!!.progress = progress
+            dimPref.mDimLevelSeekBar.progress = progress
         }
 
     //Section: Reading and writing profiles
@@ -245,7 +245,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
     fun readProfiles() {
         val profiles = mProfilesModel.profiles
 
-        for (profile in profiles!!) {
+        for (profile in profiles) {
             mArrayAdapter.add(profile.mProfileName as CharSequence)
         }
     }
@@ -254,7 +254,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
      * Updates the ammount of profiles in the shared preferences
      */
     private fun updateAmmountProfiles() {
-        val ammountProfiles = mProfilesModel.profiles!!.size + DEFAULT_OPERATIONS_AM
+        val ammountProfiles = mProfilesModel.profiles.size + DEFAULT_OPERATIONS_AM
         if (DEBUG) Log.i(TAG, "There are now $ammountProfiles profiles.")
         mSettingsModel.ammountProfiles = ammountProfiles
     }
@@ -270,22 +270,22 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
 
             override fun onDimLevelChanged(dimLevel: Int) {
                 if (dimLevel == currentDim) return
-                mProfileSpinner!!.setSelection(0)
+                mProfileSpinner.setSelection(0)
             }
 
             override fun onIntensityLevelChanged(intensityLevel: Int) {
                 if (intensityLevel == currentIntensity) return
-                mProfileSpinner!!.setSelection(0)
+                mProfileSpinner.setSelection(0)
             }
 
             override fun onColorChanged(color: Int) {
                 if (color == currentColor) return
-                mProfileSpinner!!.setSelection(0)
+                mProfileSpinner.setSelection(0)
             }
 
             override fun onProfileChanged(profile: Int) {
                 mProfile = profile
-                mProfileSpinner!!.setSelection(mProfile)
+                mProfileSpinner.setSelection(mProfile)
 
                 if (mProfile != 0) {
                     val newProfile = ProfilesHelper.getProfile(mProfilesModel, mProfile, mContext)

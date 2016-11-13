@@ -15,7 +15,7 @@
 */
 package com.jmstudios.redmoon.receiver
 
-import android.content.BroadcastReceiver
+port android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration

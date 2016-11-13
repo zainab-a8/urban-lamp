@@ -38,8 +38,8 @@ import com.jmstudios.redmoon.thread.CurrentAppMonitoringThread
 class SwitchBarPreference(private val mContext: Context, private val mActivity: Activity) : Preference(mContext), CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
     private var mValue: Boolean = false
-    private var mTextView: TextView? = null
-    private var mSwitch: Switch? = null
+    lateinit private var mTextView: TextView
+    lateinit private var mSwitch: Switch
 
     init {
         layoutResource = R.layout.switch_bar
@@ -62,15 +62,15 @@ class SwitchBarPreference(private val mContext: Context, private val mActivity: 
         super.onBindView(view)
 
         mTextView = view.findViewById(R.id.switch_text) as TextView
-        mTextView!!.setText(if (mValue) R.string.text_switch_on else R.string.text_switch_off)
+        mTextView.setText(if (mValue) R.string.text_switch_on else R.string.text_switch_off)
 
         val bar = view.findViewById(R.id.frame_layout_switch_bar) as FrameLayout
         bar.setBackgroundColor(ContextCompat.getColor(mContext, R.color.switch_bar_background))
         bar.setOnClickListener(this)
 
         mSwitch = view.findViewById(R.id.switch_bar_switch) as Switch
-        mSwitch!!.setOnCheckedChangeListener(this)
-        mSwitch!!.isChecked = mValue
+        mSwitch.setOnCheckedChangeListener(this)
+        mSwitch.isChecked = mValue
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
@@ -85,16 +85,16 @@ class SwitchBarPreference(private val mContext: Context, private val mActivity: 
 
         persistBoolean(mValue)
 
-        mTextView!!.setText(if (mValue) R.string.text_switch_on else R.string.text_switch_off)
+        mTextView.setText(if (mValue) R.string.text_switch_on else R.string.text_switch_off)
     }
 
     override fun onClick(v: View) {
-        mSwitch!!.toggle()
+        mSwitch.toggle()
     }
 
     fun usageStatsPermissionAttempted() {
         if (CurrentAppMonitoringThread.isAppMonitoringWorking(mContext)) {
-            mSwitch!!.isChecked = true
+            mSwitch.isChecked = true
         }
     }
 

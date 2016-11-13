@@ -30,8 +30,8 @@ import com.jmstudios.redmoon.preference.SwitchBarPreference
 
 class AutomaticSuspendPreferenceActivity : AppCompatPreferenceActivity() {
 
-    private var mSummaryPreference: Preference? = null
-    private var mSwitchBarPreference: SwitchBarPreference? = null
+    lateinit private var mSummaryPreference: Preference
+    lateinit private var mSwitchBarPreference: SwitchBarPreference
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,12 +42,12 @@ class AutomaticSuspendPreferenceActivity : AppCompatPreferenceActivity() {
         setPreferenceScreen(preferenceScreen)
 
         mSwitchBarPreference = SwitchBarPreference(this, this)
-        mSwitchBarPreference!!.key = resources.getString(R.string.pref_key_automatic_suspend)
+        mSwitchBarPreference.key = resources.getString(R.string.pref_key_automatic_suspend)
         preferenceScreen.addPreference(mSwitchBarPreference)
 
         mSummaryPreference = Preference(this)
-        mSummaryPreference!!.layoutResource = R.layout.automatic_suspend_summary
-        mSummaryPreference!!.isSelectable = false
+        mSummaryPreference.layoutResource = R.layout.automatic_suspend_summary
+        mSummaryPreference.isSelectable = false
         preferenceScreen.addPreference(mSummaryPreference)
     }
 
@@ -63,7 +63,7 @@ class AutomaticSuspendPreferenceActivity : AppCompatPreferenceActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         when (requestCode) {
-            RESULT_USAGE_ACCESS -> mSwitchBarPreference!!.usageStatsPermissionAttempted()
+            RESULT_USAGE_ACCESS -> mSwitchBarPreference.usageStatsPermissionAttempted()
         }
     }
 

@@ -37,23 +37,18 @@ import com.jmstudios.redmoon.view.ScreenFilterView
 
 class ColorSeekBarPreference(context: Context, attrs: AttributeSet) : Preference(context, attrs) {
 
-    var mColorTempSeekBar: SeekBar? = null
+    lateinit var mColorTempSeekBar: SeekBar
     private var mProgress: Int = 0
-    private var mView: View? = null
-    private var mCommandSender: FilterCommandSender? = null
-    private var mCommandFactory: FilterCommandFactory? = null
+    lateinit private var mView: View
+    lateinit private var mCommandSender: FilterCommandSender
+    lateinit private var mCommandFactory: FilterCommandFactory
 
     init {
-
         layoutResource = R.layout.preference_color_seekbar
     }
 
     fun setProgress(progress: Int) {
-        if (mColorTempSeekBar != null) {
-            mColorTempSeekBar!!.progress = progress
-        } else {
-            mProgress = progress
-        }
+        mColorTempSeekBar.progress = progress
     }
 
     override fun onGetDefaultValue(a: TypedArray, index: Int): Any {
@@ -79,11 +74,11 @@ class ColorSeekBarPreference(context: Context, attrs: AttributeSet) : Preference
     }
 
     private fun initLayout() {
-        mCommandSender = FilterCommandSender(mView!!.context)
-        mCommandFactory = FilterCommandFactory(mView!!.context)
-        mColorTempSeekBar!!.progress = mProgress
+        mCommandSender = FilterCommandSender(mView.context)
+        mCommandFactory = FilterCommandFactory(mView.context)
+        mColorTempSeekBar.progress = mProgress
 
-        mColorTempSeekBar!!.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        mColorTempSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 mProgress = progress
                 persistInt(mProgress)
@@ -95,15 +90,15 @@ class ColorSeekBarPreference(context: Context, attrs: AttributeSet) : Preference
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 Log.i(TAG, "Touch down on a seek bar")
 
-                val showPreviewCommand = mCommandFactory!!.createCommand(ScreenFilterService.COMMAND_SHOW_PREVIEW)
-                mCommandSender!!.send(showPreviewCommand)
+                val showPreviewCommand = mCommandFactory.createCommand(ScreenFilterService.COMMAND_SHOW_PREVIEW)
+                mCommandSender.send(showPreviewCommand)
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 Log.d(TAG, "Released a seek bar")
 
-                val hidePreviewCommand = mCommandFactory!!.createCommand(ScreenFilterService.COMMAND_HIDE_PREVIEW)
-                mCommandSender!!.send(hidePreviewCommand)
+                val hidePreviewCommand = mCommandFactory.createCommand(ScreenFilterService.COMMAND_HIDE_PREVIEW)
+                mCommandSender.send(hidePreviewCommand)
             }
         })
 
@@ -116,7 +111,7 @@ class ColorSeekBarPreference(context: Context, attrs: AttributeSet) : Preference
 
         val color = ScreenFilterView.rgbFromColorProgress(mProgress)
 
-        val moonIcon = mView!!.findViewById(R.id.moon_icon_color) as ImageView
+        val moonIcon = mView.findViewById(R.id.moon_icon_color) as ImageView
 
         val colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY)
 
@@ -126,7 +121,7 @@ class ColorSeekBarPreference(context: Context, attrs: AttributeSet) : Preference
     private fun updateProgressText() {
         val colorTemp = ScreenFilterView.getColorTempFromProgress(mProgress)
 
-        val progressView = mView!!.findViewById(R.id.current_color_temperature) as TextView
+        val progressView = mView.findViewById(R.id.current_color_temperature) as TextView
 
         val unit = "K"
         val temp = Integer.toString(colorTemp)

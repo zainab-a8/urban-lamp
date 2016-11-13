@@ -29,18 +29,17 @@ import android.util.Log
 
 import com.jmstudios.redmoon.R
 
-class LocationUpdater(private val mContext: Context?) : LocationListener {
+class LocationUpdater(private val mContext: Context) : LocationListener {
     private var mHandler: locationUpdateHandler? = null
 
     interface locationUpdateHandler {
         fun handleLocationFound()
-
         fun handleLocationSearchFailed()
     }
 
     fun updateLocation(handler: locationUpdateHandler) {
         mHandler = handler
-        val locationManager = mContext!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) &&
             ActivityCompat.checkSelfPermission
@@ -54,7 +53,7 @@ class LocationUpdater(private val mContext: Context?) : LocationListener {
 
     override fun onLocationChanged(location: Location) {
         if (DEBUG) Log.i(TAG, "Location search succeeded")
-        if (mHandler != null) mHandler!!.handleLocationFound()
+        if (mHandler != null) mHandler.handleLocationFound()
         mContext?: return
         val locationManager = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if (ActivityCompat.checkSelfPermission
@@ -87,7 +86,7 @@ class LocationUpdater(private val mContext: Context?) : LocationListener {
             locationManager.removeUpdates(this)
         }
 
-        if (mHandler != null) mHandler!!.handleLocationSearchFailed()
+        if (mHandler != null) mHandler.handleLocationSearchFailed()
     }
 
     companion object {

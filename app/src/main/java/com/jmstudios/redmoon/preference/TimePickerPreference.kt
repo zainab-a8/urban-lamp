@@ -28,22 +28,22 @@ import com.jmstudios.redmoon.R
 
 open class TimePickerPreference(context: Context, attrs: AttributeSet) : DialogPreference(context, attrs) {
 
-    private var mTimePicker: TimePicker? = null
+    lateinit private var mTimePicker: TimePicker
     protected var mTime: String = DEFAULT_VALUE
 
     @Suppress("DEPRECATION") // Need deprecated 'currentMinute' for API<23
     private var currentMinute: Int
-        get() = if (android.os.Build.VERSION.SDK_INT >= 23) mTimePicker!!.minute
-                else mTimePicker!!.currentMinute
-        set(m) = if (android.os.Build.VERSION.SDK_INT >= 23) mTimePicker!!.minute = m
-                 else mTimePicker!!.currentMinute = m
+        get() = if (android.os.Build.VERSION.SDK_INT >= 23) mTimePicker.minute
+                else mTimePicker.currentMinute
+        set(m) = if (android.os.Build.VERSION.SDK_INT >= 23) mTimePicker.minute = m
+                 else mTimePicker.currentMinute = m
 
     @Suppress("DEPRECATION") // Need deprecated 'currentHour' for API<23
     private var currentHour: Int
-        get() = if (android.os.Build.VERSION.SDK_INT >= 23) mTimePicker!!.hour
-                else mTimePicker!!.currentHour
-        set(h) = if (android.os.Build.VERSION.SDK_INT >= 23) mTimePicker!!.hour = h
-                 else mTimePicker!!.currentHour = h
+        get() = if (android.os.Build.VERSION.SDK_INT >= 23) mTimePicker.hour
+                else mTimePicker.currentHour
+        set(h) = if (android.os.Build.VERSION.SDK_INT >= 23) mTimePicker.hour = h
+                 else mTimePicker.currentHour = h
 
     override fun onGetDefaultValue(a: TypedArray, index: Int): Any {
         return a.getString(index)
@@ -67,13 +67,10 @@ open class TimePickerPreference(context: Context, attrs: AttributeSet) : DialogP
         positiveButtonText = context.resources.getString(R.string.set_dialog)
         negativeButtonText = context.resources.getString(R.string.cancel_dialog)
         mTimePicker = TimePicker(context)
-        mTimePicker!!.setIs24HourView(DateFormat.is24HourFormat(context))
-        return mTimePicker!!
+        mTimePicker.setIs24HourView(DateFormat.is24HourFormat(context))
+        return mTimePicker
     }
 
-
-    // on API 23, getCurrentHour() is replaced with getHour(), but there is not
-    // yet an appcompat way to call that, so sticking with currentHour for now
     override fun onBindDialogView(v: View) {
         super.onBindDialogView(v)
         currentHour = Integer.parseInt(mTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0])

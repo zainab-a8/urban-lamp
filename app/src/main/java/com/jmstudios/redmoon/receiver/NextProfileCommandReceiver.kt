@@ -28,7 +28,7 @@ import com.jmstudios.redmoon.model.SettingsModel
 
 class NextProfileCommandReceiver : BroadcastReceiver() {
 
-    private var mSettingsModel: SettingsModel? = null
+    lateinit private var mSettingsModel: SettingsModel
 
     override fun onReceive(context: Context, intent: Intent) {
         if (DEBUG) Log.i(TAG, "Next profile requested")
@@ -38,13 +38,13 @@ class NextProfileCommandReceiver : BroadcastReceiver() {
 
         // Here we just change the profile (cycles back to default
         // when it reaches the max).
-        val profile = mSettingsModel!!.profile
-        val amProfiles = mSettingsModel!!.ammountProfiles
+        val profile = mSettingsModel.profile
+        val amProfiles = mSettingsModel.ammountProfiles
         val newProfile = if (profile + 1 >= amProfiles)
             1
         else
             profile + 1
-        mSettingsModel!!.profile = newProfile
+        mSettingsModel.profile = newProfile
 
         // Next update the other settings that are based on the
         // profile
@@ -54,9 +54,9 @@ class NextProfileCommandReceiver : BroadcastReceiver() {
             val profilesModel = ProfilesModel(context)
             val profileObject = ProfilesHelper.getProfile(profilesModel, newProfile, context)
 
-            mSettingsModel!!.dimLevel = profileObject.mDimProgress
-            mSettingsModel!!.intensityLevel = profileObject.mIntensityProgress
-            mSettingsModel!!.color = profileObject.mColorProgress
+            mSettingsModel.dimLevel = profileObject.mDimProgress
+            mSettingsModel.intensityLevel = profileObject.mIntensityProgress
+            mSettingsModel.color = profileObject.mColorProgress
         }
     }
 

@@ -60,14 +60,14 @@ import com.jmstudios.redmoon.service.ScreenFilterService
 
 class ShadesActivity : AppCompatActivity() {
 
-    private var mPresenter: ShadesPresenter? = null
-    var fragment: ShadesFragment? = null
+    lateinit private var mPresenter: ShadesPresenter
+    lateinit var fragment: ShadesFragment
         private set
     lateinit var settingsModel: SettingsModel
         private set
-    private var mSwitch: Switch? = null
-    private var mFilterCommandFactory: FilterCommandFactory? = null
-    private var mFilterCommandSender: FilterCommandSender? = null
+    lateinit private var mSwitch: Switch
+    lateinit private var mFilterCommandFactory: FilterCommandFactory
+    lateinit private var mFilterCommandSender: FilterCommandSender
     private val context = this
 
     private var hasShownWarningToast = false
@@ -113,10 +113,10 @@ class ShadesActivity : AppCompatActivity() {
 
         mPresenter = ShadesPresenter(view, settingsModel,
                 context)
-        view.registerPresenter(mPresenter!!)
+        view.registerPresenter(mPresenter)
 
         // Make Presenter listen to settings changes
-        settingsModel.addOnSettingsChangedListener(mPresenter!!)
+        settingsModel.addOnSettingsChangedListener(mPresenter)
 
         fragment = view
 
@@ -131,15 +131,15 @@ class ShadesActivity : AppCompatActivity() {
 
         val item = menu.findItem(R.id.screen_filter_switch)
         mSwitch = item.actionView as Switch
-        mSwitch!!.isChecked = settingsModel.pauseState
-        mSwitch!!.setOnClickListener {
+        mSwitch.isChecked = settingsModel.pauseState
+        mSwitch.setOnClickListener {
             if (getOverlayPermission()) {
-                sendCommand(if (mSwitch!!.isChecked)
+                sendCommand(if (mSwitch.isChecked)
                     ScreenFilterService.COMMAND_ON
                 else
                     ScreenFilterService.COMMAND_PAUSE)
             } else {
-                mSwitch!!.isChecked = false
+                mSwitch.isChecked = false
             }
         }
 
@@ -147,9 +147,7 @@ class ShadesActivity : AppCompatActivity() {
     }
 
     fun setSwitch(onState: Boolean) {
-        if (mSwitch != null) {
-            mSwitch!!.isChecked = onState
-        }
+        mSwitch.isChecked = onState
     }
 
     @TargetApi(23) // Android Studio can't figure out that this is safe to call at any API level
@@ -174,14 +172,14 @@ class ShadesActivity : AppCompatActivity() {
     }
 
     private fun sendCommand(command: Int) {
-        val iCommand = mFilterCommandFactory!!.createCommand(command)
-        mFilterCommandSender!!.send(iCommand)
+        val iCommand = mFilterCommandFactory.createCommand(command)
+        mFilterCommandSender.send(iCommand)
     }
 
     override fun onStart() {
         super.onStart()
         settingsModel.openSettingsChangeListener()
-        mPresenter!!.onStart()
+        mPresenter.onStart()
     }
 
     override fun onResume() {

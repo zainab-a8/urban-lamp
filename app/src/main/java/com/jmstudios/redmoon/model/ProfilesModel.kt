@@ -36,31 +36,32 @@ class ProfilesModel(context: Context) {
 
     private val mSharedPrefs: SharedPreferences
     private val mPrefsContentsMap: Map<String, *>
-    var profiles: ArrayList<Profile>? = null
+    var profiles: ArrayList<Profile>
         private set
 
     init {
         if (DEBUG) Log.i(TAG, "Creating ProfilesModel")
-        mSharedPrefs = context.getSharedPreferences(preferenceName, mode)
 
+        mSharedPrefs = context.getSharedPreferences(preferenceName, mode)
         mPrefsContentsMap = mSharedPrefs.all as Map<String, String>
+        profiles = ArrayList<Profile>()
 
         parsePrefsContents()
     }
 
     fun addProfile(profile: Profile) {
         if (DEBUG) Log.i(TAG, "Adding new profile")
-        profiles!!.add(profile)
+        profiles.add(profile)
 
         updateSharedPreferences()
     }
 
     fun getProfile(index: Int): Profile {
-        return profiles!![index]
+        return profiles[index]
     }
 
     fun removeProfile(index: Int) {
-        profiles!!.removeAt(index)
+        profiles.removeAt(index)
 
         updateSharedPreferences()
     }
@@ -72,14 +73,14 @@ class ProfilesModel(context: Context) {
 
         val amProfiles = mPrefsContentsMap.entries.size
         if (DEBUG) Log.d(TAG, "Allocating " + amProfiles)
-        profiles!!.ensureCapacity(amProfiles)
+        profiles.ensureCapacity(amProfiles)
 
         if (DEBUG) Log.d(TAG, "Allocated " + amProfiles)
 
         for (i in 0..amProfiles - 1) {
             if (DEBUG) Log.d(TAG, "Parsing " + i)
             val profileEntry = findProfileEntry(i)
-            profiles!!.add(parseProfile(profileEntry))
+            profiles.add(parseProfile(profileEntry))
         }
 
         if (DEBUG) Log.d(TAG, "Done parsing preference contents. Parsed $amProfiles profiles.")
@@ -137,7 +138,7 @@ class ProfilesModel(context: Context) {
         val editor = mSharedPrefs.edit()
         editor.clear()
 
-        for ((i, profile) in profiles!!.withIndex()) {
+        for ((i, profile) in profiles.withIndex()) {
             editor.putString(profile.getKey(i), profile.values)
         }
 

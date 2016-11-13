@@ -82,7 +82,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
                             private val mContext: Context,
                             private val mWindowViewManager: WindowViewManager,
                             private val mScreenManager: ScreenManager,
-                            private var mNotificationBuilder: NotificationCompat.Builder?,
+                            private var mNotificationBuilder: NotificationCompat.Builder,
                             private val mFilterCommandFactory: FilterCommandFactory,
                             private val mFilterCommandParser: FilterCommandParser) : OrientationChangeReceiver.OnOrientationChangeListener, SettingsModel.OnSettingsChangedListener, ScreenStateReceiver.ScreenStateListener {
     private var mCamThread: CurrentAppMonitoringThread? = null
@@ -92,9 +92,9 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     private val mShuttingDown = false
     private var mScreenFilterOpen = false
 
-    private var mColorAnimator: ValueAnimator? = null
-    private var mDimAnimator: ValueAnimator? = null
-    private var mIntensityAnimator: ValueAnimator? = null
+    lateinit private var mColorAnimator: ValueAnimator
+    lateinit private var mDimAnimator: ValueAnimator
+    lateinit private var mIntensityAnimator: ValueAnimator
 
     private val mOnState = OnState()
     private val mPauseState = PauseState()
@@ -159,7 +159,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
                 nextProfileIntent, 0)
 
         mNotificationBuilder = NotificationCompat.Builder(mContext)
-        mNotificationBuilder!!.setSmallIcon(smallIconResId).setContentTitle(title).setContentText(contentText).setColor(color).setContentIntent(settingsPI).addAction(pauseOrResumeDrawableResId,
+        mNotificationBuilder.setSmallIcon(smallIconResId).setContentTitle(title).setContentText(contentText).setColor(color).setContentIntent(settingsPI).addAction(pauseOrResumeDrawableResId,
                 pauseOrResumeActionText,
                 pauseOrResumePI).addAction(R.drawable.ic_next_profile,
                 ProfilesHelper.getProfileName(profilesModel, mSettingsModel.profile, context),
@@ -168,10 +168,10 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         if (isPaused) {
             Log.d(TAG, "Creating a dismissible notification")
             val mNotificationManager = mContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            mNotificationManager.notify(NOTIFICATION_ID, mNotificationBuilder!!.build())
+            mNotificationManager.notify(NOTIFICATION_ID, mNotificationBuilder.build())
         } else {
             Log.d(TAG, "Creating a persistent notification")
-            mServiceController.startForeground(NOTIFICATION_ID, mNotificationBuilder!!.build())
+            mServiceController.startForeground(NOTIFICATION_ID, mNotificationBuilder.build())
         }
     }
 
@@ -263,10 +263,10 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         val fromColor = mView.colorTempProgress
 
         mColorAnimator = ValueAnimator.ofObject(ArgbEvaluator(), fromColor, toColor)
-        mColorAnimator!!.duration = FADE_DURATION_MS.toLong()
-        mColorAnimator!!.addUpdateListener { valueAnimator -> mView.colorTempProgress = valueAnimator.animatedValue as Int }
+        mColorAnimator.duration = FADE_DURATION_MS.toLong()
+        mColorAnimator.addUpdateListener { valueAnimator -> mView.colorTempProgress = valueAnimator.animatedValue as Int }
 
-        mColorAnimator!!.start()
+        mColorAnimator.start()
     }
 
     private fun animateDimLevel(toDimLevel: Int, listener: Animator.AnimatorListener?) {
@@ -275,14 +275,14 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         val fromDimLevel = mView.filterDimLevel
 
         mDimAnimator = ValueAnimator.ofInt(fromDimLevel, toDimLevel)
-        mDimAnimator!!.duration = FADE_DURATION_MS.toLong()
-        mDimAnimator!!.addUpdateListener { valueAnimator -> mView.filterDimLevel = valueAnimator.animatedValue as Int }
+        mDimAnimator.duration = FADE_DURATION_MS.toLong()
+        mDimAnimator.addUpdateListener { valueAnimator -> mView.filterDimLevel = valueAnimator.animatedValue as Int }
 
         if (listener != null) {
-            mDimAnimator!!.addListener(listener)
+            mDimAnimator.addListener(listener)
         }
 
-        mDimAnimator!!.start()
+        mDimAnimator.start()
     }
 
     private fun animateIntensityLevel(toIntensityLevel: Int, listener: Animator.AnimatorListener?) {
@@ -291,14 +291,14 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         val fromIntensityLevel = mView.filterIntensityLevel
 
         mIntensityAnimator = ValueAnimator.ofInt(fromIntensityLevel, toIntensityLevel)
-        mIntensityAnimator!!.duration = FADE_DURATION_MS.toLong()
-        mIntensityAnimator!!.addUpdateListener { valueAnimator -> mView.filterIntensityLevel = valueAnimator.animatedValue as Int }
+        mIntensityAnimator.duration = FADE_DURATION_MS.toLong()
+        mIntensityAnimator.addUpdateListener { valueAnimator -> mView.filterIntensityLevel = valueAnimator.animatedValue as Int }
 
         if (listener != null) {
-            mIntensityAnimator!!.addListener(listener)
+            mIntensityAnimator.addListener(listener)
         }
 
-        mIntensityAnimator!!.start()
+        mIntensityAnimator.start()
     }
 
     private val isPaused: Boolean
@@ -348,13 +348,13 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
                 mContext)
     }
 
+    @Suppress("DEPRECATION")
     fun startAppMonitoring() {
         if (DEBUG) Log.i(TAG, "Starting app monitoring")
         val powerManager = mContext.getSystemService(Context.POWER_SERVICE) as PowerManager
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT_WATCH) {
             screenOff = !powerManager.isInteractive
         } else {
-            @Suppress("DEPRECATION")
             screenOff = !powerManager.isScreenOn
         }
 

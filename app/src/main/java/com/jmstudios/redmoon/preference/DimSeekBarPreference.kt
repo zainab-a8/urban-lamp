@@ -57,22 +57,18 @@ import com.jmstudios.redmoon.view.ScreenFilterView
 
 class DimSeekBarPreference(context: Context, attrs: AttributeSet) : Preference(context, attrs) {
 
-    var mDimLevelSeekBar: SeekBar? = null
+    lateinit var mDimLevelSeekBar: SeekBar
     private var mDimLevel: Int = 0
-    private var mView: View? = null
-    private var mCommandSender: FilterCommandSender? = null
-    private var mCommandFactory: FilterCommandFactory? = null
+    lateinit private var mView: View
+    lateinit private var mCommandSender: FilterCommandSender
+    lateinit private var mCommandFactory: FilterCommandFactory
 
     init {
         layoutResource = R.layout.preference_dim_seekbar
     }
 
     fun setProgress(progress: Int) {
-        if (mDimLevelSeekBar != null) {
-            mDimLevelSeekBar!!.progress = progress
-        } else {
-            mDimLevel = progress
-        }
+        mDimLevelSeekBar.progress = progress
     }
 
     override fun onGetDefaultValue(a: TypedArray, index: Int): Any {
@@ -98,11 +94,11 @@ class DimSeekBarPreference(context: Context, attrs: AttributeSet) : Preference(c
     }
 
     private fun initLayout() {
-        mCommandSender = FilterCommandSender(mView!!.context)
-        mCommandFactory = FilterCommandFactory(mView!!.context)
-        mDimLevelSeekBar!!.progress = mDimLevel
+        mCommandSender = FilterCommandSender(mView.context)
+        mCommandFactory = FilterCommandFactory(mView.context)
+        mDimLevelSeekBar.progress = mDimLevel
 
-        mDimLevelSeekBar!!.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        mDimLevelSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 mDimLevel = progress
                 persistInt(mDimLevel)
@@ -114,15 +110,15 @@ class DimSeekBarPreference(context: Context, attrs: AttributeSet) : Preference(c
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 Log.i(TAG, "Touch down on a seek bar")
 
-                val showPreviewCommand = mCommandFactory!!.createCommand(ScreenFilterService.COMMAND_SHOW_PREVIEW)
-                mCommandSender!!.send(showPreviewCommand)
+                val showPreviewCommand = mCommandFactory.createCommand(ScreenFilterService.COMMAND_SHOW_PREVIEW)
+                mCommandSender.send(showPreviewCommand)
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 Log.d(TAG, "Released a seek bar")
 
-                val hidePreviewCommand = mCommandFactory!!.createCommand(ScreenFilterService.COMMAND_HIDE_PREVIEW)
-                mCommandSender!!.send(hidePreviewCommand)
+                val hidePreviewCommand = mCommandFactory.createCommand(ScreenFilterService.COMMAND_HIDE_PREVIEW)
+                mCommandSender.send(hidePreviewCommand)
             }
         })
 
@@ -136,7 +132,7 @@ class DimSeekBarPreference(context: Context, attrs: AttributeSet) : Preference(c
         val lightness = 102 + ((100 - mDimLevel).toFloat() * (2.55f * 0.6f)).toInt()
         val color = Color.rgb(lightness, lightness, lightness)
 
-        val moonIcon = mView!!.findViewById(R.id.moon_icon_dim) as ImageView
+        val moonIcon = mView.findViewById(R.id.moon_icon_dim) as ImageView
 
         val colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY)
 
@@ -147,7 +143,7 @@ class DimSeekBarPreference(context: Context, attrs: AttributeSet) : Preference(c
         val progress = Integer.toString((mDimLevel.toFloat() * ScreenFilterView.DIM_MAX_ALPHA).toInt())
         val suffix = "%"
 
-        val progressText = mView!!.findViewById(R.id.current_dim_level) as TextView
+        val progressText = mView.findViewById(R.id.current_dim_level) as TextView
         progressText.text = progress + suffix
     }
 
