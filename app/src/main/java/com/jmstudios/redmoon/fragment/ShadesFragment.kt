@@ -187,11 +187,11 @@ class ShadesFragment : PreferenceFragment() {
         }
 
     private fun onAutomaticFilterPreferenceChange(auto: Boolean) {
-        useLocationPref.setEnabled(auto)
+        useLocationPref.isEnabled = auto
         updateLocationPrefs(useLocationPref.isChecked)
         if (!auto) {
-            automaticTurnOnPref.setEnabled(false)
-            automaticTurnOffPref.setEnabled(false)
+            automaticTurnOnPref.isEnabled = false
+            automaticTurnOffPref.isEnabled = false
         }
     }
 

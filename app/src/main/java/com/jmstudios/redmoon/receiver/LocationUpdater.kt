@@ -29,16 +29,15 @@ import android.util.Log
 
 import com.jmstudios.redmoon.R
 
-class LocationUpdater(private val mContext: Context) : LocationListener {
-    private var mHandler: locationUpdateHandler? = null
+class LocationUpdater(private val mContext: Context,
+                      private val mHandler: locationUpdateHandler) : LocationListener {
 
     interface locationUpdateHandler {
         fun handleLocationFound()
         fun handleLocationSearchFailed()
     }
 
-    fun updateLocation(handler: locationUpdateHandler) {
-        mHandler = handler
+    fun updateLocation() {
         val locationManager = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) &&
@@ -48,13 +47,12 @@ class LocationUpdater(private val mContext: Context) : LocationListener {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
                     0, 0f, this)
         } else
-            handler.handleLocationSearchFailed()
+            mHandler.handleLocationSearchFailed()
     }
 
     override fun onLocationChanged(location: Location) {
         if (DEBUG) Log.i(TAG, "Location search succeeded")
-        if (mHandler != null) mHandler.handleLocationFound()
-        mContext?: return
+        mHandler.handleLocationFound()
         val locationManager = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if (ActivityCompat.checkSelfPermission
             (mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -78,7 +76,6 @@ class LocationUpdater(private val mContext: Context) : LocationListener {
 
     override fun onProviderDisabled(provider: String) {
         if (DEBUG) Log.i(TAG, "Location search failed")
-        mContext?: return
         val locationManager = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if (ActivityCompat.checkSelfPermission
             (mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -86,7 +83,7 @@ class LocationUpdater(private val mContext: Context) : LocationListener {
             locationManager.removeUpdates(this)
         }
 
-        if (mHandler != null) mHandler.handleLocationSearchFailed()
+        mHandler.handleLocationSearchFailed()
     }
 
     companion object {

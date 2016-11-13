@@ -74,14 +74,11 @@ class AutomaticFilterChangeReceiver : BroadcastReceiver() {
 
         // TODO: add "&& settingsModel.getUseLocation()"
         if (settingsModel.automaticFilter) {
-            val updater = LocationUpdater(context)
-            updater.updateLocation(object : LocationUpdater.locationUpdateHandler {
-                override fun handleLocationFound() {
-                }
-
-                override fun handleLocationSearchFailed() {
-                }
+            val updater = LocationUpdater(context, object : LocationUpdater.locationUpdateHandler {
+                override fun handleLocationFound() {}
+                override fun handleLocationSearchFailed() {}
             })
+            updater.updateLocation()
         }
     }
 
