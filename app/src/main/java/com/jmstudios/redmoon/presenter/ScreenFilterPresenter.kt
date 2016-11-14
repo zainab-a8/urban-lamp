@@ -92,9 +92,9 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     private val mShuttingDown = false
     private var mScreenFilterOpen = false
 
-    lateinit private var mColorAnimator: ValueAnimator
-    lateinit private var mDimAnimator: ValueAnimator
-    lateinit private var mIntensityAnimator: ValueAnimator
+    private var mColorAnimator: ValueAnimator? = null
+    private var mDimAnimator: ValueAnimator? = null
+    private var mIntensityAnimator: ValueAnimator? = null
 
     private val mOnState = OnState()
     private val mPauseState = PauseState()
@@ -263,10 +263,10 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         val fromColor = mView.colorTempProgress
 
         mColorAnimator = ValueAnimator.ofObject(ArgbEvaluator(), fromColor, toColor)
-        mColorAnimator.duration = FADE_DURATION_MS.toLong()
-        mColorAnimator.addUpdateListener { valueAnimator -> mView.colorTempProgress = valueAnimator.animatedValue as Int }
+        mColorAnimator!!.duration = FADE_DURATION_MS.toLong()
+        mColorAnimator!!.addUpdateListener { valueAnimator -> mView.colorTempProgress = valueAnimator.animatedValue as Int }
 
-        mColorAnimator.start()
+        mColorAnimator!!.start()
     }
 
     private fun animateDimLevel(toDimLevel: Int, listener: Animator.AnimatorListener?) {
@@ -275,14 +275,14 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         val fromDimLevel = mView.filterDimLevel
 
         mDimAnimator = ValueAnimator.ofInt(fromDimLevel, toDimLevel)
-        mDimAnimator.duration = FADE_DURATION_MS.toLong()
-        mDimAnimator.addUpdateListener { valueAnimator -> mView.filterDimLevel = valueAnimator.animatedValue as Int }
+        mDimAnimator!!.duration = FADE_DURATION_MS.toLong()
+        mDimAnimator!!.addUpdateListener { valueAnimator -> mView.filterDimLevel = valueAnimator.animatedValue as Int }
 
         if (listener != null) {
-            mDimAnimator.addListener(listener)
+            mDimAnimator!!.addListener(listener)
         }
 
-        mDimAnimator.start()
+        mDimAnimator!!.start()
     }
 
     private fun animateIntensityLevel(toIntensityLevel: Int, listener: Animator.AnimatorListener?) {
@@ -291,14 +291,14 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         val fromIntensityLevel = mView.filterIntensityLevel
 
         mIntensityAnimator = ValueAnimator.ofInt(fromIntensityLevel, toIntensityLevel)
-        mIntensityAnimator.duration = FADE_DURATION_MS.toLong()
-        mIntensityAnimator.addUpdateListener { valueAnimator -> mView.filterIntensityLevel = valueAnimator.animatedValue as Int }
+        mIntensityAnimator!!.duration = FADE_DURATION_MS.toLong()
+        mIntensityAnimator!!.addUpdateListener { valueAnimator -> mView.filterIntensityLevel = valueAnimator.animatedValue as Int }
 
         if (listener != null) {
-            mIntensityAnimator.addListener(listener)
+            mIntensityAnimator!!.addListener(listener)
         }
 
-        mIntensityAnimator.start()
+        mIntensityAnimator!!.start()
     }
 
     private val isPaused: Boolean

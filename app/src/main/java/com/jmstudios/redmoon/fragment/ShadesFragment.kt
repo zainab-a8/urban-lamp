@@ -35,21 +35,16 @@
  */
 package com.jmstudios.redmoon.fragment
 
-import android.Manifest
 import android.annotation.TargetApi
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.preference.Preference
-import android.preference.PreferenceCategory
 import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
 import android.provider.Settings
 import android.support.design.widget.Snackbar
-import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,26 +53,16 @@ import android.widget.TextView
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.activity.ShadesActivity
-import com.jmstudios.redmoon.preference.FilterTimePreference
-import com.jmstudios.redmoon.preference.UseLocationPreference
-import com.jmstudios.redmoon.presenter.ShadesPresenter
+import com.jmstudios.redmoon.model.SettingsModel
 
-import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
+class FilterFragment : PreferenceFragment() {
 
-import java.util.*
-
-class ShadesFragment : PreferenceFragment() {
-
-    private val DEBUG = true
-    private lateinit var mPresenter: ShadesPresenter
     private lateinit var mView: View
     private lateinit var mHelpSnackbar: Snackbar
+    private val mSettingsModel: SettingsModel
+        get() = (activity as ShadesActivity).mSettingsModel
 
     // Preferences
-    private val automaticFilterPrefCategory: PreferenceCategory
-        get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_automatic_filter_category)) as PreferenceCategory)
-
     private val darkThemePref: SwitchPreference
         get() = (preferenceScreen.findPreference
                 (getString(R.string.pref_key_dark_theme)) as SwitchPreference)
@@ -85,22 +70,9 @@ class ShadesFragment : PreferenceFragment() {
     private val lowerBrightnessPref: SwitchPreference
         get() = (preferenceScreen.findPreference
                 (getString(R.string.pref_key_control_brightness)) as SwitchPreference)
-
-    private val automaticFilterPref: SwitchPreference
-        get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_automatic_filter)) as SwitchPreference)
-
-    private val useLocationPref: UseLocationPreference
-        get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_use_location)) as UseLocationPreference)
-
-    private val automaticTurnOnPref: FilterTimePreference
-        get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_custom_start_time)) as FilterTimePreference)
-
-    private val automaticTurnOffPref: FilterTimePreference
-        get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_custom_end_time)) as FilterTimePreference)
+    
+    private val timeTogglePref: Preference
+        get() = (preferenceScreen.findPreference (getString(R.string.pref_key_time_toggle)))
 
     private val otherPrefCategory: Preference
         get() = preferenceScreen.findPreference(getString(R.string.pref_key_other))
@@ -111,7 +83,7 @@ class ShadesFragment : PreferenceFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        addPreferencesFromResource(R.xml.preferences)
+        addPreferencesFromResource(R.xml.filter_preferences)
 
         darkThemePref.onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { preference, newValue ->
@@ -130,32 +102,20 @@ class ShadesFragment : PreferenceFragment() {
                     true
                 }
 
-        automaticFilterPref.onPreferenceChangeListener =
-                Preference.OnPreferenceChangeListener { preference, newValue ->
-                    onAutomaticFilterPreferenceChange(newValue as Boolean)
+        // TODO: Add time toggle pref here
+        timeTogglePref.onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    (activity as ShadesActivity).launchTimeToggleFragment()
                     true
                 }
-
-            /* requestLocationPermission() */
-            /* updateFilterTimesFromSun() */
-            /* locationPref.searchLocation(true); */
-            /* locationPref.searchLocation(false) */
-            /* int duration = Toast.LENGTH_SHORT; */
-            /* Toast toast = Toast.makeText */
-            /*     (mContext, mContext.getString */
-            /*      (R.string.toast_warning_no_location), duration); */
-            /* toast.show(); */
-
-        useLocationPref.onPreferenceChangeListener =
-                Preference.OnPreferenceChangeListener { preference, newValue ->
-                    //TODO: Get location permission 
-                    updateLocationPrefs(newValue as Boolean)
-                    true
-                }
-
 
         // Automatic suspend
-        val automaticSuspendOn = (activity as ShadesActivity).settingsModel.automaticSuspend
+        automaticSuspendPref.onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    (activity as ShadesActivity).launchSecureSuspendFragment()
+                    true
+                }
+        val automaticSuspendOn = (activity as ShadesActivity).mSettingsModel.automaticSuspend
         automaticSuspendPref.setSummary(if (automaticSuspendOn)
             R.string.text_switch_on
         else
@@ -165,7 +125,32 @@ class ShadesFragment : PreferenceFragment() {
     override fun onResume() {
         super.onResume()
 
-        val automaticSuspendOn = (activity as ShadesActivity).settingsModel.automaticSuspend
+        // When the fragment is not on the screen, but the user
+        // updates the profile through the notification. the
+        // profile spinner and the seekbars will have missed this
+        // change. To update them correctly, we artificially change
+        // these settings.
+        val intensity = mSettingsModel.intensityLevel
+        mSettingsModel.intensityLevel = if (intensity == 0) 1 else 0
+        mSettingsModel.intensityLevel = intensity
+
+        val dim = mSettingsModel.dimLevel
+        mSettingsModel.dimLevel = if (dim == 0) 1 else 0
+        mSettingsModel.dimLevel = dim
+
+        val color = mSettingsModel.color
+        mSettingsModel.color = if (color == 0) 1 else 0
+        mSettingsModel.color = color
+
+        // The profile HAS to be updated last, otherwise the spinner
+        // will switched to custom.
+        val profile = mSettingsModel.profile
+        mSettingsModel.profile = if (profile == 0) 1 else 0
+        mSettingsModel.profile = profile
+
+        // TODO: Add time toggle pref here
+        
+        val automaticSuspendOn = mSettingsModel.automaticSuspend
         automaticSuspendPref.setSummary(if (automaticSuspendOn)
             R.string.text_switch_on
         else
@@ -186,70 +171,11 @@ class ShadesFragment : PreferenceFragment() {
         return (hasWriteSettingsPermission)
         }
 
-    private fun onAutomaticFilterPreferenceChange(auto: Boolean) {
-        useLocationPref.isEnabled = auto
-        updateLocationPrefs(useLocationPref.isChecked)
-        if (!auto) {
-            automaticTurnOnPref.isEnabled = false
-            automaticTurnOffPref.isEnabled = false
-        }
-    }
-
-    private fun removePref(category: PreferenceCategory, pref: Preference?) {
-        if (pref != null) category.removePreference(pref)
-    }
-
-    private fun addPref(category: PreferenceCategory, pref: Preference?) {
-        if (pref == null) category.addPreference(pref)
-    }
-
-    private fun updateLocationPrefs(sun: Boolean) {
-        useLocationPref.updateSummary()
-        val location = useLocationPref.location
-        if (!sun) {
-            if (DEBUG) Log.i(TAG, "Location Disabled")
-            automaticTurnOnPref.setToCustomTime()
-            automaticTurnOffPref.setToCustomTime()
-        } else if (location == "not set") {
-            if (DEBUG) Log.i(TAG, "Location Not Set")
-            automaticTurnOnPref.setToSunTime("19:30")
-            automaticTurnOffPref.setToSunTime("06:30")
-        } else {
-            if (DEBUG) Log.i(TAG, "Location Set")
-            val latitude = java.lang.Double.parseDouble(location.split(",")[0])
-            val longitude = java.lang.Double.parseDouble(location.split(",")[1])
-
-            val sunriseSunsetLocation = com.luckycatlabs.sunrisesunset.dto.Location(latitude, longitude)
-            val calculator = SunriseSunsetCalculator(sunriseSunsetLocation, TimeZone.getDefault())
-
-            val sunsetTime = calculator.getOfficialSunsetForDate(Calendar.getInstance())
-            automaticTurnOnPref.setToSunTime(sunsetTime)
-
-            val sunriseTime = calculator.getOfficialSunriseForDate(Calendar.getInstance())
-            automaticTurnOffPref.setToSunTime(sunriseTime)
-        }
-    }
-
-    private fun requestLocationPermission() {
-        if (ContextCompat.checkSelfPermission
-                (activity, Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity,
-                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 0)
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val v = super.onCreateView(inflater, container, savedInstanceState)
         mView = v
         return v
-    }
-
-    fun registerPresenter(presenter: ShadesPresenter) {
-        mPresenter = presenter
-
-        if (DEBUG) Log.i(TAG, "Registered Presenter")
     }
 
     private fun setPreferencesEnabled(enabled: Boolean) {
@@ -259,40 +185,26 @@ class ShadesFragment : PreferenceFragment() {
         }
         otherPrefCategory.isEnabled = true
         automaticSuspendPref.isEnabled = enabled
-
-        val auto = automaticFilterPref.isChecked
-        useLocationPref.isEnabled = auto
-        val sun = true
-        automaticTurnOnPref.isEnabled = auto && !sun
-        automaticTurnOffPref.isEnabled = auto && !sun
-
     }
 
-    private fun setAllPreferencesEnabled(enabled: Boolean) {
-        val root = preferenceScreen
-        for (i in 0..root.preferenceCount - 1) {
-            root.getPreference(i).isEnabled = enabled
-        }
-    }
+    /* private fun showHelpSnackbar() { */
+    /*     mHelpSnackbar = Snackbar.make(mView, activity.getString(R.string.help_snackbar_text), */
+    /*             Snackbar.LENGTH_INDEFINITE) */
 
-    private fun showHelpSnackbar() {
-        mHelpSnackbar = Snackbar.make(mView, activity.getString(R.string.help_snackbar_text),
-                Snackbar.LENGTH_INDEFINITE)
+    /*     if (mSettingsModel.darkThemeFlag) { */
+    /*         val group = mHelpSnackbar.view as ViewGroup */
+    /*         group.setBackgroundColor(ContextCompat.getColor(activity, R.color.snackbar_color_dark_theme)) */
 
-        if ((activity as ShadesActivity).settingsModel.darkThemeFlag) {
-            val group = mHelpSnackbar.view as ViewGroup
-            group.setBackgroundColor(ContextCompat.getColor(activity, R.color.snackbar_color_dark_theme))
+    /*         val snackbarTextId = android.support.design.R.id.snackbar_text */
+    /*         val textView = group.findViewById(snackbarTextId) as TextView */
+    /*         textView.setTextColor(ContextCompat.getColor(activity, R.color.text_color_dark_theme)) */
+    /*     } */
 
-            val snackbarTextId = android.support.design.R.id.snackbar_text
-            val textView = group.findViewById(snackbarTextId) as TextView
-            textView.setTextColor(ContextCompat.getColor(activity, R.color.text_color_dark_theme))
-        }
-
-        mHelpSnackbar.show()
-    }
+    /*     mHelpSnackbar.show() */
+    /* } */
 
     companion object {
-        private val TAG = "ShadesFragment"
+        private val TAG = "FilterFragment"
         private val DEBUG = true
     }
 }// Android Fragments require an explicit public default constructor for re-creation

@@ -51,19 +51,17 @@ import android.widget.Toast
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.fragment.ShadesFragment
+import com.jmstudios.redmoon.fragment.*
 import com.jmstudios.redmoon.helper.FilterCommandFactory
 import com.jmstudios.redmoon.helper.FilterCommandSender
 import com.jmstudios.redmoon.model.SettingsModel
-import com.jmstudios.redmoon.presenter.ShadesPresenter
+/* import com.jmstudios.redmoon.presenter.ShadesPresenter */
 import com.jmstudios.redmoon.service.ScreenFilterService
 
 class ShadesActivity : AppCompatActivity() {
 
-    lateinit private var mPresenter: ShadesPresenter
-    lateinit var fragment: ShadesFragment
-        private set
-    lateinit var settingsModel: SettingsModel
+    /* lateinit internal var mPresenter: ShadesPresenter */
+    lateinit var mSettingsModel: SettingsModel
         private set
     lateinit private var mSwitch: Switch
     lateinit private var mFilterCommandFactory: FilterCommandFactory
@@ -72,13 +70,16 @@ class ShadesActivity : AppCompatActivity() {
 
     private var hasShownWarningToast = false
 
+    internal val fragment: FilterFragment
+        get() = fragmentManager.findFragmentByTag(FRAGMENT_TAG_FILTER) as FilterFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val intent = intent
         if (DEBUG) Log.i(TAG, "Got intent")
 
         // Wire MVP classes
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        settingsModel = SettingsModel(resources, sharedPreferences)
+        mSettingsModel = SettingsModel(resources, sharedPreferences)
         mFilterCommandFactory = FilterCommandFactory(this)
         mFilterCommandSender = FilterCommandSender(this)
 
@@ -88,39 +89,35 @@ class ShadesActivity : AppCompatActivity() {
         }
 
 
-        if (settingsModel.darkThemeFlag) setTheme(R.style.AppThemeDark)
+        if (mSettingsModel.darkThemeFlag) setTheme(R.style.AppThemeDark)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shades)
 
-        val fragmentManager = fragmentManager
-
-        val view: ShadesFragment
+        val view: FilterFragment
 
         // Only create and attach a new fragment on the first Activity creation.
         // On Activity re-creation, retrieve the existing fragment stored in the FragmentManager.
         if (savedInstanceState == null) {
             if (DEBUG) Log.i(TAG, "onCreate - First creation")
 
-            view = ShadesFragment()
+            view = FilterFragment()
 
-            fragmentManager.beginTransaction().replace(R.id.fragment_container, view, FRAGMENT_TAG_SHADES).commit()
+            fragmentManager.beginTransaction()
+                           .replace(R.id.fragment_container, view, FRAGMENT_TAG_FILTER)
+                           .commit()
         } else {
             if (DEBUG) Log.i(TAG, "onCreate - Re-creation")
 
-            view = fragmentManager.findFragmentByTag(FRAGMENT_TAG_SHADES) as ShadesFragment
+            view = fragmentManager.findFragmentByTag(FRAGMENT_TAG_FILTER) as FilterFragment
         }
 
-        mPresenter = ShadesPresenter(view, settingsModel,
-                context)
-        view.registerPresenter(mPresenter)
+        /* mPresenter = ShadesPresenter(view, mSettingsModel, context) */
 
         // Make Presenter listen to settings changes
-        settingsModel.addOnSettingsChangedListener(mPresenter)
+        /* mSettingsModel.addOnSettingsChangedListener(mPresenter) */
 
-        fragment = view
-
-        if (!settingsModel.introShown) {
+        if (!mSettingsModel.introShown) {
             startIntro()
         }
     }
@@ -131,7 +128,7 @@ class ShadesActivity : AppCompatActivity() {
 
         val item = menu.findItem(R.id.screen_filter_switch)
         mSwitch = item.actionView as Switch
-        mSwitch.isChecked = settingsModel.pauseState
+        mSwitch.isChecked = mSettingsModel.pauseState
         mSwitch.setOnClickListener {
             if (getOverlayPermission()) {
                 sendCommand(if (mSwitch.isChecked)
@@ -144,6 +141,24 @@ class ShadesActivity : AppCompatActivity() {
         }
 
         return true
+    }
+
+    fun launchTimeToggleFragment() {
+        val newFragment = TimeToggleFragment()
+        fragmentManager.beginTransaction()
+                       .replace(R.id.fragment_container, newFragment, FRAGMENT_TAG_TIME_TOGGLE)
+                       .addToBackStack(null)
+                       .commit()
+        setTitle(R.string.automatic_filter_title)
+    }
+
+    fun launchSecureSuspendFragment() {
+        val newFragment = SecureSuspendFragment()
+        fragmentManager.beginTransaction()
+                       .replace(R.id.fragment_container, newFragment, FRAGMENT_TAG_SECURE_SUSPEND)
+                       .addToBackStack(null)
+                       .commit()
+        setTitle(R.string.automatic_suspend_preference_activity)
     }
 
     fun setSwitch(onState: Boolean) {
@@ -178,35 +193,8 @@ class ShadesActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        settingsModel.openSettingsChangeListener()
-        mPresenter.onStart()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        // When the activity is not on the screen, but the user
-        // updates the profile through the notification. the
-        // notification spinner and the seekbars will have missed this
-        // change. To update them correctly, we artificially change
-        // these settings.
-        val intensity = settingsModel.intensityLevel
-        settingsModel.intensityLevel = if (intensity == 0) 1 else 0
-        settingsModel.intensityLevel = intensity
-
-        val dim = settingsModel.dimLevel
-        settingsModel.dimLevel = if (dim == 0) 1 else 0
-        settingsModel.dimLevel = dim
-
-        val color = settingsModel.color
-        settingsModel.color = if (color == 0) 1 else 0
-        settingsModel.color = color
-
-        // The profile HAS to be updated last, otherwise the spinner
-        // will switched to custom.
-        val profile = settingsModel.profile
-        settingsModel.profile = if (profile == 0) 1 else 0
-        settingsModel.profile = profile
+        mSettingsModel.openSettingsChangeListener()
+        /* mPresenter.onStart() */
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -217,7 +205,7 @@ class ShadesActivity : AppCompatActivity() {
     }
 
     override fun onStop() {
-        settingsModel.closeSettingsChangeListener()
+        mSettingsModel.closeSettingsChangeListener()
         super.onStop()
     }
 
@@ -249,7 +237,7 @@ class ShadesActivity : AppCompatActivity() {
 
 
     fun displayInstallWarningToast() {
-        if (hasShownWarningToast || settingsModel.automaticSuspend)
+        if (hasShownWarningToast || mSettingsModel.automaticSuspend)
             return
 
         val duration = Toast.LENGTH_SHORT
@@ -265,20 +253,20 @@ class ShadesActivity : AppCompatActivity() {
         val introIntent = Intent(this, Intro::class.java)
         startActivity(introIntent)
 
-        settingsModel.introShown = true
+        mSettingsModel.introShown = true
     }
 
     val colorTempProgress: Int
-        get() = settingsModel.color
+        get() = mSettingsModel.color
 
     val intensityLevelProgress: Int
-        get() = settingsModel.intensityLevel
+        get() = mSettingsModel.intensityLevel
 
     val dimLevelProgress: Int
-        get() = settingsModel.dimLevel
+        get() = mSettingsModel.dimLevel
 
     private fun toggleAndFinish() {
-        val paused = settingsModel.pauseState
+        val paused = mSettingsModel.pauseState
         sendCommand(if (paused)
             ScreenFilterService.COMMAND_ON
         else
@@ -289,7 +277,10 @@ class ShadesActivity : AppCompatActivity() {
     companion object {
         private val TAG = "ShadesActivity"
         private val DEBUG = false
-        private val FRAGMENT_TAG_SHADES = "jmstudios.fragment.tag.SHADES"
+        private val FRAGMENT_TAG_FILTER = "jmstudios.fragment.tag.FILTER"
+        private val FRAGMENT_TAG_TIME_TOGGLE = "jmstudios.fragment.tag.TIME_TOGGLE"
+        private val FRAGMENT_TAG_SECURE_SUSPEND = "jmstudios.fragment.tag.SECURE_SUSPEND"
+
 
         val EXTRA_FROM_SHORTCUT_BOOL = "com.jmstudios.redmoon.activity.ShadesActivity.EXTRA_FROM_SHORTCUT_BOOL"
         var OVERLAY_PERMISSION_REQ_CODE = 1234

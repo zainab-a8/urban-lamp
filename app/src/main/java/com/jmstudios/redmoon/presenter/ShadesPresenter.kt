@@ -41,14 +41,14 @@ import android.util.Log
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.activity.ShadesActivity
-import com.jmstudios.redmoon.fragment.ShadesFragment
+import com.jmstudios.redmoon.fragment.FilterFragment
 import com.jmstudios.redmoon.model.SettingsModel
 import com.jmstudios.redmoon.preference.ColorSeekBarPreference
 import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
 import com.jmstudios.redmoon.receiver.AutomaticFilterChangeReceiver
 
-class ShadesPresenter(private val mView: ShadesFragment,
+class ShadesPresenter(private val mView: FilterFragment,
                       private val mSettingsModel: SettingsModel,
                       private val mContext: Context) : SettingsModel.OnSettingsChangedListener {
     private val mActivity: ShadesActivity

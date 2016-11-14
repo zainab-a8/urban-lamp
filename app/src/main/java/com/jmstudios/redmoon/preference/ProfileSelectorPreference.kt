@@ -65,7 +65,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         layoutResource = R.layout.preference_profile_selector
         mProfilesModel = ProfilesModel(mContext)
         mIsListenerRegistered = false
-        mSettingsModel = (context as ShadesActivity).settingsModel
+        mSettingsModel = (context as ShadesActivity).mSettingsModel
     }
 
     override fun onGetDefaultValue(a: TypedArray, index: Int): Any {
@@ -263,7 +263,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
     private fun addSettingsChangedListener() {
         if (mIsListenerRegistered) return
         mIsListenerRegistered = true
-        val model = (context as ShadesActivity).settingsModel
+        val model = (context as ShadesActivity).mSettingsModel
         model.addOnSettingsChangedListener(object : SettingsModel.OnSettingsChangedListener {
             override fun onPauseStateChanged(pauseState: Boolean) {
             }

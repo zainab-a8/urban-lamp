@@ -59,41 +59,19 @@
         android:defaultValue="true" />
   </PreferenceCategory>
 
-  <PreferenceCategory
-      android:key="@+string/pref_key_automatic_filter_category"
-      android:title="@string/pref_title_automatic_filter" >
-    <SwitchPreference
-        android:key="@string/pref_key_automatic_filter"
-        android:title="@string/automatic_filter_title"
-        android:defaultValue="false" />
-    <com.jmstudios.redmoon.preference.UseLocationPreference
-        android:key="@string/pref_key_use_location"
-        android:title="@string/location_title"
-        android:dependency="@string/pref_key_automatic_filter"
-        android:defaultValue="false" />
-
-    <com.jmstudios.redmoon.preference.FilterTimePreference
-        android:key="@string/pref_key_custom_start_time"
-        android:title="@string/custom_start_time_title"
-        android:defaultValue="22:00" />
-
-    <com.jmstudios.redmoon.preference.FilterTimePreference
-        android:key="@string/pref_key_custom_end_time"
-        android:title="@string/custom_end_time_title"
-        android:defaultValue="06:00" />
-  </PreferenceCategory>
-
   <PreferenceCategory android:title="@string/pref_title_other"
                       android:key="pref_key_other" >
+    <Preference
+        android:title="@string/pref_title_automatic_filter"
+        android:key="@string/pref_key_time_toggle" >
+    </Preference>
     <Preference
         android:title="@string/automatic_suspend_title"
         android:key="@string/pref_key_automatic_suspend" >
       <intent
           android:targetPackage="com.jmstudios.redmoon"
           android:targetClass="com.jmstudios.redmoon.activity.AutomaticSuspendPreferenceActivity" />
-        />
     </Preference>
-
     <SwitchPreference
         android:key="@string/pref_key_dark_theme"
         android:title="@string/dark_theme"

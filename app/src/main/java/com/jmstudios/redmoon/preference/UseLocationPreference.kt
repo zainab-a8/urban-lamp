@@ -26,7 +26,7 @@ import com.jmstudios.redmoon.R
 
 import java.util.Locale
 
-class LocationPreference(private val mContext: Context, attrs: AttributeSet)
+class UseLocationPreference(private val mContext: Context, attrs: AttributeSet)
                                             : SwitchPreference(mContext, attrs) {
     private var mIsSearchingLocation = false
 
