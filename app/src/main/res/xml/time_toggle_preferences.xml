@@ -32,10 +32,15 @@
         android:title="@string/custom_end_time_title"
         android:defaultValue="06:00" />
 
-    <com.jmstudios.redmoon.preference.UseLocationPreference
+    <SwitchPreference
         android:key="@string/pref_key_use_location"
         android:title="@string/location_title"
         android:dependency="@string/pref_key_automatic_filter"
         android:defaultValue="false" />
+
+    <com.jmstudios.redmoon.preference.LocationPreference
+        android:title="@string/automatic_suspend_title"
+        android:key="@string/pref_key_location"
+        android:dependency="@string/pref_key_use_location" />
 
 </PreferenceScreen>

@@ -19,15 +19,15 @@ package com.jmstudios.redmoon.preference
 
 import android.content.Context
 import android.preference.PreferenceManager
-import android.preference.SwitchPreference
+import android.preference.Preference
 import android.util.AttributeSet
 
 import com.jmstudios.redmoon.R
 
 import java.util.Locale
 
-class UseLocationPreference(private val mContext: Context, attrs: AttributeSet)
-                                            : SwitchPreference(mContext, attrs) {
+class LocationPreference(private val mContext: Context, attrs: AttributeSet)
+            : Preference(mContext, attrs) {
     private var mIsSearchingLocation = false
 
     /**
