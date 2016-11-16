@@ -56,6 +56,7 @@ import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.receiver.OrientationChangeReceiver
 import com.jmstudios.redmoon.receiver.SwitchAppWidgetProvider
 import com.jmstudios.redmoon.view.ScreenFilterView
+import org.greenrobot.eventbus.EventBus
 
 class ScreenFilterService : Service(), ServiceLifeCycleController {
 
@@ -87,8 +88,7 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
 
         // Make Presenter listen to settings changes and orientation changes
         mSettingsModel.openSettingsChangeListener()
-        mSettingsModel.addOnSettingsChangedListener(mPresenter)
-
+        EventBus.getDefault().register(mPresenter)
         registerOrientationReceiver(mPresenter)
     }
 
@@ -110,6 +110,7 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         if (DEBUG) Log.i(TAG, "onDestroy")
 
         mSettingsModel.closeSettingsChangeListener()
+        EventBus.getDefault().unregister(mPresenter)
         unregisterOrientationReceiver()
 
         //Broadcast to keep appwidgets in sync

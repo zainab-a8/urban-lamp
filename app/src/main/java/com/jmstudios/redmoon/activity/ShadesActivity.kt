@@ -55,12 +55,14 @@ import com.jmstudios.redmoon.fragment.*
 import com.jmstudios.redmoon.helper.FilterCommandFactory
 import com.jmstudios.redmoon.helper.FilterCommandSender
 import com.jmstudios.redmoon.model.SettingsModel
-/* import com.jmstudios.redmoon.presenter.ShadesPresenter */
+import com.jmstudios.redmoon.presenter.ShadesPresenter
 import com.jmstudios.redmoon.service.ScreenFilterService
+
+import org.greenrobot.eventbus.EventBus
 
 class ShadesActivity : AppCompatActivity() {
 
-    /* lateinit internal var mPresenter: ShadesPresenter */
+    lateinit internal var mPresenter: ShadesPresenter
     lateinit var mSettingsModel: SettingsModel
         private set
     lateinit private var mSwitch: Switch
@@ -112,10 +114,7 @@ class ShadesActivity : AppCompatActivity() {
             view = fragmentManager.findFragmentByTag(FRAGMENT_TAG_FILTER) as FilterFragment
         }
 
-        /* mPresenter = ShadesPresenter(view, mSettingsModel, context) */
-
-        // Make Presenter listen to settings changes
-        /* mSettingsModel.addOnSettingsChangedListener(mPresenter) */
+        mPresenter = ShadesPresenter(view, mSettingsModel, context)
 
         if (!mSettingsModel.introShown) {
             startIntro()
@@ -193,8 +192,9 @@ class ShadesActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        /* setSwitch(!mSettingsModel.pauseState) */
         mSettingsModel.openSettingsChangeListener()
-        /* mPresenter.onStart() */
+        EventBus.getDefault().register(mPresenter)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -206,6 +206,7 @@ class ShadesActivity : AppCompatActivity() {
 
     override fun onStop() {
         mSettingsModel.closeSettingsChangeListener()
+        EventBus.getDefault().unregister(mPresenter)
         super.onStop()
     }
 

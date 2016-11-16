@@ -44,16 +44,16 @@ import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
 import android.provider.Settings
 import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.activity.ShadesActivity
 import com.jmstudios.redmoon.model.SettingsModel
+import com.jmstudios.redmoon.preference.ProfileSelectorPreference
+import org.greenrobot.eventbus.EventBus
 
 class FilterFragment : PreferenceFragment() {
 
@@ -63,6 +63,10 @@ class FilterFragment : PreferenceFragment() {
         get() = (activity as ShadesActivity).mSettingsModel
 
     // Preferences
+    private val profileSelectorPref: ProfileSelectorPreference
+        get() = (preferenceScreen.findPreference
+                (getString(R.string.pref_key_profile_spinner)) as ProfileSelectorPreference)
+
     private val darkThemePref: SwitchPreference
         get() = (preferenceScreen.findPreference
                 (getString(R.string.pref_key_dark_theme)) as SwitchPreference)
@@ -120,6 +124,16 @@ class FilterFragment : PreferenceFragment() {
             R.string.text_switch_on
         else
             R.string.text_switch_off)
+    }
+
+    override fun onStart() {
+        EventBus.getDefault().register(profileSelectorPref)
+        super.onStart()
+    }
+
+    override fun onStop(){
+        EventBus.getDefault().unregister(profileSelectorPref)
+        super.onStop()
     }
 
     override fun onResume() {
@@ -205,7 +219,7 @@ class FilterFragment : PreferenceFragment() {
 
     companion object {
         private val TAG = "FilterFragment"
-        private val DEBUG = true
+        private val DEBUG = false
     }
 }// Android Fragments require an explicit public default constructor for re-creation
 

@@ -44,7 +44,6 @@ import java.util.*
 
 class TimeToggleFragment : PreferenceFragment() {
 
-    private val DEBUG = true
     private lateinit var mView: View
     // private lateinit var mHelpSnackbar: Snackbar
 
@@ -222,7 +221,7 @@ class TimeToggleFragment : PreferenceFragment() {
 
     companion object {
         private val TAG = "TimeToggleFragment"
-        private val DEBUG = true
+        private val DEBUG = false
     }
 }// Android Fragments require an explicit public default constructor for re-creation
 

@@ -41,6 +41,7 @@ import android.util.Log
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.activity.ShadesActivity
+import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.fragment.FilterFragment
 import com.jmstudios.redmoon.model.SettingsModel
 import com.jmstudios.redmoon.preference.ColorSeekBarPreference
@@ -48,44 +49,47 @@ import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
 import com.jmstudios.redmoon.receiver.AutomaticFilterChangeReceiver
 
+import org.greenrobot.eventbus.Subscribe
+
 class ShadesPresenter(private val mView: FilterFragment,
                       private val mSettingsModel: SettingsModel,
-                      private val mContext: Context) : SettingsModel.OnSettingsChangedListener {
+                      private val mContext: Context) {
     private val mActivity: ShadesActivity
 
     init {
         mActivity = mContext as ShadesActivity
     }
 
-    fun onStart() {
-        val paused = mSettingsModel.pauseState
-        mActivity.setSwitch(!paused)
-    }
-
     //region OnSettingsChangedListener
-    override fun onPauseStateChanged(pauseState: Boolean) {
+    @Subscribe fun onPauseStateChanged(event: pauseStateChanged) {
+        val pauseState = event.newValue
+        if (DEBUG) Log.i(TAG, "Pause state changed to " + pauseState)
         mActivity.setSwitch(!pauseState)
         if (!pauseState) {
             mActivity.displayInstallWarningToast()
         }
     }
 
-    override fun onDimLevelChanged(dimLevel: Int) {
+    @Subscribe fun onDimLevelChanged(event: dimLevelChanged) {
+        val dimLevel = event.newValue
         val pref = mView.preferenceScreen.findPreference(mContext.getString(R.string.pref_key_shades_dim_level)) as DimSeekBarPreference
         pref.setProgress(dimLevel)
     }
 
-    override fun onIntensityLevelChanged(intensityLevel: Int) {
+    @Subscribe fun onIntensityLevelChanged(event: intensityLevelChanged) {
+        val intensityLevel = event.newValue
         val pref = mView.preferenceScreen.findPreference(mContext.getString(R.string.pref_key_shades_intensity_level)) as IntensitySeekBarPreference
         pref.setProgress(intensityLevel)
     }
 
-    override fun onColorChanged(color: Int) {
+    @Subscribe fun onColorChanged(event: colorChanged) {
+        val color = event.newValue
         val pref = mView.preferenceScreen.findPreference(mContext.getString(R.string.pref_key_shades_color_temp)) as ColorSeekBarPreference
         pref.setProgress(color)
     }
 
-    override fun onAutomaticFilterChanged(automaticFilter: Boolean) {
+    @Subscribe fun onAutomaticFilterChanged(event: automaticFilterChanged) {
+        val automaticFilter = event.newValue
         if (DEBUG) Log.i(TAG, "Filter mode changed to " + automaticFilter)
         AutomaticFilterChangeReceiver.cancelAlarms(mContext)
         if (automaticFilter) {
@@ -94,19 +98,15 @@ class ShadesPresenter(private val mView: FilterFragment,
         }
     }
 
-    override fun onAutomaticTurnOnChanged(turnOnTime: String) {
+    @Subscribe fun onAutomaticTurnOnChanged(event: automaticTurnOnChanged) {
         AutomaticFilterChangeReceiver.cancelTurnOnAlarm(mContext)
         AutomaticFilterChangeReceiver.scheduleNextOnCommand(mContext)
     }
 
-    override fun onAutomaticTurnOffChanged(turnOffTime: String) {
+    @Subscribe fun onAutomaticTurnOffChanged(event: automaticTurnOffChanged) {
         AutomaticFilterChangeReceiver.cancelPauseAlarm(mContext)
         AutomaticFilterChangeReceiver.scheduleNextPauseCommand(mContext)
     }
-
-    override fun onLowerBrightnessChanged(lowerBrightness: Boolean) {}
-    override fun onProfileChanged(profile: Int) {}
-    override fun onAutomaticSuspendChanged(automaticSuspend: Boolean) {}
 
     companion object {
         private val TAG = "ShadesPresenter"

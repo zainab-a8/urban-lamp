@@ -37,6 +37,7 @@ package com.jmstudios.redmoon.model
 
 import android.content.SharedPreferences
 import android.content.res.Resources
+import com.jmstudios.redmoon.event.*
 import android.util.Log
 
 import com.jmstudios.redmoon.R
@@ -44,8 +45,7 @@ import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.preference.ColorSeekBarPreference
 import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
-
-import java.util.ArrayList
+import org.greenrobot.eventbus.EventBus
 
 /**
  * This class provides access to get and set Shades settings, and also listen to settings changes.
@@ -62,9 +62,7 @@ import java.util.ArrayList
  *
  * To begin listening again, invoke [SettingsModel.openSettingsChangeListener].
  */
-class SettingsModel(resources: Resources, private val mSharedPreferences: SharedPreferences) : SharedPreferences.OnSharedPreferenceChangeListener {
-    private val mSettingsChangedListeners = ArrayList<OnSettingsChangedListener?>()
-
+class SettingsModel(resources: Resources, private val mSharedPrefs: SharedPreferences) : SharedPreferences.OnSharedPreferenceChangeListener {
     private val mPauseStatePrefKey = resources.getString(R.string.pref_key_shades_pause_state)
     private val mDimPrefKey = resources.getString(R.string.pref_key_shades_dim_level)
     private val mIntensityPrefKey = resources.getString(R.string.pref_key_shades_intensity_level)
@@ -83,112 +81,95 @@ class SettingsModel(resources: Resources, private val mSharedPreferences: Shared
     private val mAutomaticSuspendPrefKey = resources.getString(R.string.pref_key_automatic_suspend)
 
     var pauseState: Boolean
-        get() = mSharedPreferences.getBoolean(mPauseStatePrefKey, false)
-        set(state) = mSharedPreferences.edit().putBoolean(mPauseStatePrefKey, state).apply()
+        get() = mSharedPrefs.getBoolean(mPauseStatePrefKey, false)
+        set(state) = mSharedPrefs.edit().putBoolean(mPauseStatePrefKey, state).apply()
 
     var dimLevel: Int
-        get() = mSharedPreferences.getInt(mDimPrefKey, DimSeekBarPreference.DEFAULT_VALUE)
-        set(dimLevel) = mSharedPreferences.edit().putInt(mDimPrefKey, dimLevel).apply()
+        get() = mSharedPrefs.getInt(mDimPrefKey, DimSeekBarPreference.DEFAULT_VALUE)
+        set(dimLevel) = mSharedPrefs.edit().putInt(mDimPrefKey, dimLevel).apply()
 
     var intensityLevel: Int
-        get() = mSharedPreferences.getInt(mIntensityPrefKey, IntensitySeekBarPreference.DEFAULT_VALUE)
-        set(intensityLevel) = mSharedPreferences.edit().putInt(mIntensityPrefKey, intensityLevel).apply()
+        get() = mSharedPrefs.getInt(mIntensityPrefKey, IntensitySeekBarPreference.DEFAULT_VALUE)
+        set(intensityLevel) = mSharedPrefs.edit().putInt(mIntensityPrefKey, intensityLevel).apply()
 
     var color: Int
-        get() = mSharedPreferences.getInt(mColorPrefKey, ColorSeekBarPreference.DEFAULT_VALUE)
-        set(color) = mSharedPreferences.edit().putInt(mColorPrefKey, color).apply()
+        get() = mSharedPrefs.getInt(mColorPrefKey, ColorSeekBarPreference.DEFAULT_VALUE)
+        set(color) = mSharedPrefs.edit().putInt(mColorPrefKey, color).apply()
 
     val darkThemeFlag: Boolean
-        get() = mSharedPreferences.getBoolean(mDarkThemePrefKey, false)
+        get() = mSharedPrefs.getBoolean(mDarkThemePrefKey, false)
 
     val brightnessControlFlag: Boolean
-        get() = mSharedPreferences.getBoolean(mBrightnessControlPrefKey, false)
+        get() = mSharedPrefs.getBoolean(mBrightnessControlPrefKey, false)
 
     val automaticFilter: Boolean
-        get() = mSharedPreferences.getBoolean(mAutomaticFilterPrefKey, false)
+        get() = mSharedPrefs.getBoolean(mAutomaticFilterPrefKey, false)
 
     val automaticTurnOnTime: String
-        get() = mSharedPreferences.getString(mAutomaticTurnOnPrefKey, "22:00")
+        get() = mSharedPrefs.getString(mAutomaticTurnOnPrefKey, "22:00")
 
     val automaticTurnOffTime: String
-        get() = mSharedPreferences.getString(mAutomaticTurnOffPrefKey, "06:00")
+        get() = mSharedPrefs.getString(mAutomaticTurnOffPrefKey, "06:00")
 
     val dimButtonsFlag: Boolean
-        get() = mSharedPreferences.getBoolean(mDimButtonsPrefKey, true)
+        get() = mSharedPrefs.getBoolean(mDimButtonsPrefKey, true)
 
     var brightnessAutomatic: Boolean
-        get() = mSharedPreferences.getBoolean(mBrightnessAutomaticPrefKey, true)
-        set(automatic) = mSharedPreferences.edit().putBoolean(mBrightnessAutomaticPrefKey, automatic).apply()
+        get() = mSharedPrefs.getBoolean(mBrightnessAutomaticPrefKey, true)
+        set(automatic) = mSharedPrefs.edit().putBoolean(mBrightnessAutomaticPrefKey, automatic).apply()
 
     var brightnessLevel: Int
-        get() = mSharedPreferences.getInt(mBrightnessLevelPrefKey, 0)
-        set(level) = mSharedPreferences.edit().putInt(mBrightnessLevelPrefKey, level).apply()
+        get() = mSharedPrefs.getInt(mBrightnessLevelPrefKey, 0)
+        set(level) = mSharedPrefs.edit().putInt(mBrightnessLevelPrefKey, level).apply()
 
     var profile: Int
-        get() = mSharedPreferences.getInt(mProfilePrefKey, 1)
-        set(profile) = mSharedPreferences.edit().putInt(mProfilePrefKey, profile).apply()
+        get() = mSharedPrefs.getInt(mProfilePrefKey, 1)
+        set(profile) = mSharedPrefs.edit().putInt(mProfilePrefKey, profile).apply()
 
     var ammountProfiles: Int
-        get() = mSharedPreferences.getInt(mAmmountProfilesPrefKey, 3)
-        set(ammountProfiles) = mSharedPreferences.edit().putInt(mAmmountProfilesPrefKey, ammountProfiles).apply()
+        get() = mSharedPrefs.getInt(mAmmountProfilesPrefKey, 3)
+        set(ammountProfiles) = mSharedPrefs.edit().putInt(mAmmountProfilesPrefKey, ammountProfiles).apply()
 
     var introShown: Boolean
-        get() = mSharedPreferences.getBoolean(mIntroShownPrefKey, false)
-        set(shown) = mSharedPreferences.edit().putBoolean(mIntroShownPrefKey, shown).apply()
+        get() = mSharedPrefs.getBoolean(mIntroShownPrefKey, false)
+        set(shown) = mSharedPrefs.edit().putBoolean(mIntroShownPrefKey, shown).apply()
 
     val automaticSuspend: Boolean
-        get() = mSharedPreferences.getBoolean(mAutomaticSuspendPrefKey, false)
-
-    fun addOnSettingsChangedListener(listener: OnSettingsChangedListener) {
-        mSettingsChangedListeners.add(listener)
-    }
+        get() = mSharedPrefs.getBoolean(mAutomaticSuspendPrefKey, false)
 
     fun openSettingsChangeListener() {
-        mSharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        mSharedPrefs.registerOnSharedPreferenceChangeListener(this)
 
         if (DEBUG) Log.d(TAG, "Opened Settings change listener")
     }
 
     fun closeSettingsChangeListener() {
-        mSharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        mSharedPrefs.unregisterOnSharedPreferenceChangeListener(this)
 
         if (DEBUG) Log.d(TAG, "Closed Settings change listener")
     }
 
     //region OnSharedPreferenceChangeListener
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        for (listener in mSettingsChangedListeners) {
-            if (listener==null) {
-                val i = mSettingsChangedListeners.indexOf(listener)
-                mSettingsChangedListeners.removeAt(i)
-            } else when (key) {
-                mPauseStatePrefKey        -> listener.onPauseStateChanged(pauseState)
-                mDimPrefKey               -> listener.onDimLevelChanged(dimLevel)
-                mIntensityPrefKey         -> listener.onIntensityLevelChanged(intensityLevel)
-                mColorPrefKey             -> listener.onColorChanged(color)
-                mAutomaticFilterPrefKey   -> listener.onAutomaticFilterChanged(automaticFilter)
-                mAutomaticTurnOnPrefKey   -> listener.onAutomaticTurnOnChanged(automaticTurnOnTime)
-                mAutomaticTurnOffPrefKey  -> listener.onAutomaticTurnOffChanged(automaticTurnOffTime)
-                mBrightnessControlPrefKey -> listener.onLowerBrightnessChanged(brightnessControlFlag)
-                mProfilePrefKey           -> listener.onProfileChanged(profile)
-                mAutomaticSuspendPrefKey  -> listener.onAutomaticSuspendChanged(automaticSuspend)
+        when (key) {
+            mPauseStatePrefKey        -> {
+                post(pauseStateChanged(pauseState))
+                if (DEBUG) Log.d(TAG, "Pause state changed to: ")
             }
+            mDimPrefKey               -> post(dimLevelChanged(dimLevel))
+            mIntensityPrefKey         -> post(intensityLevelChanged(intensityLevel))
+            mColorPrefKey             -> post(colorChanged(color))
+            mAutomaticFilterPrefKey   -> post(automaticFilterChanged(automaticFilter))
+            mAutomaticTurnOnPrefKey   -> post(automaticTurnOnChanged(automaticTurnOnTime))
+            mAutomaticTurnOffPrefKey  -> post(automaticTurnOffChanged(automaticTurnOffTime))
+            mBrightnessControlPrefKey -> post(lowerBrightnessChanged(brightnessControlFlag))
+            mProfilePrefKey           -> post(profileChanged(profile))
+            mAutomaticSuspendPrefKey  -> post(automaticSuspendChanged(automaticSuspend))
         }
     }
     //endregion
 
-    interface OnSettingsChangedListener {
-        fun onPauseStateChanged(pauseState: Boolean)
-        fun onDimLevelChanged(dimLevel: Int)
-        fun onIntensityLevelChanged(intensityLevel: Int)
-        fun onColorChanged(color: Int)
-        fun onAutomaticFilterChanged(automaticFilter: Boolean)
-        fun onAutomaticTurnOnChanged(turnOnTime: String)
-        fun onAutomaticTurnOffChanged(turnOffTime: String)
-        fun onLowerBrightnessChanged(lowerBrightness: Boolean)
-        fun onProfileChanged(profile: Int)
-        fun onAutomaticSuspendChanged(automaticSuspend: Boolean)
-    }
+    val post = { it: Any -> EventBus.getDefault().post(it) }
 
     companion object {
         private val TAG = "SettingsModel"

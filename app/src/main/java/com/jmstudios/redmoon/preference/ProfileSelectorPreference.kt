@@ -34,9 +34,11 @@ import android.widget.Spinner
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.activity.ShadesActivity
+import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.helper.ProfilesHelper
 import com.jmstudios.redmoon.model.ProfilesModel
 import com.jmstudios.redmoon.model.SettingsModel
+import org.greenrobot.eventbus.Subscribe
 
 import java.util.ArrayList
 import java.util.Arrays
@@ -92,8 +94,6 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         initLayout()
 
         updateButtonSetup()
-
-        addSettingsChangedListener()
     }
 
     private fun initLayout() {
@@ -259,49 +259,36 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         mSettingsModel.ammountProfiles = ammountProfiles
     }
 
-    //Section: onSettingsChangedListener
-    private fun addSettingsChangedListener() {
-        if (mIsListenerRegistered) return
-        mIsListenerRegistered = true
-        val model = (context as ShadesActivity).mSettingsModel
-        model.addOnSettingsChangedListener(object : SettingsModel.OnSettingsChangedListener {
-            override fun onPauseStateChanged(pauseState: Boolean) {
-            }
+    @Subscribe fun onDimLevelChanged(event: dimLevelChanged) {
+        val dimLevel = event.newValue
+        if (dimLevel == currentDim) return
+        mProfileSpinner.setSelection(0)
+    }
 
-            override fun onDimLevelChanged(dimLevel: Int) {
-                if (dimLevel == currentDim) return
-                mProfileSpinner.setSelection(0)
-            }
+    @Subscribe fun onIntensityLevelChanged(event: intensityLevelChanged) {
+        val intensityLevel = event.newValue
+        if (intensityLevel == currentIntensity) return
+        mProfileSpinner.setSelection(0)
+    }
 
-            override fun onIntensityLevelChanged(intensityLevel: Int) {
-                if (intensityLevel == currentIntensity) return
-                mProfileSpinner.setSelection(0)
-            }
+    @Subscribe fun onColorChanged(event: colorChanged) {
+        val color = event.newValue
+        if (color == currentColor) return
+        mProfileSpinner.setSelection(0)
+    }
 
-            override fun onColorChanged(color: Int) {
-                if (color == currentColor) return
-                mProfileSpinner.setSelection(0)
-            }
+    @Subscribe fun onProfileChanged(event: profileChanged) {
+        val profile = event.newValue
+        mProfile = profile
+        mProfileSpinner.setSelection(mProfile)
 
-            override fun onProfileChanged(profile: Int) {
-                mProfile = profile
-                mProfileSpinner.setSelection(mProfile)
+        if (mProfile != 0) {
+            val newProfile = ProfilesHelper.getProfile(mProfilesModel, mProfile, mContext)
 
-                if (mProfile != 0) {
-                    val newProfile = ProfilesHelper.getProfile(mProfilesModel, mProfile, mContext)
-
-                    currentDim = newProfile.mDimProgress
-                    currentIntensity = newProfile.mIntensityProgress
-                    currentColor = newProfile.mColorProgress
-                }
-            }
-
-            override fun onAutomaticFilterChanged(automaticFilter: Boolean) {}
-            override fun onAutomaticTurnOnChanged(turnOnTime: String) {}
-            override fun onAutomaticTurnOffChanged(turnOffTime: String) {}
-            override fun onLowerBrightnessChanged(lowerBrightness: Boolean) {}
-            override fun onAutomaticSuspendChanged(automaticSuspend: Boolean) {}
-        })
+            currentDim = newProfile.mDimProgress
+            currentIntensity = newProfile.mIntensityProgress
+            currentColor = newProfile.mColorProgress
+        }
     }
 
     companion object {

@@ -59,14 +59,15 @@ import android.view.WindowManager
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.activity.ShadesActivity
+import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.helper.AbstractAnimatorListener
 import com.jmstudios.redmoon.helper.FilterCommandFactory
 import com.jmstudios.redmoon.helper.FilterCommandParser
 import com.jmstudios.redmoon.helper.ProfilesHelper
 import com.jmstudios.redmoon.manager.ScreenManager
 import com.jmstudios.redmoon.manager.WindowViewManager
-import com.jmstudios.redmoon.model.ProfilesModel
 import com.jmstudios.redmoon.model.SettingsModel
+import com.jmstudios.redmoon.model.ProfilesModel
 import com.jmstudios.redmoon.receiver.NextProfileCommandReceiver
 import com.jmstudios.redmoon.receiver.OrientationChangeReceiver
 import com.jmstudios.redmoon.receiver.ScreenStateReceiver
@@ -76,6 +77,8 @@ import com.jmstudios.redmoon.service.ServiceLifeCycleController
 import com.jmstudios.redmoon.thread.CurrentAppMonitoringThread
 import com.jmstudios.redmoon.view.ScreenFilterView
 
+import org.greenrobot.eventbus.Subscribe
+
 class ScreenFilterPresenter(private val mView: ScreenFilterView,
                             private val mSettingsModel: SettingsModel,
                             private val mServiceController: ServiceLifeCycleController,
@@ -84,7 +87,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
                             private val mScreenManager: ScreenManager,
                             private var mNotificationBuilder: NotificationCompat.Builder,
                             private val mFilterCommandFactory: FilterCommandFactory,
-                            private val mFilterCommandParser: FilterCommandParser) : OrientationChangeReceiver.OnOrientationChangeListener, SettingsModel.OnSettingsChangedListener, ScreenStateReceiver.ScreenStateListener {
+                            private val mFilterCommandParser: FilterCommandParser): OrientationChangeReceiver.OnOrientationChangeListener, ScreenStateReceiver.ScreenStateListener {
     private var mCamThread: CurrentAppMonitoringThread? = null
     private val mScreenStateReceiver: ScreenStateReceiver
     private var screenOff: Boolean = false
@@ -191,7 +194,8 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     }
 
     //region OnSettingsChangedListener
-    override fun onPauseStateChanged(pauseState: Boolean) {
+    @Subscribe fun onPauseStateChanged(event: pauseStateChanged) {
+        val pauseState = event.newValue
         //Broadcast to keep appwidgets in sync
         if (DEBUG) Log.i(TAG, "Sending update broadcast")
         val updateAppWidgetIntent = Intent(mContext, SwitchAppWidgetProvider::class.java)
@@ -200,7 +204,8 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         mContext.sendBroadcast(updateAppWidgetIntent)
     }
 
-    override fun onDimLevelChanged(dimLevel: Int) {
+    @Subscribe fun onDimLevelChanged(event: dimLevelChanged) {
+        val dimLevel = event.newValue
         if (!isPaused || isPreviewing) {
             cancelRunningAnimator(mDimAnimator)
 
@@ -208,7 +213,8 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         }
     }
 
-    override fun onIntensityLevelChanged(intensityLevel: Int) {
+    @Subscribe fun onIntensityLevelChanged(event: intensityLevelChanged) {
+        val intensityLevel = event.newValue
         if (!isPaused || isPreviewing) {
             cancelRunningAnimator(mIntensityAnimator)
 
@@ -216,22 +222,15 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         }
     }
 
-    override fun onColorChanged(color: Int) {
+    @Subscribe fun onColorChanged(event: colorChanged) {
+        val color = event.newValue
         if (!isPaused || isPreviewing) {
             mView.colorTempProgress = color
         }
     }
 
-    override fun onAutomaticFilterChanged(automaticFilter: Boolean) {
-    }
-
-    override fun onAutomaticTurnOnChanged(turnOnTime: String) {
-    }
-
-    override fun onAutomaticTurnOffChanged(turnOffTime: String) {
-    }
-
-    override fun onLowerBrightnessChanged(lowerBrightness: Boolean) {
+    @Subscribe fun onLowerBrightnessChanged(event: lowerBrightnessChanged) {
+        val lowerBrightness = event.newValue
         if (DEBUG) Log.i(TAG, "Lower brightness flag changed to: " + lowerBrightness)
         if (!isPaused) {
             if (lowerBrightness) {
@@ -243,11 +242,13 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         }
     }
 
-    override fun onProfileChanged(profile: Int) {
+
+    @Subscribe fun onProfileChanged(event: profileChanged) {
         refreshForegroundNotification()
     }
 
-    override fun onAutomaticSuspendChanged(automaticSuspend: Boolean) {
+    @Subscribe fun onAutomaticSuspendChanged(event: automaticSuspendChanged) {
+        val automaticSuspend = event.newValue
         if (mCurrentState === mOnState) {
             if (automaticSuspend) {
                 startAppMonitoring()
