@@ -74,7 +74,8 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
         return app == "com.android.packageinstaller" ||
                 app == "eu.chainfire.supersu" ||
                 app == "com.koushikdutta.superuser" ||
-                app == "me.phh.superuser"
+                app == "me.phh.superuser" ||
+                app == "com.owncloud.android"
     }
 
     private fun sendStartSuspendCommand() {
