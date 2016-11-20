@@ -110,7 +110,14 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
         private fun getCurrentAppUsingUsageStats(context: Context): String {
             try {
                 if (android.os.Build.VERSION.SDK_INT >= 21) {
-                    val usm = context.getSystemService(Context.USAGE_STATS_SERVICE)
+                    // Although the UsageStatsManager was added in API
+                    // 21, the constant to specify the
+                    // UsageStatsManager wasn't added until API 22. So
+                    // we use the value of that constant on API 21.
+                    val usageStatsServiceString =
+                        if (android.os.Build.VERSION.SDK_INT < 22) "usagestats"
+                        else Context.USAGE_STATS_SERVICE
+                    val usm = context.getSystemService(usageStatsServiceString)
                                                                 as UsageStatsManager
                     val time = System.currentTimeMillis()
                     val appList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
