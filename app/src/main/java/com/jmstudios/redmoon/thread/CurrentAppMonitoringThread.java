@@ -133,7 +133,8 @@ public class CurrentAppMonitoringThread extends Thread {
         return app.equals("com.android.packageinstaller") ||
             app.equals("eu.chainfire.supersu") ||
             app.equals("com.koushikdutta.superuser") ||
-            app.equals("me.phh.superuser");
+            app.equals("me.phh.superuser") ||
+            app.equals("com.owncloud.android");
     }
 
     private void sendStartSuspendCommand() {
