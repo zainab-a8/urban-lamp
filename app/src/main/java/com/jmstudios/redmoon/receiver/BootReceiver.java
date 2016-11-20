@@ -41,6 +41,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.os.Handler;
 
 import java.util.Calendar;
 
@@ -50,6 +51,7 @@ import com.jmstudios.redmoon.model.SettingsModel;
 import com.jmstudios.redmoon.service.ScreenFilterService;
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter;
 import com.jmstudios.redmoon.receiver.AutomaticFilterChangeReceiver;
+import com.jmstudios.redmoon.helper.DismissNotificationRunnable;
 
 public class BootReceiver extends BroadcastReceiver {
     private static final String TAG = "BootReceiver";
@@ -104,8 +106,23 @@ public class BootReceiver extends BroadcastReceiver {
                 AutomaticFilterChangeReceiver.scheduleNextOnCommand(context);
                 AutomaticFilterChangeReceiver.scheduleNextPauseCommand(context);
 
-                commandSender.send(getPredictedPauseState(pausedBeforeReboot, settingsModel) ?
+                boolean isPausePredicted =
+                    getPredictedPauseState(pausedBeforeReboot, settingsModel);
+                commandSender.send(isPausePredicted ?
                                    pauseCommand : onCommand);
+
+                if (isPausePredicted) {
+                    // We want to dismiss the notification if the filter is paused
+                    // automatically.
+                    // However, the filter fades out and the notification is only
+                    // refreshed when this animation has been completed.  To make sure
+                    // that the new notification is removed we create a new runnable to
+                    // be excecuted 100 ms after the filter has faded out.
+                    Handler handler = new Handler();
+
+                    DismissNotificationRunnable runnable = new DismissNotificationRunnable(context);
+                    handler.postDelayed(runnable, ScreenFilterPresenter.FADE_DURATION_MS + 100);
+                }
             } else {
                 if (DEBUG) Log.i(TAG, "Shades was off before reboot; no state to resume from.");
             }
