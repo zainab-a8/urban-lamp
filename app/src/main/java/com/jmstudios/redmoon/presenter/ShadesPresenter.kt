@@ -110,7 +110,7 @@ class ShadesPresenter(private val mView: FilterFragment,
 
     companion object {
         private val TAG = "ShadesPresenter"
-        private val DEBUG = false
+        private val DEBUG = true
     }
     //endregion
 }

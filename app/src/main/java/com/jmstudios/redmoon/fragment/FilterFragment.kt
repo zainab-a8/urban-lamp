@@ -144,23 +144,23 @@ class FilterFragment : PreferenceFragment() {
         // profile spinner and the seekbars will have missed this
         // change. To update them correctly, we artificially change
         // these settings.
-        val intensity = mSettingsModel.intensityLevel
-        mSettingsModel.intensityLevel = if (intensity == 0) 1 else 0
-        mSettingsModel.intensityLevel = intensity
+        /* val intensity = mSettingsModel.intensityLevel */
+        /* mSettingsModel.intensityLevel = if (intensity == 0) 1 else 0 */
+        /* mSettingsModel.intensityLevel = intensity */
 
-        val dim = mSettingsModel.dimLevel
-        mSettingsModel.dimLevel = if (dim == 0) 1 else 0
-        mSettingsModel.dimLevel = dim
+        /* val dim = mSettingsModel.dimLevel */
+        /* mSettingsModel.dimLevel = if (dim == 0) 1 else 0 */
+        /* mSettingsModel.dimLevel = dim */
 
-        val color = mSettingsModel.color
-        mSettingsModel.color = if (color == 0) 1 else 0
-        mSettingsModel.color = color
+        /* val color = mSettingsModel.color */
+        /* mSettingsModel.color = if (color == 0) 1 else 0 */
+        /* mSettingsModel.color = color */
 
         // The profile HAS to be updated last, otherwise the spinner
         // will switched to custom.
-        val profile = mSettingsModel.profile
-        mSettingsModel.profile = if (profile == 0) 1 else 0
-        mSettingsModel.profile = profile
+        /* val profile = mSettingsModel.profile */
+        /* mSettingsModel.profile = if (profile == 0) 1 else 0 */
+        /* mSettingsModel.profile = profile */
 
         // TODO: Add time toggle pref here
         
@@ -219,7 +219,7 @@ class FilterFragment : PreferenceFragment() {
 
     companion object {
         private val TAG = "FilterFragment"
-        private val DEBUG = false
+        private val DEBUG = true
     }
 }// Android Fragments require an explicit public default constructor for re-creation
 

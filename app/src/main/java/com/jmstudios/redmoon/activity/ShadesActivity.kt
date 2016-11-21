@@ -51,9 +51,8 @@ import android.widget.Toast
 
 import com.jmstudios.redmoon.R
 
+import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.fragment.*
-import com.jmstudios.redmoon.helper.FilterCommandFactory
-import com.jmstudios.redmoon.helper.FilterCommandSender
 import com.jmstudios.redmoon.model.SettingsModel
 import com.jmstudios.redmoon.presenter.ShadesPresenter
 import com.jmstudios.redmoon.service.ScreenFilterService
@@ -66,8 +65,6 @@ class ShadesActivity : AppCompatActivity() {
     lateinit var mSettingsModel: SettingsModel
         private set
     lateinit private var mSwitch: Switch
-    lateinit private var mFilterCommandFactory: FilterCommandFactory
-    lateinit private var mFilterCommandSender: FilterCommandSender
     private val context = this
 
     private var hasShownWarningToast = false
@@ -76,14 +73,13 @@ class ShadesActivity : AppCompatActivity() {
         get() = fragmentManager.findFragmentByTag(FRAGMENT_TAG_FILTER) as FilterFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        ScreenFilterService.start(this)
         val intent = intent
         if (DEBUG) Log.i(TAG, "Got intent")
 
         // Wire MVP classes
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         mSettingsModel = SettingsModel(resources, sharedPreferences)
-        mFilterCommandFactory = FilterCommandFactory(this)
-        mFilterCommandSender = FilterCommandSender(this)
 
         val fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false)
         if (fromShortcut) {
@@ -125,21 +121,24 @@ class ShadesActivity : AppCompatActivity() {
         val inflater = menuInflater
         inflater.inflate(R.menu.main_activity_menu, menu)
 
-        val item = menu.findItem(R.id.screen_filter_switch)
-        mSwitch = item.actionView as Switch
-        mSwitch.isChecked = mSettingsModel.pauseState
+        mSwitch = menu.findItem(R.id.screen_filter_switch).actionView as Switch
+        mSwitch.isChecked = mSettingsModel.filterIsOn
         mSwitch.setOnClickListener {
             if (getOverlayPermission()) {
-                sendCommand(if (mSwitch.isChecked)
-                    ScreenFilterService.COMMAND_ON
-                else
-                    ScreenFilterService.COMMAND_PAUSE)
+                EventBus.getDefault().postSticky(moveToState(
+                          if (mSwitch.isChecked) ScreenFilterService.COMMAND_ON
+                          else ScreenFilterService.COMMAND_OFF))
             } else {
                 mSwitch.isChecked = false
             }
         }
 
         return true
+    }
+
+    override fun onDestroy() {
+        ScreenFilterService.stop(this) 
+        super.onDestroy()
     }
 
     fun launchTimeToggleFragment() {
@@ -185,14 +184,9 @@ class ShadesActivity : AppCompatActivity() {
         return Settings.canDrawOverlays(context)
     }
 
-    private fun sendCommand(command: Int) {
-        val iCommand = mFilterCommandFactory.createCommand(command)
-        mFilterCommandSender.send(iCommand)
-    }
-
     override fun onStart() {
         super.onStart()
-        /* setSwitch(!mSettingsModel.pauseState) */
+        /* setSwitch(!mSettingsModel.filterIsOn) */
         mSettingsModel.openSettingsChangeListener()
         EventBus.getDefault().register(mPresenter)
     }
@@ -267,17 +261,15 @@ class ShadesActivity : AppCompatActivity() {
         get() = mSettingsModel.dimLevel
 
     private fun toggleAndFinish() {
-        val paused = mSettingsModel.pauseState
-        sendCommand(if (paused)
-            ScreenFilterService.COMMAND_ON
-        else
-            ScreenFilterService.COMMAND_PAUSE)
+        EventBus.getDefault().postSticky(moveToState(
+                if (mSettingsModel.filterIsOn) ScreenFilterService.COMMAND_ON
+                else ScreenFilterService.COMMAND_OFF))
         finish()
     }
 
     companion object {
         private val TAG = "ShadesActivity"
-        private val DEBUG = false
+        private val DEBUG = true
         private val FRAGMENT_TAG_FILTER = "jmstudios.fragment.tag.FILTER"
         private val FRAGMENT_TAG_TIME_TOGGLE = "jmstudios.fragment.tag.TIME_TOGGLE"
         private val FRAGMENT_TAG_SECURE_SUSPEND = "jmstudios.fragment.tag.SECURE_SUSPEND"

@@ -26,9 +26,8 @@ import android.os.Handler
 import android.preference.PreferenceManager
 import android.util.Log
 
+import com.jmstudios.redmoon.event.moveToState
 import com.jmstudios.redmoon.helper.DismissNotificationRunnable
-import com.jmstudios.redmoon.helper.FilterCommandFactory
-import com.jmstudios.redmoon.helper.FilterCommandSender
 import com.jmstudios.redmoon.model.SettingsModel
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.service.ScreenFilterService
@@ -37,128 +36,108 @@ import java.util.Calendar
 import java.util.GregorianCalendar
 import java.util.TimeZone
 
+import org.greenrobot.eventbus.EventBus
+
 class AutomaticFilterChangeReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (DEBUG) Log.i(TAG, "Alarm received")
-        val commandSender = FilterCommandSender(context)
-        val commandFactory = FilterCommandFactory(context)
-        val onCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_ON)
-        val pauseCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_PAUSE)
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val settingsModel = SettingsModel(context.resources, sharedPreferences)
 
         val turnOn = intent.data.toString() == "turnOnIntent"
 
-        if (turnOn) {
-            commandSender.send(onCommand)
-            cancelTurnOnAlarm(context)
-            scheduleNextOnCommand(context)
-        } else {
-            commandSender.send(pauseCommand)
-            cancelPauseAlarm(context)
-            scheduleNextPauseCommand(context)
+        val command = if (turnOn) ScreenFilterService.COMMAND_ON
+        else ScreenFilterService.COMMAND_PAUSE
+        EventBus.getDefault().postSticky(moveToState(command))
+        cancelAlarm(context, turnOn)
+        scheduleNextCommand(context, turnOn)
 
-            // We want to dismiss the notification if the filter is paused
-            // automatically.
-            // However, the filter fades out and the notification is only
-            // refreshed when this animation has been completed.  To make sure
-            // that the new notification is removed we create a new runnable to
-            // be excecuted 100 ms after the filter has faded out.
-            val handler = Handler()
+        // We want to dismiss the notification if the filter is paused
+        // automatically.
+        // However, the filter fades out and the notification is only
+        // refreshed when this animation has been completed.  To make sure
+        // that the new notification is removed we create a new runnable to
+        // be excecuted 100 ms after the filter has faded out.
+        val handler = Handler()
 
-            val runnable = DismissNotificationRunnable(context)
-            handler.postDelayed(runnable, (ScreenFilterPresenter.FADE_DURATION_MS + 100).toLong())
-        }
+        val runnable = DismissNotificationRunnable(context)
+        handler.postDelayed(runnable, (ScreenFilterPresenter.FADE_DURATION_MS + 100).toLong())
+
 
         // TODO: add "&& settingsModel.getUseLocation()"
         if (settingsModel.automaticFilter) {
             val updater = LocationUpdater(context, object : LocationUpdater.updateHandler {
-                override fun handleFound() {}
-                override fun handleFailed() {}
+                override fun handleFound() {
+                }
+
+                override fun handleFailed() {
+                }
             })
             updater.update()
         }
     }
 
+
     companion object {
         private val TAG = "AutomaticFilterChange"
         private val DEBUG = false
 
-        fun scheduleNextOnCommand(context: Context) {
+        // Conveniences
+        val scheduleNextOnCommand = { context: Context -> scheduleNextCommand(context, true) }
+        val scheduleNextPauseCommand = { context: Context -> scheduleNextCommand(context, false) }
+        val cancelTurnOnAlarm = { context: Context -> cancelAlarm(context, true) }
+        val cancelPauseAlarm = { context: Context -> cancelAlarm(context, false) }
+        val cancelAlarms = { context: Context ->
+            cancelAlarm(context, true)
+            cancelAlarm(context, false)
+        }
+
+        private fun scheduleNextCommand(context: Context, turnOn: Boolean) {
             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
             val settingsModel = SettingsModel(context.resources, sharedPreferences)
 
             if (settingsModel.automaticFilter) {
-                val time: String
-                time = settingsModel.automaticTurnOnTime
+                val time = if (turnOn) settingsModel.automaticTurnOnTime
+                           else settingsModel.automaticTurnOffTime
 
-                val turnOnIntent = Intent(context, AutomaticFilterChangeReceiver::class.java)
-                turnOnIntent.data = Uri.parse("turnOnIntent")
-                turnOnIntent.putExtra("turn_on", true)
+                val intent = if (turnOn) Intent(context, AutomaticFilterChangeReceiver::class.java)
+                             else Intent(context, AutomaticFilterChangeReceiver::class.java)
+                intent.data = if (turnOn) Uri.parse("turnOnIntent")
+                              else Uri.parse("pauseIntent")
 
-                scheduleNextAlarm(context, time, turnOnIntent, false)
-            }
-        }
+                intent.putExtra("turn_on", turnOn)
 
-        fun scheduleNextPauseCommand(context: Context) {
-            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-            val settingsModel = SettingsModel(context.resources, sharedPreferences)
+                val calendar = GregorianCalendar()
+                calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0]))
+                calendar.set(Calendar.MINUTE, Integer.parseInt(time.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[1]))
 
-            if (settingsModel.automaticFilter) {
-                val time = settingsModel.automaticTurnOffTime
-
-                val pauseIntent = Intent(context, AutomaticFilterChangeReceiver::class.java)
-                pauseIntent.putExtra("turn_on", false)
-                pauseIntent.data = Uri.parse("pauseIntent")
-
-                scheduleNextAlarm(context, time, pauseIntent, false)
-            }
-        }
-
-        fun scheduleNextAlarm(context: Context, time: String, operation: Intent, timeInUtc: Boolean) {
-            val calendar = GregorianCalendar()
-            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0]))
-            calendar.set(Calendar.MINUTE, Integer.parseInt(time.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[1]))
-
-            val now = GregorianCalendar()
-            now.add(Calendar.SECOND, 1)
-            if (calendar.before(now)) {
-                calendar.add(Calendar.DATE, 1)
-            }
-            if (!timeInUtc)
+                val now = GregorianCalendar()
+                now.add(Calendar.SECOND, 1)
+                if (calendar.before(now)) {
+                    calendar.add(Calendar.DATE, 1)
+                }
                 calendar.timeZone = TimeZone.getTimeZone("UTC")
 
-            if (DEBUG) Log.i(TAG, "Scheduling alarm for " + calendar.toString())
+                if (DEBUG) Log.i(TAG, "Scheduling alarm for " + calendar.toString())
 
-            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
 
-            val pendingIntent = PendingIntent.getBroadcast(context, 0, operation, 0)
+                if (android.os.Build.VERSION.SDK_INT >= 19) {
+                    alarmManager.setExact(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
+                } else {
+                    alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
+                }
 
-            if (android.os.Build.VERSION.SDK_INT >= 19) {
-                alarmManager.setExact(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
-            } else {
-                alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
             }
         }
 
-        fun cancelAlarms(context: Context) {
-            cancelPauseAlarm(context)
-            cancelTurnOnAlarm(context)
-        }
-
-        fun cancelPauseAlarm(context: Context) {
+        private fun cancelAlarm(context: Context, turnOn: Boolean) {
             val commands = Intent(context, AutomaticFilterChangeReceiver::class.java)
-            commands.data = Uri.parse("pauseIntent")
-            val pendingIntent = PendingIntent.getBroadcast(context, 0, commands, 0)
-            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            alarmManager.cancel(pendingIntent)
-        }
-
-        fun cancelTurnOnAlarm(context: Context) {
-            val commands = Intent(context, AutomaticFilterChangeReceiver::class.java)
-            commands.data = Uri.parse("turnOnIntent")
+            commands.data = if (turnOn) Uri.parse("turnOnIntent")
+                            else Uri.parse("pauseIntent")
             val pendingIntent = PendingIntent.getBroadcast(context, 0, commands, 0)
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmManager.cancel(pendingIntent)

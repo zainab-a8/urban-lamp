@@ -43,12 +43,10 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.IBinder
 import android.preference.PreferenceManager
-import android.support.v7.app.NotificationCompat
 import android.util.Log
 import android.view.WindowManager
 
-import com.jmstudios.redmoon.helper.FilterCommandFactory
-import com.jmstudios.redmoon.helper.FilterCommandParser
+import com.jmstudios.redmoon.event.serviceStopped
 import com.jmstudios.redmoon.manager.ScreenManager
 import com.jmstudios.redmoon.manager.WindowViewManager
 import com.jmstudios.redmoon.model.SettingsModel
@@ -56,6 +54,7 @@ import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.receiver.OrientationChangeReceiver
 import com.jmstudios.redmoon.receiver.SwitchAppWidgetProvider
 import com.jmstudios.redmoon.view.ScreenFilterView
+
 import org.greenrobot.eventbus.EventBus
 
 class ScreenFilterService : Service(), ServiceLifeCycleController {
@@ -73,18 +72,12 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         val context = this
         val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
-        val view = ScreenFilterView(context)
-        val wvm = WindowViewManager(windowManager)
-        val sm = ScreenManager(this, windowManager)
-        val nb = NotificationCompat.Builder(this)
-        val fcf = FilterCommandFactory(this)
-        val fcp = FilterCommandParser()
-
-        // Wire MVP classes
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         mSettingsModel = SettingsModel(context.resources, sharedPreferences)
 
-        mPresenter = ScreenFilterPresenter(view, mSettingsModel, this, context, wvm, sm, nb, fcf, fcp)
+        // Wire MVP classes
+        mPresenter = ScreenFilterPresenter(ScreenFilterView(context), mSettingsModel, this, context, 
+                               WindowViewManager(windowManager), ScreenManager(this, windowManager))
 
         // Make Presenter listen to settings changes and orientation changes
         mSettingsModel.openSettingsChangeListener()
@@ -94,8 +87,6 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         if (DEBUG) Log.i(TAG, String.format("onStartCommand(%s, %d, %d", intent, flags, startId))
-
-        mPresenter.onScreenFilterCommand(intent)
 
         // Do not attempt to restart if the hosting process is killed by Android
         return Service.START_NOT_STICKY
@@ -121,12 +112,6 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         sendBroadcast(updateAppWidgetIntent)
 
         super.onDestroy()
-    }
-
-    override fun stop() {
-        if (DEBUG) Log.i(TAG, "Received stop request")
-
-        stopSelf()
     }
 
     private fun registerOrientationReceiver(listener: OrientationChangeReceiver.OnOrientationChangeListener) {
@@ -160,5 +145,18 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
 
         private val TAG = "ScreenFilterService"
         private val DEBUG = false
+
+        val intent = { context: Context -> Intent(context, ScreenFilterService::class.java) }
+
+        fun start(context: Context) {
+            if (DEBUG) Log.i(TAG, "Received start request")
+            context.startService(intent(context))
+        }
+
+        fun stop(context: Context) {
+            if (DEBUG) Log.i(TAG, "Received stop request")
+            context.stopService(intent(context))
+            EventBus.getDefault().post(serviceStopped())
+        }
     }
 }

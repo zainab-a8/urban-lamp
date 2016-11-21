@@ -30,18 +30,17 @@ import android.widget.TextView
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.helper.FilterCommandFactory
-import com.jmstudios.redmoon.helper.FilterCommandSender
+import com.jmstudios.redmoon.event.moveToState
 import com.jmstudios.redmoon.service.ScreenFilterService
 import com.jmstudios.redmoon.view.ScreenFilterView
+
+import org.greenrobot.eventbus.EventBus
 
 class ColorSeekBarPreference(context: Context, attrs: AttributeSet) : Preference(context, attrs) {
 
     lateinit var mColorTempSeekBar: SeekBar
     private var mProgress: Int = 0
     lateinit private var mView: View
-    lateinit private var mCommandSender: FilterCommandSender
-    lateinit private var mCommandFactory: FilterCommandFactory
 
     init {
         layoutResource = R.layout.preference_color_seekbar
@@ -74,8 +73,6 @@ class ColorSeekBarPreference(context: Context, attrs: AttributeSet) : Preference
     }
 
     private fun initLayout() {
-        mCommandSender = FilterCommandSender(mView.context)
-        mCommandFactory = FilterCommandFactory(mView.context)
         mColorTempSeekBar.progress = mProgress
 
         mColorTempSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -89,16 +86,14 @@ class ColorSeekBarPreference(context: Context, attrs: AttributeSet) : Preference
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 Log.i(TAG, "Touch down on a seek bar")
-
-                val showPreviewCommand = mCommandFactory.createCommand(ScreenFilterService.COMMAND_SHOW_PREVIEW)
-                mCommandSender.send(showPreviewCommand)
+                val showPreviewCommand = ScreenFilterService.COMMAND_SHOW_PREVIEW
+                EventBus.getDefault().postSticky(moveToState(showPreviewCommand))
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 Log.d(TAG, "Released a seek bar")
-
-                val hidePreviewCommand = mCommandFactory.createCommand(ScreenFilterService.COMMAND_HIDE_PREVIEW)
-                mCommandSender.send(hidePreviewCommand)
+                val hidePreviewCommand = ScreenFilterService.COMMAND_HIDE_PREVIEW
+                EventBus.getDefault().postSticky(moveToState(hidePreviewCommand))
             }
         })
 

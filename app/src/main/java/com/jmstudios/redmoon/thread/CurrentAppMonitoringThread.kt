@@ -25,26 +25,18 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.util.Log
 
-import com.jmstudios.redmoon.helper.FilterCommandFactory
-import com.jmstudios.redmoon.helper.FilterCommandSender
+import com.jmstudios.redmoon.event.moveToState
 import com.jmstudios.redmoon.service.ScreenFilterService
 
 import java.lang.Thread
 import java.util.TreeMap
 
-class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
+import org.greenrobot.eventbus.EventBus
 
-    private val commandSender: FilterCommandSender
-    private val startSuspendCommand: Intent
-    private val stopSuspendCommand: Intent
+class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 
     init {
         if (DEBUG) Log.d(TAG, "CurrentAppMonitoringThread created")
-
-        val commandFactory = FilterCommandFactory(mContext)
-        commandSender = FilterCommandSender(mContext)
-        startSuspendCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_START_SUSPEND)
-        stopSuspendCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_STOP_SUSPEND)
     }
 
     override fun run() {
@@ -56,10 +48,8 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 
                 if (DEBUG) Log.d(TAG, String.format("Current app is: %s", currentApp))
 
-                if (isAppSecured(currentApp))
-                    sendStartSuspendCommand()
-                else
-                    sendStopSuspendCommand()
+                if (isAppSecured(currentApp)) sendStartSuspendCommand()
+                else sendStopSuspendCommand()
 
                 Thread.sleep(1000)
             }
@@ -80,14 +70,12 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 
     private fun sendStartSuspendCommand() {
         if (DEBUG) Log.i(TAG, "Send a start suspend command")
-
-        commandSender.send(startSuspendCommand)
+        EventBus.getDefault().postSticky(moveToState(ScreenFilterService.COMMAND_ON))
     }
 
     private fun sendStopSuspendCommand() {
         if (DEBUG) Log.i(TAG, "Send a stop suspend command")
-
-        commandSender.send(stopSuspendCommand)
+        EventBus.getDefault().postSticky(moveToState(ScreenFilterService.COMMAND_PAUSE))
     }
 
     companion object {

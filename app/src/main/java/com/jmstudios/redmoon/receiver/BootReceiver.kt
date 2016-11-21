@@ -42,24 +42,20 @@ import android.os.Handler
 import android.preference.PreferenceManager
 import android.util.Log
 
+import com.jmstudios.redmoon.event.moveToState
 import com.jmstudios.redmoon.helper.DismissNotificationRunnable
-import com.jmstudios.redmoon.helper.FilterCommandFactory
-import com.jmstudios.redmoon.helper.FilterCommandSender
 import com.jmstudios.redmoon.model.SettingsModel
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.service.ScreenFilterService
 
 import java.util.Calendar
 
+import org.greenrobot.eventbus.EventBus
+
 class BootReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (DEBUG) Log.i(TAG, "Boot broadcast received!")
-
-        val commandSender = FilterCommandSender(context)
-        val commandFactory = FilterCommandFactory(context)
-        val onCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_ON)
-        val pauseCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_PAUSE)
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val settingsModel = SettingsModel(context.resources, sharedPreferences)
@@ -80,10 +76,10 @@ class BootReceiver : BroadcastReceiver() {
         AutomaticFilterChangeReceiver.scheduleNextPauseCommand(context)
 
         val isPausePredicted = getPredictedPauseState(pausedBeforeReboot, settingsModel)
-        commandSender.send(if (isPausePredicted)
-            pauseCommand
-        else
-            onCommand)
+
+        EventBus.getDefault().postSticky(moveToState(
+                if (isPausePredicted) ScreenFilterService.COMMAND_ON
+                else ScreenFilterService.COMMAND_PAUSE))
 
         if (isPausePredicted) {
             // We want to dismiss the notification if the filter is paused

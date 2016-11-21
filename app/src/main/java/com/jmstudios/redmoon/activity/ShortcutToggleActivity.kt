@@ -40,10 +40,11 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 
-import com.jmstudios.redmoon.helper.FilterCommandFactory
-import com.jmstudios.redmoon.helper.FilterCommandSender
+import com.jmstudios.redmoon.event.moveToState
 import com.jmstudios.redmoon.model.SettingsModel
 import com.jmstudios.redmoon.service.ScreenFilterService
+
+import org.greenrobot.eventbus.EventBus
 
 class ShortcutToggleActivity : Activity() {
 
@@ -59,20 +60,17 @@ class ShortcutToggleActivity : Activity() {
 
         fun toggleAndFinish(activity: Activity) {
             if (DEBUG) Log.i(TAG, "toggleAndFinish called.")
-            val commandSender = FilterCommandSender(activity)
-            val commandFactory = FilterCommandFactory(activity)
-            val onCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_ON)
-            val pauseCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_PAUSE)
 
             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
             val settingsModel = SettingsModel(activity.resources, sharedPreferences)
             val paused = settingsModel.pauseState
+            val command = if (paused) ScreenFilterService.COMMAND_ON
+                          else ScreenFilterService.COMMAND_PAUSE
 
-            if (paused) {
-                commandSender.send(onCommand)
-            } else {
-                commandSender.send(pauseCommand)
-            }
+            EventBus.getDefault().postSticky(moveToState(command))
+
+            if (paused) ScreenFilterService.start(activity)
+            else ScreenFilterService.stop(activity)
 
             activity.finish()
         }

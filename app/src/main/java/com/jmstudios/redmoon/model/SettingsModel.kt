@@ -151,25 +151,21 @@ class SettingsModel(resources: Resources, private val mSharedPrefs: SharedPrefer
 
     //region OnSharedPreferenceChangeListener
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        when (key) {
-            mPauseStatePrefKey        -> {
-                post(pauseStateChanged(pauseState))
-                if (DEBUG) Log.d(TAG, "Pause state changed to: ")
-            }
-            mDimPrefKey               -> post(dimLevelChanged(dimLevel))
-            mIntensityPrefKey         -> post(intensityLevelChanged(intensityLevel))
-            mColorPrefKey             -> post(colorChanged(color))
-            mAutomaticFilterPrefKey   -> post(automaticFilterChanged(automaticFilter))
-            mAutomaticTurnOnPrefKey   -> post(automaticTurnOnChanged(automaticTurnOnTime))
-            mAutomaticTurnOffPrefKey  -> post(automaticTurnOffChanged(automaticTurnOffTime))
-            mBrightnessControlPrefKey -> post(lowerBrightnessChanged(brightnessControlFlag))
-            mProfilePrefKey           -> post(profileChanged(profile))
-            mAutomaticSuspendPrefKey  -> post(automaticSuspendChanged(automaticSuspend))
-        }
+        EventBus.getDefault().post(when (key) {
+            mPauseStatePrefKey        -> pauseStateChanged(pauseState)
+            mDimPrefKey               -> dimLevelChanged(dimLevel)
+            mIntensityPrefKey         -> intensityLevelChanged(intensityLevel)
+            mColorPrefKey             -> colorChanged(color)
+            mAutomaticFilterPrefKey   -> automaticFilterChanged(automaticFilter)
+            mAutomaticTurnOnPrefKey   -> automaticTurnOnChanged(automaticTurnOnTime)
+            mAutomaticTurnOffPrefKey  -> automaticTurnOffChanged(automaticTurnOffTime)
+            mBrightnessControlPrefKey -> lowerBrightnessChanged(brightnessControlFlag)
+            mProfilePrefKey           -> profileChanged(profile)
+            mAutomaticSuspendPrefKey  -> automaticSuspendChanged(automaticSuspend)
+            else                      -> return
+        })
     }
     //endregion
-
-    val post = { it: Any -> EventBus.getDefault().post(it) }
 
     companion object {
         private val TAG = "SettingsModel"

@@ -48,9 +48,11 @@ import android.widget.RemoteViews
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.helper.FilterCommandFactory
+import com.jmstudios.redmoon.event.moveToState
 import com.jmstudios.redmoon.model.SettingsModel
 import com.jmstudios.redmoon.service.ScreenFilterService
+
+import org.greenrobot.eventbus.EventBus
 
 class SwitchAppWidgetProvider : AppWidgetProvider() {
 
@@ -85,18 +87,17 @@ class SwitchAppWidgetProvider : AppWidgetProvider() {
     }
 
     internal fun toggle(context: Context) {
-        val commandFactory = FilterCommandFactory(context)
-        val onCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_ON)
-        val pauseCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_PAUSE)
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val settingsModel = SettingsModel(context.resources, sharedPreferences)
+        val paused = settingsModel.pauseState
+        val command = if (paused) ScreenFilterService.COMMAND_ON
+                      else ScreenFilterService.COMMAND_PAUSE
 
-        if (settingsModel.pauseState) {
-            context.startService(onCommand)
-        } else {
-            context.startService(pauseCommand)
-        }
+        EventBus.getDefault().postSticky(moveToState(command))
+
+        if (paused) ScreenFilterService.start(context)
+        else ScreenFilterService.stop(context)
     }
 
     internal fun updateImage(context: Context, pausedState: Boolean) {
