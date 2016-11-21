@@ -61,11 +61,11 @@ class ShadesPresenter(private val mView: FilterFragment,
     }
 
     //region OnSettingsChangedListener
-    @Subscribe fun onPauseStateChanged(event: pauseStateChanged) {
-        val pauseState = event.newValue
-        if (DEBUG) Log.i(TAG, "Pause state changed to " + pauseState)
-        mActivity.setSwitch(!pauseState)
-        if (!pauseState) {
+    @Subscribe fun onFilterIsOnChanged(event: filterIsOnChanged) {
+        val filterIsOn = event.newValue
+        if (DEBUG) Log.i(TAG, "Filter is on changed to: " + filterIsOn)
+        mActivity.setSwitch(filterIsOn)
+        if (filterIsOn) {
             mActivity.displayInstallWarningToast()
         }
     }
@@ -94,7 +94,7 @@ class ShadesPresenter(private val mView: FilterFragment,
         AutomaticFilterChangeReceiver.cancelAlarms(mContext)
         if (automaticFilter) {
             AutomaticFilterChangeReceiver.scheduleNextOnCommand(mContext)
-            AutomaticFilterChangeReceiver.scheduleNextPauseCommand(mContext)
+            AutomaticFilterChangeReceiver.scheduleNextOffCommand(mContext)
         }
     }
 
@@ -104,8 +104,8 @@ class ShadesPresenter(private val mView: FilterFragment,
     }
 
     @Subscribe fun onAutomaticTurnOffChanged(event: automaticTurnOffChanged) {
-        AutomaticFilterChangeReceiver.cancelPauseAlarm(mContext)
-        AutomaticFilterChangeReceiver.scheduleNextPauseCommand(mContext)
+        AutomaticFilterChangeReceiver.cancelOffAlarm(mContext)
+        AutomaticFilterChangeReceiver.scheduleNextOffCommand(mContext)
     }
 
     companion object {

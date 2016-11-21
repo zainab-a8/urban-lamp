@@ -63,7 +63,7 @@ import org.greenrobot.eventbus.EventBus
  * To begin listening again, invoke [SettingsModel.openSettingsChangeListener].
  */
 class SettingsModel(resources: Resources, private val mSharedPrefs: SharedPreferences) : SharedPreferences.OnSharedPreferenceChangeListener {
-    private val mPauseStatePrefKey = resources.getString(R.string.pref_key_shades_pause_state)
+    private val mFilterIsOnPrefKey = resources.getString(R.string.pref_key_shades_pause_state)
     private val mDimPrefKey = resources.getString(R.string.pref_key_shades_dim_level)
     private val mIntensityPrefKey = resources.getString(R.string.pref_key_shades_intensity_level)
     private val mColorPrefKey = resources.getString(R.string.pref_key_shades_color_temp)
@@ -80,9 +80,9 @@ class SettingsModel(resources: Resources, private val mSharedPrefs: SharedPrefer
     private val mIntroShownPrefKey = resources.getString(R.string.pref_key_intro_shown)
     private val mAutomaticSuspendPrefKey = resources.getString(R.string.pref_key_automatic_suspend)
 
-    var pauseState: Boolean
-        get() = mSharedPrefs.getBoolean(mPauseStatePrefKey, false)
-        set(state) = mSharedPrefs.edit().putBoolean(mPauseStatePrefKey, state).apply()
+    var filterIsOn: Boolean
+        get() = mSharedPrefs.getBoolean(mFilterIsOnPrefKey, false)
+        set(state) = mSharedPrefs.edit().putBoolean(mFilterIsOnPrefKey, state).apply()
 
     var dimLevel: Int
         get() = mSharedPrefs.getInt(mDimPrefKey, DimSeekBarPreference.DEFAULT_VALUE)
@@ -152,7 +152,7 @@ class SettingsModel(resources: Resources, private val mSharedPrefs: SharedPrefer
     //region OnSharedPreferenceChangeListener
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         EventBus.getDefault().post(when (key) {
-            mPauseStatePrefKey        -> pauseStateChanged(pauseState)
+            mFilterIsOnPrefKey        -> filterIsOnChanged(filterIsOn)
             mDimPrefKey               -> dimLevelChanged(dimLevel)
             mIntensityPrefKey         -> intensityLevelChanged(intensityLevel)
             mColorPrefKey             -> colorChanged(color)

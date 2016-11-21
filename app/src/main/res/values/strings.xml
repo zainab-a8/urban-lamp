@@ -49,11 +49,14 @@
     <string name="overlay_dialog_message">Permit drawing over other apps in the next screen to allow Red Moon to turn on the filter.</string>
 
     <!-- Notification -->
-    <string name="running">Running. Pause to install apks</string>
+    <string name="running">Running. Stop to install apks</string>
     <string name="running_no_warning">Running</string>
     <string name="paused">Paused</string>
+    <string name="off">Off</string>
     <string name="resume_action">Resume</string>
     <string name="pause_action">Pause</string>
+    <string name="action_on">Start</string>
+    <string name="action_off">Stop</string>
 
     <!-- Preference -->
     <string name="pref_title_appearance">Filter</string>
@@ -69,8 +72,8 @@
     <string name="control_brightness_title">Lower brightness</string>
 
     <string name="automatic_filter_title">Automatic toggle</string>
-    <string name="custom_start_time_title">Resume at</string>
-    <string name="custom_end_time_title">Pause at</string>
+    <string name="custom_start_time_title">Start at</string>
+    <string name="custom_end_time_title">Stop at</string>
     <string name="location_title">Location</string>
     <string name="location_not_set">Not set</string>
     <string name="latitude_short">Lat</string>

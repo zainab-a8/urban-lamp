@@ -97,10 +97,10 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     private var mIntensityAnimator: ValueAnimator? = null
 
     private val mOnState = OnState()
-    private val mPauseState = PauseState()
+    private val mOffState = OffState()
     private val mPreviewState = PreviewState()
     private val mSuspendState = SuspendState()
-    private var mCurrentState: State = mPauseState
+    private var mCurrentState: State = mOffState
 
     // Screen brightness state
     private var oldScreenBrightness: Int = 0
@@ -110,7 +110,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         mScreenStateReceiver = ScreenStateReceiver(this)
         oldScreenBrightness = -1
 
-        mCurrentState.onScreenFilterCommand(ScreenFilterService.COMMAND_PAUSE)
+        mCurrentState.onScreenFilterCommand(ScreenFilterService.COMMAND_OFF)
     }
 
     private fun refreshForegroundNotification() {
@@ -123,34 +123,33 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
 
         val smallIconResId = R.drawable.notification_icon_half_moon
         val contentText: String
-        val pauseOrResumeDrawableResId: Int
-        val pauseOrResumeCommand: Intent
-        val pauseOrResumeActionText: String
+        val offOrOnDrawableResId: Int
+        val offOrOnCommand: Intent
+        val offOrOnActionText: String
 
-        if (isPaused) {
-            Log.d(TAG, "Creating notification while in pause state")
-            contentText = context.getString(R.string.paused)
-            pauseOrResumeDrawableResId = R.drawable.ic_play
-            pauseOrResumeCommand = ScreenFilterService.intent(mContext)
-            pauseOrResumeCommand.putExtra(ScreenFilterService.BUNDLE_KEY_COMMAND, ScreenFilterService.COMMAND_ON)
-            pauseOrResumeActionText = context.getString(R.string.resume_action)
+        if (filterIsOn) {
+            Log.d(TAG, "Creating notification while NOT in off state")
+            contentText = context.getString(
+                    if (mSettingsModel.automaticSuspend) R.string.running_no_warning
+                    else R.string.running)
+            offOrOnDrawableResId = R.drawable.ic_stop
+            offOrOnCommand = ScreenFilterService.intent(mContext)
+            offOrOnCommand.putExtra(ScreenFilterService.BUNDLE_KEY_COMMAND, ScreenFilterService.COMMAND_OFF)
+            offOrOnActionText = context.getString(R.string.action_stop)
         } else {
-            Log.d(TAG, "Creating notification while NOT in pause state")
-            contentText = context.getString(if (mSettingsModel.automaticSuspend)
-                R.string.running_no_warning
-            else
-                R.string.running)
-            pauseOrResumeDrawableResId = R.drawable.ic_pause
-            pauseOrResumeCommand = ScreenFilterService.intent(mContext)
-            pauseOrResumeCommand.putExtra(ScreenFilterService.BUNDLE_KEY_COMMAND, ScreenFilterService.COMMAND_PAUSE)
-            pauseOrResumeActionText = context.getString(R.string.pause_action)
+            Log.d(TAG, "Creating notification while in off state")
+            contentText = context.getString(R.string.off)
+            offOrOnDrawableResId = R.drawable.ic_play
+            offOrOnCommand = ScreenFilterService.intent(mContext)
+            offOrOnCommand.putExtra(ScreenFilterService.BUNDLE_KEY_COMMAND, ScreenFilterService.COMMAND_ON)
+            offOrOnActionText = context.getString(R.string.resume_action)
         }
 
         val shadesActivityIntent = Intent(context, ShadesActivity::class.java)
         shadesActivityIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
 
-        val pauseOrResumePI = PendingIntent.getService(context, REQUEST_CODE_ACTION_PAUSE_OR_RESUME,
-                pauseOrResumeCommand, PendingIntent.FLAG_UPDATE_CURRENT)
+        val offOrOnPI = PendingIntent.getService(context, REQUEST_CODE_ACTION_OFF_OR_ON,
+                offOrOnCommand, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val settingsPI = PendingIntent.getActivity(context, REQUEST_CODE_ACTION_SETTINGS,
                 shadesActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -166,19 +165,19 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
           .setContentText(contentText)
           .setColor (color)
           .setContentIntent(settingsPI)
-          .addAction(pauseOrResumeDrawableResId, pauseOrResumeActionText, pauseOrResumePI)
+          .addAction(offOrOnDrawableResId, offOrOnActionText, offOrOnPI)
           .addAction(R.drawable.ic_next_profile,
                      ProfilesHelper.getProfileName(profilesModel, mSettingsModel.profile, context),
                      nextProfilePI)
           .setPriority(Notification.PRIORITY_MIN)
 
-        if (isPaused) {
+        if (filterIsOn) {
+            Log.d(TAG, "Creating a persistent notification")
+            mServiceController.startForeground(NOTIFICATION_ID, nb.build())
+        } else {
             Log.d(TAG, "Creating a dismissible notification")
             val nm = mContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             nm.notify(NOTIFICATION_ID, nb.build())
-        } else {
-            Log.d(TAG, "Creating a persistent notification")
-            mServiceController.startForeground(NOTIFICATION_ID, nb.build())
         }
     }
 
@@ -199,19 +198,19 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     }
 
     //region OnSettingsChangedListener
-    @Subscribe fun onPauseStateChanged(event: pauseStateChanged) {
-        val pauseState = event.newValue
+    @Subscribe fun onOffStateChanged(event: filterIsOnChanged) {
+        val filterIsOn = event.newValue
         //Broadcast to keep appwidgets in sync
         if (DEBUG) Log.i(TAG, "Sending update broadcast")
         val updateAppWidgetIntent = Intent(mContext, SwitchAppWidgetProvider::class.java)
         updateAppWidgetIntent.action = SwitchAppWidgetProvider.ACTION_UPDATE
-        updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_POWER, !pauseState)
+        updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_POWER, filterIsOn)
         mContext.sendBroadcast(updateAppWidgetIntent)
     }
 
     @Subscribe fun onDimLevelChanged(event: dimLevelChanged) {
         val dimLevel = event.newValue
-        if (!isPaused || isPreviewing) {
+        if (filterIsOn || isPreviewing) {
             cancelRunningAnimator(mDimAnimator)
 
             mView.filterDimLevel = dimLevel
@@ -220,7 +219,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
 
     @Subscribe fun onIntensityLevelChanged(event: intensityLevelChanged) {
         val intensityLevel = event.newValue
-        if (!isPaused || isPreviewing) {
+        if (filterIsOn || isPreviewing) {
             cancelRunningAnimator(mIntensityAnimator)
 
             mView.filterIntensityLevel = intensityLevel
@@ -229,7 +228,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
 
     @Subscribe fun onColorChanged(event: colorChanged) {
         val color = event.newValue
-        if (!isPaused || isPreviewing) {
+        if (filterIsOn || isPreviewing) {
             mView.colorTempProgress = color
         }
     }
@@ -237,7 +236,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     @Subscribe fun onLowerBrightnessChanged(event: lowerBrightnessChanged) {
         val lowerBrightness = event.newValue
         if (DEBUG) Log.i(TAG, "Lower brightness flag changed to: " + lowerBrightness)
-        if (!isPaused) {
+        if (filterIsOn) {
             if (lowerBrightness) {
                 saveOldBrightnessState()
                 setBrightnessState(0, false, mContext)
@@ -307,8 +306,8 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         mIntensityAnimator!!.start()
     }
 
-    private val isPaused: Boolean
-        get() = mCurrentState.isPaused
+    private val filterIsOn: Boolean
+        get() = mCurrentState.filterIsOn
 
     private val isPreviewing: Boolean
         get() = mCurrentState === mPreviewState
@@ -452,7 +451,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     }
 
     private fun closeScreenFilter() {
-        if (!mScreenFilterOpen || !mCurrentState.isPaused) {
+        if (!mScreenFilterOpen || mCurrentState.filterIsOn) {
             return
         }
 
@@ -463,7 +462,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
 
     private fun moveToState(commandFlag: Int) {
         when (commandFlag) {
-            ScreenFilterService.COMMAND_PAUSE -> moveToState(mPauseState)
+            ScreenFilterService.COMMAND_OFF -> moveToState(mOffState)
             ScreenFilterService.COMMAND_ON -> moveToState(mOnState)
             ScreenFilterService.COMMAND_SHOW_PREVIEW -> moveToState(mPreviewState)
             ScreenFilterService.COMMAND_START_SUSPEND -> moveToState(mSuspendState)
@@ -480,13 +479,13 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         mCurrentState = newState
 
         mCurrentState.onActivation(oldState)
-        mSettingsModel.pauseState = isPaused
+        mSettingsModel.filterIsOn = filterIsOn
     }
 
 
     private abstract inner class State {
         abstract fun onActivation(prevState: State)
-        abstract val isPaused: Boolean
+        abstract val filterIsOn: Boolean
 
         open fun onScreenFilterCommand(commandFlag: Int) {
             moveToState(commandFlag)
@@ -516,11 +515,11 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             }
         }
 
-        override val isPaused: Boolean
-            get() = false
+        override val filterIsOn: Boolean
+            get() = true
     }
 
-    private inner class PauseState : State() {
+    private inner class OffState : State() {
         override fun onActivation(prevState: State) {
             mServiceController.stopForeground(false)
             refreshForegroundNotification()
@@ -550,8 +549,8 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             }
         }
 
-        override val isPaused: Boolean
-            get() = true
+        override val filterIsOn: Boolean
+            get() = false
     }
 
     /* This State is used to present the filter to the user when (s)he
@@ -579,9 +578,9 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             when (commandFlag) {
                 ScreenFilterService.COMMAND_ON -> stateToReturnTo = mOnState
 
-                ScreenFilterService.COMMAND_PAUSE -> {
+                ScreenFilterService.COMMAND_OFF -> {
                     if (DEBUG) Log.d(TAG, String.format("State to return to changed to %d while in preview mode", commandFlag))
-                    stateToReturnTo = mPauseState
+                    stateToReturnTo = mOffState
                 }
 
                 ScreenFilterService.COMMAND_SHOW_PREVIEW -> {
@@ -595,7 +594,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
 
                     if (pressesActive <= 0) {
                         if (false) Log.d(TAG, String.format("Moving back to state %d", stateToReturnTo))
-                        if (isPaused) {
+                        if (!filterIsOn) {
                             mServiceController.stopForeground(false)
                             closeScreenFilter()
                         }
@@ -605,13 +604,13 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             }
         }
 
-        override val isPaused: Boolean
-            get() = stateToReturnTo.isPaused
+        override val filterIsOn: Boolean
+            get() = stateToReturnTo.filterIsOn
     }
 
     /* This state is used when the filter is suspended temporarily,
      * because the user is in an excluded app (for example the package
-     * installer). It stops the filter like in the PauseState, but
+     * installer). It stops the filter like in the OffState, but
      * doesn't change the UI, switch or brightness state just like the
      * PreviewState. Like the PreviewState, it logs changes to the
      * state and applies them when the suspend state is deactivated.
@@ -630,7 +629,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             if (DEBUG) Log.d(TAG, String.format("Suspend, got command: %d", commandFlag))
             when (commandFlag) {
                 ScreenFilterService.COMMAND_STOP_SUSPEND -> moveToState(stateToReturnTo)
-                ScreenFilterService.COMMAND_PAUSE -> moveToState(commandFlag)
+                ScreenFilterService.COMMAND_OFF -> moveToState(commandFlag)
                 ScreenFilterService.COMMAND_ON,
                     // Suspended is a subset of on, so there is nothing to do
                 ScreenFilterService.COMMAND_SHOW_PREVIEW,
@@ -638,8 +637,8 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             }// Preview is ignored when the filter is suspended
         }
 
-        override val isPaused: Boolean
-            get() = stateToReturnTo.isPaused
+        override val filterIsOn: Boolean
+            get() = stateToReturnTo.filterIsOn
     }
 
     companion object {
@@ -648,7 +647,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
 
         val NOTIFICATION_ID = 1
         private val REQUEST_CODE_ACTION_SETTINGS = 1000
-        private val REQUEST_CODE_ACTION_PAUSE_OR_RESUME = 3000
+        private val REQUEST_CODE_ACTION_OFF_OR_ON = 3000
         private val REQUEST_CODE_NEXT_PROFILE = 4000
 
         val FADE_DURATION_MS = 1000

@@ -134,7 +134,7 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
     companion object {
         val VALID_COMMAND_START = 0
         val COMMAND_ON = 0
-        val COMMAND_PAUSE = 1
+        val COMMAND_OFF = 1
         val COMMAND_SHOW_PREVIEW = 2
         val COMMAND_HIDE_PREVIEW = 3
         val COMMAND_START_SUSPEND = 4

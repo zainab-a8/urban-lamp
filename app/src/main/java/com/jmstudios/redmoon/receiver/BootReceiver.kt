@@ -60,29 +60,29 @@ class BootReceiver : BroadcastReceiver() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val settingsModel = SettingsModel(context.resources, sharedPreferences)
 
-        val pausedBeforeReboot = settingsModel.pauseState
+        val filterIsOnBeforeReboot = settingsModel.filterIsOn
 
         // If the filter was on when the device was powered down and the
         // automatic brightness setting is on, then it still uses the
         // dimmed brightness and we need to restore the saved brightness
         // before proceeding.
-        if (!pausedBeforeReboot && settingsModel.brightnessControlFlag) {
+        if (filterIsOnBeforeReboot && settingsModel.brightnessControlFlag) {
             ScreenFilterPresenter.setBrightnessState(settingsModel.brightnessLevel,
                     settingsModel.brightnessAutomatic,
                     context)
         }
 
         AutomaticFilterChangeReceiver.scheduleNextOnCommand(context)
-        AutomaticFilterChangeReceiver.scheduleNextPauseCommand(context)
+        AutomaticFilterChangeReceiver.scheduleNextOffCommand(context)
 
-        val isPausePredicted = getPredictedPauseState(pausedBeforeReboot, settingsModel)
+        val filterIsOnPredicted = filterIsOnPrediction(filterIsOnBeforeReboot, settingsModel)
 
         EventBus.getDefault().postSticky(moveToState(
-                if (isPausePredicted) ScreenFilterService.COMMAND_ON
-                else ScreenFilterService.COMMAND_PAUSE))
+                if (filterIsOnPredicted) ScreenFilterService.COMMAND_OFF
+                else ScreenFilterService.COMMAND_ON))
 
-        if (isPausePredicted) {
-            // We want to dismiss the notification if the filter is paused
+        if (!filterIsOnPredicted) {
+            // We want to dismiss the notification if the filter is turned off
             // automatically.
             // However, the filter fades out and the notification is only
             // refreshed when this animation has been completed.  To make sure
@@ -100,7 +100,7 @@ class BootReceiver : BroadcastReceiver() {
         private val TAG = "BootReceiver"
         private val DEBUG = false
 
-        private fun getPredictedPauseState(pausedBeforeReboot: Boolean,
+        private fun filterIsOnPrediction(filterIsOnBeforeReboot: Boolean,
                                            model: SettingsModel): Boolean {
             if (model.automaticFilter) {
                 val now = Calendar.getInstance()
@@ -131,9 +131,9 @@ class BootReceiver : BroadcastReceiver() {
                     Log.d(TAG, "Off DAY_OF_MONTH: " + Integer.toString(off.get(Calendar.DAY_OF_MONTH)))
                 }
 
-                return !(now.after(on) && now.before(off))
+                return (now.after(on) && now.before(off))
             } else {
-                return pausedBeforeReboot
+                return filterIsOnBeforeReboot
             }
         }
     }

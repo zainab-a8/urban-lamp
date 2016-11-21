@@ -75,7 +75,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 
     private fun sendStopSuspendCommand() {
         if (DEBUG) Log.i(TAG, "Send a stop suspend command")
-        EventBus.getDefault().postSticky(moveToState(ScreenFilterService.COMMAND_PAUSE))
+        EventBus.getDefault().postSticky(moveToState(ScreenFilterService.COMMAND_OFF))
     }
 
     companion object {

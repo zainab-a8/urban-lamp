@@ -63,14 +63,14 @@ class ShortcutToggleActivity : Activity() {
 
             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
             val settingsModel = SettingsModel(activity.resources, sharedPreferences)
-            val paused = settingsModel.pauseState
-            val command = if (paused) ScreenFilterService.COMMAND_ON
-                          else ScreenFilterService.COMMAND_PAUSE
+            val isOn = settingsModel.filterIsOn
+            val command = if (isOn) ScreenFilterService.COMMAND_OFF
+                          else ScreenFilterService.COMMAND_ON
 
             EventBus.getDefault().postSticky(moveToState(command))
 
-            if (paused) ScreenFilterService.start(activity)
-            else ScreenFilterService.stop(activity)
+            if (isOn) ScreenFilterService.stop(activity)
+            else ScreenFilterService.start(activity)
 
             activity.finish()
         }

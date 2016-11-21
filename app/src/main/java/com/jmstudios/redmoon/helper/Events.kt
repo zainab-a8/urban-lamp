@@ -19,7 +19,7 @@ package com.jmstudios.redmoon.event
 
 /* EventBus uses classes as events. There are the available events to send */
 
-class pauseStateChanged(val newValue: Boolean) {} 
+class filterIsOnChanged(val newValue: Boolean) {} 
 class dimLevelChanged(val newValue: Int) {}
 class intensityLevelChanged(val newValue: Int) {}
 class colorChanged(val newValue: Int) {}

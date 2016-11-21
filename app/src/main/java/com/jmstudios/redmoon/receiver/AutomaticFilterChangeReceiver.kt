@@ -49,12 +49,12 @@ class AutomaticFilterChangeReceiver : BroadcastReceiver() {
         val turnOn = intent.data.toString() == "turnOnIntent"
 
         val command = if (turnOn) ScreenFilterService.COMMAND_ON
-        else ScreenFilterService.COMMAND_PAUSE
+        else ScreenFilterService.COMMAND_OFF
         EventBus.getDefault().postSticky(moveToState(command))
         cancelAlarm(context, turnOn)
         scheduleNextCommand(context, turnOn)
 
-        // We want to dismiss the notification if the filter is paused
+        // We want to dismiss the notification if the filter is turned off
         // automatically.
         // However, the filter fades out and the notification is only
         // refreshed when this animation has been completed.  To make sure
@@ -86,9 +86,9 @@ class AutomaticFilterChangeReceiver : BroadcastReceiver() {
 
         // Conveniences
         val scheduleNextOnCommand = { context: Context -> scheduleNextCommand(context, true) }
-        val scheduleNextPauseCommand = { context: Context -> scheduleNextCommand(context, false) }
+        val scheduleNextOffCommand = { context: Context -> scheduleNextCommand(context, false) }
         val cancelTurnOnAlarm = { context: Context -> cancelAlarm(context, true) }
-        val cancelPauseAlarm = { context: Context -> cancelAlarm(context, false) }
+        val cancelOffAlarm = { context: Context -> cancelAlarm(context, false) }
         val cancelAlarms = { context: Context ->
             cancelAlarm(context, true)
             cancelAlarm(context, false)
@@ -105,7 +105,7 @@ class AutomaticFilterChangeReceiver : BroadcastReceiver() {
                 val intent = if (turnOn) Intent(context, AutomaticFilterChangeReceiver::class.java)
                              else Intent(context, AutomaticFilterChangeReceiver::class.java)
                 intent.data = if (turnOn) Uri.parse("turnOnIntent")
-                              else Uri.parse("pauseIntent")
+                              else Uri.parse("offIntent")
 
                 intent.putExtra("turn_on", turnOn)
 
@@ -137,7 +137,7 @@ class AutomaticFilterChangeReceiver : BroadcastReceiver() {
         private fun cancelAlarm(context: Context, turnOn: Boolean) {
             val commands = Intent(context, AutomaticFilterChangeReceiver::class.java)
             commands.data = if (turnOn) Uri.parse("turnOnIntent")
-                            else Uri.parse("pauseIntent")
+                            else Uri.parse("offIntent")
             val pendingIntent = PendingIntent.getBroadcast(context, 0, commands, 0)
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmManager.cancel(pendingIntent)

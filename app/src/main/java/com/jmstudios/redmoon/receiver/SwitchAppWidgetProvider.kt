@@ -73,7 +73,7 @@ class SwitchAppWidgetProvider : AppWidgetProvider() {
             views.setOnClickPendingIntent(R.id.widget_pause_play_button, togglePendingIntent)
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
-            updateImage(context, settingsModel.pauseState)
+            updateImage(context, settingsModel.filterIsOn)
         }
     }
 
@@ -81,7 +81,7 @@ class SwitchAppWidgetProvider : AppWidgetProvider() {
         if (intent.action == SwitchAppWidgetProvider.ACTION_TOGGLE)
             toggle(context)
         else if (intent.action == SwitchAppWidgetProvider.ACTION_UPDATE)
-            updateImage(context, intent.getBooleanExtra(SwitchAppWidgetProvider.EXTRA_POWER, false))
+            updateImage(context, !intent.getBooleanExtra(SwitchAppWidgetProvider.EXTRA_POWER, false))
         else
             super.onReceive(context, intent)
     }
@@ -90,28 +90,23 @@ class SwitchAppWidgetProvider : AppWidgetProvider() {
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val settingsModel = SettingsModel(context.resources, sharedPreferences)
-        val paused = settingsModel.pauseState
-        val command = if (paused) ScreenFilterService.COMMAND_ON
-                      else ScreenFilterService.COMMAND_PAUSE
+        val filterIsOn = settingsModel.filterIsOn
+        val command = if (filterIsOn) ScreenFilterService.COMMAND_OFF
+                      else ScreenFilterService.COMMAND_ON
 
         EventBus.getDefault().postSticky(moveToState(command))
 
-        if (paused) ScreenFilterService.start(context)
+        if (filterIsOn) ScreenFilterService.start(context)
         else ScreenFilterService.stop(context)
     }
 
-    internal fun updateImage(context: Context, pausedState: Boolean) {
+    internal fun updateImage(context: Context, filterIsOn: Boolean) {
         if (DEBUG) Log.i(TAG, "Updating image!")
         val views = RemoteViews(context.packageName, R.layout.appwidget_switch)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetComponent = ComponentName(context, SwitchAppWidgetProvider::class.java.name)
-
-        val drawable: Int
-
-        if (!pausedState)
-            drawable = R.drawable.ic_play
-        else
-            drawable = R.drawable.ic_pause
+        val drawable = if (filterIsOn) R.drawable.ic_play
+                       else R.drawable.ic_stop
 
         views.setInt(R.id.widget_pause_play_button, "setImageResource", drawable)
         appWidgetManager.updateAppWidget(appWidgetComponent, views)
