@@ -24,7 +24,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.app.AlarmManager;
-import android.os.Build.VERSION;
 import android.net.Uri;
 import android.location.LocationManager;
 import android.location.LocationListener;
@@ -35,9 +34,6 @@ import android.support.v4.content.ContextCompat;
 
 import java.util.GregorianCalendar;
 import java.util.Calendar;
-import java.util.TimeZone;
-
-import com.jmstudios.redmoon.R;
 
 import com.jmstudios.redmoon.helper.FilterCommandFactory;
 import com.jmstudios.redmoon.helper.FilterCommandSender;
@@ -45,7 +41,6 @@ import com.jmstudios.redmoon.helper.DismissNotificationRunnable;
 import com.jmstudios.redmoon.model.SettingsModel;
 import com.jmstudios.redmoon.service.ScreenFilterService;
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter;
-import com.jmstudios.redmoon.receiver.LocationUpdateListener;
 
 public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
     private static final String TAG = "AutomaticFilterChange";
@@ -112,7 +107,7 @@ public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
             turnOnIntent.setData(Uri.parse("turnOnIntent"));
             turnOnIntent.putExtra("turn_on", true);
 
-            scheduleNextAlarm(context, time, turnOnIntent, false);
+            scheduleNextAlarm(context, time, turnOnIntent);
         }
     }
 
@@ -127,11 +122,11 @@ public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
             pauseIntent.putExtra("turn_on", false);
             pauseIntent.setData(Uri.parse("pauseIntent"));
 
-            scheduleNextAlarm(context, time, pauseIntent, false);
+            scheduleNextAlarm(context, time, pauseIntent);
         }
     }
 
-    public static void scheduleNextAlarm(Context context, String time, Intent operation, boolean timeInUtc) {
+    public static void scheduleNextAlarm(Context context, String time, Intent operation) {
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time.split(":")[0]));
         calendar.set(Calendar.MINUTE, Integer.parseInt(time.split(":")[1]));
@@ -141,8 +136,6 @@ public class AutomaticFilterChangeReceiver extends BroadcastReceiver {
         if (calendar.before(now)) {
             calendar.add(Calendar.DATE, 1);
         }
-        if (!timeInUtc)
-            calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         if (DEBUG) Log.i(TAG, "Scheduling alarm for " + calendar.toString());
 
