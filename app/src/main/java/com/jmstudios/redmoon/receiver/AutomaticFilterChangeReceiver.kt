@@ -118,7 +118,6 @@ class AutomaticFilterChangeReceiver : BroadcastReceiver() {
                 if (calendar.before(now)) {
                     calendar.add(Calendar.DATE, 1)
                 }
-                calendar.timeZone = TimeZone.getTimeZone("UTC")
 
                 if (DEBUG) Log.i(TAG, "Scheduling alarm for " + calendar.toString())
 
