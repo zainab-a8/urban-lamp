@@ -87,4 +87,8 @@ Cette option peu réduire l\'autonomie de la batterie. De plus elle peut me pas 
     <string name="text_switch_on">Activé</string>
     <string name="text_switch_off">Désactivé</string>
     <string name="usage_stats_dialog_title">Autoriser l\'accès aux données d\'utilisation</string>
+    <string name="usage_stats_dialog_message">Autorisez Red Moon à accéder aux données d\'utilisation dans la prochaine boîte de dialogue pour activer cette option.
+
+Red Moon nécessite cette autorisation pour voir dans quelle application vous vous situez et suspendre son activité lorsque nécessaire. Red Moon n\'utilisera ces données que pour suspendre l\'affichage du filtre.</string>
+
     </resources>
