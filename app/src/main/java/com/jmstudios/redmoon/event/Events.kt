@@ -17,18 +17,27 @@
 
 package com.jmstudios.redmoon.event
 
-/* EventBus uses classes as events. There are the available events to send */
+/* EventBus uses classes as events. These are the available events to send */
 
-class filterIsOnChanged(val newValue: Boolean) {} 
-class dimLevelChanged(val newValue: Int) {}
-class intensityLevelChanged(val newValue: Int) {}
-class colorChanged(val newValue: Int) {}
-class automaticFilterChanged(val newValue: Boolean) {}
-class automaticTurnOnChanged(val newValue: String) {}
-class automaticTurnOffChanged(val newValue: String) {}
-class lowerBrightnessChanged(val newValue: Boolean) {}
-class profileChanged(val newValue: Int) {}
-class automaticSuspendChanged(val newValue: Boolean) {}
+class filterIsOnChanged()
+class dimChanged()
+class intensityChanged()
+class colorChanged()
+class themeChanged()
+class timeToggleChanged()
+class customTurnOnTimeChanged()
+class customTurnOffTimeChanged()
+class lowerBrightnessChanged()
+class profileChanged()
+class timeToggleChanged()
+class useLocationChanged()
+class locationChanged()
+class sunsetTimeChanged()
+class sunriseTimeChanged()
 
-class moveToState(val commandFlag: Int) {}
-class serviceStopped() {}
+class moveToState(val commandFlag: Int)
+class serviceStopped()
+
+class locationServicesDisabled()
+class locationAccessDenied()
+class changeBrightnessDenied()

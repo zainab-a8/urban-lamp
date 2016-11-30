@@ -19,32 +19,24 @@ package com.jmstudios.redmoon.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.preference.PreferenceManager
 import android.util.Log
 
 import com.jmstudios.redmoon.helper.ProfilesHelper
 import com.jmstudios.redmoon.model.ProfilesModel
-import com.jmstudios.redmoon.model.SettingsModel
+import com.jmstudios.redmoon.model.Config
 
 class NextProfileCommandReceiver : BroadcastReceiver() {
-
-    lateinit private var mSettingsModel: SettingsModel
 
     override fun onReceive(context: Context, intent: Intent) {
         if (DEBUG) Log.i(TAG, "Next profile requested")
 
-        val standardSp = PreferenceManager.getDefaultSharedPreferences(context)
-        mSettingsModel = SettingsModel(context.resources, standardSp)
-
         // Here we just change the profile (cycles back to default
         // when it reaches the max).
-        val profile = mSettingsModel.profile
-        val amProfiles = mSettingsModel.ammountProfiles
-        val newProfile = if (profile + 1 >= amProfiles)
-            1
-        else
-            profile + 1
-        mSettingsModel.profile = newProfile
+        val profile = Config.profile
+        val amProfiles = Config.ammountProfiles
+        val newProfile = if (profile + 1 >= amProfiles) 1
+                         else profile + 1
+        Config.profile = newProfile
 
         // Next update the other settings that are based on the
         // profile
@@ -54,9 +46,9 @@ class NextProfileCommandReceiver : BroadcastReceiver() {
             val profilesModel = ProfilesModel(context)
             val profileObject = ProfilesHelper.getProfile(profilesModel, newProfile, context)
 
-            mSettingsModel.dimLevel = profileObject.mDimProgress
-            mSettingsModel.intensityLevel = profileObject.mIntensityProgress
-            mSettingsModel.color = profileObject.mColorProgress
+            Config.dim = profileObject.mDimProgress
+            Config.intensity = profileObject.mIntensityProgress
+            Config.color = profileObject.mColorProgress
         }
     }
 

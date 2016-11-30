@@ -23,18 +23,18 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Handler
-import android.preference.PreferenceManager
 import android.util.Log
 
 import com.jmstudios.redmoon.event.moveToState
 import com.jmstudios.redmoon.helper.DismissNotificationRunnable
-import com.jmstudios.redmoon.model.SettingsModel
+import com.jmstudios.redmoon.helper.Util
+import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
+import com.jmstudios.redmoon.service.LocationUpdateService
 import com.jmstudios.redmoon.service.ScreenFilterService
 
 import java.util.Calendar
 import java.util.GregorianCalendar
-import java.util.TimeZone
 
 import org.greenrobot.eventbus.EventBus
 
@@ -42,9 +42,6 @@ class AutomaticFilterChangeReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (DEBUG) Log.i(TAG, "Alarm received")
-
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val settingsModel = SettingsModel(context.resources, sharedPreferences)
 
         val turnOn = intent.data.toString() == "turnOnIntent"
 
@@ -65,20 +62,10 @@ class AutomaticFilterChangeReceiver : BroadcastReceiver() {
         val runnable = DismissNotificationRunnable(context)
         handler.postDelayed(runnable, (ScreenFilterPresenter.FADE_DURATION_MS + 100).toLong())
 
-
-        // TODO: add "&& settingsModel.getUseLocation()"
-        if (settingsModel.automaticFilter) {
-            val updater = LocationUpdater(context, object : LocationUpdater.updateHandler {
-                override fun handleFound() {
-                }
-
-                override fun handleFailed() {
-                }
-            })
-            updater.update()
+        if (Config.automaticFilter && Config.useLocation) {
+            LocationUpdateService.start(context)
         }
     }
-
 
     companion object {
         private val TAG = "AutomaticFilterChange"
@@ -89,18 +76,23 @@ class AutomaticFilterChangeReceiver : BroadcastReceiver() {
         val scheduleNextOffCommand = { context: Context -> scheduleNextCommand(context, false) }
         val cancelTurnOnAlarm = { context: Context -> cancelAlarm(context, true) }
         val cancelOffAlarm = { context: Context -> cancelAlarm(context, false) }
+        val rescheduleOnCommand = { context: Context ->
+            cancelAlarm(context, true)
+            scheduleNextCommand(context, true)
+        }
+        val rescheduleOffCommand = { context: Context ->
+            cancelAlarm(context, false)
+            scheduleNextCommand(context, false)
+        }
         val cancelAlarms = { context: Context ->
             cancelAlarm(context, true)
             cancelAlarm(context, false)
         }
 
         private fun scheduleNextCommand(context: Context, turnOn: Boolean) {
-            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-            val settingsModel = SettingsModel(context.resources, sharedPreferences)
-
-            if (settingsModel.automaticFilter) {
-                val time = if (turnOn) settingsModel.automaticTurnOnTime
-                           else settingsModel.automaticTurnOffTime
+            if (Config.automaticFilter) {
+                val time = if (turnOn) Util.automaticTurnOnTime
+                           else Util.automaticTurnOffTime
 
                 val intent = if (turnOn) Intent(context, AutomaticFilterChangeReceiver::class.java)
                              else Intent(context, AutomaticFilterChangeReceiver::class.java)
@@ -124,7 +116,7 @@ class AutomaticFilterChangeReceiver : BroadcastReceiver() {
                 val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                 val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
 
-                if (android.os.Build.VERSION.SDK_INT >= 19) {
+                if (Util.atLeastAPI(19)) {
                     alarmManager.setExact(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
                 } else {
                     alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)

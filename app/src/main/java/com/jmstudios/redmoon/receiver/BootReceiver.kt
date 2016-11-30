@@ -44,7 +44,8 @@ import android.util.Log
 
 import com.jmstudios.redmoon.event.moveToState
 import com.jmstudios.redmoon.helper.DismissNotificationRunnable
-import com.jmstudios.redmoon.model.SettingsModel
+import com.jmstudios.redmoon.helper.Util
+import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.service.ScreenFilterService
 
@@ -57,25 +58,22 @@ class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (DEBUG) Log.i(TAG, "Boot broadcast received!")
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val settingsModel = SettingsModel(context.resources, sharedPreferences)
-
-        val filterIsOnBeforeReboot = settingsModel.filterIsOn
+        val filterIsOnBeforeReboot = Config.filterIsOn
 
         // If the filter was on when the device was powered down and the
         // automatic brightness setting is on, then it still uses the
         // dimmed brightness and we need to restore the saved brightness
         // before proceeding.
-        if (filterIsOnBeforeReboot && settingsModel.brightnessControlFlag) {
-            ScreenFilterPresenter.setBrightnessState(settingsModel.brightnessLevel,
-                    settingsModel.brightnessAutomatic,
+        if (filterIsOnBeforeReboot && Config.lowerBrightness) {
+            ScreenFilterPresenter.setBrightnessState(Config.brightnessLevel,
+                    Config.brightnessAutomatic,
                     context)
         }
 
         AutomaticFilterChangeReceiver.scheduleNextOnCommand(context)
         AutomaticFilterChangeReceiver.scheduleNextOffCommand(context)
 
-        val filterIsOnPredicted = filterIsOnPrediction(filterIsOnBeforeReboot, settingsModel)
+        val filterIsOnPredicted = filterIsOnPrediction(filterIsOnBeforeReboot)
 
         EventBus.getDefault().postSticky(moveToState(
                 if (filterIsOnPredicted) ScreenFilterService.COMMAND_OFF
@@ -100,12 +98,11 @@ class BootReceiver : BroadcastReceiver() {
         private val TAG = "BootReceiver"
         private val DEBUG = false
 
-        private fun filterIsOnPrediction(filterIsOnBeforeReboot: Boolean,
-                                           model: SettingsModel): Boolean {
-            if (model.automaticFilter) {
+        private fun filterIsOnPrediction(filterIsOnBeforeReboot: Boolean): Boolean {
+            if (Config.automaticFilter) {
                 val now = Calendar.getInstance()
 
-                val onTime = model.automaticTurnOnTime
+                val onTime = Util.automaticTurnOnTime
                 val onHour = Integer.parseInt(onTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0])
                 val onMinute = Integer.parseInt(onTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[1])
                 val on = Calendar.getInstance()
@@ -115,7 +112,7 @@ class BootReceiver : BroadcastReceiver() {
                 if (on.after(now))
                     on.add(Calendar.DATE, -1)
 
-                val offTime = model.automaticTurnOffTime
+                val offTime = Util.automaticTurnOffTime
                 val offHour = Integer.parseInt(offTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0])
                 val offMinute = Integer.parseInt(offTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[1])
                 val off = Calendar.getInstance()

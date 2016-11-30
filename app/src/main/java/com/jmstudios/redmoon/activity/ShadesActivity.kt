@@ -40,34 +40,28 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.provider.Settings
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Switch
 import android.widget.Toast
 
 import com.jmstudios.redmoon.R
+import com.jmstudios.redmoon.application.RedMoonApplication
 
 import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.fragment.*
-import com.jmstudios.redmoon.model.SettingsModel
-import com.jmstudios.redmoon.presenter.ShadesPresenter
+import com.jmstudios.redmoon.helper.Util
+import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
 
 import org.greenrobot.eventbus.EventBus
 
 class ShadesActivity : AppCompatActivity() {
 
-    lateinit internal var mPresenter: ShadesPresenter
-    lateinit var mSettingsModel: SettingsModel
-        private set
-    lateinit private var mSwitch: Switch
     private val context = this
 
-    private var hasShownWarningToast = false
 
     internal val fragment: FilterFragment
         get() = fragmentManager.findFragmentByTag(FRAGMENT_TAG_FILTER) as FilterFragment
@@ -78,19 +72,15 @@ class ShadesActivity : AppCompatActivity() {
         if (DEBUG) Log.i(TAG, "Got intent")
 
         // Wire MVP classes
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        mSettingsModel = SettingsModel(resources, sharedPreferences)
-
         val fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false)
         if (fromShortcut) {
             toggleAndFinish()
         }
 
+        if (Config.darkThemeFlag) setTheme(R.style.AppThemeDark)
 
-        if (mSettingsModel.darkThemeFlag) setTheme(R.style.AppThemeDark)
-
-        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shades)
+        super.onCreate(savedInstanceState)
 
         val view: FilterFragment
 
@@ -110,29 +100,13 @@ class ShadesActivity : AppCompatActivity() {
             view = fragmentManager.findFragmentByTag(FRAGMENT_TAG_FILTER) as FilterFragment
         }
 
-        mPresenter = ShadesPresenter(view, mSettingsModel, context)
-
-        if (!mSettingsModel.introShown) {
+        if (!Config.introShown) {
             startIntro()
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.main_activity_menu, menu)
-
-        mSwitch = menu.findItem(R.id.screen_filter_switch).actionView as Switch
-        mSwitch.isChecked = mSettingsModel.filterIsOn
-        mSwitch.setOnClickListener {
-            if (getOverlayPermission()) {
-                EventBus.getDefault().postSticky(moveToState(
-                          if (mSwitch.isChecked) ScreenFilterService.COMMAND_ON
-                          else ScreenFilterService.COMMAND_OFF))
-            } else {
-                mSwitch.isChecked = false
-            }
-        }
-
+        menuInflater.inflate(R.menu.main_activity_menu, menu)
         return true
     }
 
@@ -147,7 +121,7 @@ class ShadesActivity : AppCompatActivity() {
                        .replace(R.id.fragment_container, newFragment, FRAGMENT_TAG_TIME_TOGGLE)
                        .addToBackStack(null)
                        .commit()
-        setTitle(R.string.automatic_filter_title)
+        setTitle(R.string.time_toggle_title)
     }
 
     fun launchSecureSuspendFragment() {
@@ -156,39 +130,30 @@ class ShadesActivity : AppCompatActivity() {
                        .replace(R.id.fragment_container, newFragment, FRAGMENT_TAG_SECURE_SUSPEND)
                        .addToBackStack(null)
                        .commit()
-        setTitle(R.string.automatic_suspend_preference_activity)
-    }
-
-    fun setSwitch(onState: Boolean) {
-        mSwitch.isChecked = onState
+        setTitle(R.string.time_toggle_preference_activity)
     }
 
     @TargetApi(23) // Android Studio can't figure out that this is safe to call at any API level
     private fun getOverlayPermission(): Boolean {
-        // http://stackoverflow.com/a/3993933
-        if (android.os.Build.VERSION.SDK_INT >= 23) {
-            return true
-        }
+        // TODO: Verify this should be 'at least' and not 'less than' API 23
+        if (Util.atLeastAPI(23)) return true
 
         if (!Settings.canDrawOverlays(context)) {
             val builder = AlertDialog.Builder(context)
 
-            builder.setMessage(R.string.overlay_dialog_message).setTitle(R.string.overlay_dialog_title).setPositiveButton(R.string.ok_dialog) { dialog, id ->
-                val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                        Uri.parse("package:" + packageName))
-                startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE)
-            }
-
-            builder.show()
+            builder.setMessage(R.string.overlay_dialog_message)
+                   .setTitle(R.string.overlay_dialog_title)
+                   .setPositiveButton(R.string.ok_dialog) { dialog, id ->
+                       val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                       Uri.parse("package:" + packageName))
+                       startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE) }
+                   .show()
         }
         return Settings.canDrawOverlays(context)
     }
 
     override fun onStart() {
         super.onStart()
-        /* setSwitch(!mSettingsModel.filterIsOn) */
-        mSettingsModel.openSettingsChangeListener()
-        EventBus.getDefault().register(mPresenter)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -199,8 +164,6 @@ class ShadesActivity : AppCompatActivity() {
     }
 
     override fun onStop() {
-        mSettingsModel.closeSettingsChangeListener()
-        EventBus.getDefault().unregister(mPresenter)
         super.onStop()
     }
 
@@ -230,39 +193,25 @@ class ShadesActivity : AppCompatActivity() {
         }
     }
 
-
-    fun displayInstallWarningToast() {
-        if (hasShownWarningToast || mSettingsModel.automaticSuspend)
-            return
-
-        val duration = Toast.LENGTH_SHORT
-        val toast = Toast.makeText(applicationContext,
-                getString(R.string.toast_warning_install),
-                duration)
-        toast.show()
-
-        hasShownWarningToast = true
-    }
-
     private fun startIntro() {
         val introIntent = Intent(this, Intro::class.java)
         startActivity(introIntent)
 
-        mSettingsModel.introShown = true
+        Config.introShown = true
     }
 
     val colorTempProgress: Int
-        get() = mSettingsModel.color
+        get() = Config.color
 
     val intensityLevelProgress: Int
-        get() = mSettingsModel.intensityLevel
+        get() = Config.intensity
 
     val dimLevelProgress: Int
-        get() = mSettingsModel.dimLevel
+        get() = Config.dim
 
     private fun toggleAndFinish() {
         EventBus.getDefault().postSticky(moveToState(
-                if (mSettingsModel.filterIsOn) ScreenFilterService.COMMAND_ON
+                if (Config.filterIsOn) ScreenFilterService.COMMAND_ON
                 else ScreenFilterService.COMMAND_OFF))
         finish()
     }

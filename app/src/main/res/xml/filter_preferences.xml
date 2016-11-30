@@ -42,19 +42,19 @@
         android:defaultValue="1"/>
 
     <com.jmstudios.redmoon.preference.ColorSeekBarPreference
-        android:key="@string/pref_key_shades_color_temp"
+        android:key="@string/pref_key_color"
         android:defaultValue="10" />
 
     <com.jmstudios.redmoon.preference.IntensitySeekBarPreference
-        android:key="@string/pref_key_shades_intensity_level"
+        android:key="@string/pref_key_intensity"
         android:defaultValue="50" />
 
     <com.jmstudios.redmoon.preference.DimSeekBarPreference
-        android:key="@string/pref_key_shades_dim_level"
+        android:key="@string/pref_key_dim"
         android:defaultValue="50" />
 
     <SwitchPreference
-        android:key="@string/pref_key_control_brightness"
+        android:key="@string/pref_key_lower_brightness"
         android:title="@string/control_brightness_title"
         android:defaultValue="true" />
   </PreferenceCategory>
@@ -72,4 +72,9 @@
         android:title="@string/dark_theme"
         android:defaultValue="false" />
   </PreferenceCategory>
+
+  //padding for the fab
+  <Preference
+      android:enabled="false"
+      android:layout="@layout/blank_preference" />
 </PreferenceScreen>

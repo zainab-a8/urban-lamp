@@ -17,212 +17,173 @@
 package com.jmstudios.redmoon.fragment
 
 import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.preference.Preference
-import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
-// import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 
 import com.jmstudios.redmoon.R
+import com.jmstudios.redmoon.event.*
 
-import com.jmstudios.redmoon.preference.FilterTimePreference
-import com.jmstudios.redmoon.preference.LocationPreference
-import com.jmstudios.redmoon.receiver.LocationUpdater
-
-import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
+import com.jmstudios.redmoon.helper.Util
+import com.jmstudios.redmoon.model.Config
+import com.jmstudios.redmoon.preference.TimePickerPreference
+import com.jmstudios.redmoon.receiver.AutomaticFilterChangeReceiver
+import com.jmstudios.redmoon.service.LocationUpdateService
 
 import java.util.*
 
+import org.greenrobot.eventbus.Subscribe
 
-class TimeToggleFragment : PreferenceFragment() {
 
-    private lateinit var mView: View
-    // private lateinit var mHelpSnackbar: Snackbar
+class TimeToggleFragment : EventPreferenceFragment() {
+    private var mIsSearchingLocation = false
 
     // Preferences
-    private val automaticFilterPref: SwitchPreference
+    private val timeTogglePref: SwitchPreference
         get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_automatic_filter)) as SwitchPreference)
+                (getString(R.string.pref_key_time_toggle)) as SwitchPreference)
 
-    private val automaticTurnOnPref: FilterTimePreference
+    private val automaticTurnOnPref: TimePickerPreference
         get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_custom_start_time)) as FilterTimePreference)
+                (getString(R.string.pref_key_custom_turn_on_time)) as TimePickerPreference)
 
-    private val automaticTurnOffPref: FilterTimePreference
+    private val automaticTurnOffPref: TimePickerPreference
         get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_custom_end_time)) as FilterTimePreference)
+                (getString(R.string.pref_key_custom_turn_off_time)) as TimePickerPreference)
 
-    private val useLocationPref: SwitchPreference
-        get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_use_location)) as SwitchPreference)
-
-    private val locationPref: LocationPreference
-        get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_location)) as LocationPreference)
-
-    private val hasLocationPermission: Boolean
-            get() = (ContextCompat.checkSelfPermission(
-                        activity, Manifest.permission.ACCESS_COARSE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED)
+    private val locationPref: Preference
+        get() = preferenceScreen.findPreference(getString(R.string.pref_key_location))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         addPreferencesFromResource(R.xml.time_toggle_preferences)
-        setSwitchBarTitle(automaticFilterPref.isChecked)
-        setPrefsEnabled()
+        updatePrefs()
 
-        automaticFilterPref.onPreferenceChangeListener =
-                Preference.OnPreferenceChangeListener { preference, newValue ->
-                    setPrefsEnabled(newValue as Boolean)
-                    true
-                }
-
-        useLocationPref.onPreferenceChangeListener = 
-                Preference.OnPreferenceChangeListener { preference, newValue ->
-                    val useLocation = newValue as Boolean
-                    if (!useLocation) {
-                        setPrefsEnabled(automaticFilterPref.isChecked, useLocation)
-                        true
-                    } else {
-                        updateLocation()
-                    }
-                }
-
-        locationPref.onPreferenceChangeListener =
-                Preference.OnPreferenceChangeListener { pref, newVal -> updateLocation() }
-    }
-
-    private fun updateLocation(): Boolean {
-        val lUpdater = LocationUpdater(activity, object : LocationUpdater.updateHandler {
-            override fun handleFound() { locationPref.setIsSearchingLocation(false) }
-            override fun handleFailed() {
-                locationPref.setIsSearchingLocation(false)
-                val toast = Toast.makeText(activity,
-                                           activity.getString(R.string.toast_warning_no_location),
-                                           Toast.LENGTH_SHORT)
-                toast.show()
+        locationPref.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener { pref ->
+                mIsSearchingLocation = true
+                pref.summary = getString(R.string.searching_location)
+                LocationUpdateService.start(activity)
+                true
             }
-        })
-
-        if (!hasLocationPermission) requestLocationPermission()
-        val hasLP = hasLocationPermission // Check if request succeeded
-        setPrefsEnabled(automaticFilterPref.isChecked, hasLP)
-        locationPref.setIsSearchingLocation(hasLP)
-        lUpdater.update()
-        return hasLP
     }
 
-    override fun onResume() {
-        super.onResume()
+    private fun updatePrefs() {
+        updateSwitchBarTitle()
+        updateTimePrefs()
+        updateLocationPref()
     }
 
-    private fun setPrefsEnabled(auto: Boolean = automaticFilterPref.isChecked,
-                                useLocation: Boolean = useLocationPref.isChecked) {
-        setSwitchBarTitle(auto)
-        updateTimePrefs(useLocation)
-        if (!auto) {
-            automaticTurnOnPref.isEnabled = false
-            automaticTurnOffPref.isEnabled = false
-        }
-    }
-
-    private fun setSwitchBarTitle(on: Boolean) {
-        automaticFilterPref.setTitle(
-                if (on) R.string.text_switch_on
+    private fun updateSwitchBarTitle() {
+        timeTogglePref.setTitle(
+                if (Config.automaticFilter) R.string.text_switch_on
                 else R.string.text_switch_off
         )
     }
 
-    private fun updateTimePrefs(sun: Boolean) {
-        locationPref.updateSummary()
-        val location = locationPref.location
-        if (!sun) {
-            if (DEBUG) Log.i(TAG, "Location Disabled")
-            automaticTurnOnPref.setToCustomTime()
-            automaticTurnOffPref.setToCustomTime()
-        } else if (location == "not set") {
-            if (DEBUG) Log.i(TAG, "Location Not Set")
-            automaticTurnOnPref.setToSunTime("19:30")
-            automaticTurnOffPref.setToSunTime("06:30")
+    private fun updateLocationPref() {
+        val l = Config.location
+        when {
+            mIsSearchingLocation -> locationPref.summary = getString(R.string.searching_location)
+            l === DEFAULT_LOCATION -> locationPref.summary = getString(R.string.location_not_set)
+            else -> {
+                val latitudeStr = getString(R.string.latitude_short)
+                val longitudeStr = getString(R.string.longitude_short)
+
+                val x = l.indexOf(",")
+                val latitude = java.lang.Double.parseDouble(l.substring(0, x))
+                val longitude = java.lang.Double.parseDouble(l.substring(x+1, l.length))
+
+                locationPref.summary = String.format(Locale.getDefault(), "%s: %.2f %s: %.2f",
+                                                     latitudeStr, latitude, longitudeStr, longitude)
+            }
+        }
+        locationPref.isEnabled = Config.automaticSuspend && Config.useLocation
+    }
+
+    private fun updateTimePrefs() {
+        val auto = Config.automaticSuspend
+        val useLocation = Config.useLocation
+        val enabled = auto && !useLocation
+        automaticTurnOnPref.isEnabled = enabled
+        automaticTurnOffPref.isEnabled = enabled
+        automaticTurnOnPref.summary = Util.automaticTurnOnTime
+        automaticTurnOffPref.summary = Util.automaticTurnOffTime
+    }
+
+    //region presenter
+    @Subscribe
+    fun onTimeToggleChanged(event: timeToggleChanged) {
+        if (DEBUG) Log.i(TAG, "Filter mode changed to " + Config.automaticFilter)
+        updatePrefs()
+        if (Config.automaticFilter) {
+            AutomaticFilterChangeReceiver.rescheduleOnCommand(activity)
+            AutomaticFilterChangeReceiver.rescheduleOffCommand(activity)
         } else {
-            if (DEBUG) Log.i(TAG, "Location Set")
-            val latitude = java.lang.Double.parseDouble(location.split(",")[0])
-            val longitude = java.lang.Double.parseDouble(location.split(",")[1])
-
-            val sunriseSunsetLocation = com.luckycatlabs.sunrisesunset.dto.Location(latitude, longitude)
-            val calculator = SunriseSunsetCalculator(sunriseSunsetLocation, TimeZone.getDefault())
-
-            val sunsetTime = calculator.getOfficialSunsetForDate(Calendar.getInstance())
-            automaticTurnOnPref.setToSunTime(sunsetTime)
-
-            val sunriseTime = calculator.getOfficialSunriseForDate(Calendar.getInstance())
-            automaticTurnOffPref.setToSunTime(sunriseTime)
+            AutomaticFilterChangeReceiver.cancelAlarms(activity)
         }
     }
 
-    private fun requestLocationPermission() {
-        if (!hasLocationPermission) {
+    @Subscribe
+    fun onCustomTurnOnTimeChanged(event: customTurnOnTimeChanged) {
+        AutomaticFilterChangeReceiver.rescheduleOnCommand(activity)
+    }
+
+    @Subscribe
+    fun onCustomTurnOffTimeChanged(event: customTurnOffTimeChanged) {
+        AutomaticFilterChangeReceiver.rescheduleOffCommand(activity)
+    }
+
+    @Subscribe
+    fun onUseLocationChanged(event: useLocationChanged) {
+        mIsSearchingLocation = true
+        updateLocationPref()
+    }
+
+    @Subscribe
+    fun onLocationChanged(event: locationChanged) {
+        updateLocationPref()
+    }
+
+    @Subscribe
+    fun requestLocationPermission(event: locationAccessDenied) {
+        if (mIsSearchingLocation && !Util.hasLocationPermission) {
             ActivityCompat.requestPermissions(activity,
-                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 0)
+            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 0)
+            mIsSearchingLocation = false
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val v = super.onCreateView(inflater, container, savedInstanceState)
-        mView = v
-        return v
+    @Subscribe
+    fun onLocationServicesDisabled(event: locationServicesDisabled) {
+        if (mIsSearchingLocation) {
+            val toast = Toast.makeText(activity,
+                                       getString(R.string.toast_warning_no_location),
+                                       Toast.LENGTH_SHORT)
+            toast.show()
+            mIsSearchingLocation = false
+            updateLocationPref()
+        }
     }
 
-    /* private fun setPreferencesEnabled(enabled: Boolean) { */
-    /*     val root = preferenceScreen */
-    /*     for (i in 0..root.preferenceCount - 1) { */
-    /*         root.getPreference(i).isEnabled = enabled */
-    /*     } */
-    /*     val auto = automaticFilterPref.isChecked */
-    /*     useLocationPref.isEnabled = auto */
-    /*     val sun = true */
-    /*     automaticTurnOnPref.isEnabled = auto && !sun */
-    /*     automaticTurnOffPref.isEnabled = auto && !sun */
+    @Subscribe
+    fun onSunsetTimeChanged(event: sunsetTimeChanged) {
+        AutomaticFilterChangeReceiver.rescheduleOnCommand(activity)
+    }
 
-    /* } */
-
-    /* private fun setAllPreferencesEnabled(enabled: Boolean) { */
-    /*     val root = preferenceScreen */
-    /*     for (i in 0..root.preferenceCount - 1) { */
-    /*         root.getPreference(i).isEnabled = enabled */
-    /*     } */
-    /* } */
-
-    /* private fun showHelpSnackbar() { */
-    /*     mHelpSnackbar = Snackbar.make(mView, activity.getString(R.string.help_snackbar_text), */
-    /*             Snackbar.LENGTH_INDEFINITE) */
-
-    /*     if (mSettingsModel.darkThemeFlag) { */
-    /*         val group = mHelpSnackbar.view as ViewGroup */
-    /*         group.setBackgroundColor(ContextCompat.getColor(activity, R.color.snackbar_color_dark_theme)) */
-
-    /*         val snackbarTextId = android.support.design.R.id.snackbar_text */
-    /*         val textView = group.findViewById(snackbarTextId) as TextView */
-    /*         textView.setTextColor(ContextCompat.getColor(activity, R.color.text_color_dark_theme)) */
-    /*     } */
-
-    /*     mHelpSnackbar.show() */
-    /* } */
+    @Subscribe
+    fun onSunriseTimeChanged(event: sunriseTimeChanged) {
+        AutomaticFilterChangeReceiver.rescheduleOffCommand(activity)
+    }
+    //endregion
 
     companion object {
         private val TAG = "TimeToggleFragment"
         private val DEBUG = false
+        val DEFAULT_LOCATION = "not set"
     }
 }// Android Fragments require an explicit public default constructor for re-creation
-
-

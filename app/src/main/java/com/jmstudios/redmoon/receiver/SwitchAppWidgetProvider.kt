@@ -42,14 +42,13 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.RemoteViews
 
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.event.moveToState
-import com.jmstudios.redmoon.model.SettingsModel
+import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
 
 import org.greenrobot.eventbus.EventBus
@@ -58,9 +57,6 @@ class SwitchAppWidgetProvider : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         if (DEBUG) Log.i(TAG, "Updating!")
-
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val settingsModel = SettingsModel(context.resources, sharedPreferences)
 
         for (i in appWidgetIds.indices) {
             val appWidgetId = appWidgetIds[i]
@@ -73,7 +69,7 @@ class SwitchAppWidgetProvider : AppWidgetProvider() {
             views.setOnClickPendingIntent(R.id.widget_pause_play_button, togglePendingIntent)
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
-            updateImage(context, settingsModel.filterIsOn)
+            updateImage(context, Config.filterIsOn)
         }
     }
 
@@ -87,10 +83,7 @@ class SwitchAppWidgetProvider : AppWidgetProvider() {
     }
 
     internal fun toggle(context: Context) {
-
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val settingsModel = SettingsModel(context.resources, sharedPreferences)
-        val filterIsOn = settingsModel.filterIsOn
+        val filterIsOn = Config.filterIsOn
         val command = if (filterIsOn) ScreenFilterService.COMMAND_OFF
                       else ScreenFilterService.COMMAND_ON
 

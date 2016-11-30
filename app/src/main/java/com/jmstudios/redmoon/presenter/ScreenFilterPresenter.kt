@@ -60,11 +60,10 @@ import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.activity.ShadesActivity
 import com.jmstudios.redmoon.event.*
-import com.jmstudios.redmoon.helper.AbstractAnimatorListener
-import com.jmstudios.redmoon.helper.ProfilesHelper
+import com.jmstudios.redmoon.helper.*
 import com.jmstudios.redmoon.manager.ScreenManager
 import com.jmstudios.redmoon.manager.WindowViewManager
-import com.jmstudios.redmoon.model.SettingsModel
+import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.model.ProfilesModel
 import com.jmstudios.redmoon.receiver.NextProfileCommandReceiver
 import com.jmstudios.redmoon.receiver.OrientationChangeReceiver
@@ -75,10 +74,10 @@ import com.jmstudios.redmoon.service.ServiceLifeCycleController
 import com.jmstudios.redmoon.thread.CurrentAppMonitoringThread
 import com.jmstudios.redmoon.view.ScreenFilterView
 
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 class ScreenFilterPresenter(private val mView: ScreenFilterView,
-                            private val mSettingsModel: SettingsModel,
                             private val mServiceController: ServiceLifeCycleController,
                             private val mContext: Context,
                             private val mWindowViewManager: WindowViewManager,
@@ -130,12 +129,12 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         if (filterIsOn) {
             Log.d(TAG, "Creating notification while NOT in off state")
             contentText = context.getString(
-                    if (mSettingsModel.automaticSuspend) R.string.running_no_warning
+                    if (Config.automaticSuspend) R.string.running_no_warning
                     else R.string.running)
             offOrOnDrawableResId = R.drawable.ic_stop
             offOrOnCommand = ScreenFilterService.intent(mContext)
             offOrOnCommand.putExtra(ScreenFilterService.BUNDLE_KEY_COMMAND, ScreenFilterService.COMMAND_OFF)
-            offOrOnActionText = context.getString(R.string.action_stop)
+            offOrOnActionText = context.getString(R.string.action_off)
         } else {
             Log.d(TAG, "Creating notification while in off state")
             contentText = context.getString(R.string.off)
@@ -167,7 +166,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
           .setContentIntent(settingsPI)
           .addAction(offOrOnDrawableResId, offOrOnActionText, offOrOnPI)
           .addAction(R.drawable.ic_next_profile,
-                     ProfilesHelper.getProfileName(profilesModel, mSettingsModel.profile, context),
+                     ProfilesHelper.getProfileName(profilesModel, Config.profile, context),
                      nextProfilePI)
           .setPriority(Notification.PRIORITY_MIN)
 
@@ -197,28 +196,29 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         mCurrentState.onScreenFilterCommand(commandFlag)
     }
 
-    //region OnSettingsChangedListener
-    @Subscribe fun onOffStateChanged(event: filterIsOnChanged) {
-        val filterIsOn = event.newValue
+    @Subscribe
+    fun onOffStateChanged(event: filterIsOnChanged) {
         //Broadcast to keep appwidgets in sync
         if (DEBUG) Log.i(TAG, "Sending update broadcast")
         val updateAppWidgetIntent = Intent(mContext, SwitchAppWidgetProvider::class.java)
         updateAppWidgetIntent.action = SwitchAppWidgetProvider.ACTION_UPDATE
-        updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_POWER, filterIsOn)
+        updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_POWER, Config.filterIsOn)
         mContext.sendBroadcast(updateAppWidgetIntent)
     }
 
-    @Subscribe fun onDimLevelChanged(event: dimLevelChanged) {
-        val dimLevel = event.newValue
+    @Subscribe
+    fun onDimLevelChanged(event: dimChanged) {
+        val dim = Config.dim
         if (filterIsOn || isPreviewing) {
             cancelRunningAnimator(mDimAnimator)
 
-            mView.filterDimLevel = dimLevel
+            mView.filterDimLevel = dim
         }
     }
 
-    @Subscribe fun onIntensityLevelChanged(event: intensityLevelChanged) {
-        val intensityLevel = event.newValue
+    @Subscribe
+    fun onIntensityLevelChanged(event: intensityChanged) {
+        val intensityLevel = Config.intensity
         if (filterIsOn || isPreviewing) {
             cancelRunningAnimator(mIntensityAnimator)
 
@@ -226,39 +226,41 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         }
     }
 
-    @Subscribe fun onColorChanged(event: colorChanged) {
-        val color = event.newValue
+    @Subscribe
+    fun onColorChanged(event: colorChanged) {
         if (filterIsOn || isPreviewing) {
-            mView.colorTempProgress = color
+            mView.colorTempProgress = Config.color
         }
     }
 
-    @Subscribe fun onLowerBrightnessChanged(event: lowerBrightnessChanged) {
-        val lowerBrightness = event.newValue
-        if (DEBUG) Log.i(TAG, "Lower brightness flag changed to: " + lowerBrightness)
-        if (filterIsOn) {
-            if (lowerBrightness) {
-                saveOldBrightnessState()
-                setBrightnessState(0, false, mContext)
-            } else {
-                restoreBrightnessState()
+    @Subscribe
+    fun onLowerBrightnessChanged(event: lowerBrightnessChanged) {
+        if (Util.hasWriteSettingsPermission) {
+            val lowerBrightness = Config.lowerBrightness
+            if (DEBUG) Log.i(TAG, "Lower brightness flag changed to: " + lowerBrightness)
+            if (filterIsOn) {
+                if (lowerBrightness) {
+                    saveOldBrightnessState()
+                    setBrightnessState(0, false, mContext)
+                } else {
+                    restoreBrightnessState()
+                }
             }
+        } else {
+            EventBus.getDefault().post(changeBrightnessDenied())
         }
     }
 
-
-    @Subscribe fun onProfileChanged(event: profileChanged) {
+    @Subscribe
+    fun onProfileChanged(event: profileChanged) {
         refreshForegroundNotification()
     }
 
-    @Subscribe fun onAutomaticSuspendChanged(event: automaticSuspendChanged) {
-        val automaticSuspend = event.newValue
+    @Subscribe
+    fun onAutomaticSuspendChanged(event: automaticSuspendChanged) {
         if (mCurrentState === mOnState) {
-            if (automaticSuspend) {
-                startAppMonitoring()
-            } else {
-                stopAppMonitoring()
-            }
+            if (Config.automaticSuspend) startAppMonitoring()
+            else stopAppMonitoring()
         }
     }
 
@@ -330,7 +332,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     //endregion
 
     private fun saveOldBrightnessState() {
-        if (mSettingsModel.brightnessControlFlag) {
+        if (Config.lowerBrightness) {
             val resolver = mContext.contentResolver
             try {
                 oldScreenBrightness = Settings.System.getInt(resolver, Settings.System.SCREEN_BRIGHTNESS)
@@ -343,13 +345,13 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         } else {
             oldScreenBrightness = -1
         }
-        mSettingsModel.brightnessAutomatic = oldIsAutomaticBrightness
-        mSettingsModel.brightnessLevel = oldScreenBrightness
+        Config.brightnessAutomatic = oldIsAutomaticBrightness
+        Config.brightnessLevel = oldScreenBrightness
     }
 
     private fun restoreBrightnessState() {
-        setBrightnessState(mSettingsModel.brightnessLevel,
-                mSettingsModel.brightnessAutomatic,
+        setBrightnessState(Config.brightnessLevel,
+                Config.brightnessAutomatic,
                 mContext)
     }
 
@@ -357,11 +359,8 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     fun startAppMonitoring() {
         if (DEBUG) Log.i(TAG, "Starting app monitoring")
         val powerManager = mContext.getSystemService(Context.POWER_SERVICE) as PowerManager
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT_WATCH) {
-            screenOff = !powerManager.isInteractive
-        } else {
-            screenOff = !powerManager.isScreenOn
-        }
+        screenOff = if (Util.atLeastAPI(20)) !powerManager.isInteractive
+                    else !powerManager.isScreenOn
 
         val filter = IntentFilter()
         filter.addAction(Intent.ACTION_SCREEN_OFF)
@@ -430,7 +429,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
                 PixelFormat.TRANSLUCENT)
 
         wlp.gravity = Gravity.TOP or Gravity.START
-        wlp.buttonBrightness = (if (mSettingsModel.dimButtonsFlag) 0 else -1).toFloat()
+        wlp.buttonBrightness = (if (Config.dimButtons) 0 else -1).toFloat()
 
         return wlp
     }
@@ -479,7 +478,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         mCurrentState = newState
 
         mCurrentState.onActivation(oldState)
-        mSettingsModel.filterIsOn = filterIsOn
+        Config.filterIsOn = filterIsOn
     }
 
 
@@ -502,21 +501,20 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
 
             openScreenFilter()
 
-            animateDimLevel(mSettingsModel.dimLevel, null)
-            animateIntensityLevel(mSettingsModel.intensityLevel, null)
+            animateDimLevel(Config.dim, null)
+            animateIntensityLevel(Config.intensity, null)
 
-            if (mSettingsModel.brightnessControlFlag) {
+            if (Config.lowerBrightness) {
                 saveOldBrightnessState()
                 setBrightnessState(0, false, mContext)
             }
 
-            if (mSettingsModel.automaticSuspend) {
+            if (Config.automaticSuspend) {
                 startAppMonitoring()
             }
         }
 
-        override val filterIsOn: Boolean
-            get() = true
+        override val filterIsOn = true
     }
 
     private inner class OffState : State() {
@@ -540,17 +538,16 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
                 })
             }
 
-            if (mSettingsModel.brightnessControlFlag) {
+            if (Config.lowerBrightness) {
                 restoreBrightnessState()
             }
 
-            if (mSettingsModel.automaticSuspend) {
+            if (Config.automaticSuspend) {
                 stopAppMonitoring()
             }
         }
 
-        override val filterIsOn: Boolean
-            get() = false
+        override val filterIsOn = false
     }
 
     /* This State is used to present the filter to the user when (s)he
@@ -568,9 +565,9 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             refreshForegroundNotification()
             openScreenFilter()
 
-            mView.filterDimLevel = mSettingsModel.dimLevel
-            mView.filterIntensityLevel = mSettingsModel.intensityLevel
-            mView.colorTempProgress = mSettingsModel.color
+            mView.filterDimLevel = Config.dim
+            mView.filterIntensityLevel = Config.intensity
+            mView.colorTempProgress = Config.color
         }
 
         override fun onScreenFilterCommand(commandFlag: Int) {
@@ -654,9 +651,8 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
 
         // Statically used by BootReceiver
         fun setBrightnessState(brightness: Int, automatic: Boolean, context: Context) {
-            if (android.os.Build.VERSION.SDK_INT >= 23 && !Settings.System.canWrite(context))
-                return
             if (DEBUG) Log.i(TAG, "Setting brightness to: $brightness, automatic: $automatic")
+            if (Util.atLeastAPI(23) && !Settings.System.canWrite(context)) return
             if (brightness >= 0) {
                 val resolver = context.contentResolver
                 Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, brightness)

@@ -42,14 +42,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.IBinder
-import android.preference.PreferenceManager
 import android.util.Log
 import android.view.WindowManager
 
 import com.jmstudios.redmoon.event.serviceStopped
 import com.jmstudios.redmoon.manager.ScreenManager
 import com.jmstudios.redmoon.manager.WindowViewManager
-import com.jmstudios.redmoon.model.SettingsModel
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.receiver.OrientationChangeReceiver
 import com.jmstudios.redmoon.receiver.SwitchAppWidgetProvider
@@ -60,7 +58,6 @@ import org.greenrobot.eventbus.EventBus
 class ScreenFilterService : Service(), ServiceLifeCycleController {
 
     lateinit private var mPresenter: ScreenFilterPresenter
-    lateinit private var mSettingsModel: SettingsModel
     private var mOrientationReceiver: OrientationChangeReceiver? = null
 
     override fun onCreate() {
@@ -72,15 +69,12 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         val context = this
         val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        mSettingsModel = SettingsModel(context.resources, sharedPreferences)
-
         // Wire MVP classes
-        mPresenter = ScreenFilterPresenter(ScreenFilterView(context), mSettingsModel, this, context, 
-                               WindowViewManager(windowManager), ScreenManager(this, windowManager))
+        mPresenter = ScreenFilterPresenter(ScreenFilterView(context), this, context, 
+                                           WindowViewManager(windowManager),
+                                           ScreenManager(this, windowManager))
 
         // Make Presenter listen to settings changes and orientation changes
-        mSettingsModel.openSettingsChangeListener()
         EventBus.getDefault().register(mPresenter)
         registerOrientationReceiver(mPresenter)
     }
@@ -100,7 +94,6 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
     override fun onDestroy() {
         if (DEBUG) Log.i(TAG, "onDestroy")
 
-        mSettingsModel.closeSettingsChangeListener()
         EventBus.getDefault().unregister(mPresenter)
         unregisterOrientationReceiver()
 

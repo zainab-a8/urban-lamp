@@ -37,7 +37,7 @@ import com.jmstudios.redmoon.activity.ShadesActivity
 import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.helper.ProfilesHelper
 import com.jmstudios.redmoon.model.ProfilesModel
-import com.jmstudios.redmoon.model.SettingsModel
+import com.jmstudios.redmoon.model.Config
 import org.greenrobot.eventbus.Subscribe
 
 import java.util.ArrayList
@@ -61,13 +61,11 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
     private var mIsListenerRegistered: Boolean = false
 
     // Settings model from the activity to save the ammount of profiles
-    private val mSettingsModel: SettingsModel
 
     init {
         layoutResource = R.layout.preference_profile_selector
         mProfilesModel = ProfilesModel(mContext)
         mIsListenerRegistered = false
-        mSettingsModel = (context as ShadesActivity).mSettingsModel
     }
 
     override fun onGetDefaultValue(a: TypedArray, index: Int): Any {
@@ -140,9 +138,9 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
             val profilesModel = ProfilesModel(mContext)
             val profileObject = ProfilesHelper.getProfile(profilesModel, mProfile, mContext)
 
-            mSettingsModel.dimLevel = profileObject.mDimProgress
-            mSettingsModel.intensityLevel = profileObject.mIntensityProgress
-            mSettingsModel.color = profileObject.mColorProgress
+            Config.dim = profileObject.mDimProgress
+            Config.intensity = profileObject.mIntensityProgress
+            Config.color = profileObject.mColorProgress
         }
     }
 
@@ -212,7 +210,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         set(progress) {
             currentColor = progress
             val fragment = (context as ShadesActivity).fragment
-            val colorPref = fragment.findPreference(context.resources.getString(R.string.pref_key_shades_color_temp)) as ColorSeekBarPreference
+            val colorPref = fragment.findPreference(context.resources.getString(R.string.pref_key_color)) as ColorSeekBarPreference
 
             colorPref.mColorTempSeekBar.progress = progress
         }
@@ -222,7 +220,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         set(progress) {
             currentIntensity = progress
             val fragment = (context as ShadesActivity).fragment
-            val intensityPref = fragment.findPreference(context.resources.getString(R.string.pref_key_shades_intensity_level)) as IntensitySeekBarPreference
+            val intensityPref = fragment.findPreference(context.resources.getString(R.string.pref_key_intensity)) as IntensitySeekBarPreference
 
             intensityPref.mIntensityLevelSeekBar.progress = progress
         }
@@ -232,7 +230,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         set(progress) {
             currentDim = progress
             val fragment = (context as ShadesActivity).fragment
-            val dimPref = fragment.findPreference(context.resources.getString(R.string.pref_key_shades_dim_level)) as DimSeekBarPreference
+            val dimPref = fragment.findPreference(context.resources.getString(R.string.pref_key_dim)) as DimSeekBarPreference
 
             dimPref.mDimLevelSeekBar.progress = progress
         }
@@ -256,30 +254,30 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
     private fun updateAmmountProfiles() {
         val ammountProfiles = mProfilesModel.profiles.size + DEFAULT_OPERATIONS_AM
         if (DEBUG) Log.i(TAG, "There are now $ammountProfiles profiles.")
-        mSettingsModel.ammountProfiles = ammountProfiles
+        Config.ammountProfiles = ammountProfiles
     }
 
-    @Subscribe fun onDimLevelChanged(event: dimLevelChanged) {
-        val dimLevel = event.newValue
-        if (dimLevel == currentDim) return
+    @Subscribe
+    fun onDimLevelChanged(event: dimChanged) {
+        if (Config.dim == currentDim) return
         mProfileSpinner.setSelection(0)
     }
 
-    @Subscribe fun onIntensityLevelChanged(event: intensityLevelChanged) {
-        val intensityLevel = event.newValue
-        if (intensityLevel == currentIntensity) return
+    @Subscribe
+    fun onIntensityLevelChanged(event: intensityChanged) {
+        if (Config.intensity == currentIntensity) return
         mProfileSpinner.setSelection(0)
     }
 
-    @Subscribe fun onColorChanged(event: colorChanged) {
-        val color = event.newValue
-        if (color == currentColor) return
+    @Subscribe
+    fun onColorChanged(event: colorChanged) {
+        if (Config.color == currentColor) return
         mProfileSpinner.setSelection(0)
     }
 
-    @Subscribe fun onProfileChanged(event: profileChanged) {
-        val profile = event.newValue
-        mProfile = profile
+    @Subscribe
+    fun onProfileChanged(event: profileChanged) {
+        mProfile = Config.profile
         mProfileSpinner.setSelection(mProfile)
 
         if (mProfile != 0) {

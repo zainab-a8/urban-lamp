@@ -21,17 +21,14 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.preference.Preference
-import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
 import android.provider.Settings
-import android.view.MenuItem
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.activity.ShadesActivity
 import com.jmstudios.redmoon.thread.CurrentAppMonitoringThread
 
-class SecureSuspendFragment : PreferenceFragment() {
+class SecureSuspendFragment : EventPreferenceFragment() {
 
     private val appMonitoringIsWorking: Boolean
         get() = CurrentAppMonitoringThread.isAppMonitoringWorking(context)

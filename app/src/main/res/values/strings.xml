@@ -42,7 +42,7 @@
     <string name="shortcut_activity">Red Moon Toggle</string>
     <string name="intro_label">Intro</string>
     <string name="show_intro_text">Show intro</string>
-    <string name="automatic_suspend_preference_activity">Suspend in secure apps</string>
+    <string name="secure_suspend_preference_activity">Suspend in secure apps</string>
 
     <!-- Overlay popup -->
     <string name="overlay_dialog_title">Drawing over other apps</string>
@@ -60,7 +60,7 @@
 
     <!-- Preference -->
     <string name="pref_title_appearance">Filter</string>
-    <string name="pref_title_automatic_filter">Automatically turn the filter on and off</string>
+    <string name="pref_title_time_toggle">Automatically turn the filter on and off</string>
     <string name="pref_title_startup">Startup</string>
     <string name="pref_title_other">Other</string>
 
@@ -71,7 +71,7 @@
     <string name="shades_color_temp">Color temperature</string>
     <string name="control_brightness_title">Lower brightness</string>
 
-    <string name="automatic_filter_title">Automatic toggle</string>
+    <string name="time_toggle_title">Automatic toggle</string>
     <string name="custom_start_time_title">Start at</string>
     <string name="custom_end_time_title">Stop at</string>
     <string name="location_title">Location</string>
@@ -80,9 +80,9 @@
     <string name="longitude_short">Long</string>
     <string name="searching_location">Searching for location</string>
 
-    <string name="automatic_suspend_title">Automatically suspend filter in secure apps</string>
-    <!-- Automatic suspend subscreen -->
-    <string name="automatic_suspend_summary">Some features of Android are protected against screen overlays and won\'t work when Red Moon is enabled. For example installing APKs or granting permissions on Android 6.0+.\n\nWhen this feature is enabled Red Moon will automatically suspend when one of these features is opened and restore the filter when you are done. This way you don\'t have to worry about manually turning Red Moon on and off.\n\nThis feature may slightly lower the battery life of your device. Furthermore this feature may not work on all devices.</string>
+    <string name="secure_suspend_title">Automatically suspend filter in secure apps</string>
+    <!-- Secure suspend subscreen -->
+    <string name="secure_suspend_summary">Some features of Android are protected against screen overlays and won\'t work when Red Moon is enabled. For example installing APKs or granting permissions on Android 6.0+.\n\nWhen this feature is enabled Red Moon will automatically suspend when one of these features is opened and restore the filter when you are done. This way you don\'t have to worry about manually turning Red Moon on and off.\n\nThis feature may slightly lower the battery life of your device. Furthermore this feature may not work on all devices.</string>
     <string name="text_switch_on">On</string>
     <string name="text_switch_off">Off</string>
     <string name="usage_stats_dialog_title">Usage access</string>
@@ -139,13 +139,13 @@
     <string name="standard_profiles_array_1">Default</string>
     <string name="standard_profiles_array_2">Reading</string>
 
-    <!-- Automatic filter -->
-    <!-- automatic_filter_options_array -->
-    <string name="automatic_filter_options_array_0">Manual</string>
-    <string name="automatic_filter_options_array_1">Automatic (sun)</string>
-    <string name="automatic_filter_options_array_2">Automatic (custom)</string>
+    <!-- Time toggle -->
+    <!-- time_toggle_options_array -->
+    <string name="time_toggle_options_array_0">Manual</string>
+    <string name="time_toggle_options_array_1">Automatic (sun)</string>
+    <string name="time_toggle_options_array_2">Automatic (custom)</string>
 
-    <string-array name="automatic_filter_values_array"
+    <string-array name="time_toggle_values_array"
                   translatable="false">
       <item>never</item>
       <item>sun</item>

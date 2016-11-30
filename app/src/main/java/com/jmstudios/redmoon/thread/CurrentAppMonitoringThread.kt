@@ -22,10 +22,10 @@ import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.ContextWrapper
-import android.content.Intent
 import android.util.Log
 
 import com.jmstudios.redmoon.event.moveToState
+import com.jmstudios.redmoon.helper.Util
 import com.jmstudios.redmoon.service.ScreenFilterService
 
 import java.lang.Thread
@@ -88,24 +88,24 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 
         private fun getCurrentApp(context: Context): String {
             // http://stackoverflow.com/q/33581311
-            if (android.os.Build.VERSION.SDK_INT >= 21) {
+            if (Util.atLeastAPI(21)) {
                 return getCurrentAppUsingUsageStats(context)
             } else {
                 return getCurrentAppUsingActivityManager(context)
             }
         }
 
-       @TargetApi(21)
+        @TargetApi(21)
         private fun getCurrentAppUsingUsageStats(context: Context): String {
             try {
-                if (android.os.Build.VERSION.SDK_INT >= 21) {
+                if (Util.atLeastAPI(21)) {
                     // Although the UsageStatsManager was added in API
                     // 21, the constant to specify the
                     // UsageStatsManager wasn't added until API 22. So
                     // we use the value of that constant on API 21.
                     val usageStatsServiceString =
-                        if (android.os.Build.VERSION.SDK_INT < 22) "usagestats"
-                        else Context.USAGE_STATS_SERVICE
+                        if (Util.atLeastAPI(22)) Context.USAGE_STATS_SERVICE
+                        else "usagestats"
                     val usm = context.getSystemService(usageStatsServiceString)
                                                                 as UsageStatsManager
                     val time = System.currentTimeMillis()
@@ -134,7 +134,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 
         @Suppress("DEPRECATION") // Needed for pre-lollipop compatibility
         private fun getCurrentAppUsingActivityManager(context: Context): String {
-            if (android.os.Build.VERSION.SDK_INT < 21) {
+            if (Util.atLeastAPI(1)) {
                 val am = ContextWrapper(context).baseContext
                           .getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
                 return am.getRunningTasks(1)[0].topActivity.packageName

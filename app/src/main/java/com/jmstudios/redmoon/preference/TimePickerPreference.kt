@@ -25,6 +25,7 @@ import android.view.View
 import android.widget.TimePicker
 
 import com.jmstudios.redmoon.R
+import com.jmstudios.redmoon.helper.Util
 
 open class TimePickerPreference(context: Context, attrs: AttributeSet) : DialogPreference(context, attrs) {
 
@@ -33,16 +34,16 @@ open class TimePickerPreference(context: Context, attrs: AttributeSet) : DialogP
 
     @Suppress("DEPRECATION") // Need deprecated 'currentMinute' for API<23
     private var currentMinute: Int
-        get() = if (android.os.Build.VERSION.SDK_INT >= 23) mTimePicker.minute
+        get() = if (Util.atLeastAPI(23)) mTimePicker.minute
                 else mTimePicker.currentMinute
-        set(m) = if (android.os.Build.VERSION.SDK_INT >= 23) mTimePicker.minute = m
+        set(m) = if (Util.atLeastAPI(23)) mTimePicker.minute = m
                  else mTimePicker.currentMinute = m
 
     @Suppress("DEPRECATION") // Need deprecated 'currentHour' for API<23
     private var currentHour: Int
-        get() = if (android.os.Build.VERSION.SDK_INT >= 23) mTimePicker.hour
+        get() = if (Util.atLeastAPI(23)) mTimePicker.hour
                 else mTimePicker.currentHour
-        set(h) = if (android.os.Build.VERSION.SDK_INT >= 23) mTimePicker.hour = h
+        set(h) = if (Util.atLeastAPI(23)) mTimePicker.hour = h
                  else mTimePicker.currentHour = h
 
     override fun onGetDefaultValue(a: TypedArray, index: Int): Any {

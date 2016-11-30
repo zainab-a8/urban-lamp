@@ -17,28 +17,28 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference
-        android:key="@string/pref_key_automatic_filter"
+        android:key="@string/pref_key_time_toggle"
         android:title="@string/automatic_filter_title"
         android:layout="@layout/switch_bar"
         android:defaultValue="false" />
 
-    <com.jmstudios.redmoon.preference.FilterTimePreference
-        android:key="@string/pref_key_custom_start_time"
+    <com.jmstudios.redmoon.preference.TimePickerPreference
+        android:key="@string/pref_key_custom_turn_on_time"
         android:title="@string/custom_start_time_title"
         android:defaultValue="22:00" />
 
-    <com.jmstudios.redmoon.preference.FilterTimePreference
-        android:key="@string/pref_key_custom_end_time"
+    <com.jmstudios.redmoon.preference.TimePickerPreference
+        android:key="@string/pref_key_custom_turn_off_time"
         android:title="@string/custom_end_time_title"
         android:defaultValue="06:00" />
 
     <SwitchPreference
         android:key="@string/pref_key_use_location"
         android:title="@string/location_title"
-        android:dependency="@string/pref_key_automatic_filter"
+        android:dependency="@string/pref_key_time_toggle"
         android:defaultValue="false" />
 
-    <com.jmstudios.redmoon.preference.LocationPreference
+    <Preference
         android:title="@string/automatic_suspend_title"
         android:key="@string/pref_key_location"
         android:dependency="@string/pref_key_use_location" />

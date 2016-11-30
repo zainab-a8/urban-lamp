@@ -40,62 +40,61 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.preference.Preference
-import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
 import android.provider.Settings
-import android.support.design.widget.Snackbar
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.design.widget.FloatingActionButton
+import android.util.Log
+import android.widget.Toast
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.activity.ShadesActivity
-import com.jmstudios.redmoon.model.SettingsModel
-import com.jmstudios.redmoon.preference.ProfileSelectorPreference
+import com.jmstudios.redmoon.application.RedMoonApplication
+import com.jmstudios.redmoon.event.*
+import com.jmstudios.redmoon.helper.Util
+import com.jmstudios.redmoon.model.Config
+import com.jmstudios.redmoon.preference.ColorSeekBarPreference
+import com.jmstudios.redmoon.preference.DimSeekBarPreference
+import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
+import com.jmstudios.redmoon.service.ScreenFilterService
+
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
-class FilterFragment : PreferenceFragment() {
-
-    private lateinit var mView: View
-    private lateinit var mHelpSnackbar: Snackbar
-    private val mSettingsModel: SettingsModel
-        get() = (activity as ShadesActivity).mSettingsModel
+class FilterFragment : EventPreferenceFragment() {
+    private var hasShownWarningToast = false
 
     // Preferences
-    private val profileSelectorPref: ProfileSelectorPreference
+    private val colorPref: ColorSeekBarPreference
         get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_profile_spinner)) as ProfileSelectorPreference)
+                (getString(R.string.pref_key_color)) as ColorSeekBarPreference)
 
-    private val darkThemePref: SwitchPreference
+    private val intensityPref: IntensitySeekBarPreference
         get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_dark_theme)) as SwitchPreference)
+                (getString(R.string.pref_key_intensity)) as IntensitySeekBarPreference)
+
+    private val dimPref: DimSeekBarPreference
+        get()= (preferenceScreen.findPreference
+               (getString(R.string.pref_key_dim)) as DimSeekBarPreference)
 
     private val lowerBrightnessPref: SwitchPreference
         get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_control_brightness)) as SwitchPreference)
-    
-    private val timeTogglePref: Preference
-        get() = (preferenceScreen.findPreference (getString(R.string.pref_key_time_toggle)))
+                (getString(R.string.pref_key_lower_brightness)) as SwitchPreference)
 
-    private val otherPrefCategory: Preference
-        get() = preferenceScreen.findPreference(getString(R.string.pref_key_other))
+    private val timeTogglePref: Preference
+        get() = (preferenceScreen.findPreference(getString(R.string.pref_key_time_toggle)))
 
     private val automaticSuspendPref: Preference
         get() = preferenceScreen.findPreference(getString(R.string.pref_key_automatic_suspend))
+
+    private val mToggleFab: FloatingActionButton
+        get() = activity.findViewById(R.id.toggle_fab) as FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         addPreferencesFromResource(R.xml.filter_preferences)
 
-        darkThemePref.onPreferenceChangeListener =
-                Preference.OnPreferenceChangeListener { preference, newValue ->
-                    activity.recreate()
-                    true
-                }
-
-        if (!hasWriteSettingsPermission) lowerBrightnessPref.isChecked = false
+        if (!Util.hasWriteSettingsPermission) lowerBrightnessPref.isChecked = false
 
         lowerBrightnessPref.onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { preference, newValue ->
@@ -106,116 +105,109 @@ class FilterFragment : PreferenceFragment() {
                     true
                 }
 
-        // TODO: Add time toggle pref here
-        timeTogglePref.onPreferenceClickListener =
-                Preference.OnPreferenceClickListener {
-                    (activity as ShadesActivity).launchTimeToggleFragment()
-                    true
-                }
+        mToggleFab.setOnClickListener {
+        if (DEBUG) Log.i(TAG, "FAB clicked while filter is: " + Config.filterIsOn)
+            if (!hasShownWarningToast || !Config.filterIsOn) {
+                val duration = Toast.LENGTH_SHORT
+                val toast = Toast.makeText(RedMoonApplication.app,
+                                           getString(R.string.toast_warning_install),
+                                           duration)
+                toast.show()
+                hasShownWarningToast = true
+            }
 
-        // Automatic suspend
-        automaticSuspendPref.onPreferenceClickListener =
-                Preference.OnPreferenceClickListener {
-                    (activity as ShadesActivity).launchSecureSuspendFragment()
-                    true
-                }
-        val automaticSuspendOn = (activity as ShadesActivity).mSettingsModel.automaticSuspend
-        automaticSuspendPref.setSummary(if (automaticSuspendOn)
-            R.string.text_switch_on
-        else
-            R.string.text_switch_off)
-    }
+            EventBus.getDefault().postSticky(moveToState(
+                    if (Config.filterIsOn) ScreenFilterService.COMMAND_OFF
+                    else ScreenFilterService.COMMAND_ON))
+        }
 
-    override fun onStart() {
-        EventBus.getDefault().register(profileSelectorPref)
-        super.onStart()
-    }
-
-    override fun onStop(){
-        EventBus.getDefault().unregister(profileSelectorPref)
-        super.onStop()
+        updateAutomaticSuspendSummary()
     }
 
     override fun onResume() {
         super.onResume()
+
+        mToggleFab.show()
+        updateFabIcon()
 
         // When the fragment is not on the screen, but the user
         // updates the profile through the notification. the
         // profile spinner and the seekbars will have missed this
         // change. To update them correctly, we artificially change
         // these settings.
-        /* val intensity = mSettingsModel.intensityLevel */
-        /* mSettingsModel.intensityLevel = if (intensity == 0) 1 else 0 */
-        /* mSettingsModel.intensityLevel = intensity */
+        /* val intensity = Config.intensityLevel */
+        /* Config.intensityLevel = if (intensity == 0) 1 else 0 */
+        /* Config.intensityLevel = intensity */
 
-        /* val dim = mSettingsModel.dimLevel */
-        /* mSettingsModel.dimLevel = if (dim == 0) 1 else 0 */
-        /* mSettingsModel.dimLevel = dim */
+        /* val dim = Config.dimLevel */
+        /* Config.dimLevel = if (dim == 0) 1 else 0 */
+        /* Config.dimLevel = dim */
 
-        /* val color = mSettingsModel.color */
-        /* mSettingsModel.color = if (color == 0) 1 else 0 */
-        /* mSettingsModel.color = color */
+        /* val color = Config.color */
+        /* Config.color = if (color == 0) 1 else 0 */
+        /* Config.color = color */
 
         // The profile HAS to be updated last, otherwise the spinner
         // will switched to custom.
-        /* val profile = mSettingsModel.profile */
-        /* mSettingsModel.profile = if (profile == 0) 1 else 0 */
-        /* mSettingsModel.profile = profile */
+        /* val profile = Config.profile */
+        /* Config.profile = if (profile == 0) 1 else 0 */
+        /* Config.profile = profile */
 
-        // TODO: Add time toggle pref here
-        
-        val automaticSuspendOn = mSettingsModel.automaticSuspend
-        automaticSuspendPref.setSummary(if (automaticSuspendOn)
-            R.string.text_switch_on
-        else
-            R.string.text_switch_off)
+        updateAutomaticSuspendSummary()
     }
 
-    private val hasWriteSettingsPermission: Boolean
-        get() = if (android.os.Build.VERSION.SDK_INT < 23) true
-                else Settings.System.canWrite(context)
+    override fun onPause() {
+        mToggleFab.hide()
+        super.onPause()
+    }
+
+    private fun updateAutomaticSuspendSummary() {
+        // TODO: Show the time here instead of just "on" or "off"
+        automaticSuspendPref.setSummary(if (Config.automaticSuspend) R.string.text_switch_on
+                                        else R.string.text_switch_off)
+    }
+
+    private fun updateFabIcon() {
+        mToggleFab.setImageResource(if (Config.filterIsOn) R.drawable.fab_pause
+                                    else R.drawable.fab_start)
+    }
 
     @TargetApi(23) // Safe to call on all APIs but Android Studio doesn't know
     private fun getWriteSettingsPermission(): Boolean {
-        if (!hasWriteSettingsPermission) {
+        if (!Util.hasWriteSettingsPermission) {
             val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
                                 Uri.parse("package:" + context.packageName))
             startActivityForResult(intent, -1)
         }
-        return (hasWriteSettingsPermission)
+        return (Util.hasWriteSettingsPermission)
         }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val v = super.onCreateView(inflater, container, savedInstanceState)
-        mView = v
-        return v
+    //region presenter
+    @Subscribe
+    fun onFilterIsOnChanged(event: filterIsOnChanged) {
+        updateFabIcon()
     }
 
-    private fun setPreferencesEnabled(enabled: Boolean) {
-        val root = preferenceScreen
-        for (i in 0..root.preferenceCount - 1) {
-            root.getPreference(i).isEnabled = enabled
-        }
-        otherPrefCategory.isEnabled = true
-        automaticSuspendPref.isEnabled = enabled
+    @Subscribe
+    fun onColorChanged(event: colorChanged) {
+        colorPref.setProgress(Config.color)
     }
 
-    /* private fun showHelpSnackbar() { */
-    /*     mHelpSnackbar = Snackbar.make(mView, activity.getString(R.string.help_snackbar_text), */
-    /*             Snackbar.LENGTH_INDEFINITE) */
+    @Subscribe
+    fun onIntensityLevelChanged(event: intensityChanged) {
+        intensityPref.setProgress(Config.intensity)
+    }
 
-    /*     if (mSettingsModel.darkThemeFlag) { */
-    /*         val group = mHelpSnackbar.view as ViewGroup */
-    /*         group.setBackgroundColor(ContextCompat.getColor(activity, R.color.snackbar_color_dark_theme)) */
+    @Subscribe
+    fun onDimLevelChanged(event: dimChanged) {
+        dimPref.setProgress(Config.dim)
+    }
 
-    /*         val snackbarTextId = android.support.design.R.id.snackbar_text */
-    /*         val textView = group.findViewById(snackbarTextId) as TextView */
-    /*         textView.setTextColor(ContextCompat.getColor(activity, R.color.text_color_dark_theme)) */
-    /*     } */
-
-    /*     mHelpSnackbar.show() */
-    /* } */
+    @Subscribe
+    fun onthemeChanged(event: themeChanged) {
+        activity.recreate()
+    }
+    //endregion
 
     companion object {
         private val TAG = "FilterFragment"

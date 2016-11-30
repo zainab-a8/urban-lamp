@@ -36,19 +36,20 @@
 -->
 <resources>
   <string name="pref_key_profile_spinner" translatable="false">pref_key_profile_spinner</string>
-  <string name="pref_key_shades_dim_level" translatable="false">pref_key_shades_dim_level</string>
-  <string name="pref_key_shades_intensity_level" translatable="false">pref_key_shades_intensity_level</string>
-  <string name="pref_key_shades_color_temp" translatable="false">pref_key_shades_color_temp</string>
-  <string name="pref_key_control_brightness" translatable="false">pref_key_control_brightness</string>
+  <string name="pref_key_dim" translatable="false">pref_key_shades_dim_level</string>
+  <string name="pref_key_intensity" translatable="false">pref_key_shades_intensity_level</string>
+  <string name="pref_key_color" translatable="false">pref_key_shades_color_temp</string>
+  <string name="pref_key_lower_brightness" translatable="false">pref_key_control_brightness</string>
   <string name="pref_key_keep_running_after_reboot" translatable="false">pref_key_keep_running_after_reboot</string>
   <string name="pref_key_always_open_on_startup" translatable="false">pref_key_always_open_on_startup</string>
-  <string name="pref_key_shades_power_state" translatable="false">pref_key_shades_power_state</string>
+  <string name="pref_key_filter_is_on" translatable="false">pref_key_shades_power_state</string>
   <string name="pref_key_shades_pause_state" translatable="false">pref_key_shades_pause_state</string>
   <string name="pref_key_dark_theme" translatable="false">pref_key_dark_theme</string>
-  <string name="pref_key_automatic_filter" translatable="false">pref_key_automatic_filter</string>
-  <string name="pref_key_time_toggle" translatable="false">pref_key_time_toggle</string>
-  <string name="pref_key_custom_start_time" translatable="false">pref_key_custom_start_time</string>
-  <string name="pref_key_custom_end_time" translatable="false">pref_key_custom_end_time</string>
+  <string name="pref_key_time_toggle" translatable="false">pref_key_automatic_filter</string>
+  <string name="pref_key_custom_turn_on_time" translatable="false">pref_key_custom_start_time</string>
+  <string name="pref_key_custom_turn_off_time" translatable="false">pref_key_custom_end_time</string>
+  <string name="pref_key_sunset_time" translatable="false">pref_key_sunset_time</string>
+  <string name="pref_key_sunrise_time" translatable="false">pref_key_sunrise_time</string>
   <string name="pref_key_location" translatable="false">pref_key_location</string>
   <string name="pref_key_use_location" translatable="false">pref_key_use_location</string>
   <string name="pref_key_github" translatable="false">pref_key_github</string>
@@ -57,7 +58,7 @@
   <string name="pref_key_dim_buttons" translatable="false">pref_key_dim_buttons</string>
   <string name="pref_key_brightness_automatic" translatable="false">pref_key_brightness_automatic</string>
   <string name="pref_key_brightness_level" translatable="false">pref_key_brightness_level</string>
-  <string name="pref_key_ammount_profiles" translatable="false">pref_key_ammount_profiles</string>
+  <string name="pref_key_num_profiles" translatable="false">pref_key_ammount_profiles</string>
   <string name="pref_key_intro_shown" translatable="false">pref_key_intro_shown</string>
   <string name="pref_key_automatic_suspend" translatable="false">pref_key_automatic_suspend</string>
 
