@@ -75,4 +75,20 @@ Red Moon bloque la lumière bleue produite par votre écran, ce qui vous permet 
     <string name="intro_slide_4_title">Commencer !</string>
     <string name="intro_slide_4_text">Pour activer Red Moon, appuyez sur le bouton dans le coin supérieur droit.</string>
 
+    <string name="automatic_suspend_preference_activity">Suspendre automatiquement</string>
+
+    <string name="running_no_warning">Actif</string>
+    <string name="automatic_suspend_title">Supendre automatiquement le filtre pour les applications sécurisées</string>
+    <string name="automatic_suspend_summary">Certaines fonctionnalités d\'Android sont protégées contre la superposition d\'écran (par exemple l\'installation d\'APK ou la gestion des permissions sur Android 6.0+) et ne fonctionneront pas lorsque Red Moon est actif. 
+
+Lorsque cette option est activée, Red Moon se suspendra lorsque l\'une de ces fonctionnalités est lancée, et relancera le filtre après. Ainsi, vous n\'avez pas à vous soucier d\'activer ou désactiver manuellement Red Moon.
+
+Cette option peu réduire l\'autonomie de la batterie. De plus elle peut me pas fonctionner sur certains appareils.</string>
+    <string name="text_switch_on">Activé</string>
+    <string name="text_switch_off">Désactivé</string>
+    <string name="usage_stats_dialog_title">Autoriser l\'accès aux données d\'utilisation</string>
+    <string name="usage_stats_dialog_message">Autorisez Red Moon à accéder aux données d\'utilisation dans la prochaine boîte de dialogue pour activer cette option.
+
+Red Moon nécessite cette autorisation pour voir dans quelle application vous vous situez et suspendre son activité lorsque nécessaire. Red Moon n\'utilisera ces données que pour suspendre l\'affichage du filtre.</string>
+
     </resources>
