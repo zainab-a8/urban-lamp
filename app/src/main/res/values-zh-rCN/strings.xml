@@ -16,7 +16,7 @@
 
     <string name="running">运行中……需要暂停来安装APK</string>
     <string name="pref_title_appearance">滤镜</string>
-    <string name="pref_title_automatic_filter">滤镜时间段</string>
+    <string name="pref_title_time_toggle">滤镜时间段</string>
     <string name="pref_title_startup">启动</string>
     <string name="button_add_profile">添加</string>
     <string name="shades_dim_level">暗度</string>

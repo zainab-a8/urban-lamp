@@ -10,7 +10,7 @@
     <string name="pause_action">Παύση</string>
 
     <string name="pref_title_appearance">Φίλτρο</string>
-    <string name="pref_title_automatic_filter">Ώρες φίλτρου</string>
+    <string name="pref_title_time_toggle">Ώρες φίλτρου</string>
     <string name="pref_title_startup">Εκκίνηση</string>
     <string name="pref_title_other">Άλλα</string>
 

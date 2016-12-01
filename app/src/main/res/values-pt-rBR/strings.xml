@@ -16,7 +16,7 @@
 
     <string name="button_add_profile">Adicionar</string>
     <string name="button_remove_profile">Excluir</string>
-    <string name="pref_title_automatic_filter">Horários de funcionamento</string>
+    <string name="pref_title_time_toggle">Horários de funcionamento</string>
     <string name="shades_intensity_level">Nível de intensidade</string>
     <string name="control_brightness_title">Diminuir brilho</string>
 

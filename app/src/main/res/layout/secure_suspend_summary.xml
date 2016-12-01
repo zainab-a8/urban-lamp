@@ -17,7 +17,7 @@
 -->
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/automatic_suspend_summary_text"
+    android:id="@+id/secure_suspend_summary_text"
     android:text="@string/secure_suspend_summary"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"

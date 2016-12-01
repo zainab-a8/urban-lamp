@@ -38,7 +38,7 @@
     <string name="email_me_summary">Schreiben Sie mir eine Email für Vorschläge oder Fehlerberichte</string>
     <string name="email_me_title">Schreiben Sie dem Entwickler eine Email (marienraat@riseup.net)</string>
     <string name="ok_dialog">OK</string>
-    <string name="pref_title_automatic_filter">Automatischer Filter</string>
+    <string name="pref_title_time_toggle">Automatischer Filter</string>
     <string name="project_page_summary">Mehr Informationen, Feedback und eigener Beitrag</string>
     <string name="project_page_title">Homepage des Projektes</string>
     <string name="remove_profile_dialog_title">Dieses Profil löschen?</string>

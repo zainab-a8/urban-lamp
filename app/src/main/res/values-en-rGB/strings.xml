@@ -11,7 +11,7 @@
     <string name="pause_action">Pause</string>
 
     <string name="pref_title_appearance">Filter</string>
-    <string name="pref_title_automatic_filter">Filter times</string>
+    <string name="pref_title_time_toggle">Filter times</string>
     <string name="pref_title_startup">Startup</string>
     <string name="pref_title_other">Other</string>
 

@@ -11,7 +11,7 @@
 
     <!-- Preference -->
     <string name="pref_title_appearance">Фильтр</string>
-    <string name="pref_title_automatic_filter">Время фильтра</string>
+    <string name="pref_title_time_toggle">Время фильтра</string>
     <string name="pref_title_startup">Запуск</string>
     <string name="pref_title_other">Другое</string>
 
@@ -62,7 +62,7 @@
     <string name="standard_profiles_array_1">По умолчанию</string>
     <string name="standard_profiles_array_2">Чтения</string>
 
-    <!-- Automatic filter -->
+    <!-- Time Toggle -->
     <!-- time_toggle_options_array -->
     <string name="time_toggle_options_array_0">Инструкция</string>
     <string name="time_toggle_options_array_1">Солнце</string>
@@ -74,11 +74,11 @@
     <string name="pause_action">Пауза</string>
 
     <string name="resume_action">Продолжить</string>
-    <string name="automatic_suspend_preference_activity">Автоматическая приостановка</string>
+    <string name="secure_suspend_preference_activity">Автоматическая приостановка</string>
 
     <string name="running_no_warning">Запущено</string>
-    <string name="automatic_suspend_title">Автоматически приостанавливать фильтр в безопасных приложениях</string>
-    <string name="automatic_suspend_summary">Некоторые функции Android защищены от перекрытия другими приложениями и не будут работать, когда приложение Red Moon запущено. Например, установка APK-файлов или предоставление разрешений на Android 6.0+.
+    <string name="secure_suspend_title">Автоматически приостанавливать фильтр в безопасных приложениях</string>
+    <string name="secure_suspend_summary">Некоторые функции Android защищены от перекрытия другими приложениями и не будут работать, когда приложение Red Moon запущено. Например, установка APK-файлов или предоставление разрешений на Android 6.0+.
 
 Если эта функция включена, Red Moon автоматически приостановит свою работу, когда одна из таких защищённых функций будет запущена, и восстановит фильтр, когда такая функция завершит работу. Таким образом, вам не нужно будет беспокоиться о выключении и включении Red Moon вручную.
 

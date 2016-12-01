@@ -9,7 +9,7 @@
     <string name="pause_action">Pausar</string>
 
     <string name="pref_title_appearance">Filtro</string>
-    <string name="pref_title_automatic_filter">Horas de funcionamiento</string>
+    <string name="pref_title_time_toggle">Horas de funcionamiento</string>
     <string name="pref_title_startup">Inicio</string>
     <string name="pref_title_other">Otros</string>
 

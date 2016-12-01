@@ -75,7 +75,7 @@
     <string name="time_toggle_options_array_2">تلقائي (مخصص)</string>
 
     <string name="shades_settings">القمر الأحمر</string>
-    <string name="pref_title_automatic_filter">عدد الترشيح</string>
+    <string name="pref_title_time_toggle">عدد الترشيح</string>
     <string name="secure_suspend_preference_activity">الإيقاف التلقائي</string>
 
     <string name="secure_suspend_title">إيقاف المرشح تلقائياً في التطبيقات الآمنة</string>
