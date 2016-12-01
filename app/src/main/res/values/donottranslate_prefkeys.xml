@@ -46,6 +46,7 @@
   <string name="pref_key_shades_pause_state" translatable="false">pref_key_shades_pause_state</string>
   <string name="pref_key_dark_theme" translatable="false">pref_key_dark_theme</string>
   <string name="pref_key_time_toggle" translatable="false">pref_key_automatic_filter</string>
+  <string name="pref_key_time_toggle_header" translatable="false">pref_key_time_toggle_filter</string>
   <string name="pref_key_custom_turn_on_time" translatable="false">pref_key_custom_start_time</string>
   <string name="pref_key_custom_turn_off_time" translatable="false">pref_key_custom_end_time</string>
   <string name="pref_key_sunset_time" translatable="false">pref_key_sunset_time</string>
@@ -60,6 +61,6 @@
   <string name="pref_key_brightness_level" translatable="false">pref_key_brightness_level</string>
   <string name="pref_key_num_profiles" translatable="false">pref_key_ammount_profiles</string>
   <string name="pref_key_intro_shown" translatable="false">pref_key_intro_shown</string>
-  <string name="pref_key_automatic_suspend" translatable="false">pref_key_automatic_suspend</string>
-
+  <string name="pref_key_secure_suspend" translatable="false">pref_key_automatic_suspend</string>
+  <string name="pref_key_secure_suspend_header" translatable="false">pref_key_secure_suspend_header</string>
 </resources>

@@ -18,7 +18,7 @@
     <string name="shades_color_temp">Temperatura barwowa</string>
     <string name="control_brightness_title">Zmniejsz jasność</string>
 
-    <string name="automatic_filter_title">Tryb włączania</string>
+    <string name="time_toggle_title">Tryb włączania</string>
     <string name="custom_start_time_title">Wznawiaj o</string>
     <string name="custom_end_time_title">Zatrzymuj o</string>
     <string name="location_title">Lokalizacja</string>
@@ -51,18 +51,18 @@
     <string name="standard_profiles_array_1">Domyślny</string>
     <string name="standard_profiles_array_2">Czytanie</string>
 
-    <string name="automatic_filter_options_array_0">Manualny</string>
-    <string name="automatic_filter_options_array_1">Automatyczny (słońce)</string>
-    <string name="automatic_filter_options_array_2">Automatyczny (własny)</string>
+    <string name="time_toggle_options_array_0">Manualny</string>
+    <string name="time_toggle_options_array_1">Automatyczny (słońce)</string>
+    <string name="time_toggle_options_array_2">Automatyczny (własny)</string>
 
     <string name="intro_label">Wprowadzenie</string>
     <string name="show_intro_text">Pokaż wprowadzenie</string>
-    <string name="automatic_suspend_preference_activity">Automatyczne wstrzymywanie</string>
+    <string name="secure_suspend_preference_activity">Automatyczne wstrzymywanie</string>
 
     <string name="resume_action">Wznów</string>
     <string name="pause_action">Wstrzymaj</string>
 
-    <string name="automatic_suspend_title">Automatycznie wstrzymaj filtr w zaufanych aplikacjach</string>
+    <string name="secure_suspend_title">Automatycznie wstrzymaj filtr w zaufanych aplikacjach</string>
     <string name="usage_stats_dialog_message">W następnym ekranie zezwól aplikacji Red Moon na użytkowanie danych monitorujących, by włączyć tą funkcję.
 
 Red Moon potrzebuje dostępu do użytkowania, żeby zobaczyć jaką aplikację masz włączoną i by wstrzymać działanie filtru w zaufanych aplikacjach. Red Moon będzie używał tych danych tylko w celu wstrzymywania filtru.</string>
@@ -70,7 +70,7 @@ Red Moon potrzebuje dostępu do użytkowania, żeby zobaczyć jaką aplikację m
     <string name="usage_stats_dialog_title">Zezwól na dostęp do użykowania</string>
     <string name="text_switch_on">Włączone</string>
     <string name="text_switch_off">Wyłączone</string>
-    <string name="automatic_suspend_summary">"Niektóre funkcje Androida (np. instalowanie aplikacji czy przyznawanie uprawnień w Androidzie 6.0+)  są chronione przed nakładkami systemowymi i nie będą działać, gdy Red Moon jest włączony. 
+    <string name="secure_suspend_summary">"Niektóre funkcje Androida (np. instalowanie aplikacji czy przyznawanie uprawnień w Androidzie 6.0+)  są chronione przed nakładkami systemowymi i nie będą działać, gdy Red Moon jest włączony. 
 
 Kiedy ta funkcja jest włączona Red Moon będzie automatycznie wstrzymywany w przypadku, gdy te funkcje działają i wznowi działanie, kiedy skończysz. Dzięki temu nie musisz się martwić o ręczne włączanie i wyłączanie Red Moon.
 

@@ -19,7 +19,7 @@
     <string name="shades_color_temp"/>
     <string name="control_brightness_title"/>
 
-    <string name="automatic_filter_title"/>
+    <string name="time_toggle_title"/>
     <string name="custom_start_time_title"/>
     <string name="custom_end_time_title"/>
     <string name="location_title">شوێن</string>
@@ -28,8 +28,8 @@
     <string name="longitude_short"/>
     <string name="searching_location"/>
 
-    <string name="automatic_suspend_title"/>
-    <string name="automatic_suspend_summary"/>
+    <string name="secure_suspend_title"/>
+    <string name="secure_suspend_summary"/>
     <string name="text_switch_on">کارا</string>
     <string name="text_switch_off">ناکارا</string>
     <string name="project_page_title">سەردانکردنی پەڕەی پڕۆژە</string>
@@ -59,8 +59,8 @@
     <string name="standard_profiles_array_1">بنەڕەت</string>
     <string name="standard_profiles_array_2"/>
 
-    <string name="automatic_filter_options_array_0"/>
-    <string name="automatic_filter_options_array_1"/>
-    <string name="automatic_filter_options_array_2"></string>
+    <string name="time_toggle_options_array_0"/>
+    <string name="time_toggle_options_array_1"/>
+    <string name="time_toggle_options_array_2"></string>
 
     </resources>

@@ -30,7 +30,7 @@ import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.helper.Util
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.preference.TimePickerPreference
-import com.jmstudios.redmoon.receiver.AutomaticFilterChangeReceiver
+import com.jmstudios.redmoon.receiver.TimeToggleChangeReceiver
 import com.jmstudios.redmoon.service.LocationUpdateService
 
 import java.util.*
@@ -80,7 +80,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
 
     private fun updateSwitchBarTitle() {
         timeTogglePref.setTitle(
-                if (Config.automaticFilter) R.string.text_switch_on
+                if (Config.timeToggle) R.string.text_switch_on
                 else R.string.text_switch_off
         )
     }
@@ -102,11 +102,11 @@ class TimeToggleFragment : EventPreferenceFragment() {
                                                      latitudeStr, latitude, longitudeStr, longitude)
             }
         }
-        locationPref.isEnabled = Config.automaticSuspend && Config.useLocation
+        locationPref.isEnabled = Config.secureSuspend && Config.useLocation
     }
 
     private fun updateTimePrefs() {
-        val auto = Config.automaticSuspend
+        val auto = Config.secureSuspend
         val useLocation = Config.useLocation
         val enabled = auto && !useLocation
         automaticTurnOnPref.isEnabled = enabled
@@ -118,24 +118,24 @@ class TimeToggleFragment : EventPreferenceFragment() {
     //region presenter
     @Subscribe
     fun onTimeToggleChanged(event: timeToggleChanged) {
-        if (DEBUG) Log.i(TAG, "Filter mode changed to " + Config.automaticFilter)
+        if (DEBUG) Log.i(TAG, "Filter mode changed to " + Config.timeToggle)
         updatePrefs()
-        if (Config.automaticFilter) {
-            AutomaticFilterChangeReceiver.rescheduleOnCommand(activity)
-            AutomaticFilterChangeReceiver.rescheduleOffCommand(activity)
+        if (Config.timeToggle) {
+            TimeToggleChangeReceiver.rescheduleOnCommand(activity)
+            TimeToggleChangeReceiver.rescheduleOffCommand(activity)
         } else {
-            AutomaticFilterChangeReceiver.cancelAlarms(activity)
+            TimeToggleChangeReceiver.cancelAlarms(activity)
         }
     }
 
     @Subscribe
     fun onCustomTurnOnTimeChanged(event: customTurnOnTimeChanged) {
-        AutomaticFilterChangeReceiver.rescheduleOnCommand(activity)
+        TimeToggleChangeReceiver.rescheduleOnCommand(activity)
     }
 
     @Subscribe
     fun onCustomTurnOffTimeChanged(event: customTurnOffTimeChanged) {
-        AutomaticFilterChangeReceiver.rescheduleOffCommand(activity)
+        TimeToggleChangeReceiver.rescheduleOffCommand(activity)
     }
 
     @Subscribe
@@ -172,12 +172,12 @@ class TimeToggleFragment : EventPreferenceFragment() {
 
     @Subscribe
     fun onSunsetTimeChanged(event: sunsetTimeChanged) {
-        AutomaticFilterChangeReceiver.rescheduleOnCommand(activity)
+        TimeToggleChangeReceiver.rescheduleOnCommand(activity)
     }
 
     @Subscribe
     fun onSunriseTimeChanged(event: sunriseTimeChanged) {
-        AutomaticFilterChangeReceiver.rescheduleOffCommand(activity)
+        TimeToggleChangeReceiver.rescheduleOffCommand(activity)
     }
     //endregion
 

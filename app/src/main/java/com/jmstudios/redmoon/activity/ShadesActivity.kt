@@ -130,7 +130,7 @@ class ShadesActivity : AppCompatActivity() {
                        .replace(R.id.fragment_container, newFragment, FRAGMENT_TAG_SECURE_SUSPEND)
                        .addToBackStack(null)
                        .commit()
-        setTitle(R.string.time_toggle_preference_activity)
+        setTitle(R.string.secure_suspend_preference_activity)
     }
 
     @TargetApi(23) // Android Studio can't figure out that this is safe to call at any API level

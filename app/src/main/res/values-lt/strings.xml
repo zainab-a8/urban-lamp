@@ -56,7 +56,7 @@
     <string name="shades_color_temp">Spalvų temperatūra</string>
     <string name="control_brightness_title">Sumažinti ryškumą</string>
 
-    <string name="automatic_filter_title">Automatiškai įjungti filtrą</string>
+    <string name="time_toggle_title">Automatiškai įjungti filtrą</string>
     <string name="custom_start_time_title">Automatinio įjungimo laikas</string>
     <string name="custom_end_time_title">Automatinio išjungimo laikas</string>
 	<string name="location_title">Vieta</string>
@@ -97,9 +97,9 @@
     <string name="standard_profiles_array_2">Skaitymui</string>
 
     <!-- Automatic filter -->
-    <!-- automatic_filter_options_array -->
-    <string name="automatic_filter_options_array_0">Niekada</string>
-    <string name="automatic_filter_options_array_1">Saulė</string>
-    <string name="automatic_filter_options_array_2">Pritaikytas laikas</string>
+    <!-- time_toggle_options_array -->
+    <string name="time_toggle_options_array_0">Niekada</string>
+    <string name="time_toggle_options_array_1">Saulė</string>
+    <string name="time_toggle_options_array_2">Pritaikytas laikas</string>
 <string name="shades_settings">Red Moon</string>
     </resources>

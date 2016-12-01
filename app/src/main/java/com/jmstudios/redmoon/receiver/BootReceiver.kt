@@ -70,8 +70,8 @@ class BootReceiver : BroadcastReceiver() {
                     context)
         }
 
-        AutomaticFilterChangeReceiver.scheduleNextOnCommand(context)
-        AutomaticFilterChangeReceiver.scheduleNextOffCommand(context)
+        TimeToggleChangeReceiver.scheduleNextOnCommand(context)
+        TimeToggleChangeReceiver.scheduleNextOffCommand(context)
 
         val filterIsOnPredicted = filterIsOnPrediction(filterIsOnBeforeReboot)
 
@@ -99,7 +99,7 @@ class BootReceiver : BroadcastReceiver() {
         private val DEBUG = false
 
         private fun filterIsOnPrediction(filterIsOnBeforeReboot: Boolean): Boolean {
-            if (Config.automaticFilter) {
+            if (Config.timeToggle) {
                 val now = Calendar.getInstance()
 
                 val onTime = Util.automaticTurnOnTime

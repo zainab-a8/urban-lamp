@@ -62,11 +62,11 @@
   <PreferenceCategory android:title="@string/pref_title_other"
                       android:key="pref_key_other" >
     <Preference
-        android:title="@string/pref_title_automatic_filter"
-        android:key="@string/pref_key_time_toggle" />
+        android:title="@string/pref_title_time_toggle"
+        android:key="@string/pref_key_time_toggle_header" />
     <Preference
-        android:title="@string/automatic_suspend_title"
-        android:key="@string/pref_key_automatic_suspend" />
+        android:title="@string/secure_suspend_title"
+        android:key="@string/pref_key_secure_suspend_header" />
     <SwitchPreference
         android:key="@string/pref_key_dark_theme"
         android:title="@string/dark_theme"

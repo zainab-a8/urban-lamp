@@ -129,7 +129,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         if (filterIsOn) {
             Log.d(TAG, "Creating notification while NOT in off state")
             contentText = context.getString(
-                    if (Config.automaticSuspend) R.string.running_no_warning
+                    if (Config.secureSuspend) R.string.running_no_warning
                     else R.string.running)
             offOrOnDrawableResId = R.drawable.ic_stop
             offOrOnCommand = ScreenFilterService.intent(mContext)
@@ -257,9 +257,9 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     }
 
     @Subscribe
-    fun onAutomaticSuspendChanged(event: automaticSuspendChanged) {
+    fun onSecureSuspendChanged(event: secureSuspendChanged) {
         if (mCurrentState === mOnState) {
-            if (Config.automaticSuspend) startAppMonitoring()
+            if (Config.secureSuspend) startAppMonitoring()
             else stopAppMonitoring()
         }
     }
@@ -509,7 +509,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
                 setBrightnessState(0, false, mContext)
             }
 
-            if (Config.automaticSuspend) {
+            if (Config.secureSuspend) {
                 startAppMonitoring()
             }
         }
@@ -542,7 +542,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
                 restoreBrightnessState()
             }
 
-            if (Config.automaticSuspend) {
+            if (Config.secureSuspend) {
                 stopAppMonitoring()
             }
         }

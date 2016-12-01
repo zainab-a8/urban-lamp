@@ -113,9 +113,10 @@
             </intent-filter>
         </activity>
 
+        <!--
         <activity
-            android:name="com.jmstudios.redmoon.activity.AutomaticSuspendPreferenceActivity"
-            android:label="@string/automatic_suspend_preference_activity"
+            android:name="com.jmstudios.redmoon.activity.SecureSuspendPreferenceActivity"
+            android:label="@string/secure_suspend_preference_activity"
             android:theme="@style/AppTheme"
             android:parentActivityName="com.jmstudios.redmoon.activity.ShadesActivity" >
 
@@ -124,6 +125,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        -->
 
         <service android:name="com.jmstudios.redmoon.service.ScreenFilterService" />
         <service android:name="com.jmstudios.redmoon.service.LocationUpdateService" />

@@ -7,5 +7,5 @@
     <string name="running_no_warning">실행 중</string>
     <string name="pause_action">일시 중지</string>
 
-    <string name="automatic_suspend_summary">Android의 일부 기능은 화면 오버레이로부터 보호되며 Red Moon이 작동 중일 때 작동하지 않습니다. 예를 들어 APK를 설치하거나 Android 6.0 이상에서 권한 부여하기가 있습니다.</string>
+    <string name="secure_suspend_summary">Android의 일부 기능은 화면 오버레이로부터 보호되며 Red Moon이 작동 중일 때 작동하지 않습니다. 예를 들어 APK를 설치하거나 Android 6.0 이상에서 권한 부여하기가 있습니다.</string>
     </resources>

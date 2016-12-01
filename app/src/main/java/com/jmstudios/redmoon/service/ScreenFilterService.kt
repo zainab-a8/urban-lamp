@@ -139,7 +139,7 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         private val TAG = "ScreenFilterService"
         private val DEBUG = false
 
-        val intent = { context: Context -> Intent(context, ScreenFilterService::class.java) }
+        val intent = { ctx: Context -> Intent(ctx, ScreenFilterService::class.java) }
 
         fun start(context: Context) {
             if (DEBUG) Log.i(TAG, "Received start request")

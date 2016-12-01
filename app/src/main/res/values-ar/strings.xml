@@ -20,7 +20,7 @@
     <string name="shades_color_temp">شِدة اللون</string>
     <string name="control_brightness_title">خفض السطوع</string>
 
-    <string name="automatic_filter_title">وضع التبديل</string>
+    <string name="time_toggle_title">وضع التبديل</string>
     <string name="custom_start_time_title">الإستئناف عند</string>
     <string name="custom_end_time_title">الإيقاف عند</string>
     <string name="location_title">الموقع</string>
@@ -70,16 +70,16 @@
     <string name="standard_profiles_array_1">الإفتراضي</string>
     <string name="standard_profiles_array_2">القراءة</string>
 
-    <string name="automatic_filter_options_array_0">يدوي</string>
-    <string name="automatic_filter_options_array_1">تلقائي (النهار)</string>
-    <string name="automatic_filter_options_array_2">تلقائي (مخصص)</string>
+    <string name="time_toggle_options_array_0">يدوي</string>
+    <string name="time_toggle_options_array_1">تلقائي (النهار)</string>
+    <string name="time_toggle_options_array_2">تلقائي (مخصص)</string>
 
     <string name="shades_settings">القمر الأحمر</string>
     <string name="pref_title_automatic_filter">عدد الترشيح</string>
-    <string name="automatic_suspend_preference_activity">الإيقاف التلقائي</string>
+    <string name="secure_suspend_preference_activity">الإيقاف التلقائي</string>
 
-    <string name="automatic_suspend_title">إيقاف المرشح تلقائياً في التطبيقات الآمنة</string>
-    <string name="automatic_suspend_summary">بعض مميزات الأندرويد تقوم بمنع تراكب الشاشة ولن تعمل عندما يكون التطبيق مفعل. على سبيل المثال تثبيت التطبيقات الخارجية APK أو إعطاء الصلاحيات في Android 6.0+.
+    <string name="secure_suspend_title">إيقاف المرشح تلقائياً في التطبيقات الآمنة</string>
+    <string name="secure_suspend_summary">بعض مميزات الأندرويد تقوم بمنع تراكب الشاشة ولن تعمل عندما يكون التطبيق مفعل. على سبيل المثال تثبيت التطبيقات الخارجية APK أو إعطاء الصلاحيات في Android 6.0+.
 
 عندما تقوم بتفعيل هذه الخاصية سيقوم التطبيق بإيقاف المرشح عند وجود منع تراكيب الشاشة, وسيعود المرشح عندما تنتهي تلقائياً. بهذه الطريقة لن يكون لديك أي قلق بخصوص تشغيل وإيقاف التطبيق يدوياً.
 

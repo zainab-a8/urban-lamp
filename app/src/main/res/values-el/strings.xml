@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="intro_label">Εισαγωγή</string>
     <string name="show_intro_text">Δείξε την εισαγωγή</string>
-    <string name="automatic_suspend_preference_activity">Αυτόματη αναστολή</string>
+    <string name="secure_suspend_preference_activity">Αυτόματη αναστολή</string>
 
     <string name="running">Σε λειτουργία. Σε παύση για την εγκατάσταση των apks</string>
     <string name="running_no_warning">Σε λειτουργία</string>
@@ -21,7 +21,7 @@
     <string name="shades_color_temp">Θερμοκρασία χρώματος</string>
     <string name="control_brightness_title">Χαμήλωμα φωτεινότητας</string>
 
-    <string name="automatic_filter_title">Εναλλαγή λειτουργίας</string>
+    <string name="time_toggle_title">Εναλλαγή λειτουργίας</string>
     <string name="custom_start_time_title">Συνέχεια στις</string>
     <string name="custom_end_time_title">Παύση στις</string>
     <string name="location_title">Τοποθεσία</string>
@@ -30,8 +30,8 @@
     <string name="longitude_short">Γεωγρ. μήκος</string>
     <string name="searching_location">Αναζήτηση της τοποθεσίας σας</string>
 
-    <string name="automatic_suspend_title">Αυτόματη αναστολή φίλτρου σε προστατευμένα apps</string>
-    <string name="automatic_suspend_summary">Μερικά χαρακτηριστικά του Android προστατεύονται από επικαλύψεις οθόνης και δεν μπορούν να λειτουργήσουν όταν είναι ενεργοποιημένο το Κόκκινο Φεγγάρι. Για παράδειγμα, η εγκατάσταση αρχείων APK ή η χορήγηση δικαιωμάτων στο Android 6.0+.
+    <string name="secure_suspend_title">Αυτόματη αναστολή φίλτρου σε προστατευμένα apps</string>
+    <string name="secure_suspend_summary">Μερικά χαρακτηριστικά του Android προστατεύονται από επικαλύψεις οθόνης και δεν μπορούν να λειτουργήσουν όταν είναι ενεργοποιημένο το Κόκκινο Φεγγάρι. Για παράδειγμα, η εγκατάσταση αρχείων APK ή η χορήγηση δικαιωμάτων στο Android 6.0+.
 
 Όταν ενεργοποιείται αυτή η λειτουργία το Κόκκινο Φεγγάρι θα ανασταλεί αυτόματα όταν ένα από αυτά τα χαρακτηριστικά ανοίγει και το φίλτρο επαναφέρετε όταν τελειώσει. Με αυτό τον τρόπο δεν έχετε να ανησυχείτε για το χειροκίνητο άνοιγμα και κλείσιμο του Κόκκινου Φεγγαριού.
 
@@ -84,9 +84,9 @@
     <string name="standard_profiles_array_1">Προεπιλογή</string>
     <string name="standard_profiles_array_2">Ανάγνωση</string>
 
-    <string name="automatic_filter_options_array_0">Χειροκίνητο</string>
-    <string name="automatic_filter_options_array_1">Αυτόματο (ήλιος)</string>
-    <string name="automatic_filter_options_array_2">Αυτόματο (εξατομικευμένο)</string>
+    <string name="time_toggle_options_array_0">Χειροκίνητο</string>
+    <string name="time_toggle_options_array_1">Αυτόματο (ήλιος)</string>
+    <string name="time_toggle_options_array_2">Αυτόματο (εξατομικευμένο)</string>
 
     <string name="app_name">Κόκκινο Φεγγάρι</string>
     <string name="shades_settings">Κόκκινο Φεγγάρι</string>

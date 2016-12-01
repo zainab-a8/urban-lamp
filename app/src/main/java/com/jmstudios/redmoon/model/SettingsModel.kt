@@ -81,7 +81,7 @@ object Config {
     val lowerBrightness: Boolean
         get() = mSharedPrefs.getBoolean(Util.getString(R.string.pref_key_lower_brightness), false)
 
-    val automaticFilter: Boolean
+    val timeToggle: Boolean
         get() = mSharedPrefs.getBoolean(Util.getString(R.string.pref_key_time_toggle), false)
     
     val dimButtons: Boolean
@@ -119,10 +119,9 @@ object Config {
                                  .putBoolean(Util.getString(R.string.pref_key_intro_shown), shown)
                                  .apply()
     
-    val automaticSuspend: Boolean
-        get() = mSharedPrefs.getBoolean(Util.getString(R.string.pref_key_automatic_suspend), false)
+    val secureSuspend: Boolean
+        get() = mSharedPrefs.getBoolean(Util.getString(R.string.pref_key_secure_suspend), false)
 
-    
     var location: String
         get() = mSharedPrefs.getString(Util.getString(R.string.pref_key_location),
                                        TimeToggleFragment.DEFAULT_LOCATION)

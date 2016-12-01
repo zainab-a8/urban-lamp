@@ -39,7 +39,7 @@
     <string name="shades_color_temp">دمای رنگ</string>
     <string name="control_brightness_title">کاهش روشنایی</string>
 
-    <string name="automatic_filter_title">روش تغییر حالت</string>
+    <string name="time_toggle_title">روش تغییر حالت</string>
     <string name="custom_start_time_title">از سر گیری در</string>
     <string name="custom_end_time_title">مکث در</string>
     <string name="location_title">موقعیّت</string>
@@ -80,8 +80,8 @@
     <string name="standard_profiles_array_2">مطالعه</string>
 
     <!-- Automatic filter -->
-    <!-- automatic_filter_options_array -->
-    <string name="automatic_filter_options_array_0">دستی</string>
-    <string name="automatic_filter_options_array_1">‫خودکار (خورشید)‬</string>
-    <string name="automatic_filter_options_array_2">‫خودکار (شخصی)‬</string>
+    <!-- time_toggle_options_array -->
+    <string name="time_toggle_options_array_0">دستی</string>
+    <string name="time_toggle_options_array_1">‫خودکار (خورشید)‬</string>
+    <string name="time_toggle_options_array_2">‫خودکار (شخصی)‬</string>
 </resources>

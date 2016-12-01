@@ -20,7 +20,7 @@
     <string name="shades_intensity_level">Nível de intensidade</string>
     <string name="control_brightness_title">Diminuir brilho</string>
 
-    <string name="automatic_filter_title">Modo de alternância</string>
+    <string name="time_toggle_title">Modo de alternância</string>
     <string name="shades_color_temp">Temperatura da cor</string>
     <string name="custom_start_time_title">Retomar às</string>
     <string name="custom_end_time_title">Pausar às</string>
@@ -70,9 +70,9 @@ interruptor no canto superior direito.</string>
     <string name="standard_profiles_array_1">Padrão</string>
     <string name="standard_profiles_array_2">Leitura</string>
 
-    <string name="automatic_filter_options_array_0">Manual</string>
-    <string name="automatic_filter_options_array_1">Automático (sol)</string>
-    <string name="automatic_filter_options_array_2">Automático (personalizado)</string>
+    <string name="time_toggle_options_array_0">Manual</string>
+    <string name="time_toggle_options_array_1">Automático (sol)</string>
+    <string name="time_toggle_options_array_2">Automático (personalizado)</string>
 
     <string name="shades_dim_level">Nível de escurecimento</string>
     <string name="longitude_short">Long</string>

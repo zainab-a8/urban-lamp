@@ -22,7 +22,7 @@
     <string name="shades_color_temp">Colour temperature</string>
     <string name="control_brightness_title">Lower brightness</string>
 
-    <string name="automatic_filter_title">Toggle mode</string>
+    <string name="time_toggle_title">Toggle mode</string>
     <string name="custom_start_time_title">Resume at</string>
     <string name="custom_end_time_title">Pause at</string>
     <string name="location_title">Location</string>
@@ -72,8 +72,8 @@
     <string name="standard_profiles_array_1">Default</string>
     <string name="standard_profiles_array_2">Reading</string>
 
-    <string name="automatic_filter_options_array_0">Manual</string>
-    <string name="automatic_filter_options_array_1">Automatic (sun)</string>
-    <string name="automatic_filter_options_array_2">Automatic (custom)</string>
+    <string name="time_toggle_options_array_0">Manual</string>
+    <string name="time_toggle_options_array_1">Automatic (sun)</string>
+    <string name="time_toggle_options_array_2">Automatic (custom)</string>
 
     </resources>

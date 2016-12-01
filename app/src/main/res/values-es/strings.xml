@@ -16,7 +16,7 @@
     <string name="button_add_profile">Nuevo</string>
     <string name="button_remove_profile">Borrar</string>
     <string name="shades_color_temp">Temperatura de color</string>
-    <string name="automatic_filter_title">Modos de activación</string>
+    <string name="time_toggle_title">Modos de activación</string>
     <string name="custom_end_time_title">Pausar a las</string>
     <string name="custom_start_time_title">Reanudar a las</string>
     <string name="location_title">Ubicación</string>
@@ -44,9 +44,9 @@
     <string name="standard_profiles_array_1">Predeterminado</string>
     <string name="standard_profiles_array_2">Modo lectura</string>
 
-    <string name="automatic_filter_options_array_2">Automático (personalizado)</string>
+    <string name="time_toggle_options_array_2">Automático (personalizado)</string>
 
-    <string name="automatic_filter_options_array_1">Automático (sol)</string>
+    <string name="time_toggle_options_array_1">Automático (sol)</string>
     <string name="intro_slide_1_title">¡Hola!</string>
     <string name="ok_dialog">Aceptar</string>
     <string name="cancel_dialog">Cancelar</string>
@@ -75,11 +75,11 @@ que puedas dormirte fácilmente.</string>
 
     <string name="latitude_short">Latitud</string>
     <string name="longitude_short">Longitud</string>
-    <string name="automatic_filter_options_array_0">Manual</string>
-    <string name="automatic_suspend_preference_activity">Pausar automáticamente</string>
+    <string name="time_toggle_options_array_0">Manual</string>
+    <string name="secure_suspend_preference_activity">Pausar automáticamente</string>
 
-    <string name="automatic_suspend_title">No filtrar aplicaciones seguras</string>
-    <string name="automatic_suspend_summary">Algunas características de Android están protegidas contra superposiciones de pantalla y no funcionan con filtros como Red Moon. Te las encontrarás al instalar APKs o conceder permisos en Android 6.0+.
+    <string name="secure_suspend_title">No filtrar aplicaciones seguras</string>
+    <string name="secure_suspend_summary">Algunas características de Android están protegidas contra superposiciones de pantalla y no funcionan con filtros como Red Moon. Te las encontrarás al instalar APKs o conceder permisos en Android 6.0+.
 
 Al activar esta opción Red Moon se pausa momentáneamente si detecta este tipo de actividad y reanuda el filtro al terminar. Así puedes despreocuparte de tener que quitar el filtro de forma manual.
 

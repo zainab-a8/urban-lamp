@@ -17,7 +17,7 @@
     <string name="shades_color_temp">Température de couleur</string>
     <string name="control_brightness_title">Luminosité minimale</string>
 
-    <string name="automatic_filter_title">Mode d\'activation</string>
+    <string name="time_toggle_title">Mode d\'activation</string>
     <string name="custom_start_time_title">Reprendre à</string>
     <string name="custom_end_time_title">Suspendre à</string>
     <string name="location_title">Localisation</string>
@@ -51,9 +51,9 @@
     <string name="standard_profiles_array_1">Par défaut</string>
     <string name="standard_profiles_array_2">Lecture</string>
 
-    <string name="automatic_filter_options_array_0">Manuel</string>
-    <string name="automatic_filter_options_array_1">Automatique (localisation)</string>
-    <string name="automatic_filter_options_array_2">Automatique (personnalisé)</string>
+    <string name="time_toggle_options_array_0">Manuel</string>
+    <string name="time_toggle_options_array_1">Automatique (localisation)</string>
+    <string name="time_toggle_options_array_2">Automatique (personnalisé)</string>
 
     <string name="resume_action">Reprendre</string>
     <string name="pause_action">Mettre en pause</string>

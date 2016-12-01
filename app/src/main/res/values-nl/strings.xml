@@ -15,7 +15,7 @@
     <string name="shades_color_temp">Kleur temperatuur</string>
     <string name="control_brightness_title">Verminder helderheid</string>
 
-    <string name="automatic_filter_title">Schakel mode</string>
+    <string name="time_toggle_title">Schakel mode</string>
     <string name="custom_start_time_title">Hervat om</string>
     <string name="custom_end_time_title">Pauzeer om</string>
     <string name="location_title">Locatie</string>
@@ -51,9 +51,9 @@
     <string name="standard_profiles_array_1">Standaard</string>
     <string name="standard_profiles_array_2">Lezen</string>
 
-    <string name="automatic_filter_options_array_0">Handmatig</string>
-    <string name="automatic_filter_options_array_1">Automatisch (zon)</string>
-    <string name="automatic_filter_options_array_2">Automatisch (aangepast)</string>
+    <string name="time_toggle_options_array_0">Handmatig</string>
+    <string name="time_toggle_options_array_1">Automatisch (zon)</string>
+    <string name="time_toggle_options_array_2">Automatisch (aangepast)</string>
 
     <string name="resume_action">Hervat</string>
     <string name="pause_action">Pauzeer</string>

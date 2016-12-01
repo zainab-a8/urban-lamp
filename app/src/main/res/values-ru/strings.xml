@@ -22,7 +22,7 @@
     <string name="shades_color_temp">Цветовая температура</string>
     <string name="control_brightness_title">Низкая яркость</string>
 
-    <string name="automatic_filter_title">Режим переключения</string>
+    <string name="time_toggle_title">Режим переключения</string>
     <string name="custom_start_time_title">Включить</string>
     <string name="custom_end_time_title">Приостановить</string>
     <string name="location_title">Местоположение</string>
@@ -63,10 +63,10 @@
     <string name="standard_profiles_array_2">Чтения</string>
 
     <!-- Automatic filter -->
-    <!-- automatic_filter_options_array -->
-    <string name="automatic_filter_options_array_0">Инструкция</string>
-    <string name="automatic_filter_options_array_1">Солнце</string>
-    <string name="automatic_filter_options_array_2">Свой</string>
+    <!-- time_toggle_options_array -->
+    <string name="time_toggle_options_array_0">Инструкция</string>
+    <string name="time_toggle_options_array_1">Солнце</string>
+    <string name="time_toggle_options_array_2">Свой</string>
 
 <string name="intro_label">Интро</string>
     <string name="show_intro_text">Показать интро</string>

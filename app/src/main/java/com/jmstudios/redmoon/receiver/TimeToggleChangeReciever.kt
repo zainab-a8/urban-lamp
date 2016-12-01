@@ -38,7 +38,7 @@ import java.util.GregorianCalendar
 
 import org.greenrobot.eventbus.EventBus
 
-class AutomaticFilterChangeReceiver : BroadcastReceiver() {
+class TimeToggleChangeReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (DEBUG) Log.i(TAG, "Alarm received")
@@ -62,14 +62,15 @@ class AutomaticFilterChangeReceiver : BroadcastReceiver() {
         val runnable = DismissNotificationRunnable(context)
         handler.postDelayed(runnable, (ScreenFilterPresenter.FADE_DURATION_MS + 100).toLong())
 
-        if (Config.automaticFilter && Config.useLocation) {
+        if (Config.timeToggle && Config.useLocation) {
             LocationUpdateService.start(context)
         }
     }
 
     companion object {
-        private val TAG = "AutomaticFilterChange"
+        private val TAG = "TimeToggleChange"
         private val DEBUG = false
+        private val intent = { ctx: Context -> Intent(ctx, TimeToggleChangeReceiver::class.java) }
 
         // Conveniences
         val scheduleNextOnCommand = { context: Context -> scheduleNextCommand(context, true) }
@@ -90,16 +91,15 @@ class AutomaticFilterChangeReceiver : BroadcastReceiver() {
         }
 
         private fun scheduleNextCommand(context: Context, turnOn: Boolean) {
-            if (Config.automaticFilter) {
+            if (Config.timeToggle) {
                 val time = if (turnOn) Util.automaticTurnOnTime
                            else Util.automaticTurnOffTime
 
-                val intent = if (turnOn) Intent(context, AutomaticFilterChangeReceiver::class.java)
-                             else Intent(context, AutomaticFilterChangeReceiver::class.java)
-                intent.data = if (turnOn) Uri.parse("turnOnIntent")
+                val command = intent(context)
+                command.data = if (turnOn) Uri.parse("turnOnIntent")
                               else Uri.parse("offIntent")
 
-                intent.putExtra("turn_on", turnOn)
+                command.putExtra("turn_on", turnOn)
 
                 val calendar = GregorianCalendar()
                 calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0]))
@@ -114,7 +114,7 @@ class AutomaticFilterChangeReceiver : BroadcastReceiver() {
                 if (DEBUG) Log.i(TAG, "Scheduling alarm for " + calendar.toString())
 
                 val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
+                val pendingIntent = PendingIntent.getBroadcast(context, 0, command, 0)
 
                 if (Util.atLeastAPI(19)) {
                     alarmManager.setExact(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
@@ -126,10 +126,10 @@ class AutomaticFilterChangeReceiver : BroadcastReceiver() {
         }
 
         private fun cancelAlarm(context: Context, turnOn: Boolean) {
-            val commands = Intent(context, AutomaticFilterChangeReceiver::class.java)
-            commands.data = if (turnOn) Uri.parse("turnOnIntent")
+            val command = intent(context)
+            command.data = if (turnOn) Uri.parse("turnOnIntent")
                             else Uri.parse("offIntent")
-            val pendingIntent = PendingIntent.getBroadcast(context, 0, commands, 0)
+            val pendingIntent = PendingIntent.getBroadcast(context, 0, command, 0)
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmManager.cancel(pendingIntent)
         }

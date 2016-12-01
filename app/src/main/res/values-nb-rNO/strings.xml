@@ -18,7 +18,7 @@
     <string name="shades_color_temp">Fargetemperatur</string>
     <string name="control_brightness_title">Lavere lysstyrke</string>
 
-    <string name="automatic_filter_title">Veksle modus</string>
+    <string name="time_toggle_title">Veksle modus</string>
     <string name="custom_start_time_title">Gjennoppta om</string>
     <string name="custom_end_time_title">Pause om</string>
     <string name="location_title">Plassering</string>
@@ -49,9 +49,9 @@
     <string name="standard_profiles_array_1">Original verdi</string>
     <string name="standard_profiles_array_2">Leser</string>
 
-    <string name="automatic_filter_options_array_0">Manuell</string>
-    <string name="automatic_filter_options_array_1">Automatisk (sola)</string>
-    <string name="automatic_filter_options_array_2">Automatisk (egendefinert)</string>
+    <string name="time_toggle_options_array_0">Manuell</string>
+    <string name="time_toggle_options_array_1">Automatisk (sola)</string>
+    <string name="time_toggle_options_array_2">Automatisk (egendefinert)</string>
 
     <string name="latitude_short">Breddegrad</string>
     <string name="longitude_short">Lengdegrad</string>

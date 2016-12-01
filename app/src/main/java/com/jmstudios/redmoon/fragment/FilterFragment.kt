@@ -81,10 +81,11 @@ class FilterFragment : EventPreferenceFragment() {
                 (getString(R.string.pref_key_lower_brightness)) as SwitchPreference)
 
     private val timeTogglePref: Preference
-        get() = (preferenceScreen.findPreference(getString(R.string.pref_key_time_toggle)))
+        get() =
+        (preferenceScreen.findPreference(getString(R.string.pref_key_time_toggle_header)))
 
-    private val automaticSuspendPref: Preference
-        get() = preferenceScreen.findPreference(getString(R.string.pref_key_automatic_suspend))
+    private val secureSuspendPref: Preference
+        get() = preferenceScreen.findPreference(getString(R.string.pref_key_secure_suspend_header))
 
     private val mToggleFab: FloatingActionButton
         get() = activity.findViewById(R.id.toggle_fab) as FloatingActionButton
@@ -121,7 +122,7 @@ class FilterFragment : EventPreferenceFragment() {
                     else ScreenFilterService.COMMAND_ON))
         }
 
-        updateAutomaticSuspendSummary()
+        updateSecureSuspendSummary()
     }
 
     override fun onResume() {
@@ -153,7 +154,7 @@ class FilterFragment : EventPreferenceFragment() {
         /* Config.profile = if (profile == 0) 1 else 0 */
         /* Config.profile = profile */
 
-        updateAutomaticSuspendSummary()
+        updateSecureSuspendSummary()
     }
 
     override fun onPause() {
@@ -161,9 +162,9 @@ class FilterFragment : EventPreferenceFragment() {
         super.onPause()
     }
 
-    private fun updateAutomaticSuspendSummary() {
+    private fun updateSecureSuspendSummary() {
         // TODO: Show the time here instead of just "on" or "off"
-        automaticSuspendPref.setSummary(if (Config.automaticSuspend) R.string.text_switch_on
+        secureSuspendPref.setSummary(if (Config.secureSuspend) R.string.text_switch_on
                                         else R.string.text_switch_off)
     }
 
