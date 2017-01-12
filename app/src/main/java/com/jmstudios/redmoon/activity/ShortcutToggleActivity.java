@@ -36,6 +36,7 @@
 package com.jmstudios.redmoon.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -59,15 +60,20 @@ public class ShortcutToggleActivity extends Activity {
     }
 
     public static void toggleAndFinish(Activity activity) {
+        toggleAndFinish((Context) activity);
+        activity.finish();
+    }
+
+    public static void toggleAndFinish(Context context) {
         if (DEBUG) Log.i(TAG, "toggleAndFinish called.");
-        FilterCommandSender commandSender = new FilterCommandSender(activity);
-        FilterCommandFactory commandFactory = new FilterCommandFactory(activity);
+        FilterCommandSender commandSender = new FilterCommandSender(context);
+        FilterCommandFactory commandFactory = new FilterCommandFactory(context);
         Intent onCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_ON);
         Intent pauseCommand = commandFactory.createCommand(ScreenFilterService.COMMAND_PAUSE);
 
         SharedPreferences sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(activity);
-        SettingsModel settingsModel = new SettingsModel(activity.getResources(), sharedPreferences);
+                PreferenceManager.getDefaultSharedPreferences(context);
+        SettingsModel settingsModel = new SettingsModel(context.getResources(), sharedPreferences);
         boolean poweredOn = settingsModel.getShadesPowerState();
         boolean paused = settingsModel.getShadesPauseState();
 
@@ -76,7 +82,5 @@ public class ShortcutToggleActivity extends Activity {
         } else {
             commandSender.send(pauseCommand);
         }
-
-        activity.finish();
     }
 }
