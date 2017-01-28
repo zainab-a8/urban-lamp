@@ -42,7 +42,7 @@
     <string name="intro_slide_3_title">Te ayuda a dormir</string>
     <string name="intro_slide_4_title">¡Empecemos!</string>
     <string name="standard_profiles_array_0">Personalizado</string>
-    <string name="standard_profiles_array_1">Predeterminado</string>
+    <string name="standard_profiles_array_1">Modo normal</string>
     <string name="standard_profiles_array_2">Modo lectura</string>
 
     <string name="time_toggle_options_array_2">Automático (personalizado)</string>
@@ -71,8 +71,7 @@ daña la vista, puedes utilizar Red Moon para limitar el brillo de tu pantalla.<
     <string name="shades_dim_level">Atenuar</string>
     <string name="intro_slide_3_text">La luz azul inhibe la
 producción de melatonina, una hormona que ayuda a que nos durmamos
-por la noche. Red Moon elimina la luz azul de la pantalla, asegurando
-que puedas dormirte fácilmente.</string>
+por la noche. Red Moon elimina la luz azul de la pantalla para que puedas dormir bien.</string>
 
     <string name="latitude_short">Latitud</string>
     <string name="longitude_short">Longitud</string>
@@ -92,5 +91,5 @@ Esta característica puede gastar un poco más de batería y no funcionar del to
 
 Red Moon necesita acceder a los datos de uso para saber si la aplicación en primer plano está protegida y así poder suspender el filtro. Solo se utilizarán estos datos cuando sean necesarios.</string>
 
-    <string name="running_no_warning">Funcionando</string>
+    <string name="running_no_warning">En funcionamiento</string>
     </resources>

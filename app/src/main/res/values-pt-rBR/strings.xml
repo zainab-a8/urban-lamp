@@ -77,4 +77,20 @@ interruptor no canto superior direito.</string>
 
     <string name="shades_dim_level">Nível de escurecimento</string>
     <string name="longitude_short">Long</string>
+    <string name="running_no_warning">Rodando</string>
+    <string name="automatic_suspend_preference_activity">Suspender automaticamente</string>
+
+    <string name="automatic_suspend_title">Suspender filtro automaticamente em aplicativos seguros</string>
+    <string name="automatic_suspend_summary">Alguns recursos do Android possuem uma proteção contra sobreposições de tela e não funcionarão enquanto o Red moon estiver ativado. Por exemplo, ao instalar APKs ou conceder permissões no Android 6.0 ou superior.
+
+Quando esse recurso estiver ativado, o Red Moon irá suspender automaticamente quando um desses recursos estiver aberto e irá restaurar o filtro quando você tiver terminado. Desse modo, você não precisará se preocupar com ligar e desliga manualmente o Red Moon.
+
+Esse recurso pode diminuir ligeiramente a duração da bateria do seu dispositivo. Além disso, este recurso pode não funcionar em todos os dispositivos.</string>
+    <string name="text_switch_on">Ligado</string>
+    <string name="text_switch_off">Desligado</string>
+    <string name="usage_stats_dialog_title">Permitir acesso ao uso</string>
+    <string name="usage_stats_dialog_message">Permita que o Red Moon acesse estatísticas de uso do aplicativo na próxima tela para habilitar esse recurso.
+
+O Red Moon necessita do acesso ao uso para ver que aplicativo você está usando e, então, suspender o filtro em aplicativos protegidos. O Red Moon irá utilizar esses dados apenas para suspender o filtro quando necessário.</string>
+
     </resources>
