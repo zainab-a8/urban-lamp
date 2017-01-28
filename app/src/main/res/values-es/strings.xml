@@ -9,6 +9,7 @@
     <string name="pause_action">Pausar</string>
 
     <string name="pref_title_appearance">Filtro</string>
+    <string name="time_toggle_activity">Horas de funcionamiento</string>
     <string name="pref_title_time_toggle">Horas de funcionamiento</string>
     <string name="pref_title_startup">Inicio</string>
     <string name="pref_title_other">Otros</string>
@@ -76,7 +77,7 @@ que puedas dormirte fácilmente.</string>
     <string name="latitude_short">Latitud</string>
     <string name="longitude_short">Longitud</string>
     <string name="time_toggle_options_array_0">Manual</string>
-    <string name="secure_suspend_preference_activity">Pausar automáticamente</string>
+    <string name="secure_suspend_activity">Pausar automáticamente</string>
 
     <string name="secure_suspend_title">No filtrar aplicaciones seguras</string>
     <string name="secure_suspend_summary">Algunas características de Android están protegidas contra superposiciones de pantalla y no funcionan con filtros como Red Moon. Te las encontrarás al instalar APKs o conceder permisos en Android 6.0+.

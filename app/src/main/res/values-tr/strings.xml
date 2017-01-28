@@ -28,6 +28,7 @@
     <string name="running">Çalışıyor. Apk kurmak için durdurun</string>
     <string name="app_name">Red Moon</string>
     <string name="shades_settings">Red Moon</string>
+    <string name="time_toggle_activity">Süzgeç zamanları</string>
     <string name="pref_title_time_toggle">Süzgeç zamanları</string>
     <string name="custom_start_time_title">Devam et</string>
     <string name="custom_end_time_title">Durdur</string>
@@ -64,7 +65,7 @@
     <string name="remove_profile_dialog_title">Bu profili sil?</string>
     <string name="intro_slide_2_text">Gece telefonuna bakmak gözlerine zarar verir, Red Moon\'u kullanıp ekranını karartabilirsin.</string>
 
-    <string name="secure_suspend_preference_activity">Kendiliğinden askıya al</string>
+    <string name="secure_suspend_activity">Kendiliğinden askıya al</string>
 
     <string name="latitude_short">Enlem</string>
     <string name="secure_suspend_title">Güvenli uygulamalarda kendiliğinden durdur</string>

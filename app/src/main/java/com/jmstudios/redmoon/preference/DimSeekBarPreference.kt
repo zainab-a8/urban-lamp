@@ -50,11 +50,8 @@ import android.widget.TextView
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.event.moveToState
 import com.jmstudios.redmoon.service.ScreenFilterService
 import com.jmstudios.redmoon.view.ScreenFilterView
-
-import org.greenrobot.eventbus.EventBus
 
 class DimSeekBarPreference(context: Context, attrs: AttributeSet) : Preference(context, attrs) {
 
@@ -106,14 +103,12 @@ class DimSeekBarPreference(context: Context, attrs: AttributeSet) : Preference(c
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 Log.i(TAG, "Touch down on a seek bar")
-                val showPreviewCommand = ScreenFilterService.COMMAND_SHOW_PREVIEW
-                EventBus.getDefault().postSticky(moveToState(showPreviewCommand))
+                ScreenFilterService.moveToState(ScreenFilterService.COMMAND_SHOW_PREVIEW)
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 Log.d(TAG, "Released a seek bar")
-                val hidePreviewCommand = ScreenFilterService.COMMAND_HIDE_PREVIEW
-                EventBus.getDefault().postSticky(moveToState(hidePreviewCommand))
+                ScreenFilterService.moveToState(ScreenFilterService.COMMAND_HIDE_PREVIEW)
             }
         })
 

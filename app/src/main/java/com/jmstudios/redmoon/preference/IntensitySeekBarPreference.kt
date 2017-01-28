@@ -31,11 +31,9 @@ import android.widget.TextView
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.activity.ShadesActivity
-import com.jmstudios.redmoon.event.moveToState
+import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
 import com.jmstudios.redmoon.view.ScreenFilterView
-
-import org.greenrobot.eventbus.EventBus
 
 class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : Preference(context, attrs) {
 
@@ -44,7 +42,6 @@ class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
     lateinit private var mView: View
 
     init {
-
         layoutResource = R.layout.preference_intensity_seekbar
     }
 
@@ -67,9 +64,7 @@ class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
 
     override fun onBindView(view: View) {
         super.onBindView(view)
-
         mView = view
-
         mIntensityLevelSeekBar = view.findViewById(R.id.intensity_level_seekbar) as SeekBar
         initLayout()
     }
@@ -88,14 +83,12 @@ class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 Log.i(TAG, "Touch down on a seek bar")
-                val showPreviewCommand = ScreenFilterService.COMMAND_SHOW_PREVIEW
-                EventBus.getDefault().postSticky(moveToState(showPreviewCommand))
+                ScreenFilterService.moveToState(ScreenFilterService.COMMAND_SHOW_PREVIEW)
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 Log.d(TAG, "Released a seek bar")
-                val hidePreviewCommand = ScreenFilterService.COMMAND_HIDE_PREVIEW
-                EventBus.getDefault().postSticky(moveToState(hidePreviewCommand))
+                ScreenFilterService.moveToState(ScreenFilterService.COMMAND_HIDE_PREVIEW)
             }
         })
 
@@ -106,12 +99,9 @@ class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
     fun updateMoonIconColor() {
         if (!isEnabled) return
 
-        val colorTempProgress = (context as ShadesActivity).colorTempProgress
-
+        val colorTempProgress = Config.color
         val color = ScreenFilterView.getIntensityColor(mIntensityLevel, colorTempProgress)
-
         val moonIcon = mView.findViewById(R.id.moon_icon_intensity) as ImageView
-
         val colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY)
 
         moonIcon.colorFilter = colorFilter

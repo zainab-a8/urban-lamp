@@ -47,11 +47,8 @@ import android.widget.RemoteViews
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.event.moveToState
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
-
-import org.greenrobot.eventbus.EventBus
 
 class SwitchAppWidgetProvider : AppWidgetProvider() {
 
@@ -87,7 +84,7 @@ class SwitchAppWidgetProvider : AppWidgetProvider() {
         val command = if (filterIsOn) ScreenFilterService.COMMAND_OFF
                       else ScreenFilterService.COMMAND_ON
 
-        EventBus.getDefault().postSticky(moveToState(command))
+        ScreenFilterService.moveToState(command)
 
         if (filterIsOn) ScreenFilterService.start(context)
         else ScreenFilterService.stop(context)

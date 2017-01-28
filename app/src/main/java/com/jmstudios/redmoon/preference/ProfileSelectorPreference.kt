@@ -206,7 +206,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
     //Section: Reading and writing preference states
 
     private var colorTemperatureProgress: Int
-        get() = (context as ShadesActivity).colorTempProgress
+        get() = Config.color
         set(progress) {
             currentColor = progress
             val fragment = (context as ShadesActivity).fragment
@@ -216,7 +216,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         }
 
     private var intensityLevelProgress: Int
-        get() = (context as ShadesActivity).intensityLevelProgress
+        get() = Config.intensity
         set(progress) {
             currentIntensity = progress
             val fragment = (context as ShadesActivity).fragment
@@ -226,7 +226,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         }
 
     private var dimLevelProgress: Int
-        get() = (context as ShadesActivity).dimLevelProgress
+        get() = Config.dim
         set(progress) {
             currentDim = progress
             val fragment = (context as ShadesActivity).fragment

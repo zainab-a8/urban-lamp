@@ -62,7 +62,7 @@
       <item name="android:ellipsize">marquee</item>
     </style>
 
-    <style name="PreferenceSecundaryTextStyle">
+    <style name="PreferenceSecondaryTextStyle">
       <item name="android:textAppearance">@android:style/TextAppearance.Holo.Small</item>
       <item name="android:singleLine">true</item>
       <item name="android:ellipsize">marquee</item>

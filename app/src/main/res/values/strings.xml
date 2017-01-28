@@ -42,7 +42,7 @@
     <string name="shortcut_activity">Red Moon Toggle</string>
     <string name="intro_label">Intro</string>
     <string name="show_intro_text">Show intro</string>
-    <string name="secure_suspend_preference_activity">Suspend in secure apps</string>
+    <string name="secure_suspend_activity">Suspend in secure apps</string>
 
     <!-- Overlay popup -->
     <string name="overlay_dialog_title">Drawing over other apps</string>
@@ -60,7 +60,8 @@
 
     <!-- Preference -->
     <string name="pref_title_appearance">Filter</string>
-    <string name="pref_title_time_toggle">Automatically turn the filter on and off</string>
+    <string name="time_toggle_activity">Timer</string>
+    <string name="pref_title_time_toggle">Timer</string>
     <string name="pref_title_startup">Startup</string>
     <string name="pref_title_other">Other</string>
 

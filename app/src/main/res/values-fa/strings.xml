@@ -28,6 +28,7 @@
 
     <!-- Preference -->
     <string name="pref_title_appearance">پالایه</string>
+    <string name="time_toggle_activity">زمان‌های پالایه</string>
     <string name="pref_title_time_toggle">زمان‌های پالایه</string>
     <string name="pref_title_startup">روشن شدن</string>
     <string name="pref_title_other">دیگر</string>

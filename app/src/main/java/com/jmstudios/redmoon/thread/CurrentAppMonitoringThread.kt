@@ -24,14 +24,11 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.util.Log
 
-import com.jmstudios.redmoon.event.moveToState
-import com.jmstudios.redmoon.helper.Util
+import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
 
 import java.lang.Thread
 import java.util.TreeMap
-
-import org.greenrobot.eventbus.EventBus
 
 class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 
@@ -48,9 +45,9 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 
                 if (DEBUG) Log.d(TAG, String.format("Current app is: %s", currentApp))
 
-                if (isAppSecured(currentApp)) sendStartSuspendCommand()
-                else sendStopSuspendCommand()
-
+                val state = if (isAppSecured(currentApp)) ScreenFilterService.COMMAND_START_SUSPEND
+                            else ScreenFilterService.COMMAND_STOP_SUSPEND
+                ScreenFilterService.moveToState(state)
                 Thread.sleep(1000)
             }
         } catch (e: InterruptedException) {
@@ -68,16 +65,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
                 app == "com.owncloud.android"
     }
 
-    private fun sendStartSuspendCommand() {
-        if (DEBUG) Log.i(TAG, "Send a start suspend command")
-        EventBus.getDefault().postSticky(moveToState(ScreenFilterService.COMMAND_ON))
-    }
-
-    private fun sendStopSuspendCommand() {
-        if (DEBUG) Log.i(TAG, "Send a stop suspend command")
-        EventBus.getDefault().postSticky(moveToState(ScreenFilterService.COMMAND_OFF))
-    }
-
+    @TargetApi(22) // Safe to call at all api levels but Studio doesn't know that
     companion object {
         private val TAG = "CurrentAppMonitoring"
         private val DEBUG = false
@@ -88,23 +76,23 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 
         private fun getCurrentApp(context: Context): String {
             // http://stackoverflow.com/q/33581311
-            if (Util.atLeastAPI(21)) {
+            if (Config.atLeastAPI(21)) {
                 return getCurrentAppUsingUsageStats(context)
             } else {
                 return getCurrentAppUsingActivityManager(context)
             }
         }
 
-        @TargetApi(21)
+        @TargetApi(22) // Safe to call at all api levels but Studio doesn't know that
         private fun getCurrentAppUsingUsageStats(context: Context): String {
             try {
-                if (Util.atLeastAPI(21)) {
+                if (Config.atLeastAPI(21)) {
                     // Although the UsageStatsManager was added in API
                     // 21, the constant to specify the
                     // UsageStatsManager wasn't added until API 22. So
                     // we use the value of that constant on API 21.
                     val usageStatsServiceString =
-                        if (Util.atLeastAPI(22)) Context.USAGE_STATS_SERVICE
+                        if (Config.atLeastAPI(22)) Context.USAGE_STATS_SERVICE
                         else "usagestats"
                     val usm = context.getSystemService(usageStatsServiceString)
                                                                 as UsageStatsManager
@@ -134,7 +122,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 
         @Suppress("DEPRECATION") // Needed for pre-lollipop compatibility
         private fun getCurrentAppUsingActivityManager(context: Context): String {
-            if (Util.atLeastAPI(1)) {
+            if (Config.belowAPI(21)) {
                 val am = ContextWrapper(context).baseContext
                           .getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
                 return am.getRunningTasks(1)[0].topActivity.packageName

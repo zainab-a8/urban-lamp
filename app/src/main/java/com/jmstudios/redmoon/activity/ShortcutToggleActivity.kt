@@ -39,11 +39,8 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 
-import com.jmstudios.redmoon.event.moveToState
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
-
-import org.greenrobot.eventbus.EventBus
 
 class ShortcutToggleActivity : Activity() {
 
@@ -60,14 +57,13 @@ class ShortcutToggleActivity : Activity() {
         fun toggleAndFinish(activity: Activity) {
             if (DEBUG) Log.i(TAG, "toggleAndFinish called.")
 
-            val isOn = Config.filterIsOn
-            val command = if (isOn) ScreenFilterService.COMMAND_OFF
-                          else ScreenFilterService.COMMAND_ON
-
-            EventBus.getDefault().postSticky(moveToState(command))
-
-            if (isOn) ScreenFilterService.stop(activity)
-            else ScreenFilterService.start(activity)
+            if (Config.filterIsOn) {
+                ScreenFilterService.moveToState(ScreenFilterService.COMMAND_OFF)
+                ScreenFilterService.stop(activity)
+            } else {
+                ScreenFilterService.start(activity)
+                ScreenFilterService.moveToState(ScreenFilterService.COMMAND_ON)
+            }
 
             activity.finish()
         }

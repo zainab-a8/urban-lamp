@@ -4,6 +4,7 @@
     <string name="paused">Gepauzeerd</string>
 
     <string name="pref_title_appearance">Filter</string>
+    <string name="time_toggle_activity">Filter tijden</string>
     <string name="pref_title_time_toggle">Filter tijden</string>
     <string name="pref_title_startup">Opstarten</string>
     <string name="pref_title_other">Overig</string>

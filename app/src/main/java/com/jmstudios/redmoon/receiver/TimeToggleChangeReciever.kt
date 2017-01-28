@@ -25,9 +25,7 @@ import android.net.Uri
 import android.os.Handler
 import android.util.Log
 
-import com.jmstudios.redmoon.event.moveToState
 import com.jmstudios.redmoon.helper.DismissNotificationRunnable
-import com.jmstudios.redmoon.helper.Util
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.service.LocationUpdateService
@@ -36,7 +34,6 @@ import com.jmstudios.redmoon.service.ScreenFilterService
 import java.util.Calendar
 import java.util.GregorianCalendar
 
-import org.greenrobot.eventbus.EventBus
 
 class TimeToggleChangeReceiver : BroadcastReceiver() {
 
@@ -47,7 +44,7 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
 
         val command = if (turnOn) ScreenFilterService.COMMAND_ON
         else ScreenFilterService.COMMAND_OFF
-        EventBus.getDefault().postSticky(moveToState(command))
+        ScreenFilterService.moveToState(command)
         cancelAlarm(context, turnOn)
         scheduleNextCommand(context, turnOn)
 
@@ -92,8 +89,8 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
 
         private fun scheduleNextCommand(context: Context, turnOn: Boolean) {
             if (Config.timeToggle) {
-                val time = if (turnOn) Util.automaticTurnOnTime
-                           else Util.automaticTurnOffTime
+                val time = if (turnOn) Config.automaticTurnOnTime
+                           else Config.automaticTurnOffTime
 
                 val command = intent(context)
                 command.data = if (turnOn) Uri.parse("turnOnIntent")
@@ -116,7 +113,7 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
                 val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                 val pendingIntent = PendingIntent.getBroadcast(context, 0, command, 0)
 
-                if (Util.atLeastAPI(19)) {
+                if (Config.atLeastAPI(19)) {
                     alarmManager.setExact(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
                 } else {
                     alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)

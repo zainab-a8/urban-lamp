@@ -42,9 +42,7 @@ import android.os.Handler
 import android.preference.PreferenceManager
 import android.util.Log
 
-import com.jmstudios.redmoon.event.moveToState
 import com.jmstudios.redmoon.helper.DismissNotificationRunnable
-import com.jmstudios.redmoon.helper.Util
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.service.ScreenFilterService
@@ -75,9 +73,8 @@ class BootReceiver : BroadcastReceiver() {
 
         val filterIsOnPredicted = filterIsOnPrediction(filterIsOnBeforeReboot)
 
-        EventBus.getDefault().postSticky(moveToState(
-                if (filterIsOnPredicted) ScreenFilterService.COMMAND_OFF
-                else ScreenFilterService.COMMAND_ON))
+        ScreenFilterService.moveToState(if (filterIsOnPredicted) ScreenFilterService.COMMAND_OFF
+                                        else ScreenFilterService.COMMAND_ON)
 
         if (!filterIsOnPredicted) {
             // We want to dismiss the notification if the filter is turned off
@@ -102,7 +99,7 @@ class BootReceiver : BroadcastReceiver() {
             if (Config.timeToggle) {
                 val now = Calendar.getInstance()
 
-                val onTime = Util.automaticTurnOnTime
+                val onTime = Config.automaticTurnOnTime
                 val onHour = Integer.parseInt(onTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0])
                 val onMinute = Integer.parseInt(onTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[1])
                 val on = Calendar.getInstance()
@@ -112,7 +109,7 @@ class BootReceiver : BroadcastReceiver() {
                 if (on.after(now))
                     on.add(Calendar.DATE, -1)
 
-                val offTime = Util.automaticTurnOffTime
+                val offTime = Config.automaticTurnOffTime
                 val offHour = Integer.parseInt(offTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0])
                 val offMinute = Integer.parseInt(offTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[1])
                 val off = Calendar.getInstance()

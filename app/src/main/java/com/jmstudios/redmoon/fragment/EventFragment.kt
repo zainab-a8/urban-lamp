@@ -24,7 +24,7 @@ import android.view.ViewGroup
 
 import org.greenrobot.eventbus.EventBus
 
-abstract class EventPreferenceFragment() : PreferenceFragment() {
+abstract class EventPreferenceFragment : PreferenceFragment() {
     private lateinit var mView: View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -68,5 +68,4 @@ abstract class EventPreferenceFragment() : PreferenceFragment() {
 
     /*     mHelpSnackbar.show() */
     /* } */
-
 }

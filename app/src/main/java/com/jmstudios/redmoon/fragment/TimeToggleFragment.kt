@@ -27,7 +27,6 @@ import android.widget.Toast
 import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.event.*
 
-import com.jmstudios.redmoon.helper.Util
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.preference.TimePickerPreference
 import com.jmstudios.redmoon.receiver.TimeToggleChangeReceiver
@@ -111,8 +110,8 @@ class TimeToggleFragment : EventPreferenceFragment() {
         val enabled = auto && !useLocation
         automaticTurnOnPref.isEnabled = enabled
         automaticTurnOffPref.isEnabled = enabled
-        automaticTurnOnPref.summary = Util.automaticTurnOnTime
-        automaticTurnOffPref.summary = Util.automaticTurnOffTime
+        automaticTurnOnPref.summary = Config.automaticTurnOnTime
+        automaticTurnOffPref.summary = Config.automaticTurnOffTime
     }
 
     //region presenter
@@ -151,7 +150,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
 
     @Subscribe
     fun requestLocationPermission(event: locationAccessDenied) {
-        if (mIsSearchingLocation && !Util.hasLocationPermission) {
+        if (mIsSearchingLocation && !Config.hasLocationPermission) {
             ActivityCompat.requestPermissions(activity,
             arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 0)
             mIsSearchingLocation = false

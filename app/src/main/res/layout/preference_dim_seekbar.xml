@@ -52,7 +52,7 @@
               android:layout_alignParentBottom="true"
               android:paddingStart="6dp"
               android:paddingEnd="6dp"
-              style="@style/PreferenceSecundaryTextStyle" />
+              style="@style/PreferenceSecondaryTextStyle" />
 
         </RelativeLayout>
 

@@ -15,27 +15,11 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" >
-    <item
-        android:id="@+id/screen_filter_switch"
-        android:title=""
-        app:showAsAction="always"
-        app:actionLayout="@layout/switch_layout" />
-
-    <item
-        android:id="@+id/show_intro_button"
-        android:title="@string/show_intro_text"
-        app:showAsAction="never"
-        android:icon="@drawable/ic_help_white_24dp"/>
-
-    <item
-        android:id="@+id/view_github"
-        android:title="@string/project_page_title"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/email_developer"
-        android:title="@string/email_me_title"
-        app:showAsAction="never"/>
-</menu>
+<android.widget.Switch
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/switch_for_action_bar"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:paddingStart="6dp"
+    android:paddingEnd="6dp"
+    android:text="" />

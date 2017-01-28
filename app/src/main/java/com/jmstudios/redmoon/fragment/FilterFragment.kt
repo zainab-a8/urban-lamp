@@ -36,13 +36,9 @@
 package com.jmstudios.redmoon.fragment
 
 import android.annotation.TargetApi
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.preference.Preference
 import android.preference.SwitchPreference
-import android.provider.Settings
-import android.support.design.widget.FloatingActionButton
 import android.util.Log
 import android.widget.Toast
 
@@ -50,7 +46,6 @@ import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.application.RedMoonApplication
 import com.jmstudios.redmoon.event.*
-import com.jmstudios.redmoon.helper.Util
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.preference.ColorSeekBarPreference
 import com.jmstudios.redmoon.preference.DimSeekBarPreference
@@ -81,55 +76,29 @@ class FilterFragment : EventPreferenceFragment() {
                 (getString(R.string.pref_key_lower_brightness)) as SwitchPreference)
 
     private val timeTogglePref: Preference
-        get() =
-        (preferenceScreen.findPreference(getString(R.string.pref_key_time_toggle_header)))
+        get() = (preferenceScreen.findPreference(getString(R.string.pref_key_time_toggle_header)))
 
     private val secureSuspendPref: Preference
         get() = preferenceScreen.findPreference(getString(R.string.pref_key_secure_suspend_header))
 
-    private val mToggleFab: FloatingActionButton
-        get() = activity.findViewById(R.id.toggle_fab) as FloatingActionButton
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         addPreferencesFromResource(R.xml.filter_preferences)
 
-        if (!Util.hasWriteSettingsPermission) lowerBrightnessPref.isChecked = false
+        if (!Config.hasWriteSettingsPermission) lowerBrightnessPref.isChecked = false
+        updateSecureSuspendSummary()
+        updateTimeToggleSummary()
 
         lowerBrightnessPref.onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { preference, newValue ->
                     val checked = newValue as Boolean
-                    if (checked && getWriteSettingsPermission()) {
-                        return@OnPreferenceChangeListener false
-                    }
-                    true
+                    if (checked) Config.requestWriteSettingsPermission(activity) else true
                 }
-
-        mToggleFab.setOnClickListener {
-        if (DEBUG) Log.i(TAG, "FAB clicked while filter is: " + Config.filterIsOn)
-            if (!hasShownWarningToast || !Config.filterIsOn) {
-                val duration = Toast.LENGTH_SHORT
-                val toast = Toast.makeText(RedMoonApplication.app,
-                                           getString(R.string.toast_warning_install),
-                                           duration)
-                toast.show()
-                hasShownWarningToast = true
-            }
-
-            EventBus.getDefault().postSticky(moveToState(
-                    if (Config.filterIsOn) ScreenFilterService.COMMAND_OFF
-                    else ScreenFilterService.COMMAND_ON))
-        }
-
-        updateSecureSuspendSummary()
     }
 
     override fun onResume() {
+        if (DEBUG) Log.i(TAG, "onResume")
         super.onResume()
-
-        mToggleFab.show()
-        updateFabIcon()
 
         // When the fragment is not on the screen, but the user
         // updates the profile through the notification. the
@@ -155,40 +124,25 @@ class FilterFragment : EventPreferenceFragment() {
         /* Config.profile = profile */
 
         updateSecureSuspendSummary()
+        updateTimeToggleSummary()
     }
 
     override fun onPause() {
-        mToggleFab.hide()
         super.onPause()
     }
 
+    private fun updateTimeToggleSummary() {
+        // TODO: Show the time of the next upcoming toggle instead of just on/off
+        timeTogglePref.setSummary(if (Config.timeToggle) R.string.text_switch_on
+                                     else R.string.text_switch_off)
+    }
+
     private fun updateSecureSuspendSummary() {
-        // TODO: Show the time here instead of just "on" or "off"
         secureSuspendPref.setSummary(if (Config.secureSuspend) R.string.text_switch_on
-                                        else R.string.text_switch_off)
+                                     else R.string.text_switch_off)
     }
-
-    private fun updateFabIcon() {
-        mToggleFab.setImageResource(if (Config.filterIsOn) R.drawable.fab_pause
-                                    else R.drawable.fab_start)
-    }
-
-    @TargetApi(23) // Safe to call on all APIs but Android Studio doesn't know
-    private fun getWriteSettingsPermission(): Boolean {
-        if (!Util.hasWriteSettingsPermission) {
-            val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
-                                Uri.parse("package:" + context.packageName))
-            startActivityForResult(intent, -1)
-        }
-        return (Util.hasWriteSettingsPermission)
-        }
 
     //region presenter
-    @Subscribe
-    fun onFilterIsOnChanged(event: filterIsOnChanged) {
-        updateFabIcon()
-    }
-
     @Subscribe
     fun onColorChanged(event: colorChanged) {
         colorPref.setProgress(Config.color)
@@ -215,5 +169,3 @@ class FilterFragment : EventPreferenceFragment() {
         private val DEBUG = true
     }
 }// Android Fragments require an explicit public default constructor for re-creation
-
-

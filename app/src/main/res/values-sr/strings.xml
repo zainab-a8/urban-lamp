@@ -75,12 +75,13 @@
     <string name="project_page_summary">Пронађите још информација, оставите повратне информације и допринесите</string>
     <string name="email_me_summary">Пошаљите ми е-поруку са извештајем о грешкама или предлозима</string>
     <string name="time_toggle_title">Режим прекидача</string>
+    <string name="time_toggle_activity">Време филтера</string>
     <string name="pref_title_time_toggle">Време филтера</string>
     <string name="shortcut_activity">Прекидач Црвеног месеца</string>
     <string name="text_switch_on">Укљ</string>
     <string name="text_switch_off">Иск</string>
     <string name="usage_stats_dialog_title">Дозволи приступ статистикама</string>
-    <string name="secure_suspend_preference_activity">Аутоматско обустављање</string>
+    <string name="secure_suspend_activity">Аутоматско обустављање</string>
 
     <string name="secure_suspend_title">Аутоматско обустављање филтера у безбедним апликацијама</string>
     <string name="secure_suspend_summary">Неке функције Андроида су заштићене од прекривања екрана и неће радити ако је Црвени месец укључен. На пример, инсталирање апликација или давање дозвола на Андроиду 6.0+.

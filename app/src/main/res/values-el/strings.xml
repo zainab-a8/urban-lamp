@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="intro_label">Εισαγωγή</string>
     <string name="show_intro_text">Δείξε την εισαγωγή</string>
-    <string name="secure_suspend_preference_activity">Αυτόματη αναστολή</string>
+    <string name="secure_suspend_activity">Αυτόματη αναστολή</string>
 
     <string name="running">Σε λειτουργία. Σε παύση για την εγκατάσταση των apks</string>
     <string name="running_no_warning">Σε λειτουργία</string>
@@ -10,6 +10,7 @@
     <string name="pause_action">Παύση</string>
 
     <string name="pref_title_appearance">Φίλτρο</string>
+    <string name="time_toggle_activity">Ώρες φίλτρου</string>
     <string name="pref_title_time_toggle">Ώρες φίλτρου</string>
     <string name="pref_title_startup">Εκκίνηση</string>
     <string name="pref_title_other">Άλλα</string>

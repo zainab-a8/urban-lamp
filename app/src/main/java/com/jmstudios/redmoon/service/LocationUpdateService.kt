@@ -49,12 +49,11 @@ import android.util.Log
 
 import com.jmstudios.redmoon.application.RedMoonApplication
 import com.jmstudios.redmoon.event.*
-import com.jmstudios.redmoon.helper.Util
-
 import com.jmstudios.redmoon.model.Config
-import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
 
+import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
 import org.greenrobot.eventbus.EventBus
+
 import java.util.*
 
 class LocationUpdateService: Service(), LocationListener {
@@ -73,14 +72,14 @@ class LocationUpdateService: Service(), LocationListener {
     override fun onCreate() {
         super.onCreate()
         if (DEBUG) Log.i(TAG, "onCreate")
-        if (Util.hasLocationPermission)
+        if (Config.hasLocationPermission)
                 mLocationManager.requestLocationUpdates(locationProvider, 0, 0f, this)
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         if (DEBUG) Log.i(TAG, String.format("onStartCommand(%s, %d, %d", intent, flags, startId))
         
-        if (Util.hasLocationPermission) {
+        if (Config.hasLocationPermission) {
             if (!locationServicesEnabled) {
                 EventBus.getDefault().post(locationServicesDisabled())
             } else {
@@ -118,7 +117,7 @@ class LocationUpdateService: Service(), LocationListener {
 
     override fun onDestroy() {
         if (DEBUG) Log.i(TAG, "onDestroy")
-        if (Util.hasLocationPermission) {
+        if (Config.hasLocationPermission) {
             mLocationManager.removeUpdates(this)
             updateLocation(lastKnownLocation)
         }
@@ -126,7 +125,7 @@ class LocationUpdateService: Service(), LocationListener {
     }
 
     private fun updateLocation(location: Location?) {
-        if (Util.hasLocationPermission) mLocationManager.removeUpdates(this)
+        if (Config.hasLocationPermission) mLocationManager.removeUpdates(this)
 
         if (location != null) {
             val latitude    = location.latitude

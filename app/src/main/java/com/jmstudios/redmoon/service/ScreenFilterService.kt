@@ -45,7 +45,7 @@ import android.os.IBinder
 import android.util.Log
 import android.view.WindowManager
 
-import com.jmstudios.redmoon.event.serviceStopped
+import com.jmstudios.redmoon.event.command
 import com.jmstudios.redmoon.manager.ScreenManager
 import com.jmstudios.redmoon.manager.WindowViewManager
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
@@ -76,7 +76,13 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
 
         // Make Presenter listen to settings changes and orientation changes
         EventBus.getDefault().register(mPresenter)
-        registerOrientationReceiver(mPresenter)
+        if (mOrientationReceiver == null) {
+            val orientationIntentFilter = IntentFilter()
+            orientationIntentFilter.addAction(Intent.ACTION_CONFIGURATION_CHANGED)
+
+            mOrientationReceiver = OrientationChangeReceiver(mPresenter)
+            registerReceiver(mOrientationReceiver, orientationIntentFilter)
+        }
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
@@ -95,7 +101,8 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         if (DEBUG) Log.i(TAG, "onDestroy")
 
         EventBus.getDefault().unregister(mPresenter)
-        unregisterOrientationReceiver()
+        unregisterReceiver(mOrientationReceiver)
+        mOrientationReceiver = null
 
         //Broadcast to keep appwidgets in sync
         if (DEBUG) Log.i(TAG, "Sending update broadcast")
@@ -105,23 +112,6 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         sendBroadcast(updateAppWidgetIntent)
 
         super.onDestroy()
-    }
-
-    private fun registerOrientationReceiver(listener: OrientationChangeReceiver.OnOrientationChangeListener) {
-        if (mOrientationReceiver != null) {
-            return
-        }
-
-        val orientationIntentFilter = IntentFilter()
-        orientationIntentFilter.addAction(Intent.ACTION_CONFIGURATION_CHANGED)
-
-        mOrientationReceiver = OrientationChangeReceiver(this, listener)
-        registerReceiver(mOrientationReceiver, orientationIntentFilter)
-    }
-
-    private fun unregisterOrientationReceiver() {
-        unregisterReceiver(mOrientationReceiver)
-        mOrientationReceiver = null
     }
 
     companion object {
@@ -149,7 +139,10 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         fun stop(context: Context) {
             if (DEBUG) Log.i(TAG, "Received stop request")
             context.stopService(intent(context))
-            EventBus.getDefault().post(serviceStopped())
+        }
+
+        fun moveToState(commandFlag: Int) {
+            EventBus.getDefault().postSticky(command(commandFlag))
         }
     }
 }

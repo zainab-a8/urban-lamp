@@ -7,6 +7,7 @@
     <string name="paused">Wstrzymano</string>
 
     <string name="pref_title_appearance">Filtr</string>
+    <string name="time_toggle_activity">Czas filtrowania</string>
     <string name="pref_title_time_toggle">Czas filtrowania</string>
     <string name="pref_title_startup">Uruchamianie</string>
     <string name="pref_title_other">Inne</string>
@@ -57,7 +58,7 @@
 
     <string name="intro_label">Wprowadzenie</string>
     <string name="show_intro_text">Pokaż wprowadzenie</string>
-    <string name="secure_suspend_preference_activity">Automatyczne wstrzymywanie</string>
+    <string name="secure_suspend_activity">Automatyczne wstrzymywanie</string>
 
     <string name="resume_action">Wznów</string>
     <string name="pause_action">Wstrzymaj</string>

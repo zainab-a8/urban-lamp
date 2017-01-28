@@ -35,34 +35,28 @@
  */
 package com.jmstudios.redmoon.activity
 
-import android.annotation.TargetApi
-import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
+import android.widget.Switch
 
 import com.jmstudios.redmoon.R
-import com.jmstudios.redmoon.application.RedMoonApplication
 
 import com.jmstudios.redmoon.event.*
-import com.jmstudios.redmoon.fragment.*
-import com.jmstudios.redmoon.helper.Util
+import com.jmstudios.redmoon.fragment.FilterFragment
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
 
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 class ShadesActivity : AppCompatActivity() {
 
-    private val context = this
-
-
+    lateinit private var mSwitch: Switch
     internal val fragment: FilterFragment
         get() = fragmentManager.findFragmentByTag(FRAGMENT_TAG_FILTER) as FilterFragment
 
@@ -71,33 +65,22 @@ class ShadesActivity : AppCompatActivity() {
         val intent = intent
         if (DEBUG) Log.i(TAG, "Got intent")
 
-        // Wire MVP classes
         val fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false)
-        if (fromShortcut) {
-            toggleAndFinish()
-        }
-
+        if (fromShortcut) { toggleAndFinish() }
         if (Config.darkThemeFlag) setTheme(R.style.AppThemeDark)
 
         setContentView(R.layout.activity_shades)
         super.onCreate(savedInstanceState)
 
-        val view: FilterFragment
-
         // Only create and attach a new fragment on the first Activity creation.
-        // On Activity re-creation, retrieve the existing fragment stored in the FragmentManager.
         if (savedInstanceState == null) {
             if (DEBUG) Log.i(TAG, "onCreate - First creation")
 
-            view = FilterFragment()
-
+            val view = FilterFragment()
+            val tag = FRAGMENT_TAG_FILTER
             fragmentManager.beginTransaction()
-                           .replace(R.id.fragment_container, view, FRAGMENT_TAG_FILTER)
+                           .replace(R.id.fragment_container, view, tag)
                            .commit()
-        } else {
-            if (DEBUG) Log.i(TAG, "onCreate - Re-creation")
-
-            view = fragmentManager.findFragmentByTag(FRAGMENT_TAG_FILTER) as FilterFragment
         }
 
         if (!Config.introShown) {
@@ -107,7 +90,25 @@ class ShadesActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_activity_menu, menu)
+        mSwitch = menu.findItem(R.id.screen_filter_switch).actionView as Switch
+        mSwitch.isChecked = Config.filterIsOn
+        mSwitch.setOnClickListener {
+            if (Config.requestOverlayPermission(this)) {
+                val state = if (mSwitch.isChecked) ScreenFilterService.COMMAND_ON
+                            else ScreenFilterService.COMMAND_OFF
+                ScreenFilterService.moveToState(state)
+            } else mSwitch.isChecked = false
+        }
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        EventBus.getDefault().register(this)
+    }
+    override fun onPause() {
+        EventBus.getDefault().unregister(this)
+        super.onPause()
     }
 
     override fun onDestroy() {
@@ -115,56 +116,10 @@ class ShadesActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    fun launchTimeToggleFragment() {
-        val newFragment = TimeToggleFragment()
-        fragmentManager.beginTransaction()
-                       .replace(R.id.fragment_container, newFragment, FRAGMENT_TAG_TIME_TOGGLE)
-                       .addToBackStack(null)
-                       .commit()
-        setTitle(R.string.time_toggle_title)
-    }
-
-    fun launchSecureSuspendFragment() {
-        val newFragment = SecureSuspendFragment()
-        fragmentManager.beginTransaction()
-                       .replace(R.id.fragment_container, newFragment, FRAGMENT_TAG_SECURE_SUSPEND)
-                       .addToBackStack(null)
-                       .commit()
-        setTitle(R.string.secure_suspend_preference_activity)
-    }
-
-    @TargetApi(23) // Android Studio can't figure out that this is safe to call at any API level
-    private fun getOverlayPermission(): Boolean {
-        // TODO: Verify this should be 'at least' and not 'less than' API 23
-        if (Util.atLeastAPI(23)) return true
-
-        if (!Settings.canDrawOverlays(context)) {
-            val builder = AlertDialog.Builder(context)
-
-            builder.setMessage(R.string.overlay_dialog_message)
-                   .setTitle(R.string.overlay_dialog_title)
-                   .setPositiveButton(R.string.ok_dialog) { dialog, id ->
-                       val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                       Uri.parse("package:" + packageName))
-                       startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE) }
-                   .show()
-        }
-        return Settings.canDrawOverlays(context)
-    }
-
-    override fun onStart() {
-        super.onStart()
-    }
-
     override fun onNewIntent(intent: Intent) {
         val fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false)
-        if (fromShortcut) {
-            toggleAndFinish()
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
+        if (fromShortcut) { toggleAndFinish() }
+        if (DEBUG) Log.i(TAG, "onNewIntent")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -196,35 +151,25 @@ class ShadesActivity : AppCompatActivity() {
     private fun startIntro() {
         val introIntent = Intent(this, Intro::class.java)
         startActivity(introIntent)
-
         Config.introShown = true
     }
 
-    val colorTempProgress: Int
-        get() = Config.color
-
-    val intensityLevelProgress: Int
-        get() = Config.intensity
-
-    val dimLevelProgress: Int
-        get() = Config.dim
-
     private fun toggleAndFinish() {
-        EventBus.getDefault().postSticky(moveToState(
-                if (Config.filterIsOn) ScreenFilterService.COMMAND_ON
-                else ScreenFilterService.COMMAND_OFF))
+        val state = if (Config.filterIsOn) ScreenFilterService.COMMAND_OFF
+                    else ScreenFilterService.COMMAND_ON
+        ScreenFilterService.moveToState(state)
         finish()
+    }
+
+    @Subscribe
+    fun onFilterIsOnChanged(event: filterIsOnChanged) {
+        mSwitch.isChecked = Config.filterIsOn
     }
 
     companion object {
         private val TAG = "ShadesActivity"
         private val DEBUG = true
         private val FRAGMENT_TAG_FILTER = "jmstudios.fragment.tag.FILTER"
-        private val FRAGMENT_TAG_TIME_TOGGLE = "jmstudios.fragment.tag.TIME_TOGGLE"
-        private val FRAGMENT_TAG_SECURE_SUSPEND = "jmstudios.fragment.tag.SECURE_SUSPEND"
-
-
         val EXTRA_FROM_SHORTCUT_BOOL = "com.jmstudios.redmoon.activity.ShadesActivity.EXTRA_FROM_SHORTCUT_BOOL"
-        var OVERLAY_PERMISSION_REQ_CODE = 1234
     }
 }
