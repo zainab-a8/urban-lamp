@@ -35,42 +35,38 @@
  */
 package com.jmstudios.redmoon.activity
 
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.MenuItem
 
+import com.jmstudios.redmoon.R
+
+import com.jmstudios.redmoon.fragment.SecureSuspendFragment
 import com.jmstudios.redmoon.model.Config
-import com.jmstudios.redmoon.service.ScreenFilterService
 
-class ShortcutToggleActivity : Activity() {
+class SecureSuspendActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (Config.darkThemeFlag) setTheme(R.style.AppThemeDark)
+        setContentView(R.layout.activity_shades)
         super.onCreate(savedInstanceState)
-        if (DEBUG) Log.i(TAG, "ShortcutToggleActivity created")
-        toggleAndFinish(this)
+
+        actionBar.setDisplayHomeAsUpEnabled(true)
+        // Only create and attach a new fragment on the first Activity creation.
+        if (savedInstanceState == null) {
+            if (DEBUG) Log.i(TAG, "onCreate - First creation")
+            val view = SecureSuspendFragment()
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, view).commit()
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {
-        private val TAG = "ShortcutToggleActivity"
+        private val TAG = "SecureSuspendActivity"
         private val DEBUG = true
-
-        fun toggleAndFinish(activity: Activity) {
-            if (DEBUG) Log.i(TAG, "toggleAndFinish (activity) called.")
-            toggleAndFinish(activity as Context)
-            activity.finish()
-        }
-
-        fun toggleAndFinish(context: Context) {
-            if (DEBUG) Log.i(TAG, "toggleAndFinish (context) called.")
-
-            if (Config.filterIsOn) {
-                ScreenFilterService.moveToState(ScreenFilterService.COMMAND_OFF)
-                ScreenFilterService.stop(context)
-            } else {
-                ScreenFilterService.start(context)
-                ScreenFilterService.moveToState(ScreenFilterService.COMMAND_ON)
-            }
-        }
     }
 }
