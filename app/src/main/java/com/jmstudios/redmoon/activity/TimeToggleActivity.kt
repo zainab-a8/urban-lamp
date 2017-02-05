@@ -52,7 +52,10 @@ class TimeToggleActivity : AppCompatActivity() {
         setContentView(R.layout.activity_shades)
         super.onCreate(savedInstanceState)
 
-        actionBar.setDisplayHomeAsUpEnabled(true)
+        // It seems that this method is abstract and thus throws an
+        // error. I'm not sure what to replace it with.
+        // actionBar.setDisplayHomeAsUpEnabled(true)
+
         // Only create and attach a new fragment on the first Activity creation.
         if (savedInstanceState == null) {
             if (DEBUG) Log.i(TAG, "onCreate - First creation")

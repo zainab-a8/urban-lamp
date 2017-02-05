@@ -111,25 +111,25 @@
         </activity>
 
         <activity
-            android:name="com.jmstudios.redmoon.activity.TimeToggleActivity"
+            android:name=".activity.TimeToggleActivity"
             android:label="@string/time_toggle_activity"
-            android:theme="@style/AppTheme"
             android:parentActivityName="com.jmstudios.redmoon.activity.ShadesActivity" >
+            android:theme="@style/AppTheme" >
 
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="com.jmstudios.redmoon.activity.TimeToggleActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name="com.jmstudios.redmoon.activity.SecureSuspendActivity"
+            android:name=".activity.SecureSuspendActivity"
             android:label="@string/secure_suspend_activity"
-            android:theme="@style/AppTheme"
             android:parentActivityName="com.jmstudios.redmoon.activity.ShadesActivity" >
+            android:theme="@style/AppTheme" >
 
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="com.jmstudios.redmoon.activity.SecureSuspendActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

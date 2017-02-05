@@ -25,8 +25,11 @@ import android.preference.SwitchPreference
 import android.provider.Settings
 
 import com.jmstudios.redmoon.R
+import com.jmstudios.redmoon.event.*
 
 import com.jmstudios.redmoon.thread.CurrentAppMonitoringThread
+
+import org.greenrobot.eventbus.Subscribe
 
 class SecureSuspendFragment : EventPreferenceFragment() {
 
@@ -78,6 +81,18 @@ class SecureSuspendFragment : EventPreferenceFragment() {
         }
 
         builder.show()
+    }
+
+    // Because this is an EventPreferenceFragment, it initializes EventBus
+    // functions. This means that it needs at least one subscription, otherwise
+    // EventBus throws a RunTimeException. That's why this class is subscribed
+    // to this event right now and doesn't do anything with it. Please remove
+    // this method as soon as it subscribers to any other event (or remove the
+    // relationship to EventPreferenceFragment entirely as soon as it is
+    // apparent that this class doesn't need any subscriptions.
+    @Subscribe
+    fun onCustomTurnOnTimeChanged(event: customTurnOnTimeChanged) {
+        true
     }
 
     companion object {
