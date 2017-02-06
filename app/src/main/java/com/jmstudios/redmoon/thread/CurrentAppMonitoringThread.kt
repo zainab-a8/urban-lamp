@@ -67,7 +67,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
     @TargetApi(22) // Safe to call at all api levels but Studio doesn't know that
     companion object {
         private val TAG = "CurrentAppMonitoring"
-        private val DEBUG = false
+        private val DEBUG = true
 
         fun isAppMonitoringWorking(context: Context): Boolean {
             return getCurrentApp(context) != ""

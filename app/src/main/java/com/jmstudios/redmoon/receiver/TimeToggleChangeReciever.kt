@@ -66,7 +66,7 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
 
     companion object {
         private val TAG = "TimeToggleChange"
-        private val DEBUG = false
+        private val DEBUG = true
         private val intent = { ctx: Context -> Intent(ctx, TimeToggleChangeReceiver::class.java) }
 
         // Conveniences
@@ -89,6 +89,10 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
 
         private fun scheduleNextCommand(context: Context, turnOn: Boolean) {
             if (Config.timeToggle) {
+                if (DEBUG) {
+                    val state = if (turnOn) "on" else "off"
+                    Log.d(TAG, "Scheduling alarm to turn filter " + state)
+                }
                 val time = if (turnOn) Config.automaticTurnOnTime
                            else Config.automaticTurnOffTime
 
@@ -118,11 +122,16 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
                 } else {
                     alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
                 }
-
+            } else {
+                if (DEBUG) Log.i(TAG, "Tried to schedule alarm, but timer is disabled.")
             }
         }
 
         private fun cancelAlarm(context: Context, turnOn: Boolean) {
+            if (DEBUG) {
+                val state = if (turnOn) "on" else "off"
+                Log.d(TAG, "Canceling alarm to turn filter " + state)
+            }
             val command = intent(context)
             command.data = if (turnOn) Uri.parse("turnOnIntent")
                             else Uri.parse("offIntent")

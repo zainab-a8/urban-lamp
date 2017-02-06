@@ -49,6 +49,7 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
 
     //region OnSharedPreferenceChangeListener
     override fun onSharedPreferenceChanged(sp: SharedPreferences, key: String) {
+        if (DEBUG) Log.i(TAG, "onPreferenceChanged: " + key)
         EventBus.getDefault().post(when (key) {
             getString(R.string.pref_key_filter_is_on)         -> filterIsOnChanged()
             getString(R.string.pref_key_dim)                  -> dimChanged()
@@ -76,8 +77,8 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
 
     //endregion
     companion object {
-        private val TAG = "Config"
-        private val DEBUG = false
+        private val TAG = "RedMoonApplication"
+        private val DEBUG = true
 
         lateinit var app: RedMoonApplication
     }
