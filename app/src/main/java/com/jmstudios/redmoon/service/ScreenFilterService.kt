@@ -123,7 +123,7 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         private val COMMAND_INVALID = -1
 
         private val TAG = "ScreenFilterService"
-        private val DEBUG = false
+        private val DEBUG = true
         private val intent = Intent(RedMoonApplication.app, ScreenFilterService::class.java)
         private val context = RedMoonApplication.app
 
