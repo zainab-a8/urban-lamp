@@ -61,7 +61,7 @@ class ShadesActivity : AppCompatActivity() {
         get() = fragmentManager.findFragmentByTag(FRAGMENT_TAG_FILTER) as FilterFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        ScreenFilterService.start(this)
+        ScreenFilterService.start()
         val intent = intent
         if (DEBUG) Log.i(TAG, "Got intent")
 
@@ -94,8 +94,8 @@ class ShadesActivity : AppCompatActivity() {
         mSwitch.isChecked = Config.filterIsOn
         mSwitch.setOnClickListener {
             if (Config.requestOverlayPermission(this)) {
-                val state = if (mSwitch.isChecked) ScreenFilterService.COMMAND_ON
-                            else ScreenFilterService.COMMAND_OFF
+                val state = if (mSwitch.isChecked) ScreenFilterService.Command.ON
+                            else ScreenFilterService.Command.OFF
                 ScreenFilterService.moveToState(state)
             } else mSwitch.isChecked = false
         }
@@ -112,7 +112,7 @@ class ShadesActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        ScreenFilterService.stop(this) 
+        ScreenFilterService.stop()
         super.onDestroy()
     }
 
@@ -155,8 +155,8 @@ class ShadesActivity : AppCompatActivity() {
     }
 
     private fun toggleAndFinish() {
-        val state = if (Config.filterIsOn) ScreenFilterService.COMMAND_OFF
-                    else ScreenFilterService.COMMAND_ON
+        val state = if (Config.filterIsOn) ScreenFilterService.Command.OFF
+                    else ScreenFilterService.Command.ON
         ScreenFilterService.moveToState(state)
         finish()
     }

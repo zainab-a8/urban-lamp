@@ -83,12 +83,12 @@ abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
 
     override fun onStartTrackingTouch(seekBar: SeekBar) {
         Log.i(TAG, "Touch down on a seek bar")
-        ScreenFilterService.moveToState(ScreenFilterService.COMMAND_SHOW_PREVIEW)
+        ScreenFilterService.moveToState(ScreenFilterService.Command.SHOW_PREVIEW)
     }
 
     override fun onStopTrackingTouch(seekBar: SeekBar) {
         Log.d(TAG, "Released a seek bar")
-        ScreenFilterService.moveToState(ScreenFilterService.COMMAND_HIDE_PREVIEW)
+        ScreenFilterService.moveToState(ScreenFilterService.Command.HIDE_PREVIEW)
     }
     //end region
 

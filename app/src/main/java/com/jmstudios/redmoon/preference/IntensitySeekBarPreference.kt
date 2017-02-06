@@ -30,7 +30,6 @@ import android.widget.TextView
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.activity.ShadesActivity
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
 import com.jmstudios.redmoon.view.ScreenFilterView
@@ -83,12 +82,12 @@ class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 Log.i(TAG, "Touch down on a seek bar")
-                ScreenFilterService.moveToState(ScreenFilterService.COMMAND_SHOW_PREVIEW)
+                ScreenFilterService.moveToState(ScreenFilterService.Command.SHOW_PREVIEW)
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 Log.d(TAG, "Released a seek bar")
-                ScreenFilterService.moveToState(ScreenFilterService.COMMAND_HIDE_PREVIEW)
+                ScreenFilterService.moveToState(ScreenFilterService.Command.HIDE_PREVIEW)
             }
         })
 

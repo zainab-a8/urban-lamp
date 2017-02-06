@@ -42,8 +42,8 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
 
         val turnOn = intent.data.toString() == "turnOnIntent"
 
-        val command = if (turnOn) ScreenFilterService.COMMAND_ON
-        else ScreenFilterService.COMMAND_OFF
+        val command = if (turnOn) ScreenFilterService.Command.ON
+        else ScreenFilterService.Command.OFF
         ScreenFilterService.moveToState(command)
         cancelAlarm(context, turnOn)
         scheduleNextCommand(context, turnOn)

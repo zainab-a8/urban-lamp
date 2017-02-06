@@ -114,39 +114,36 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
 
     init {
         oldScreenBrightness = -1
-        mCurrentState.onScreenFilterCommand(ScreenFilterService.COMMAND_OFF)
+        mCurrentState.onScreenFilterCommand(ScreenFilterService.Command.OFF.ordinal)
         Config.filterIsOn = mCurrentState.filterIsOn
     }
 
+    // TODO: Move to ScreenFilterService
     private fun refreshForegroundNotification() {
         val context = mView.context
-
         val profilesModel = ProfilesModel(context)
 
         val title = context.getString(R.string.app_name)
         val color = ContextCompat.getColor(context, R.color.color_primary)
-
         val smallIconResId = R.drawable.notification_icon_half_moon
         val contentText: String
+
         val offOrOnDrawableResId: Int
         val offOrOnCommand: Intent
         val offOrOnActionText: String
-
         if (filterIsOn) {
             Log.d(TAG, "Creating notification while NOT in off state")
             contentText = context.getString(
                     if (Config.secureSuspend) R.string.running_no_warning
                     else R.string.running)
             offOrOnDrawableResId = R.drawable.ic_stop
-            offOrOnCommand = ScreenFilterService.intent(mContext)
-            offOrOnCommand.putExtra(ScreenFilterService.BUNDLE_KEY_COMMAND, ScreenFilterService.COMMAND_OFF)
+            offOrOnCommand = ScreenFilterService.command(ScreenFilterService.Command.OFF)
             offOrOnActionText = context.getString(R.string.action_off)
         } else {
             Log.d(TAG, "Creating notification while in off state")
             contentText = context.getString(R.string.off)
             offOrOnDrawableResId = R.drawable.ic_play
-            offOrOnCommand = ScreenFilterService.intent(mContext)
-            offOrOnCommand.putExtra(ScreenFilterService.BUNDLE_KEY_COMMAND, ScreenFilterService.COMMAND_ON)
+            offOrOnCommand = ScreenFilterService.command(ScreenFilterService.Command.ON)
             offOrOnActionText = context.getString(R.string.resume_action)
         }
 
@@ -185,6 +182,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         }
     }
 
+    //TODO: Move into ScreenFilterView
     //region view
     private fun animateShadesColor(toColor: Int) {
         cancelRunningAnimator(mColorAnimator)
@@ -286,21 +284,6 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
 
     //region events
     @Subscribe
-    fun onScreenFilterCommand(event: command) {
-        val commandFlag = event.commandFlag
-
-        if (mShuttingDown) {
-            Log.i(TAG, "In the process of shutting down; ignoring command: " + commandFlag)
-            return
-        }
-
-        if (DEBUG) Log.i(TAG, String.format("Handling command: %d in current state: %s",
-                                            commandFlag, mCurrentState))
-
-        mCurrentState.onScreenFilterCommand(commandFlag)
-    }
-
-    @Subscribe
     fun onOffStateChanged(event: filterIsOnChanged) {
         //Broadcast to keep appwidgets in sync
         if (DEBUG) Log.i(TAG, "Sending update broadcast")
@@ -337,6 +320,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         }
     }
 
+    //TODO: figure out what class brightness-related code should belong to
     @Subscribe
     fun onLowerBrightnessChanged(event: lowerBrightnessChanged) {
         if (Config.hasWriteSettingsPermission) {
@@ -355,11 +339,13 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         }
     }
 
+    //TODO: Move to ScreenFilterService
     @Subscribe
     fun onProfileChanged(event: profileChanged) {
         refreshForegroundNotification()
     }
 
+    //TODO: Move to ScreenFilterService
     @Subscribe
     fun onSecureSuspendChanged(event: secureSuspendChanged) {
         if (mCurrentState === mOnState) {
@@ -403,6 +389,56 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     }
     //endregion
 
+    fun onScreenFilterCommand(commandFlag: Int) {
+        if (mShuttingDown) {
+            Log.i(TAG, "In the process of shutting down; ignoring command: " + commandFlag)
+            return
+        }
+        if (DEBUG) Log.i(TAG, String.format("Handling command: %d in current state: %s",
+                                            commandFlag, mCurrentState))
+
+        mCurrentState.onScreenFilterCommand(commandFlag)
+    }
+
+    // TODO: Move to ScreenFilterService
+    @Suppress("DEPRECATION")
+    fun startAppMonitoring() {
+        if (DEBUG) Log.i(TAG, "Starting app monitoring")
+        val powerManager = mContext.getSystemService(Context.POWER_SERVICE) as PowerManager
+        screenOff = if (Config.atLeastAPI(20)) @TargetApi(20){!powerManager.isInteractive}
+                    else !powerManager.isScreenOn
+
+        val filter = IntentFilter()
+        filter.addAction(Intent.ACTION_SCREEN_OFF)
+        filter.addAction(Intent.ACTION_SCREEN_ON)
+        mContext.registerReceiver(mScreenStateReceiver, filter)
+
+        if (mCamThread == null && !screenOff) {
+            mCamThread = CurrentAppMonitoringThread(mContext)
+            mCamThread!!.start()
+        }
+    }
+
+    // TODO: Move to ScreenFilterService
+    fun stopAppMonitoring() {
+        if (DEBUG) Log.i(TAG, "Stopping app monitoring")
+        if (mCamThread != null) {
+            if (!mCamThread!!.isInterrupted) {
+                mCamThread!!.interrupt()
+            }
+            mCamThread = null
+        }
+
+        try {
+            mContext.unregisterReceiver(mScreenStateReceiver)
+        } catch (e: IllegalArgumentException) {
+            // Catch errors when receiver is unregistered more than
+            // once, it is not a problem, so we just ignore it.
+        }
+
+    }
+
+    // TODO: Move to State class. This may be hard to refactor.
     private fun saveOldBrightnessState() {
         if (Config.lowerBrightness) {
             val resolver = mContext.contentResolver
@@ -427,52 +463,16 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
                 mContext)
     }
 
-    @Suppress("DEPRECATION")
-    fun startAppMonitoring() {
-        if (DEBUG) Log.i(TAG, "Starting app monitoring")
-        val powerManager = mContext.getSystemService(Context.POWER_SERVICE) as PowerManager
-        screenOff = if (Config.atLeastAPI(20)) @TargetApi(20){!powerManager.isInteractive}
-                    else !powerManager.isScreenOn
-
-        val filter = IntentFilter()
-        filter.addAction(Intent.ACTION_SCREEN_OFF)
-        filter.addAction(Intent.ACTION_SCREEN_ON)
-        mContext.registerReceiver(mScreenStateReceiver, filter)
-
-        if (mCamThread == null && !screenOff) {
-            mCamThread = CurrentAppMonitoringThread(mContext)
-            mCamThread!!.start()
-        }
-    }
-
-    fun stopAppMonitoring() {
-        if (DEBUG) Log.i(TAG, "Stopping app monitoring")
-        if (mCamThread != null) {
-            if (!mCamThread!!.isInterrupted) {
-                mCamThread!!.interrupt()
-            }
-            mCamThread = null
-        }
-
-        try {
-            mContext.unregisterReceiver(mScreenStateReceiver)
-        } catch (e: IllegalArgumentException) {
-            // Catch errors when receiver is unregistered more than
-            // once, it is not a problem, so we just ignore it.
-        }
-
-    }
-
     private abstract inner class State {
         abstract fun onActivation(prevState: State)
         abstract val filterIsOn: Boolean
 
         open fun onScreenFilterCommand(commandFlag: Int) {
             mCurrentState.moveToState(when (commandFlag) {
-                ScreenFilterService.COMMAND_OFF           -> mOffState
-                ScreenFilterService.COMMAND_ON            -> mOnState
-                ScreenFilterService.COMMAND_SHOW_PREVIEW  -> mPreviewState
-                ScreenFilterService.COMMAND_START_SUSPEND -> mSuspendState
+                ScreenFilterService.Command.OFF.ordinal           -> mOffState
+                ScreenFilterService.Command.ON.ordinal            -> mOnState
+                ScreenFilterService.Command.SHOW_PREVIEW.ordinal  -> mPreviewState
+                ScreenFilterService.Command.START_SUSPEND.ordinal -> mSuspendState
                 else -> mOffState
             })
         }
@@ -483,8 +483,8 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             if (newState === this) return
             if (DEBUG) Log.i(TAG, "Passed check for same state.")
             mCurrentState = newState
-            Config.filterIsOn = newState.filterIsOn
             mCurrentState.onActivation(this)
+            Config.filterIsOn = newState.filterIsOn
         }
 
         override fun toString(): String {
@@ -560,6 +560,9 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             stateToReturnTo = prevState
             pressesActive = 1
             refreshForegroundNotification()
+            // If the animators are not canceled, preview does not work when filter is turning off
+            cancelRunningAnimator(mDimAnimator)
+            cancelRunningAnimator(mIntensityAnimator)
             openScreenFilter()
 
             mView.filterDimLevel = Config.dim
@@ -570,19 +573,19 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         override fun onScreenFilterCommand(commandFlag: Int) {
             if (DEBUG) Log.d(TAG, String.format("Preview, got command: %d", commandFlag))
             when (commandFlag) {
-                ScreenFilterService.COMMAND_ON -> stateToReturnTo = mOnState
+                ScreenFilterService.Command.ON.ordinal -> stateToReturnTo = mOnState
 
-                ScreenFilterService.COMMAND_OFF -> {
+                ScreenFilterService.Command.OFF.ordinal -> {
                     if (DEBUG) Log.d(TAG, String.format("State to return to changed to %d while in preview mode", commandFlag))
                     stateToReturnTo = mOffState
                 }
 
-                ScreenFilterService.COMMAND_SHOW_PREVIEW -> {
+                ScreenFilterService.Command.SHOW_PREVIEW.ordinal -> {
                     pressesActive++
                     if (DEBUG) Log.d(TAG, String.format("%d presses active", pressesActive))
                 }
 
-                ScreenFilterService.COMMAND_HIDE_PREVIEW -> {
+                ScreenFilterService.Command.HIDE_PREVIEW.ordinal -> {
                     pressesActive--
                     if (DEBUG) Log.d(TAG, String.format("%d presses active", pressesActive))
 
@@ -620,14 +623,14 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         }
 
         override fun onScreenFilterCommand(commandFlag: Int) {
-            if (DEBUG) Log.d(TAG, String.format("Suspend, got command: %d", commandFlag))
+            if (DEBUG) Log.d(TAG, String.format("In Suspend, got command: %d", commandFlag))
             when (commandFlag) {
-                ScreenFilterService.COMMAND_STOP_SUSPEND -> moveToState(stateToReturnTo)
-                ScreenFilterService.COMMAND_OFF -> onScreenFilterCommand(commandFlag)
-                ScreenFilterService.COMMAND_ON,
+                ScreenFilterService.Command.STOP_SUSPEND.ordinal -> moveToState(stateToReturnTo)
+                ScreenFilterService.Command.OFF.ordinal -> onScreenFilterCommand(commandFlag)
+                ScreenFilterService.Command.ON.ordinal,
                     // Suspended is a subset of on, so there is nothing to do
-                ScreenFilterService.COMMAND_SHOW_PREVIEW,
-                ScreenFilterService.COMMAND_HIDE_PREVIEW -> { }
+                ScreenFilterService.Command.SHOW_PREVIEW.ordinal,
+                ScreenFilterService.Command.HIDE_PREVIEW.ordinal -> { }
             }// Preview is ignored when the filter is suspended
         }
 

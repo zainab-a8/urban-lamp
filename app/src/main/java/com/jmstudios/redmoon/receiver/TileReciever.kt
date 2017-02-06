@@ -14,6 +14,6 @@ class TileReciever : TileService() {
     override fun onClick() {
         super.onClick()
 
-        ShortcutToggleActivity.toggleAndFinish(this)
+        ShortcutToggleActivity.toggleAndFinish()
     }
 }

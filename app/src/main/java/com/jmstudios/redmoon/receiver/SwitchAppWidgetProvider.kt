@@ -70,24 +70,25 @@ class SwitchAppWidgetProvider : AppWidgetProvider() {
         }
     }
 
-    override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == SwitchAppWidgetProvider.ACTION_TOGGLE)
-            toggle(context)
-        else if (intent.action == SwitchAppWidgetProvider.ACTION_UPDATE)
-            updateImage(context, !intent.getBooleanExtra(SwitchAppWidgetProvider.EXTRA_POWER, false))
-        else
-            super.onReceive(context, intent)
+    override fun onReceive(ctx: Context, intent: Intent) {
+        if (intent.action == SwitchAppWidgetProvider.ACTION_TOGGLE) {
+            toggle()
+        } else if (intent.action == SwitchAppWidgetProvider.ACTION_UPDATE) {
+            updateImage(ctx, !intent.getBooleanExtra(SwitchAppWidgetProvider.EXTRA_POWER, false))
+        } else {
+            super.onReceive(ctx, intent)
+        }
     }
 
-    internal fun toggle(context: Context) {
+    internal fun toggle() {
         val filterIsOn = Config.filterIsOn
-        val command = if (filterIsOn) ScreenFilterService.COMMAND_OFF
-                      else ScreenFilterService.COMMAND_ON
+        val command = if (filterIsOn) ScreenFilterService.Command.OFF
+                      else ScreenFilterService.Command.ON
 
         ScreenFilterService.moveToState(command)
 
-        if (filterIsOn) ScreenFilterService.start(context)
-        else ScreenFilterService.stop(context)
+        if (filterIsOn) ScreenFilterService.start()
+        else ScreenFilterService.stop()
     }
 
     internal fun updateImage(context: Context, filterIsOn: Boolean) {

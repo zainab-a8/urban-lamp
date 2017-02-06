@@ -27,6 +27,7 @@ import org.greenrobot.eventbus.EventBus
 abstract class EventPreferenceFragment : PreferenceFragment() {
     private lateinit var mView: View
 
+    // This can be deleted if we don't end up using showHelpSnackBar, commented out below
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val v = super.onCreateView(inflater, container, savedInstanceState)
@@ -43,15 +44,6 @@ abstract class EventPreferenceFragment : PreferenceFragment() {
         EventBus.getDefault().unregister(this);
         super.onStop();
     }
-
-    /* private fun setPreferencesEnabled(enabled: Boolean) { */
-    /*     val root = preferenceScreen */
-    /*     for (i in 0..root.preferenceCount - 1) { */
-    /*         root.getPreference(i).isEnabled = enabled */
-    /*     } */
-    /*     otherPrefCategory.isEnabled = true */
-    /*     secureSuspendPref.isEnabled = enabled */
-    /* } */
 
     /* private fun showHelpSnackbar() { */
     /*     mHelpSnackbar = Snackbar.make(mView, activity.getString(R.string.help_snackbar_text), */

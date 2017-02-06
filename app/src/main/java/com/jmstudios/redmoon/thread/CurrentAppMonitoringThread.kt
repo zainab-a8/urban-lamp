@@ -45,13 +45,12 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 
                 if (DEBUG) Log.d(TAG, String.format("Current app is: %s", currentApp))
 
-                val state = if (isAppSecured(currentApp)) ScreenFilterService.COMMAND_START_SUSPEND
-                            else ScreenFilterService.COMMAND_STOP_SUSPEND
+                val state = if (isAppSecured(currentApp)) ScreenFilterService.Command.START_SUSPEND
+                            else ScreenFilterService.Command.STOP_SUSPEND
                 ScreenFilterService.moveToState(state)
                 Thread.sleep(1000)
             }
         } catch (e: InterruptedException) {
-
         }
 
         if (DEBUG) Log.i(TAG, "Shutting down CurrentAppMonitoringThread")

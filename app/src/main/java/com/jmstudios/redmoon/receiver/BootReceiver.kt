@@ -39,7 +39,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Handler
-import android.preference.PreferenceManager
 import android.util.Log
 
 import com.jmstudios.redmoon.helper.DismissNotificationRunnable
@@ -48,8 +47,6 @@ import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.service.ScreenFilterService
 
 import java.util.Calendar
-
-import org.greenrobot.eventbus.EventBus
 
 class BootReceiver : BroadcastReceiver() {
 
@@ -73,8 +70,8 @@ class BootReceiver : BroadcastReceiver() {
 
         val filterIsOnPredicted = filterIsOnPrediction(filterIsOnBeforeReboot)
 
-        ScreenFilterService.moveToState(if (filterIsOnPredicted) ScreenFilterService.COMMAND_OFF
-                                        else ScreenFilterService.COMMAND_ON)
+        ScreenFilterService.moveToState(if (filterIsOnPredicted) ScreenFilterService.Command.OFF
+                                        else ScreenFilterService.Command.ON)
 
         if (!filterIsOnPredicted) {
             // We want to dismiss the notification if the filter is turned off

@@ -101,13 +101,14 @@ class TimeToggleFragment : EventPreferenceFragment() {
                                                      latitudeStr, latitude, longitudeStr, longitude)
             }
         }
-        locationPref.isEnabled = Config.secureSuspend && Config.useLocation
     }
 
     private fun updateTimePrefs() {
-        val auto = Config.secureSuspend
+        val auto = Config.timeToggle
         val useLocation = Config.useLocation
         val enabled = auto && !useLocation
+        if (DEBUG) Log.i(TAG, String.format("auto: %s, useLocation: %s, enabled: %s",
+                                            auto, useLocation, enabled))
         automaticTurnOnPref.isEnabled = enabled
         automaticTurnOffPref.isEnabled = enabled
         automaticTurnOnPref.summary = Config.automaticTurnOnTime
@@ -141,6 +142,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
     fun onUseLocationChanged(event: useLocationChanged) {
         mIsSearchingLocation = true
         updateLocationPref()
+        updateTimePrefs()
     }
 
     @Subscribe
@@ -182,7 +184,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
 
     companion object {
         private val TAG = "TimeToggleFragment"
-        private val DEBUG = false
+        private val DEBUG = true
         val DEFAULT_LOCATION = "not set"
     }
 }// Android Fragments require an explicit public default constructor for re-creation

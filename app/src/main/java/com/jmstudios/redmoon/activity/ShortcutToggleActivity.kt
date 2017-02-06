@@ -36,7 +36,6 @@
 package com.jmstudios.redmoon.activity
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 
@@ -57,19 +56,19 @@ class ShortcutToggleActivity : Activity() {
 
         fun toggleAndFinish(activity: Activity) {
             if (DEBUG) Log.i(TAG, "toggleAndFinish (activity) called.")
-            toggleAndFinish(activity as Context)
+            toggleAndFinish()
             activity.finish()
         }
 
-        fun toggleAndFinish(context: Context) {
+        fun toggleAndFinish() {
             if (DEBUG) Log.i(TAG, "toggleAndFinish (context) called.")
 
             if (Config.filterIsOn) {
-                ScreenFilterService.moveToState(ScreenFilterService.COMMAND_OFF)
-                ScreenFilterService.stop(context)
+                ScreenFilterService.moveToState(ScreenFilterService.Command.OFF)
+                ScreenFilterService.stop()
             } else {
-                ScreenFilterService.start(context)
-                ScreenFilterService.moveToState(ScreenFilterService.COMMAND_ON)
+                ScreenFilterService.start()
+                ScreenFilterService.moveToState(ScreenFilterService.Command.ON)
             }
         }
     }

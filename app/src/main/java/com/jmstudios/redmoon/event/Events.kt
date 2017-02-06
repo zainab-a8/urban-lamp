@@ -37,8 +37,6 @@ class sunsetTimeChanged        : Event()
 class sunriseTimeChanged       : Event()
 class secureSuspendChanged     : Event()
 
-class command(val commandFlag: Int) : Event()
-
 class locationServicesDisabled : Event()
 class locationAccessDenied     : Event()
 class changeBrightnessDenied   : Event()
