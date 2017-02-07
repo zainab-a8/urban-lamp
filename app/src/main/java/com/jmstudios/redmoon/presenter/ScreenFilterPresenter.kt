@@ -483,7 +483,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         }
 
         fun moveToState(newState: State) {
-            if (DEBUG) Log.i(TAG, "Transitioning from " + mCurrentState + " to " + newState)
+            if (DEBUG) Log.i(TAG, "Transitioning from $mCurrentState to $newState")
             if (newState === this) return
             if (DEBUG) Log.i(TAG, "Passed check for same state.")
             mCurrentState = newState

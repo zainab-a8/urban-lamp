@@ -55,13 +55,13 @@ class ShortcutToggleActivity : Activity() {
         private val DEBUG = true
 
         fun toggleAndFinish(activity: Activity) {
-            if (DEBUG) Log.i(TAG, "toggleAndFinish (activity) called.")
+            if (DEBUG) Log.i(TAG, "toggleAndFinish(activity) called.")
             toggleAndFinish()
             activity.finish()
         }
 
         fun toggleAndFinish() {
-            if (DEBUG) Log.i(TAG, "toggleAndFinish (context) called.")
+            if (DEBUG) Log.i(TAG, "toggleAndFinish() called.")
 
             if (Config.filterIsOn) {
                 ScreenFilterService.moveToState(ScreenFilterService.Command.OFF)
