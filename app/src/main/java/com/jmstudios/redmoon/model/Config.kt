@@ -118,11 +118,11 @@ object Config {
 
     var filterIsOn: Boolean
         get() = mSharedPrefs.getBoolean(getString(R.string.pref_key_filter_is_on), false)
-        set(isOn) { Log.i("CONFIG", String.format("Setting filter to: %s", isOn))
-                    mSharedPrefs.edit()
-                                .putBoolean(getString(R.string.pref_key_filter_is_on), isOn)
-                                .apply()
-                    }
+        set(isOn) {
+            mSharedPrefs.edit()
+                        .putBoolean(getString(R.string.pref_key_filter_is_on), isOn)
+                        .apply()
+        }
     
     var dim: Int
         get() = mSharedPrefs.getInt(getString(R.string.pref_key_dim),

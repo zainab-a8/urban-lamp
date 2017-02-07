@@ -50,7 +50,6 @@ import com.jmstudios.redmoon.manager.ScreenManager
 import com.jmstudios.redmoon.manager.WindowViewManager
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.receiver.OrientationChangeReceiver
-import com.jmstudios.redmoon.receiver.SwitchAppWidgetProvider
 import com.jmstudios.redmoon.view.ScreenFilterView
 
 import org.greenrobot.eventbus.EventBus
@@ -91,7 +90,17 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         if (DEBUG) Log.i(TAG, String.format("onStartCommand(%s, %d, %d", intent, flags, startId))
         val flag = intent.getIntExtra(ScreenFilterService.BUNDLE_KEY_COMMAND, COMMAND_INVALID)
-        if (flag != COMMAND_INVALID) mPresenter.onScreenFilterCommand(flag)
+        val command = when (flag) {
+            Command.ON.ordinal            -> Command.ON
+            Command.OFF.ordinal           -> Command.OFF
+            Command.SHOW_PREVIEW.ordinal  -> Command.SHOW_PREVIEW
+            Command.HIDE_PREVIEW.ordinal  -> Command.HIDE_PREVIEW
+            Command.START_SUSPEND.ordinal -> Command.START_SUSPEND
+            Command.STOP_SUSPEND.ordinal  -> Command.STOP_SUSPEND
+            else -> return Service.START_NOT_STICKY
+        }
+        mPresenter.onScreenFilterCommand(command)
+
         // Do not attempt to restart if the hosting process is killed by Android
         return Service.START_NOT_STICKY
     }
@@ -107,13 +116,7 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         EventBus.getDefault().unregister(mPresenter)
         unregisterReceiver(mOrientationReceiver)
         mOrientationReceiver = null
-
-        //Broadcast to keep appwidgets in sync
-        if (DEBUG) Log.i(TAG, "Sending update broadcast")
-        val updateAppWidgetIntent = Intent(this, SwitchAppWidgetProvider::class.java)
-        updateAppWidgetIntent.action = SwitchAppWidgetProvider.ACTION_UPDATE
-        updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_POWER, false)
-        sendBroadcast(updateAppWidgetIntent)
+        mPresenter.updateWidgets()
 
         super.onDestroy()
     }
