@@ -35,22 +35,19 @@
  */
 package com.jmstudios.redmoon.fragment
 
-import android.annotation.TargetApi
 import android.os.Bundle
 import android.preference.Preference
 import android.preference.SwitchPreference
 import android.util.Log
-import android.widget.Toast
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.application.RedMoonApplication
 import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.preference.ColorSeekBarPreference
 import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
-import com.jmstudios.redmoon.service.ScreenFilterService
+import com.jmstudios.redmoon.preference.ProfileSelectorPreference
 
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -59,6 +56,10 @@ class FilterFragment : EventPreferenceFragment() {
     private var hasShownWarningToast = false
 
     // Preferences
+    private val profileSelectorPref: ProfileSelectorPreference
+             get() = (preferenceScreen.findPreference
+                     (getString(R.string.pref_key_profile_spinner)) as ProfileSelectorPreference)
+
     private val colorPref: ColorSeekBarPreference
         get() = (preferenceScreen.findPreference
                 (getString(R.string.pref_key_color)) as ColorSeekBarPreference)
@@ -99,6 +100,7 @@ class FilterFragment : EventPreferenceFragment() {
     override fun onResume() {
         if (DEBUG) Log.i(TAG, "onResume")
         super.onResume()
+        EventBus.getDefault().register(profileSelectorPref)
 
         // When the fragment is not on the screen, but the user
         // updates the profile through the notification. the
@@ -128,6 +130,7 @@ class FilterFragment : EventPreferenceFragment() {
     }
 
     override fun onPause() {
+        EventBus.getDefault().unregister(profileSelectorPref)
         super.onPause()
     }
 
