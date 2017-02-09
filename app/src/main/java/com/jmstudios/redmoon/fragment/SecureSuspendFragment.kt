@@ -1,6 +1,6 @@
-
 /*
  * Copyright (c) 2016 Marien Raat <marienraat@riseup.net>
+ * Copyright (c) 2017  Stephen Michel <s@smichel.me>
  *
  *  This file is free software: you may copy, redistribute and/or modify it
  *  under the terms of the GNU General Public License as published by the Free

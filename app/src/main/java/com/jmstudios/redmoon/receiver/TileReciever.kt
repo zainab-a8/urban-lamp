@@ -1,4 +1,5 @@
-/* Created by cj on 12/01/17.
+/* Copyright (c) 2017-12-01  cj
+ * Copyright (c) 2017  Stephen Michel <s@smichel.me>
  *
  *  This file is free software: you may copy, redistribute and/or modify it
  *  under the terms of the GNU General Public License as published by the Free
