@@ -107,11 +107,9 @@ class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
     }
 
     private fun updateProgressText() {
-        val progress = Integer.toString(mIntensityLevel)
         val suffix = "%"
-
         val progressText = mView.findViewById(R.id.current_intensity_level) as TextView
-        progressText.text = progress + suffix
+        progressText.text = String.format("%d%s", mIntensityLevel, suffix)
     }
 
     companion object {

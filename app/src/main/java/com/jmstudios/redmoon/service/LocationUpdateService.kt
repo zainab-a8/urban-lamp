@@ -141,10 +141,10 @@ class LocationUpdateService: Service(), LocationListener {
     companion object {
         private val TAG = "LocationUpdateService"
         private val DEBUG = false
-        private val locationProvider = LocationManager.NETWORK_PROVIDER;
+        private val locationProvider = LocationManager.NETWORK_PROVIDER
 
-        val FOREGROUND = true
-        val BACKGROUND = false
+        //val FOREGROUND = true
+        //val BACKGROUND = false
 
         private val intent = { ctx: Context -> Intent(ctx, LocationUpdateService::class.java) }
 

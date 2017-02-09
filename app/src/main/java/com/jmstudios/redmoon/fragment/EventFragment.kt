@@ -37,12 +37,12 @@ abstract class EventPreferenceFragment : PreferenceFragment() {
 
     override fun onStart() {
         super.onStart()
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this)
     }
 
     override fun onStop() {
-        EventBus.getDefault().unregister(this);
-        super.onStop();
+        EventBus.getDefault().unregister(this)
+        super.onStop()
     }
 
     /* private fun showHelpSnackbar() { */

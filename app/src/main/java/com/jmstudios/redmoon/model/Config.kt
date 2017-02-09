@@ -36,6 +36,7 @@
 package com.jmstudios.redmoon.model
 
 import android.Manifest
+import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -44,7 +45,6 @@ import android.preference.PreferenceManager
 import android.provider.Settings
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
-import android.util.Log
 
 import com.jmstudios.redmoon.R
 
@@ -85,7 +85,7 @@ object Config {
         get() = if (useLocation) sunriseTime else customTurnOffTime
 
     fun requestWriteSettingsPermission(context: Context): Boolean {
-        if (!hasWriteSettingsPermission) {
+        if (!hasWriteSettingsPermission) @TargetApi(23) {
             val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
                                 Uri.parse("package:" + context.packageName))
             val builder = AlertDialog.Builder(context)
@@ -99,7 +99,7 @@ object Config {
     }
 
     fun requestOverlayPermission(context: Context): Boolean {
-        if (!hasOverlayPermission) {
+        if (!hasOverlayPermission) @TargetApi(23) {
             val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                                 Uri.parse("package:" + context.packageName))
             val builder = AlertDialog.Builder(context)

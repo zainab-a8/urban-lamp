@@ -36,7 +36,6 @@
 package com.jmstudios.redmoon.view
 
 import android.animation.Animator
-import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
@@ -48,7 +47,6 @@ import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
 
 class ScreenFilterView(context: Context) : View(context) {
-    private var mColorAnimator: ValueAnimator? = null
     private var mDimAnimator: ValueAnimator? = null
     private var mIntensityAnimator: ValueAnimator? = null
 
@@ -102,6 +100,7 @@ class ScreenFilterView(context: Context) : View(context) {
         canvas.drawColor(mFilterColor)
     }
 
+/*
     fun animateShadesColor(toColor: Int) {
         cancelRunningAnimator(mColorAnimator)
 
@@ -114,6 +113,7 @@ class ScreenFilterView(context: Context) : View(context) {
         }
         mColorAnimator!!.start()
     }
+*/
 
     fun cancelDimAnimator(){
         cancelRunningAnimator(mDimAnimator)

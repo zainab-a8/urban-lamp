@@ -24,13 +24,11 @@ import android.os.Bundle
 import android.preference.Preference
 import android.preference.SwitchPreference
 import android.provider.Settings
+import android.util.Log
 
 import com.jmstudios.redmoon.R
-import com.jmstudios.redmoon.event.*
 
 import com.jmstudios.redmoon.thread.CurrentAppMonitoringThread
-
-import org.greenrobot.eventbus.Subscribe
 
 class SecureSuspendFragment : PreferenceFragment() {
 
@@ -42,10 +40,10 @@ class SecureSuspendFragment : PreferenceFragment() {
                 (getString(R.string.pref_key_secure_suspend)) as SwitchPreference)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (DEBUG) Log.i(TAG, "onCreate()")
         super.onCreate(savedInstanceState)
 
         addPreferencesFromResource(R.xml.secure_suspend_preferences)
-
         setSwitchBarTitle(mSwitchBarPreference.isChecked)
 
         mSwitchBarPreference.onPreferenceChangeListener =
@@ -86,6 +84,7 @@ class SecureSuspendFragment : PreferenceFragment() {
 
     companion object {
         val RESULT_USAGE_ACCESS = 1
+        private val TAG = "SecureSuspendFragment"
         private val DEBUG = false
     }
 }

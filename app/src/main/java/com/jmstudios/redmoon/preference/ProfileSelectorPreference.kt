@@ -50,7 +50,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
     lateinit internal var mArrayAdapter: ArrayAdapter<CharSequence>
     private var mProfile: Int = 0
     lateinit private var mView: View
-    private val mProfilesModel: ProfilesModel
+    private val mProfilesModel: ProfilesModel = ProfilesModel(mContext)
 
     private var mDefaultOperations: ArrayList<CharSequence>? = null
 
@@ -60,11 +60,10 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
 
     private var mIsListenerRegistered: Boolean = false
 
-    // Settings model from the activity to save the ammount of profiles
+    // Settings model from the activity to save the amount of profiles
 
     init {
         layoutResource = R.layout.preference_profile_selector
-        mProfilesModel = ProfilesModel(mContext)
         mIsListenerRegistered = false
     }
 

@@ -110,18 +110,14 @@ class ColorSeekBarPreference(context: Context, attrs: AttributeSet) : Preference
 
     private fun updateProgressText() {
         val colorTemp = ScreenFilterView.getColorTempFromProgress(mProgress)
-
         val progressView = mView.findViewById(R.id.current_color_temperature) as TextView
-
         val unit = "K"
-        val temp = Integer.toString(colorTemp)
 
-        progressView.text = temp + unit
+        progressView.text = String.format("%d%s", colorTemp, unit)
     }
 
     companion object {
         private val TAG = "ColorSeekBarPreference"
-        private val DEBUG = false
         // Changes to DEFAULT_VALUE should be reflected in preferences.xml
         val DEFAULT_VALUE = 10
     }

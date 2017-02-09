@@ -166,6 +166,11 @@ class ShadesActivity : AppCompatActivity() {
         mSwitch.isChecked = Config.filterIsOn
     }
 
+    @Subscribe
+    fun onthemeChanged(event: themeChanged) {
+        recreate()
+    }
+
     companion object {
         private val TAG = "ShadesActivity"
         private val DEBUG = true

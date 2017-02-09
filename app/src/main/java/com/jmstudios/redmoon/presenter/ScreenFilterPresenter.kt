@@ -109,7 +109,6 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         Config.filterIsOn = mCurrentState.filterIsOn
     }
 
-    // TODO: Move to ScreenFilterService
     private fun refreshForegroundNotification() {
         val context = mView.context
         val profilesModel = ProfilesModel(context)
@@ -241,7 +240,6 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         mCurrentState.onColorChanged()
     }
 
-    //TODO: figure out what class brightness-related code should belong to
     @Subscribe
     fun onLowerBrightnessChanged(event: lowerBrightnessChanged) {
         if (Config.hasWriteSettingsPermission) {
@@ -260,13 +258,11 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         }
     }
 
-    //TODO: Move to ScreenFilterService
     @Subscribe
     fun onProfileChanged(event: profileChanged) {
         refreshForegroundNotification()
     }
 
-    //TODO: Move to ScreenFilterService
     @Subscribe
     fun onSecureSuspendChanged(event: secureSuspendChanged) {
         mCurrentState.onSecureSuspendChanged()
@@ -313,7 +309,6 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         mCurrentState.onScreenFilterCommand(command)
     }
 
-    // TODO: Move to ScreenFilterService
     @Suppress("DEPRECATION")
     fun startAppMonitoring() {
         if (DEBUG) Log.i(TAG, "Starting app monitoring")
@@ -332,7 +327,6 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         }
     }
 
-    // TODO: Move to ScreenFilterService
     fun stopAppMonitoring() {
         if (DEBUG) Log.i(TAG, "Stopping app monitoring")
         if (mCamThread != null) {
@@ -360,7 +354,6 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         mContext.sendBroadcast(updateAppWidgetIntent)
     }
 
-    // TODO: Move to State class. This may be hard to refactor.
     private fun saveOldBrightnessState() {
         if (Config.lowerBrightness) {
             val resolver = mContext.contentResolver

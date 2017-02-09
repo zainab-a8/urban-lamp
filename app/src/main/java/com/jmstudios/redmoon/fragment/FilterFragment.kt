@@ -53,7 +53,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 class FilterFragment : EventPreferenceFragment() {
-    private var hasShownWarningToast = false
+    //private var hasShownWarningToast = false
 
     // Preferences
     private val profileSelectorPref: ProfileSelectorPreference
@@ -135,9 +135,8 @@ class FilterFragment : EventPreferenceFragment() {
     }
 
     private fun updateTimeToggleSummary() {
-        // TODO: Show the time of the next upcoming toggle instead of just on/off
         timeTogglePref.setSummary(if (Config.timeToggle) R.string.text_switch_on
-                                     else R.string.text_switch_off)
+                                  else R.string.text_switch_off)
     }
 
     private fun updateSecureSuspendSummary() {
@@ -159,11 +158,6 @@ class FilterFragment : EventPreferenceFragment() {
     @Subscribe
     fun onDimLevelChanged(event: dimChanged) {
         dimPref.setProgress(Config.dim)
-    }
-
-    @Subscribe
-    fun onthemeChanged(event: themeChanged) {
-        activity.recreate()
     }
     //endregion
 

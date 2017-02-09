@@ -130,11 +130,11 @@ class DimSeekBarPreference(context: Context, attrs: AttributeSet) : Preference(c
     }
 
     private fun updateProgressText() {
-        val progress = Integer.toString((mDimLevel.toFloat() * ScreenFilterView.DIM_MAX_ALPHA).toInt())
+        val progress = (mDimLevel.toFloat() * ScreenFilterView.DIM_MAX_ALPHA).toInt()
         val suffix = "%"
 
         val progressText = mView.findViewById(R.id.current_dim_level) as TextView
-        progressText.text = progress + suffix
+        progressText.text = String.format("%d%s", progress, suffix)
     }
 
     companion object {
