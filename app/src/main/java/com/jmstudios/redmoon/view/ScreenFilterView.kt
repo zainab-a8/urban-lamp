@@ -35,6 +35,9 @@
  */
 package com.jmstudios.redmoon.view
 
+import android.animation.Animator
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -45,6 +48,9 @@ import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
 
 class ScreenFilterView(context: Context) : View(context) {
+    private var mColorAnimator: ValueAnimator? = null
+    private var mDimAnimator: ValueAnimator? = null
+    private var mIntensityAnimator: ValueAnimator? = null
 
     /**
      * Sets the dim level of the screen filter.
@@ -67,8 +73,8 @@ class ScreenFilterView(context: Context) : View(context) {
      * *                       is guaranteed to never be fully opaque.
      */
     var filterIntensityLevel = IntensitySeekBarPreference.DEFAULT_VALUE
-        set(intensityLevel) {
-            field = intensityLevel
+        set(value) {
+            field = value
             invalidate()
             updateFilterColor()
         }
@@ -78,9 +84,8 @@ class ScreenFilterView(context: Context) : View(context) {
      * @param colorTempProgress the progress of the color temperature slider.
      */
     var colorTempProgress = ColorSeekBarPreference.DEFAULT_VALUE
-        set(colorTempProgress) {
-            val colorTemperature = getColorTempFromProgress(colorTempProgress)
-
+        set(value) {
+            val colorTemperature = getColorTempFromProgress(value)
             mRgbColor = rgbFromColorTemperature(colorTemperature)
             invalidate()
             updateFilterColor()
@@ -95,6 +100,65 @@ class ScreenFilterView(context: Context) : View(context) {
 
     override fun onDraw(canvas: Canvas) {
         canvas.drawColor(mFilterColor)
+    }
+
+    fun animateShadesColor(toColor: Int) {
+        cancelRunningAnimator(mColorAnimator)
+
+        val fromColor = colorTempProgress
+
+        mColorAnimator = ValueAnimator.ofObject(ArgbEvaluator(), fromColor, toColor)
+        mColorAnimator!!.duration = FADE_DURATION_MS.toLong()
+        mColorAnimator!!.addUpdateListener { valueAnimator ->
+            colorTempProgress = valueAnimator.animatedValue as Int
+        }
+        mColorAnimator!!.start()
+    }
+
+    fun cancelDimAnimator(){
+        cancelRunningAnimator(mDimAnimator)
+    }
+
+    fun animateDimLevel(toDimLevel: Int, listener: Animator.AnimatorListener?) {
+        cancelRunningAnimator(mDimAnimator)
+
+        val fromDimLevel = filterDimLevel
+
+        mDimAnimator = ValueAnimator.ofInt(fromDimLevel, toDimLevel)
+        mDimAnimator!!.duration = FADE_DURATION_MS.toLong()
+        mDimAnimator!!.addUpdateListener { valueAnimator -> filterDimLevel = valueAnimator.animatedValue as Int }
+
+        if (listener != null) {
+            mDimAnimator!!.addListener(listener)
+        }
+
+        mDimAnimator!!.start()
+    }
+
+    fun cancelIntensityAnimator(){
+        cancelRunningAnimator(mIntensityAnimator)
+    }
+
+    fun animateIntensityLevel(toIntensityLevel: Int, listener: Animator.AnimatorListener?) {
+        cancelRunningAnimator(mIntensityAnimator)
+
+        val fromIntensityLevel = filterIntensityLevel
+
+        mIntensityAnimator = ValueAnimator.ofInt(fromIntensityLevel, toIntensityLevel)
+        mIntensityAnimator!!.duration = FADE_DURATION_MS.toLong()
+        mIntensityAnimator!!.addUpdateListener { valueAnimator -> filterIntensityLevel = valueAnimator.animatedValue as Int }
+
+        if (listener != null) {
+            mIntensityAnimator!!.addListener(listener)
+        }
+
+        mIntensityAnimator!!.start()
+    }
+
+    private fun cancelRunningAnimator(animator: Animator?) {
+        if (animator != null && animator.isRunning) {
+            animator.cancel()
+        }
     }
 
     private fun getFilterColor(rgbColor: Int, dimLevel: Int, intensityLevel: Int): Int {
@@ -122,7 +186,7 @@ class ScreenFilterView(context: Context) : View(context) {
 
         // See: http://stackoverflow.com/a/10782314
 
-        // Alpha changed to allow more controll
+        // Alpha changed to allow more control
         val fAlpha = alpha2 * INTENSITY_MAX_ALPHA + (DIM_MAX_ALPHA - alpha2 * INTENSITY_MAX_ALPHA) * alpha1
         alpha1 *= ALPHA_ADD_MULTIPLIER
         alpha2 *= ALPHA_ADD_MULTIPLIER
@@ -147,6 +211,8 @@ class ScreenFilterView(context: Context) : View(context) {
         private val INTENSITY_MAX_ALPHA = 0.75f
         private val ALPHA_ADD_MULTIPLIER = 0.75f
 
+        val FADE_DURATION_MS = 1000
+
         fun rgbFromColorProgress(colorTempProgress: Int): Int {
             val colorTemperature = getColorTempFromProgress(colorTempProgress)
 
@@ -158,7 +224,7 @@ class ScreenFilterView(context: Context) : View(context) {
         }
 
         private fun rgbFromColorTemperature(colorTemperature: Int): Int {
-            val alpha = 255 // alpha is managed seperately
+            val alpha = 255 // alpha is managed separately
 
             // After: http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
             val temp = colorTemperature.toDouble() / 100.0f

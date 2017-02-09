@@ -38,8 +38,6 @@
 package com.jmstudios.redmoon.presenter
 
 import android.animation.Animator
-import android.animation.ArgbEvaluator
-import android.animation.ValueAnimator
 import android.annotation.TargetApi
 import android.app.Notification
 import android.app.NotificationManager
@@ -89,17 +87,13 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     private val mScreenStateReceiver = ScreenStateReceiver(this)
     private var screenOff: Boolean = false
 
-    private val mShuttingDown = false
     private var mScreenFilterOpen = false
-
-    private var mColorAnimator: ValueAnimator? = null
-    private var mDimAnimator: ValueAnimator? = null
-    private var mIntensityAnimator: ValueAnimator? = null
 
     private val mOnState = OnState()
     private val mOffState = OffState()
     private val mPreviewState = PreviewState()
     private val mSuspendState = SuspendState()
+
     private var mCurrentState: State = mOffState
 
     // Screen brightness state
@@ -108,9 +102,6 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
 
     private val filterIsOn: Boolean
         get() = mCurrentState.filterIsOn
-
-    private val isPreviewing: Boolean
-        get() = mCurrentState === mPreviewState
 
     init {
         oldScreenBrightness = -1
@@ -181,59 +172,6 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         }
     }
 
-    //TODO: Move into ScreenFilterView
-    //region view
-    private fun animateShadesColor(toColor: Int) {
-        cancelRunningAnimator(mColorAnimator)
-
-        val fromColor = mView.colorTempProgress
-
-        mColorAnimator = ValueAnimator.ofObject(ArgbEvaluator(), fromColor, toColor)
-        mColorAnimator!!.duration = FADE_DURATION_MS.toLong()
-        mColorAnimator!!.addUpdateListener { valueAnimator ->
-            mView.colorTempProgress = valueAnimator.animatedValue as Int
-        }
-        mColorAnimator!!.start()
-    }
-
-    private fun animateDimLevel(toDimLevel: Int, listener: Animator.AnimatorListener?) {
-        cancelRunningAnimator(mDimAnimator)
-
-        val fromDimLevel = mView.filterDimLevel
-
-        mDimAnimator = ValueAnimator.ofInt(fromDimLevel, toDimLevel)
-        mDimAnimator!!.duration = FADE_DURATION_MS.toLong()
-        mDimAnimator!!.addUpdateListener { valueAnimator -> mView.filterDimLevel = valueAnimator.animatedValue as Int }
-
-        if (listener != null) {
-            mDimAnimator!!.addListener(listener)
-        }
-
-        mDimAnimator!!.start()
-    }
-
-    private fun animateIntensityLevel(toIntensityLevel: Int, listener: Animator.AnimatorListener?) {
-        cancelRunningAnimator(mIntensityAnimator)
-
-        val fromIntensityLevel = mView.filterIntensityLevel
-
-        mIntensityAnimator = ValueAnimator.ofInt(fromIntensityLevel, toIntensityLevel)
-        mIntensityAnimator!!.duration = FADE_DURATION_MS.toLong()
-        mIntensityAnimator!!.addUpdateListener { valueAnimator -> mView.filterIntensityLevel = valueAnimator.animatedValue as Int }
-
-        if (listener != null) {
-            mIntensityAnimator!!.addListener(listener)
-        }
-
-        mIntensityAnimator!!.start()
-    }
-
-    private fun cancelRunningAnimator(animator: Animator?) {
-        if (animator != null && animator.isRunning) {
-            animator.cancel()
-        }
-    }
-
     private fun createFilterLayoutParams(): WindowManager.LayoutParams {
         val wlp = WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
@@ -290,29 +228,17 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
 
     @Subscribe
     fun onDimLevelChanged(event: dimChanged) {
-        val dim = Config.dim
-        if (filterIsOn || isPreviewing) {
-            cancelRunningAnimator(mDimAnimator)
-
-            mView.filterDimLevel = dim
-        }
+        mCurrentState.onDimLevelChanged()
     }
 
     @Subscribe
     fun onIntensityLevelChanged(event: intensityChanged) {
-        val intensityLevel = Config.intensity
-        if (filterIsOn || isPreviewing) {
-            cancelRunningAnimator(mIntensityAnimator)
-
-            mView.filterIntensityLevel = intensityLevel
-        }
+        mCurrentState.onIntensityLevelChanged()
     }
 
     @Subscribe
     fun onColorChanged(event: colorChanged) {
-        if (filterIsOn || isPreviewing) {
-            mView.colorTempProgress = Config.color
-        }
+        mCurrentState.onColorChanged()
     }
 
     //TODO: figure out what class brightness-related code should belong to
@@ -343,10 +269,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     //TODO: Move to ScreenFilterService
     @Subscribe
     fun onSecureSuspendChanged(event: secureSuspendChanged) {
-        if (mCurrentState === mOnState) {
-            if (Config.secureSuspend) startAppMonitoring()
-            else stopAppMonitoring()
-        }
+        mCurrentState.onSecureSuspendChanged()
     }
     //endregion
 
@@ -385,10 +308,6 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     //endregion
 
     fun onScreenFilterCommand(command: ScreenFilterService.Command) {
-        if (mShuttingDown) {
-            Log.i(TAG, "In the process of shutting down; ignoring command: " + command.name)
-            return
-        }
         if (DEBUG) Log.i(TAG, "Handling command " + command.name + " in current state: " + mCurrentState)
 
         mCurrentState.onScreenFilterCommand(command)
@@ -470,6 +389,11 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         abstract fun onActivation(prevState: State)
         abstract val filterIsOn: Boolean
 
+        open fun onDimLevelChanged() {}
+        open fun onColorChanged() {}
+        open fun onIntensityLevelChanged() {}
+        open fun onSecureSuspendChanged() {}
+
         open fun onScreenFilterCommand(command: ScreenFilterService.Command) {
             val newState = when (command) {
                 ScreenFilterService.Command.OFF           -> mOffState
@@ -479,7 +403,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
                 // Don't do anything on STOP_SUSPEND or HIDE_PREVIEW
                 else -> return
             }
-            mCurrentState.moveToState(newState)
+            moveToState(newState)
         }
 
         fun moveToState(newState: State) {
@@ -502,8 +426,8 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
 
             openScreenFilter()
 
-            animateDimLevel(Config.dim, null)
-            animateIntensityLevel(Config.intensity, null)
+            mView.animateDimLevel(Config.dim, null)
+            mView.animateIntensityLevel(Config.intensity, null)
 
             if (Config.lowerBrightness) {
                 saveOldBrightnessState()
@@ -513,6 +437,24 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             if (Config.secureSuspend) {
                 startAppMonitoring()
             }
+        }
+
+        override fun onDimLevelChanged() {
+            val dim = Config.dim
+            mView.cancelDimAnimator()
+            mView.filterDimLevel = dim
+        }
+        override fun onIntensityLevelChanged() {
+            val intensityLevel = Config.intensity
+            mView.cancelDimAnimator()
+            mView.filterIntensityLevel = intensityLevel
+        }
+        override fun onColorChanged() {
+            mView.colorTempProgress = Config.color
+        }
+        override fun onSecureSuspendChanged() {
+            if (Config.secureSuspend) startAppMonitoring()
+            else stopAppMonitoring()
         }
 
         override val filterIsOn = true
@@ -527,24 +469,15 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
                 mServiceController.stopForeground(false)
                 closeScreenFilter()
             } else {
-                animateIntensityLevel(ScreenFilterView.MIN_INTENSITY, null)
-                animateDimLevel(ScreenFilterView.MIN_DIM, object : AbstractAnimatorListener() {
-                    override fun onAnimationCancel(animator: Animator) {
-                        closeScreenFilter()
-                    }
-                    override fun onAnimationEnd(animator: Animator) {
-                        closeScreenFilter()
-                    }
+                mView.animateIntensityLevel(ScreenFilterView.MIN_INTENSITY, null)
+                mView.animateDimLevel(ScreenFilterView.MIN_DIM, object : AbstractAnimatorListener() {
+                    override fun onAnimationCancel(animator: Animator) { closeScreenFilter() }
+                    override fun onAnimationEnd(animator: Animator) { closeScreenFilter() }
                 })
             }
 
-            if (Config.lowerBrightness) {
-                restoreBrightnessState()
-            }
-
-            if (Config.secureSuspend) {
-                stopAppMonitoring()
-            }
+            if (Config.lowerBrightness) restoreBrightnessState()
+            if (Config.secureSuspend) stopAppMonitoring()
         }
 
         override val filterIsOn = false
@@ -564,8 +497,8 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             pressesActive = 1
             refreshForegroundNotification()
             // If the animators are not canceled, preview does not work when filter is turning off
-            cancelRunningAnimator(mDimAnimator)
-            cancelRunningAnimator(mIntensityAnimator)
+            mView.cancelDimAnimator()
+            mView.cancelIntensityAnimator()
             openScreenFilter()
 
             mView.filterDimLevel = Config.dim
@@ -599,6 +532,20 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
                 }
                 else -> super.onScreenFilterCommand(command)
             }
+        }
+
+        override fun onDimLevelChanged() {
+            val dim = Config.dim
+            mView.cancelDimAnimator()
+            mView.filterDimLevel = dim
+        }
+        override fun onIntensityLevelChanged() {
+            val intensityLevel = Config.intensity
+            mView.cancelDimAnimator()
+            mView.filterIntensityLevel = intensityLevel
+        }
+        override fun onColorChanged() {
+            mView.colorTempProgress = Config.color
         }
 
         override val filterIsOn: Boolean
