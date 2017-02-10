@@ -156,9 +156,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun toggleAndFinish() {
-        val state = if (Config.filterIsOn) ScreenFilterService.Command.OFF
-                    else ScreenFilterService.Command.ON
-        ScreenFilterService.moveToState(state)
+        ScreenFilterService.toggle()
         finish()
     }
 

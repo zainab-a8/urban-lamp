@@ -107,7 +107,8 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     init {
         oldScreenBrightness = -1
         mCurrentState.onScreenFilterCommand(ScreenFilterService.Command.OFF)
-        Config.filterIsOn = mCurrentState.filterIsOn
+        if (DEBUG) Log.d(TAG, "Filter is on? $filterIsOn")
+        Config.filterIsOn = filterIsOn
     }
 
     private fun refreshForegroundNotification() {

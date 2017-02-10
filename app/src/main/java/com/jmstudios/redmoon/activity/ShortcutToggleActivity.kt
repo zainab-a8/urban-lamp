@@ -40,7 +40,6 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 
-import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
 
 class ShortcutToggleActivity : Activity() {
@@ -48,29 +47,12 @@ class ShortcutToggleActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (DEBUG) Log.i(TAG, "ShortcutToggleActivity created")
-        toggleAndFinish(this)
+        ScreenFilterService.toggle()
+        finish()
     }
 
     companion object {
         private val TAG = "ShortcutToggleActivity"
         private val DEBUG = true
-
-        fun toggleAndFinish(activity: Activity) {
-            if (DEBUG) Log.i(TAG, "toggleAndFinish(activity) called.")
-            toggleAndFinish()
-            activity.finish()
-        }
-
-        fun toggleAndFinish() {
-            if (DEBUG) Log.i(TAG, "toggleAndFinish() called.")
-
-            if (Config.filterIsOn) {
-                ScreenFilterService.moveToState(ScreenFilterService.Command.OFF)
-                ScreenFilterService.stop()
-            } else {
-                ScreenFilterService.start()
-                ScreenFilterService.moveToState(ScreenFilterService.Command.ON)
-            }
-        }
     }
 }
