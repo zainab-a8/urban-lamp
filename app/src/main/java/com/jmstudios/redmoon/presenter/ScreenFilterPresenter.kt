@@ -418,6 +418,12 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         override fun onActivation(prevState: State) {
             refreshForegroundNotification()
 
+            /* Adding a new animator cancels the existing one. If the filter is
+             * turning off, this will call closeScreenFIlter(). Canceling it
+             * makes sure that this doesn't happen after we re-open the filter.
+             */
+            mView.cancelDimAnimator()
+
             openScreenFilter()
 
             mView.animateDimLevel(Config.dim, null)
