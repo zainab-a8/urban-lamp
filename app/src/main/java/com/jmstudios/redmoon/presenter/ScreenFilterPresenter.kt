@@ -212,11 +212,13 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         if (DEBUG) Log.i(TAG, "Got request to close screen filter")
         if (!mScreenFilterOpen) {
             if (DEBUG) Log.i(TAG, "Screen filter is already closed")
-            return
+        } else if (mCurrentState.filterIsOn) {
+            if (DEBUG) Log.i(TAG, "Not closing; filter is turning back on")
+        } else {
+            // Close the window once the fade-out animation is complete
+            mWindowViewManager.closeWindow(mView)
+            mScreenFilterOpen = false
         }
-        // Close the window once the fade-out animation is complete
-        mWindowViewManager.closeWindow(mView)
-        mScreenFilterOpen = false
     }
     //endregion
 
@@ -417,15 +419,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     private inner class OnState : State() {
         override fun onActivation(prevState: State) {
             refreshForegroundNotification()
-
-            /* Adding a new animator cancels the existing one. If the filter is
-             * turning off, this will call closeScreenFIlter(). Canceling it
-             * makes sure that this doesn't happen after we re-open the filter.
-             */
-            mView.cancelDimAnimator()
-
             openScreenFilter()
-
             mView.animateDimLevel(Config.dim, null)
             mView.animateIntensityLevel(Config.intensity, null)
 
@@ -433,10 +427,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
                 saveOldBrightnessState()
                 setBrightnessState(0, false, mContext)
             }
-
-            if (Config.secureSuspend) {
-                startAppMonitoring()
-            }
+            if (Config.secureSuspend) startAppMonitoring()
         }
 
         override fun onDimLevelChanged() {
