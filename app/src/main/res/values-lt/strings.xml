@@ -102,5 +102,5 @@
     <string name="time_toggle_options_array_0">Niekada</string>
     <string name="time_toggle_options_array_1">Saulė</string>
     <string name="time_toggle_options_array_2">Pritaikytas laikas</string>
-<string name="shades_settings">Red Moon</string>
+<string name="settings">Red Moon</string>
     </resources>

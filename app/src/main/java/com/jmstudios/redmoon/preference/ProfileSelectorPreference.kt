@@ -34,7 +34,7 @@ import android.widget.Spinner
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.activity.ShadesActivity
+import com.jmstudios.redmoon.activity.MainActivity
 import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.helper.ProfilesHelper
 import com.jmstudios.redmoon.model.ProfilesModel
@@ -209,7 +209,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         get() = Config.color
         set(progress) {
             currentColor = progress
-            val fragment = (context as ShadesActivity).fragment
+            val fragment = (context as MainActivity).fragment
             val colorPref = fragment.findPreference(context.resources.getString(R.string.pref_key_color)) as ColorSeekBarPreference
 
             colorPref.mColorTempSeekBar.progress = progress
@@ -219,7 +219,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         get() = Config.intensity
         set(progress) {
             currentIntensity = progress
-            val fragment = (context as ShadesActivity).fragment
+            val fragment = (context as MainActivity).fragment
             val intensityPref = fragment.findPreference(context.resources.getString(R.string.pref_key_intensity)) as IntensitySeekBarPreference
 
             intensityPref.mIntensityLevelSeekBar.progress = progress
@@ -229,7 +229,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         get() = Config.dim
         set(progress) {
             currentDim = progress
-            val fragment = (context as ShadesActivity).fragment
+            val fragment = (context as MainActivity).fragment
             val dimPref = fragment.findPreference(context.resources.getString(R.string.pref_key_dim)) as DimSeekBarPreference
 
             dimPref.mDimLevelSeekBar.progress = progress

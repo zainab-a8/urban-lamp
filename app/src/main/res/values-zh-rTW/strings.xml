@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="app_name">紅月</string>
-    <string name="shades_settings">紅月</string>
+    <string name="settings">紅月</string>
     <string name="shortcut_activity">紅月切換鍵</string>
 
     <string name="paused">已暫停</string>

@@ -47,7 +47,7 @@
 
     <string name="toggle_shortcut_title">フィルターの切り替え</string>
 
-    <string name="shades_settings">レッドムーン</string>
+    <string name="settings">レッドムーン</string>
     <string name="standard_profiles_array_0">カスタム</string>
     <string name="standard_profiles_array_1">デフォルト</string>
     <string name="standard_profiles_array_2">読書</string>

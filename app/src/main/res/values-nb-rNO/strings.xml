@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="app_name">Rød Måne</string>
-    <string name="shades_settings">Rød Måne</string>
+    <string name="settings">Rød Måne</string>
     <string name="shortcut_activity">Veksle Rød Måne</string>
 
     <string name="running">Kjører. Sett på pause for å installere APK-er</string>

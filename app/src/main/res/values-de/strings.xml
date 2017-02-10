@@ -67,7 +67,7 @@ ein-/ausschalten</string>
     <string name="longitude_short">geograph. Länge</string>
     <string name="pref_title_other">Andere</string>
 <string name="app_name">Red Moon</string>
-    <string name="shades_settings">Red Moon</string>
+    <string name="settings">Red Moon</string>
     <string name="help_snackbar_text">Den Schalter antippen, um Red Moon zu aktivieren</string>
     <string name="searching_location">Standortsuche</string>
 <string name="intro_label">Einführung</string>

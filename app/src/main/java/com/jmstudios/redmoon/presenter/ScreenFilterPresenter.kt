@@ -58,7 +58,7 @@ import android.view.WindowManager
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.activity.ShadesActivity
+import com.jmstudios.redmoon.activity.MainActivity
 import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.helper.*
 import com.jmstudios.redmoon.manager.ScreenManager
@@ -137,14 +137,14 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             offOrOnActionText = context.getString(R.string.resume_action)
         }
 
-        val shadesActivityIntent = Intent(context, ShadesActivity::class.java)
-        shadesActivityIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        val mainActivityIntent = Intent(context, MainActivity::class.java)
+        mainActivityIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
 
         val offOrOnPI = PendingIntent.getService(context, REQUEST_CODE_ACTION_OFF_OR_ON,
                 offOrOnCommand, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val settingsPI = PendingIntent.getActivity(context, REQUEST_CODE_ACTION_SETTINGS,
-                shadesActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+                mainActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val nextProfileIntent = Intent(context, NextProfileCommandReceiver::class.java)
 

@@ -27,7 +27,7 @@
 
     <string name="running">Çalışıyor. Apk kurmak için durdurun</string>
     <string name="app_name">Red Moon</string>
-    <string name="shades_settings">Red Moon</string>
+    <string name="settings">Red Moon</string>
     <string name="time_toggle_activity">Süzgeç zamanları</string>
     <string name="pref_title_time_toggle">Süzgeç zamanları</string>
     <string name="custom_start_time_title">Devam et</string>

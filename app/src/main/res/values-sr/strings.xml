@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="app_name">Црвени месец</string>
-    <string name="shades_settings">Црвени месец</string>
+    <string name="settings">Црвени месец</string>
     <string name="intro_label">Увод</string>
     <string name="show_intro_text">Прикажи увод</string>
 

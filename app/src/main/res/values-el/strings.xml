@@ -90,6 +90,6 @@
     <string name="time_toggle_options_array_2">Αυτόματο (εξατομικευμένο)</string>
 
     <string name="app_name">Κόκκινο Φεγγάρι</string>
-    <string name="shades_settings">Κόκκινο Φεγγάρι</string>
+    <string name="settings">Κόκκινο Φεγγάρι</string>
     <string name="shortcut_activity">Κόκκινο Φεγγάρι εναλλαγή</string>
     </resources>

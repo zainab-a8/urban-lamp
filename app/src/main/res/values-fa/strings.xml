@@ -19,7 +19,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App Name and Activity Labels -->
     <string name="app_name">رد مون</string>
-    <string name="shades_settings">رد مون</string>
+    <string name="settings">رد مون</string>
     <string name="shortcut_activity">تغییر حالت رد مون</string>
 
     <!-- Notification -->

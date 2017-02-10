@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="app_name">Red Moon</string>
     <string name="intro_label">Introducción</string>
-    <string name="shades_settings">Red Moon</string>
+    <string name="settings">Red Moon</string>
     <string name="show_intro_text">Ver la introducción</string>
 
     <string name="paused">En pausa</string>

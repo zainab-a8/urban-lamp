@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="app_name">مانگی سوور</string>
-    <string name="shades_settings">مانگی سوور</string>
+    <string name="settings">مانگی سوور</string>
     <string name="intro_label">پێشەکی</string>
     <string name="show_intro_text">پیشاندانی پێشەکی</string>
     <string name="paused">ڕاگیراو</string>

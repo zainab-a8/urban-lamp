@@ -57,8 +57,8 @@
         android:theme="@style/AppTheme"
         android:supportsRtl="true" >
         <activity
-            android:name="com.jmstudios.redmoon.activity.ShadesActivity"
-            android:label="@string/shades_settings" >
+            android:name="com.jmstudios.redmoon.activity.MainActivity"
+            android:label="@string/settings" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -114,7 +114,7 @@
         <activity
             android:name=".activity.TimeToggleActivity"
             android:label="@string/time_toggle_activity"
-            android:parentActivityName="com.jmstudios.redmoon.activity.ShadesActivity"
+            android:parentActivityName="com.jmstudios.redmoon.activity.MainActivity"
             android:theme="@style/AppTheme" >
 
             <intent-filter>
@@ -126,7 +126,7 @@
         <activity
             android:name=".activity.SecureSuspendActivity"
             android:label="@string/secure_suspend_activity"
-            android:parentActivityName="com.jmstudios.redmoon.activity.ShadesActivity"
+            android:parentActivityName="com.jmstudios.redmoon.activity.MainActivity"
             android:theme="@style/AppTheme" >
 
             <intent-filter>

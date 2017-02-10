@@ -30,8 +30,8 @@ class ShortcutCreationActivity : Activity() {
         if (DEBUG) Log.i(TAG, "Create ShortcutCreationActivity")
         super.onCreate(savedInstanceState)
 
-        val shortcutIntent = Intent(this, ShadesActivity::class.java)
-        shortcutIntent.putExtra(ShadesActivity.EXTRA_FROM_SHORTCUT_BOOL, true)
+        val shortcutIntent = Intent(this, MainActivity::class.java)
+        shortcutIntent.putExtra(MainActivity.EXTRA_FROM_SHORTCUT_BOOL, true)
         shortcutIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
 
         // See: http://www.kind-kristiansen.no/2010/android-adding-desktop-shortcut-support-to-your-app/

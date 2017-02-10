@@ -50,7 +50,7 @@ class SecureSuspendActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (Config.darkThemeFlag) setTheme(R.style.AppThemeDark)
-        setContentView(R.layout.activity_shades)
+        setContentView(R.layout.activity_main)
         super.onCreate(savedInstanceState)
 
         // It seems that this method is abstract and thus throws an

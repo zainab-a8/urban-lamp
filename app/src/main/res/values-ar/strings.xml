@@ -74,7 +74,7 @@
     <string name="time_toggle_options_array_1">تلقائي (النهار)</string>
     <string name="time_toggle_options_array_2">تلقائي (مخصص)</string>
 
-    <string name="shades_settings">القمر الأحمر</string>
+    <string name="settings">القمر الأحمر</string>
     <string name="time_toggle_activity">عدد الترشيح</string>
     <string name="pref_title_time_toggle">عدد الترشيح</string>
     <string name="secure_suspend_activity">الإيقاف التلقائي</string>

@@ -55,7 +55,7 @@ import com.jmstudios.redmoon.service.ScreenFilterService
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
-class ShadesActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     lateinit private var mSwitch: Switch
     internal val fragment: FilterFragment
@@ -70,7 +70,7 @@ class ShadesActivity : AppCompatActivity() {
         if (fromShortcut) { toggleAndFinish() }
         if (Config.darkThemeFlag) setTheme(R.style.AppThemeDark)
 
-        setContentView(R.layout.activity_shades)
+        setContentView(R.layout.activity_main)
         super.onCreate(savedInstanceState)
 
         // Only create and attach a new fragment on the first Activity creation.
@@ -173,9 +173,9 @@ class ShadesActivity : AppCompatActivity() {
     }
 
     companion object {
-        private val TAG = "ShadesActivity"
+        private val TAG = "MainActivity"
         private val DEBUG = true
         private val FRAGMENT_TAG_FILTER = "jmstudios.fragment.tag.FILTER"
-        val EXTRA_FROM_SHORTCUT_BOOL = "com.jmstudios.redmoon.activity.ShadesActivity.EXTRA_FROM_SHORTCUT_BOOL"
+        val EXTRA_FROM_SHORTCUT_BOOL = "com.jmstudios.redmoon.activity.MainActivity.EXTRA_FROM_SHORTCUT_BOOL"
     }
 }

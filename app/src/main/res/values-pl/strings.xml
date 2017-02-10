@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="app_name">Red Moon</string>
-    <string name="shades_settings">Red Moon</string>
+    <string name="settings">Red Moon</string>
     <string name="shortcut_activity">Włącznik Red Moon</string>
 
     <string name="running">Uruchomiono. Wstrzymaj aby instalować aplikacje</string>
