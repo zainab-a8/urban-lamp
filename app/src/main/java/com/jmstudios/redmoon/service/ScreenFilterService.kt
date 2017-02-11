@@ -49,7 +49,6 @@ import android.view.WindowManager
 import com.jmstudios.redmoon.application.RedMoonApplication
 import com.jmstudios.redmoon.manager.ScreenManager
 import com.jmstudios.redmoon.manager.WindowViewManager
-import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.receiver.OrientationChangeReceiver
 import com.jmstudios.redmoon.view.ScreenFilterView
@@ -58,7 +57,7 @@ import org.greenrobot.eventbus.EventBus
 
 class ScreenFilterService : Service(), ServiceLifeCycleController {
     enum class Command {
-        ON, OFF, SHOW_PREVIEW, HIDE_PREVIEW, START_SUSPEND, STOP_SUSPEND
+        ON, OFF, SHOW_PREVIEW, HIDE_PREVIEW, START_SUSPEND, STOP_SUSPEND, TOGGLE
     }
 
     lateinit private var mPresenter: ScreenFilterPresenter
@@ -92,6 +91,7 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         if (DEBUG) Log.i(TAG, String.format("onStartCommand(%s, %d, %d", intent, flags, startId))
         val flag = intent.getIntExtra(ScreenFilterService.BUNDLE_KEY_COMMAND, COMMAND_INVALID)
+        if (DEBUG) Log.i(TAG, "Recieved flag: $flag")
         if (flag != COMMAND_INVALID) mPresenter.onScreenFilterCommand(Command.values()[flag])
 
         // Do not attempt to restart if the hosting process is killed by Android
@@ -106,6 +106,8 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
     override fun onDestroy() {
         if (DEBUG) Log.i(TAG, "onDestroy")
 
+        // TODO: make sure the filterView gets closed. Not a problem right now
+        // but without it this is brittle and bug-prone
         EventBus.getDefault().unregister(mPresenter)
         unregisterReceiver(mOrientationReceiver)
         mOrientationReceiver = null
@@ -120,38 +122,17 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
 
         private val TAG = "ScreenFilterService"
         private val DEBUG = true
-        private val intent = Intent(RedMoonApplication.app, ScreenFilterService::class.java)
+
         private val context = RedMoonApplication.app
+        private val intent: Intent
+            get() = Intent(RedMoonApplication.app, ScreenFilterService::class.java)
 
-        fun command(c: Command): Intent {
-            val command = intent
-            command.putExtra(BUNDLE_KEY_COMMAND, c.ordinal)
-            return command
-        }
+        val command = { c: Command -> intent.putExtra(BUNDLE_KEY_COMMAND, c.ordinal) }
 
-        fun start() {
-            if (DEBUG) Log.i(TAG, "Received start request")
-            context.startService(intent)
-        }
+        fun start()  { context.startService(intent) }
+        fun stop()   { context.stopService(intent)  }
 
-        fun stop() {
-            if (DEBUG) Log.i(TAG, "Received stop request")
-            context.stopService(intent)
-        }
-
-        fun moveToState(c: Command) {
-            context.startService(command(c))
-        }
-
-        fun toggle() {
-            if (DEBUG) Log.i(TAG, "toggleAndFinish() called.")
-            if (Config.filterIsOn) {
-                moveToState(Command.OFF)
-                stop()
-            } else {
-                start()
-                moveToState(Command.ON)
-            }
-        }
+        fun toggle() { moveToState(Command.TOGGLE)  }
+        fun moveToState(c: Command) { context.startService(command(c)) }
     }
 }

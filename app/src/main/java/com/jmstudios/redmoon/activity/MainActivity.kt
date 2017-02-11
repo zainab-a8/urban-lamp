@@ -113,7 +113,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        ScreenFilterService.stop()
+        // Really we want to post an eventbus event, "uiClosed"
+        // So the service can turn itself off if the filter is paused
+        /* ScreenFilterService.stop() */
         super.onDestroy()
     }
 

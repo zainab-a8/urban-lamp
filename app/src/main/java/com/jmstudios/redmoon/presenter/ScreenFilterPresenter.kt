@@ -228,12 +228,10 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     fun onOffStateChanged(event: filterIsOnChanged) {
         updateWidgets()
     }
-
     @Subscribe
     fun onDimLevelChanged(event: dimChanged) {
         mCurrentState.onDimLevelChanged()
     }
-
     @Subscribe
     fun onIntensityLevelChanged(event: intensityChanged) {
         mCurrentState.onIntensityLevelChanged()
@@ -247,16 +245,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     @Subscribe
     fun onLowerBrightnessChanged(event: lowerBrightnessChanged) {
         if (Config.hasWriteSettingsPermission) {
-            val lowerBrightness = Config.lowerBrightness
-            if (DEBUG) Log.i(TAG, "Lower brightness flag changed to: " + lowerBrightness)
-            if (filterIsOn) {
-                if (lowerBrightness) {
-                    saveOldBrightnessState()
-                    setBrightnessState(0, false, mContext)
-                } else {
-                    restoreBrightnessState()
-                }
-            }
+            mCurrentState.onLowerBrightnessChanged()
         } else {
             EventBus.getDefault().post(changeBrightnessDenied())
         }
@@ -354,7 +343,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         if (DEBUG) Log.i(TAG, "Sending update broadcast")
         val updateAppWidgetIntent = Intent(mContext, SwitchAppWidgetProvider::class.java)
         updateAppWidgetIntent.action = SwitchAppWidgetProvider.ACTION_UPDATE
-        updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_POWER, Config.filterIsOn)
+        updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_POWER, filterIsOn)
         mContext.sendBroadcast(updateAppWidgetIntent)
     }
 
@@ -383,24 +372,21 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     }
 
     private abstract inner class State {
-        abstract fun onActivation(prevState: State)
         abstract val filterIsOn: Boolean
-
-        open fun onDimLevelChanged() {}
-        open fun onColorChanged() {}
-        open fun onIntensityLevelChanged() {}
-        open fun onSecureSuspendChanged() {}
+        abstract fun onActivation(prevState: State)
 
         open fun onScreenFilterCommand(command: ScreenFilterService.Command) {
-            val newState = when (command) {
+            moveToState(nextState(command))
+        }
+
+        open val nextState: (ScreenFilterService.Command) -> State = {
+            when (it) {
                 ScreenFilterService.Command.OFF           -> mOffState
                 ScreenFilterService.Command.ON            -> mOnState
                 ScreenFilterService.Command.SHOW_PREVIEW  -> mPreviewState
                 ScreenFilterService.Command.START_SUSPEND -> mSuspendState
-                // Don't do anything on STOP_SUSPEND or HIDE_PREVIEW
-                else -> return
+                else -> this
             }
-            moveToState(newState)
         }
 
         fun moveToState(newState: State) {
@@ -409,8 +395,13 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             if (DEBUG) Log.i(TAG, "Passed check for same state.")
             mCurrentState = newState
             mCurrentState.onActivation(this)
-            Config.filterIsOn = newState.filterIsOn
         }
+
+        open fun onDimLevelChanged() {}
+        open fun onColorChanged() {}
+        open fun onIntensityLevelChanged() {}
+        open fun onLowerBrightnessChanged() {}
+        open fun onSecureSuspendChanged() {}
 
         override fun toString(): String {
             return javaClass.simpleName
@@ -418,9 +409,11 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     }
 
     private inner class OnState : State() {
+        override val filterIsOn = true
         override fun onActivation(prevState: State) {
             refreshForegroundNotification()
             openScreenFilter()
+            Config.filterIsOn = filterIsOn
             mView.animateDimLevel(Config.dim, null)
             mView.animateIntensityLevel(Config.intensity, null)
 
@@ -429,6 +422,11 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
                 setBrightnessState(0, false, mContext)
             }
             if (Config.secureSuspend) startAppMonitoring()
+        }
+
+        override val nextState: (ScreenFilterService.Command) -> State = {
+            if (it == ScreenFilterService.Command.TOGGLE) mOffState
+            else super.nextState(it)
         }
 
         override fun onDimLevelChanged() {
@@ -444,21 +442,30 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         override fun onColorChanged() {
             mView.colorTempProgress = Config.color
         }
+        override fun onLowerBrightnessChanged() {
+            val lowerBrightness = Config.lowerBrightness
+            if (DEBUG) Log.i(TAG, "Lower brightness flag changed to: " + lowerBrightness)
+            if (lowerBrightness) {
+                saveOldBrightnessState()
+                setBrightnessState(0, false, mContext)
+            } else {
+                restoreBrightnessState()
+            }
+        }
         override fun onSecureSuspendChanged() {
             if (Config.secureSuspend) startAppMonitoring()
             else stopAppMonitoring()
         }
-
-        override val filterIsOn = true
     }
 
     private inner class OffState : State() {
+        override val filterIsOn = false
         override fun onActivation(prevState: State) {
+            Config.filterIsOn = filterIsOn
             mServiceController.stopForeground(false)
             refreshForegroundNotification()
 
             if (prevState === mPreviewState) {
-                mServiceController.stopForeground(false)
                 closeScreenFilter()
             } else {
                 mView.animateIntensityLevel(ScreenFilterView.MIN_INTENSITY, null)
@@ -472,7 +479,10 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             if (Config.secureSuspend) stopAppMonitoring()
         }
 
-        override val filterIsOn = false
+        override val nextState: (ScreenFilterService.Command) -> State = {
+            if (it == ScreenFilterService.Command.TOGGLE) mOnState
+            else super.nextState(it)
+        }
     }
 
     /* This State is used to present the filter to the user when (s)he
@@ -484,8 +494,12 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         lateinit var stateToReturnTo: State
         var pressesActive: Int = 0
 
+        override val filterIsOn: Boolean
+            get() = stateToReturnTo.filterIsOn
+
         override fun onActivation(prevState: State) {
             stateToReturnTo = prevState
+            Config.filterIsOn = filterIsOn
             pressesActive = 1
             refreshForegroundNotification()
             // If the animators are not canceled, preview does not work when filter is turning off
@@ -501,11 +515,6 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         override fun onScreenFilterCommand(command: ScreenFilterService.Command) {
             if (DEBUG) Log.d(TAG, "Preview, got command: " + command.name)
             when (command) {
-                ScreenFilterService.Command.ON -> stateToReturnTo = mOnState
-                ScreenFilterService.Command.OFF -> {
-                    if (DEBUG) Log.d(TAG, "State to return to changed to " + command.name + " while in preview mode")
-                    stateToReturnTo = mOffState
-                }
                 ScreenFilterService.Command.SHOW_PREVIEW -> {
                     pressesActive++
                     if (DEBUG) Log.d(TAG, String.format("%d presses active", pressesActive))
@@ -522,8 +531,12 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
                         moveToState(stateToReturnTo)
                     }
                 }
-                else -> super.onScreenFilterCommand(command)
+                else -> stateToReturnTo = nextState(command)
             }
+        }
+
+        override val nextState: (ScreenFilterService.Command) -> State = {
+            stateToReturnTo.nextState(it)
         }
 
         override fun onDimLevelChanged() {
@@ -539,9 +552,6 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         override fun onColorChanged() {
             mView.colorTempProgress = Config.color
         }
-
-        override val filterIsOn: Boolean
-            get() = stateToReturnTo.filterIsOn
     }
 
     /* This state is used when the filter is suspended temporarily,
@@ -553,6 +563,9 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
      */
     private inner class SuspendState : State() {
         lateinit var stateToReturnTo: State
+        
+        override val filterIsOn: Boolean
+            get() = stateToReturnTo.filterIsOn
 
         override fun onActivation(prevState: State) {
             stateToReturnTo = prevState
@@ -565,14 +578,14 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             if (DEBUG) Log.d(TAG, "In Suspend, got command: " + command.name)
             when (command) {
                 ScreenFilterService.Command.STOP_SUSPEND -> moveToState(stateToReturnTo)
-                ScreenFilterService.Command.OFF -> stateToReturnTo = mOffState
-                ScreenFilterService.Command.ON  -> stateToReturnTo = mOnState
-                else -> {}
+                ScreenFilterService.Command.START_SUSPEND -> {}
+                else -> stateToReturnTo = nextState(command)
             }
         }
 
-        override val filterIsOn: Boolean
-            get() = stateToReturnTo.filterIsOn
+        override val nextState: (ScreenFilterService.Command) -> State = {
+            stateToReturnTo.nextState(it)
+        }
     }
 
     companion object {
