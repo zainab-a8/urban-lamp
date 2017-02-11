@@ -45,14 +45,9 @@ import android.view.WindowManager
 
 class ScreenManager(context: Context, private val mWindowManager: WindowManager) {
 
-    private val mResources: Resources
-
+    private val mResources: Resources = context.resources
     private var mStatusBarHeight = -1
     private var mNavigationBarHeight = -1
-
-    init {
-        mResources = context.resources
-    }
 
     val screenHeight: Int
         get() {

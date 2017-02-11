@@ -59,8 +59,8 @@ class ScreenFilterView(context: Context) : View(context) {
      * *                 never be fully opaque.
      */
     var filterDimLevel = DimSeekBarPreference.DEFAULT_VALUE
-        set(dimLevel) {
-            field = dimLevel
+        set(value) {
+            field = value
             invalidate()
             updateFilterColor()
         }
