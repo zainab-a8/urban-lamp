@@ -89,6 +89,8 @@
                 android:resource="@xml/switch_appwidget_info" />
         </receiver>
 
+        <receiver android:name="com.jmstudios.redmoon.receiver.TimeToggleChangeReceiver">
+        </receiver>
         <receiver android:name="com.jmstudios.redmoon.receiver.NextProfileCommandReceiver">
         </receiver>
 
