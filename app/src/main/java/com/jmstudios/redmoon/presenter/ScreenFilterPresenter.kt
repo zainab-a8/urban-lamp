@@ -194,32 +194,11 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         return wlp
     }
 
-    private fun openScreenFilter() {
-        if (!mScreenFilterOpen) {
-            // Display the transparent filter
-            mWindowViewManager.openWindow(mView, createFilterLayoutParams())
-            mScreenFilterOpen = true
-        }
-    }
-
     private fun reLayoutScreenFilter() {
         if (!mScreenFilterOpen) {
             return
         }
         mWindowViewManager.reLayoutWindow(mView, createFilterLayoutParams())
-    }
-
-    private fun closeScreenFilter() {
-        if (DEBUG) Log.i(TAG, "Got request to close screen filter")
-        if (!mScreenFilterOpen) {
-            if (DEBUG) Log.i(TAG, "Screen filter is already closed")
-        } else if (mCurrentState.filterIsOn) {
-            if (DEBUG) Log.i(TAG, "Not closing; filter is turning back on")
-        } else {
-            // Close the window once the fade-out animation is complete
-            mWindowViewManager.closeWindow(mView)
-            mScreenFilterOpen = false
-        }
     }
     //endregion
 
@@ -375,11 +354,30 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         abstract val filterIsOn: Boolean
         abstract fun onActivation(prevState: State)
 
+        internal fun openScreenFilter() {
+            if (!mScreenFilterOpen) {
+                // Display the transparent filter
+                mWindowViewManager.openWindow(mView, createFilterLayoutParams())
+                mScreenFilterOpen = true
+            }
+        }
+
+        open internal fun closeScreenFilter() {
+            if (mScreenFilterOpen) {
+                if (DEBUG) Log.i(TAG, "Closing screen filter")
+                // Close the window once the fade-out animation is complete
+                mWindowViewManager.closeWindow(mView)
+                mScreenFilterOpen = false
+            } else {
+                if (DEBUG) Log.i(TAG, "Can't close Screen filter; it's already closed")
+            }
+        }
+
         open fun onScreenFilterCommand(command: ScreenFilterService.Command) {
             moveToState(nextState(command))
         }
 
-        open val nextState: (ScreenFilterService.Command) -> State = {
+        open internal val nextState: (ScreenFilterService.Command) -> State = {
             when (it) {
                 ScreenFilterService.Command.OFF           -> mOffState
                 ScreenFilterService.Command.ON            -> mOnState
@@ -389,7 +387,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             }
         }
 
-        fun moveToState(newState: State) {
+        internal fun moveToState(newState: State) {
             if (DEBUG) Log.i(TAG, "Transitioning from $mCurrentState to $newState")
             if (newState === this) return
             if (DEBUG) Log.i(TAG, "Passed check for same state.")
@@ -422,6 +420,10 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
                 setBrightnessState(0, false, mContext)
             }
             if (Config.secureSuspend) startAppMonitoring()
+        }
+
+        override fun closeScreenFilter() {
+            if (DEBUG) Log.i(TAG, "Filter is turning on again; don't close it.")
         }
 
         override val nextState: (ScreenFilterService.Command) -> State = {
@@ -470,8 +472,8 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             } else {
                 mView.animateIntensityLevel(ScreenFilterView.MIN_INTENSITY, null)
                 mView.animateDimLevel(ScreenFilterView.MIN_DIM, object : AbstractAnimatorListener() {
-                    override fun onAnimationCancel(animator: Animator) { closeScreenFilter() }
-                    override fun onAnimationEnd(animator: Animator) { closeScreenFilter() }
+                    override fun onAnimationCancel(animator: Animator) { mCurrentState.closeScreenFilter() }
+                    override fun onAnimationEnd(animator: Animator) { mCurrentState.closeScreenFilter() }
                 })
             }
 

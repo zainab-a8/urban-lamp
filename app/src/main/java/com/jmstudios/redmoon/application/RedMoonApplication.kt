@@ -65,6 +65,7 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
             getString(R.string.pref_key_location)             -> locationChanged()
             getString(R.string.pref_key_sunset_time)          -> sunsetTimeChanged()
             getString(R.string.pref_key_sunrise_time)         -> sunriseTimeChanged()
+            getString(R.string.pref_key_secure_suspend)       -> secureSuspendChanged()
             else -> return
             /* Preferences for which no Event is posted */
             // getString(R.string.pref_key_lower_brightness)
