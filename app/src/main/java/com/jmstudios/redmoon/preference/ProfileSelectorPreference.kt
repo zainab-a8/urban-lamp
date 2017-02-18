@@ -34,7 +34,6 @@ import android.widget.Spinner
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.activity.MainActivity
 import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.helper.ProfilesHelper
 import com.jmstudios.redmoon.model.ProfilesModel
@@ -48,11 +47,12 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
 
     lateinit private var mProfileSpinner: Spinner
     lateinit private var mProfileActionButton: Button
-    lateinit internal var mArrayAdapter: ArrayAdapter<CharSequence>
-    private var mProfile: Int = 0
     lateinit private var mView: View
-    private val mProfilesModel: ProfilesModel = ProfilesModel(mContext)
 
+    lateinit internal var mArrayAdapter: ArrayAdapter<CharSequence>
+
+    private var mProfile: Int = 0
+    private val mProfilesModel: ProfilesModel = ProfilesModel(mContext)
     private var mDefaultOperations: ArrayList<CharSequence>? = null
 
     private var currentColor: Int = 0
@@ -60,8 +60,6 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
     private var currentDim: Int = 0
 
     private var mIsListenerRegistered: Boolean = false
-
-    // Settings model from the activity to save the amount of profiles
 
     init {
         layoutResource = R.layout.preference_profile_selector
@@ -144,8 +142,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         }
     }
 
-    override fun onNothingSelected(parent: AdapterView<*>) {
-    }
+    override fun onNothingSelected(parent: AdapterView<*>) { }
 
     private fun openRemoveProfileDialog() {
         val builder = AlertDialog.Builder(context)
@@ -159,7 +156,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
             mProfile = 0
             initLayout()
 
-            updateAmmountProfiles()
+            updateAmountProfiles()
         }
 
         builder.setNegativeButton(cancelString) { dialog, which -> dialog.cancel() }
@@ -183,16 +180,16 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         builder.setPositiveButton(okString) { dialog, which ->
             if (nameInput.text.toString().trim { it <= ' ' } != "") {
                 val profile = ProfilesModel.Profile(nameInput.text.toString(),
-                        colorTemperatureProgress,
-                        intensityLevelProgress,
-                        dimLevelProgress)
+                                                    Config.color,
+                                                    Config.intensity,
+                                                    Config.dim)
 
                 mProfilesModel.addProfile(profile)
                 mArrayAdapter.add(profile.mProfileName as CharSequence)
 
                 mProfileSpinner.setSelection(mProfilesModel.profiles.size - 1 + DEFAULT_OPERATIONS_AM)
 
-                updateAmmountProfiles()
+                updateAmountProfiles()
             } else {
                 dialog.cancel()
             }
@@ -202,38 +199,6 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
 
         builder.show()
     }
-
-    //Section: Reading and writing preference states
-
-    private var colorTemperatureProgress: Int
-        get() = Config.color
-        set(progress) {
-            currentColor = progress
-            val fragment = (context as MainActivity).fragment
-            val colorPref = fragment.findPreference(context.resources.getString(R.string.pref_key_color)) as ColorSeekBarPreference
-
-            colorPref.mColorTempSeekBar.progress = progress
-        }
-
-    private var intensityLevelProgress: Int
-        get() = Config.intensity
-        set(progress) {
-            currentIntensity = progress
-            val fragment = (context as MainActivity).fragment
-            val intensityPref = fragment.findPreference(context.resources.getString(R.string.pref_key_intensity)) as IntensitySeekBarPreference
-
-            intensityPref.mIntensityLevelSeekBar.progress = progress
-        }
-
-    private var dimLevelProgress: Int
-        get() = Config.dim
-        set(progress) {
-            currentDim = progress
-            val fragment = (context as MainActivity).fragment
-            val dimPref = fragment.findPreference(context.resources.getString(R.string.pref_key_dim)) as DimSeekBarPreference
-
-            dimPref.mDimLevelSeekBar.progress = progress
-        }
 
     //Section: Reading and writing profiles
 
@@ -249,30 +214,27 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
     }
 
     /**
-     * Updates the ammount of profiles in the shared preferences
+     * Updates the amount of profiles in the shared preferences
      */
-    private fun updateAmmountProfiles() {
-        val ammountProfiles = mProfilesModel.profiles.size + DEFAULT_OPERATIONS_AM
-        if (DEBUG) Log.i(TAG, "There are now $ammountProfiles profiles.")
-        Config.ammountProfiles = ammountProfiles
+    private fun updateAmountProfiles() {
+        val amountProfiles = mProfilesModel.profiles.size + DEFAULT_OPERATIONS_AM
+        if (DEBUG) Log.i(TAG, "There are now $amountProfiles profiles.")
+        Config.amountProfiles = amountProfiles
     }
 
     @Subscribe
     fun onDimLevelChanged(event: dimChanged) {
-        if (Config.dim == currentDim) return
-        mProfileSpinner.setSelection(0)
+        if (Config.dim != currentDim) mProfileSpinner.setSelection(0)
     }
 
     @Subscribe
     fun onIntensityLevelChanged(event: intensityChanged) {
-        if (Config.intensity == currentIntensity) return
-        mProfileSpinner.setSelection(0)
+        if (Config.intensity != currentIntensity) mProfileSpinner.setSelection(0)
     }
 
     @Subscribe
     fun onColorChanged(event: colorChanged) {
-        if (Config.color == currentColor) return
-        mProfileSpinner.setSelection(0)
+        if (Config.color != currentColor) mProfileSpinner.setSelection(0)
     }
 
     @Subscribe

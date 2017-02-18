@@ -34,7 +34,7 @@ class NextProfileCommandReceiver : BroadcastReceiver() {
         // Here we just change the profile (cycles back to default
         // when it reaches the max).
         val profile = Config.profile
-        val amProfiles = Config.ammountProfiles
+        val amProfiles = Config.amountProfiles
         val newProfile = if (profile + 1 >= amProfiles) 1
                          else profile + 1
         Config.profile = newProfile

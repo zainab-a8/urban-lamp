@@ -173,7 +173,7 @@ object Config {
                              .putInt(getString(R.string.pref_key_profile_spinner), p)
                              .apply()
     
-    var ammountProfiles: Int
+    var amountProfiles: Int
         get() = mSharedPrefs.getInt(getString(R.string.pref_key_num_profiles), 3)
         set(num) = mSharedPrefs.edit()
                                .putInt(getString(R.string.pref_key_num_profiles), num)

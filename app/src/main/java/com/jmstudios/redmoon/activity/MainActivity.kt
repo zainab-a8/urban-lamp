@@ -58,8 +58,6 @@ import org.greenrobot.eventbus.Subscribe
 class MainActivity : AppCompatActivity() {
 
     lateinit private var mSwitch: Switch
-    internal val fragment: FilterFragment
-        get() = fragmentManager.findFragmentByTag(FRAGMENT_TAG_FILTER) as FilterFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ScreenFilterService.start()
@@ -168,7 +166,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Subscribe
-    fun onthemeChanged(event: themeChanged) {
+    fun onThemeChanged(event: themeChanged) {
         recreate()
     }
 

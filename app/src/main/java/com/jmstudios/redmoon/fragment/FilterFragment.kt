@@ -102,30 +102,6 @@ class FilterFragment : EventPreferenceFragment() {
         if (DEBUG) Log.i(TAG, "onResume")
         super.onResume()
         EventBus.getDefault().register(profileSelectorPref)
-
-        // When the fragment is not on the screen, but the user
-        // updates the profile through the notification. the
-        // profile spinner and the seekbars will have missed this
-        // change. To update them correctly, we artificially change
-        // these settings.
-        /* val intensity = Config.intensityLevel */
-        /* Config.intensityLevel = if (intensity == 0) 1 else 0 */
-        /* Config.intensityLevel = intensity */
-
-        /* val dim = Config.dimLevel */
-        /* Config.dimLevel = if (dim == 0) 1 else 0 */
-        /* Config.dimLevel = dim */
-
-        /* val color = Config.color */
-        /* Config.color = if (color == 0) 1 else 0 */
-        /* Config.color = color */
-
-        // The profile HAS to be updated last, otherwise the spinner
-        // will switched to custom.
-        /* val profile = Config.profile */
-        /* Config.profile = if (profile == 0) 1 else 0 */
-        /* Config.profile = profile */
-
         updateSecureSuspendSummary()
         updateTimeToggleSummary()
     }
