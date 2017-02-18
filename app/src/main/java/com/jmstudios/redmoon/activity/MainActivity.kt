@@ -165,11 +165,6 @@ class MainActivity : AppCompatActivity() {
         mSwitch.isChecked = Config.filterIsOn
     }
 
-    @Subscribe
-    fun onThemeChanged(event: themeChanged) {
-        recreate()
-    }
-
     companion object {
         private val TAG = "MainActivity"
         private val DEBUG = true

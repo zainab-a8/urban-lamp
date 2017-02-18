@@ -83,6 +83,10 @@ class FilterFragment : EventPreferenceFragment() {
     private val secureSuspendPref: Preference
         get() = preferenceScreen.findPreference(getString(R.string.pref_key_secure_suspend_header))
 
+    private val darkThemePref: SwitchPreference
+        get() = (preferenceScreen.findPreference
+                (getString(R.string.pref_key_dark_theme)) as SwitchPreference)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.filter_preferences)
@@ -95,6 +99,16 @@ class FilterFragment : EventPreferenceFragment() {
                 Preference.OnPreferenceChangeListener { preference, newValue ->
                     val checked = newValue as Boolean
                     if (checked) Config.requestWriteSettingsPermission(activity) else true
+                }
+
+        /* Normally we'd change theme via an event after the setting gets
+         * changed, but for some reason doing it that way makes the activity
+         * scroll to the top when it gets recreated, which is rather jarring.
+         * Doing it this way keeps the same scroll position, which is nice. */
+        darkThemePref.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { preference, newValue ->
+                    activity.recreate()
+                    true
                 }
     }
 
