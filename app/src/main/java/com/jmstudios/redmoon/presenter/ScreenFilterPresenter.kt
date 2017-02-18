@@ -438,7 +438,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         }
         override fun onIntensityLevelChanged() {
             val intensityLevel = Config.intensity
-            mView.cancelDimAnimator()
+            mView.cancelIntensityAnimator()
             mView.filterIntensityLevel = intensityLevel
         }
         override fun onColorChanged() {
