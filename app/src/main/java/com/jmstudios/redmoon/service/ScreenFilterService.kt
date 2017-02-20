@@ -125,7 +125,7 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
 
         private val context = RedMoonApplication.app
         private val intent: Intent
-            get() = Intent(RedMoonApplication.app, ScreenFilterService::class.java)
+            get() = Intent(context, ScreenFilterService::class.java)
 
         val command = { c: Command -> intent.putExtra(BUNDLE_KEY_COMMAND, c.ordinal) }
 
