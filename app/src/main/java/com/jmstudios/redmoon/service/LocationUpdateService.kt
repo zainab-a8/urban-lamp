@@ -80,7 +80,7 @@ class LocationUpdateService: Service(), LocationListener {
         if (DEBUG) Log.i(TAG, "onCreate")
         if (Config.hasLocationPermission) {
             if (DEBUG) Log.i(TAG, "Requesting location updates")
-            if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER)) {
+            if (locationManager.allProviders.contains(LocationManager.NETWORK_PROVIDER)) {
                 locationManager.requestLocationUpdates(locationProvider, 0, 0f, this)
             } else {
                 if (DEBUG) Log.i(TAG, "Approximate location not available, stopping.")
