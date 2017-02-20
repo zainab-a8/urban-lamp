@@ -57,40 +57,52 @@ import org.greenrobot.eventbus.EventBus
 
 import java.util.*
 
+/**
+ * When the service starts, we request location updates. When we get a new
+ * location fix, we shut down the service. When we shut down (for any reason),
+ * we update the location with the last known location. This way, even if we
+ * didn't get a fix before the service was stopped, we might be able to get
+ * something more recent than the last time red moon updated location.
+ */
 class LocationUpdateService: Service(), LocationListener {
 
-    private val mContext = RedMoonApplication.app
-
-    private val mLocationManager: LocationManager
-        get() = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    private val locationManager: LocationManager
+        get() = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
     private val locationServicesEnabled: Boolean
-        get() = mLocationManager.isProviderEnabled(locationProvider)
+        get() = locationManager.isProviderEnabled(locationProvider)
                     
     private val lastKnownLocation: Location?
-        get() = mLocationManager.getLastKnownLocation(locationProvider)
+        get() = locationManager.getLastKnownLocation(locationProvider)
 
     override fun onCreate() {
         super.onCreate()
         if (DEBUG) Log.i(TAG, "onCreate")
-        if (Config.hasLocationPermission)
-                mLocationManager.requestLocationUpdates(locationProvider, 0, 0f, this)
+        if (Config.hasLocationPermission) {
+            if (DEBUG) Log.i(TAG, "Requesting location updates")
+            if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER)) {
+                locationManager.requestLocationUpdates(locationProvider, 0, 0f, this)
+            } else {
+                if (DEBUG) Log.i(TAG, "Approximate location not available, stopping.")
+                if (DEBUG) Log.i(TAG, "List of providers + ${locationManager.allProviders}")
+                stopSelf()
+            }
+        }
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        if (DEBUG) Log.i(TAG, String.format("onStartCommand(%s, %d, %d", intent, flags, startId))
-        
-        if (Config.hasLocationPermission) {
-            if (!locationServicesEnabled) {
-                EventBus.getDefault().post(locationServicesDisabled())
-            } else {
-                //search for location
-            }
-        } else {
+        if (DEBUG) Log.i(TAG, "onStartCommand($intent, $flags, $startId)")
+
+        if (!Config.hasLocationPermission) {
             EventBus.getDefault().post(locationAccessDenied())
             stopSelf()
+        } else if (!locationServicesEnabled) {
+            EventBus.getDefault().post(locationServicesDisabled())
+        } else {
+            // TODO: startForeground() and show notification instead of sending event
+            EventBus.getDefault().post(locationUpdating())
         }
-        
+
         // Do not attempt to restart if the hosting process is killed by Android
         return Service.START_NOT_STICKY
     }
@@ -109,7 +121,10 @@ class LocationUpdateService: Service(), LocationListener {
         if (DEBUG) Log.i(TAG, "Status changed for " + provider)
     }
 
-    override fun onProviderEnabled(provider: String) { }
+    override fun onProviderEnabled(provider: String) {
+        // TODO: startForeground() and show notification instead of sending event
+        EventBus.getDefault().post(locationUpdating())
+    }
 
     override fun onProviderDisabled(provider: String) {
         if (DEBUG) Log.i(TAG, "Location search failed, using last known location")
@@ -119,18 +134,14 @@ class LocationUpdateService: Service(), LocationListener {
     override fun onDestroy() {
         if (DEBUG) Log.i(TAG, "onDestroy")
         if (Config.hasLocationPermission) {
-            mLocationManager.removeUpdates(this)
+            locationManager.removeUpdates(this)
             updateLocation(lastKnownLocation)
         }
         super.onDestroy()
     }
 
     private fun updateLocation(location: Location?) {
-        if (Config.hasLocationPermission) mLocationManager.removeUpdates(this)
-
-        if (location != null) {
-            val latitude    = location.latitude
-            val longitude   = location.longitude
+        location?.apply {
             val sunLocation = com.luckycatlabs.sunrisesunset.dto.Location(latitude, longitude)
             val calculator  = SunriseSunsetCalculator(sunLocation, TimeZone.getDefault())
             Config.sunsetTime  = calculator.getOfficialSunsetForDate(Calendar.getInstance())
@@ -141,17 +152,19 @@ class LocationUpdateService: Service(), LocationListener {
 
     companion object {
         private val TAG = "LocationUpdateService"
-        private val DEBUG = false
+        private val DEBUG = true
         private val locationProvider = LocationManager.NETWORK_PROVIDER
 
         //val FOREGROUND = true
         //val BACKGROUND = false
 
-        private val intent = { ctx: Context -> Intent(ctx, LocationUpdateService::class.java) }
+        private val context = RedMoonApplication.app
+        private val intent: Intent
+            get() = Intent(context, LocationUpdateService::class.java)
 
-        fun start(context: Context) {
+        fun start() {
             if (DEBUG) Log.i(TAG, "Received start request")
-            context.startService(intent(context))
+            context.startService(intent)
         }
     }
 }

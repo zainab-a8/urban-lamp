@@ -17,11 +17,9 @@
  */
 package com.jmstudios.redmoon.fragment
 
-import android.Manifest
 import android.os.Bundle
 import android.preference.Preference
 import android.preference.SwitchPreference
-import android.support.v4.app.ActivityCompat
 import android.util.Log
 import android.widget.Toast
 
@@ -32,8 +30,6 @@ import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.preference.TimePickerPreference
 import com.jmstudios.redmoon.receiver.TimeToggleChangeReceiver
 import com.jmstudios.redmoon.service.LocationUpdateService
-
-import java.util.*
 
 import org.greenrobot.eventbus.Subscribe
 
@@ -65,9 +61,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
 
         locationPref.onPreferenceClickListener =
             Preference.OnPreferenceClickListener { pref ->
-                mIsSearchingLocation = true
-                pref.summary = getString(R.string.searching_location)
-                LocationUpdateService.start(activity)
+                LocationUpdateService.start()
                 true
             }
     }
@@ -86,20 +80,18 @@ class TimeToggleFragment : EventPreferenceFragment() {
     }
 
     private fun updateLocationPref() {
-        val l = Config.location
-        when {
-            mIsSearchingLocation -> locationPref.summary = getString(R.string.searching_location)
-            l === DEFAULT_LOCATION -> locationPref.summary = getString(R.string.location_not_set)
-            else -> {
+        locationPref.summary = when {
+            mIsSearchingLocation                -> getString(R.string.searching_location)
+            Config.location == DEFAULT_LOCATION -> getString(R.string.location_not_set)
+            else -> with (Config.location) {
+                val x = indexOf(",")
+                val latitude = java.lang.Double.parseDouble(substring(0, x))
+                val longitude = java.lang.Double.parseDouble(substring(x + 1, length))
+
                 val latitudeStr = getString(R.string.latitude_short)
                 val longitudeStr = getString(R.string.longitude_short)
 
-                val x = l.indexOf(",")
-                val latitude = java.lang.Double.parseDouble(l.substring(0, x))
-                val longitude = java.lang.Double.parseDouble(l.substring(x+1, l.length))
-
-                locationPref.summary = String.format(Locale.getDefault(), "%s: %.2f %s: %.2f",
-                                                     latitudeStr, latitude, longitudeStr, longitude)
+                "$latitudeStr: $latitude, $longitudeStr: $longitude"
             }
         }
     }
@@ -108,8 +100,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
         val auto = Config.timeToggle
         val useLocation = Config.useLocation
         val enabled = auto && !useLocation
-        if (DEBUG) Log.i(TAG, String.format("auto: %s, useLocation: %s, enabled: %s",
-                                            auto, useLocation, enabled))
+        if (DEBUG) Log.i(TAG, "auto: $auto, useLocation: $useLocation, enabled: $enabled")
         automaticTurnOnPref.isEnabled = enabled
         automaticTurnOffPref.isEnabled = enabled
         automaticTurnOnPref.summary = Config.automaticTurnOnTime
@@ -141,22 +132,26 @@ class TimeToggleFragment : EventPreferenceFragment() {
 
     @Subscribe
     fun onUseLocationChanged(event: useLocationChanged) {
-        mIsSearchingLocation = true
-        updateLocationPref()
+        if (Config.useLocation) { LocationUpdateService.start() }
         updateTimePrefs()
     }
 
     @Subscribe
-    fun onLocationChanged(event: locationChanged) {
+    fun onLocationUpdating(event: locationUpdating) {
+        mIsSearchingLocation = true
         updateLocationPref()
     }
 
     @Subscribe
-    fun requestLocationPermission(event: locationAccessDenied) {
-        if (mIsSearchingLocation && !Config.hasLocationPermission) {
-            ActivityCompat.requestPermissions(activity,
-            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 0)
-            mIsSearchingLocation = false
+    fun onLocationChanged(event: locationChanged) {
+        mIsSearchingLocation = false
+        updateLocationPref()
+    }
+
+    @Subscribe
+    fun onLocationAccessDenied(event: locationAccessDenied) {
+        if (mIsSearchingLocation) {
+            Config.requestLocationPermission(activity)
         }
     }
 

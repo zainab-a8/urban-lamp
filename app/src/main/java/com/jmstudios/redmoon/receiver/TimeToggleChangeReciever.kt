@@ -54,14 +54,14 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
         // However, the filter fades out and the notification is only
         // refreshed when this animation has been completed.  To make sure
         // that the new notification is removed we create a new runnable to
-        // be excecuted 100 ms after the filter has faded out.
+        // be executed 100 ms after the filter has faded out.
         val handler = Handler()
 
         val runnable = DismissNotificationRunnable(context)
         handler.postDelayed(runnable, (ScreenFilterPresenter.FADE_DURATION_MS + 100).toLong())
 
         if (Config.timeToggle && Config.useLocation) {
-            LocationUpdateService.start(context)
+            LocationUpdateService.start()
         }
     }
 

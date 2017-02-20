@@ -38,12 +38,14 @@ package com.jmstudios.redmoon.model
 
 import android.Manifest
 import android.annotation.TargetApi
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.preference.PreferenceManager
 import android.provider.Settings
+import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 
@@ -85,6 +87,14 @@ object Config {
     val automaticTurnOffTime: String
         get() = if (useLocation) sunriseTime else customTurnOffTime
 
+    fun requestLocationPermission(activity: Activity): Boolean {
+        if (!hasLocationPermission) {
+            val permission = arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION)
+            ActivityCompat.requestPermissions(activity, permission, 0)
+        }
+        return hasLocationPermission
+    }
+
     fun requestWriteSettingsPermission(context: Context): Boolean {
         if (!hasWriteSettingsPermission) @TargetApi(23) {
             val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
@@ -96,7 +106,7 @@ object Config {
                        context.startActivity(intent)
                    }.show()
         }
-        return (hasWriteSettingsPermission)
+        return hasWriteSettingsPermission
     }
 
     fun requestOverlayPermission(context: Context): Boolean {
