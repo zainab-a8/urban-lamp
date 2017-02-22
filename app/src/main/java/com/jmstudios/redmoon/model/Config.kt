@@ -52,10 +52,13 @@ import android.support.v7.app.AlertDialog
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.application.RedMoonApplication
+import com.jmstudios.redmoon.event.locationPermissionDialogClosed
 import com.jmstudios.redmoon.fragment.TimeToggleFragment
 import com.jmstudios.redmoon.preference.ColorSeekBarPreference
 import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
+
+import org.greenrobot.eventbus.EventBus
 
 /**
  * TODO: Better comment.
@@ -66,7 +69,8 @@ object Config {
     private val mContext = RedMoonApplication.app
     private val lp = Manifest.permission.ACCESS_COARSE_LOCATION
     private val granted = PackageManager.PERMISSION_GRANTED
-    //private val OVERLAY_PERMISSION_REQ_CODE = 1234
+    //private val OVERLAY_PERMISSION_REQ_CODE = 1111
+    private val LOCATION_PERMISSION_REQ_CODE = 2222
 
     val atLeastAPI: (Int) -> Boolean = { it <= android.os.Build.VERSION.SDK_INT }
     val belowAPI: (Int) -> Boolean = { it > android.os.Build.VERSION.SDK_INT }
@@ -90,7 +94,7 @@ object Config {
     fun requestLocationPermission(activity: Activity): Boolean {
         if (!hasLocationPermission) {
             val permission = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
-            ActivityCompat.requestPermissions(activity, permission, 0)
+            ActivityCompat.requestPermissions(activity, permission, LOCATION_PERMISSION_REQ_CODE)
         }
         return hasLocationPermission
     }
@@ -121,6 +125,12 @@ object Config {
                    }.show()
         }
         return hasOverlayPermission
+    }
+
+    fun onRequestPermissionsResult(requestCode: Int) {
+        if (requestCode == Config.LOCATION_PERMISSION_REQ_CODE) {
+            EventBus.getDefault().post(locationPermissionDialogClosed())
+        }
     }
     //endregion
 

@@ -22,10 +22,6 @@ import android.preference.Preference
 import android.preference.SwitchPreference
 import android.util.Log
 import android.widget.Toast
-import android.support.v4.content.ContextCompat;
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
 
 import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.event.*
@@ -66,16 +62,6 @@ class TimeToggleFragment : EventPreferenceFragment() {
 
         addPreferencesFromResource(R.xml.time_toggle_preferences)
         updatePrefs()
-
-        useLocationPref.onPreferenceChangeListener =
-            Preference.OnPreferenceChangeListener { preference, newValue ->
-                val on = newValue as Boolean
-                if (on && !Config.requestLocationPermission(getActivity())) {
-                   false
-                } else {
-                   true
-                }
-            }
 
         locationPref.onPreferenceClickListener =
             Preference.OnPreferenceClickListener { pref ->
@@ -150,7 +136,10 @@ class TimeToggleFragment : EventPreferenceFragment() {
 
     @Subscribe
     fun onUseLocationChanged(event: useLocationChanged) {
-        if (Config.useLocation) { LocationUpdateService.start() }
+        if (Config.useLocation) {
+            mIsSearchingLocation = true
+            LocationUpdateService.start()
+        }
         updateTimePrefs()
     }
 
@@ -170,6 +159,15 @@ class TimeToggleFragment : EventPreferenceFragment() {
     fun onLocationAccessDenied(event: locationAccessDenied) {
         if (mIsSearchingLocation) {
             Config.requestLocationPermission(activity)
+        }
+    }
+
+    @Subscribe
+    fun onLocationPermissionDialogClosed(event: locationPermissionDialogClosed) {
+        if (Config.hasLocationPermission) {
+            LocationUpdateService.start()
+        } else {
+            useLocationPref.isChecked = false
         }
     }
 

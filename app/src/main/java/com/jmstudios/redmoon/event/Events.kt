@@ -41,3 +41,5 @@ class locationServicesDisabled : Event()
 class locationAccessDenied     : Event()
 class locationUpdating         : Event()
 class changeBrightnessDenied   : Event()
+
+class locationPermissionDialogClosed : Event()

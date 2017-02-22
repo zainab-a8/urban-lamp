@@ -46,6 +46,7 @@ import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.fragment.TimeToggleFragment
 import com.jmstudios.redmoon.model.Config
 
+
 class TimeToggleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,12 +69,18 @@ class TimeToggleActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                finish();
-                return true;
+                finish()
+                return true
             }
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
+                                            grantResults: IntArray) {
+        Config.onRequestPermissionsResult(requestCode)
+    }
+
 
     companion object {
         private val TAG = "TimeToggleActivity"
