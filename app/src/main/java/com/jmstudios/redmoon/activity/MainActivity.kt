@@ -134,9 +134,6 @@ class MainActivity : AppCompatActivity() {
                 val github = resources.getString(R.string.project_page_url)
                 val projectIntent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(github))
                 startActivity(projectIntent)
-                val email = resources.getString(R.string.contact_email_adress)
-                val emailIntent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(email))
-                startActivity(emailIntent)
                 return super.onOptionsItemSelected(item)
             }
             R.id.email_developer -> {
