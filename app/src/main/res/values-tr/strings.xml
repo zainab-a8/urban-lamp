@@ -22,13 +22,14 @@
     <string name="cancel_dialog">İptal</string>
 
     <string name="ok_dialog">Tamam</string>
-    <string name="automatic_filter_options_array_0">Elle</string>
+    <string name="time_toggle_options_array_0">Elle</string>
     <string name="standard_profiles_array_2">Okuma</string>
 
     <string name="running">Çalışıyor. Apk kurmak için durdurun</string>
     <string name="app_name">Red Moon</string>
-    <string name="shades_settings">Red Moon</string>
-    <string name="pref_title_automatic_filter">Süzgeç zamanları</string>
+    <string name="settings">Red Moon</string>
+    <string name="time_toggle_activity">Süzgeç zamanları</string>
+    <string name="pref_title_time_toggle">Süzgeç zamanları</string>
     <string name="custom_start_time_title">Devam et</string>
     <string name="custom_end_time_title">Durdur</string>
     <string name="dark_theme">Siyah tema</string>
@@ -51,12 +52,12 @@
 
     <string name="intro_slide_2_title">Gözlerinizi koruyun</string>
     <string name="intro_slide_3_title">Uyku niteliğinizi arttırın</string>
-    <string name="automatic_filter_options_array_1">Kendiliğinden (güneş)</string>
-    <string name="automatic_filter_options_array_2">Kendiliğinden (özel)</string>
+    <string name="time_toggle_options_array_1">Kendiliğinden (güneş)</string>
+    <string name="time_toggle_options_array_2">Kendiliğinden (özel)</string>
 
     <string name="control_brightness_title">Düşük parlaklık</string>
 
-    <string name="automatic_filter_title">Geçiş kipi</string>
+    <string name="time_toggle_title">Geçiş kipi</string>
     <string name="intro_slide_4_text">Red Moon\'u etkinleştirmek için sağ üst köşedeki düğmeyi açın.</string>
 
     <string name="help_snackbar_text">Red Moon\'u etkinleştirmek için düğmeye bas</string>
@@ -64,16 +65,16 @@
     <string name="remove_profile_dialog_title">Bu profili sil?</string>
     <string name="intro_slide_2_text">Gece telefonuna bakmak gözlerine zarar verir, Red Moon\'u kullanıp ekranını karartabilirsin.</string>
 
-    <string name="automatic_suspend_preference_activity">Kendiliğinden askıya al</string>
+    <string name="secure_suspend_activity">Kendiliğinden askıya al</string>
 
     <string name="latitude_short">Enlem</string>
-    <string name="automatic_suspend_title">Güvenli uygulamalarda kendiliğinden durdur</string>
+    <string name="secure_suspend_title">Güvenli uygulamalarda kendiliğinden durdur</string>
     <string name="text_switch_on">Açık</string>
     <string name="text_switch_off">Kapalı</string>
     <string name="usage_stats_dialog_title">Kullanım erişimine izin ver</string>
     <string name="email_me_summary">Bana hataları ya da önerileri e-postayla gönder</string>
     <string name="intro_slide_4_title">Başlayın!</string>
-    <string name="automatic_suspend_summary">Android\'in bazı özellikleri ekran katmanlarına karşı korunmaktadır ve Red Moon etkinken çalışmamaktadır. Örneğin APK\'ler yüklenirken ya da Android 6.0+ üzerinde izin verilirken.
+    <string name="secure_suspend_summary">Android\'in bazı özellikleri ekran katmanlarına karşı korunmaktadır ve Red Moon etkinken çalışmamaktadır. Örneğin APK\'ler yüklenirken ya da Android 6.0+ üzerinde izin verilirken.
 
 Bu özellik etkinken bu özelliklerden biri açıldığında Red Moon kendiliğinden askıya alınacak ve işiniz bittiğinde süzgeç geri getirilecek. Bu yolla Red Moon\'u elle açıp kapatmayı düşünmeyeceksiniz.
 

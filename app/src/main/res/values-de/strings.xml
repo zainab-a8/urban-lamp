@@ -2,6 +2,7 @@
 <!--
  * Copyright (c) 2016  twckr <https://github.com/twckr>
  * Copyright (c) 2016  Marien Raat <marienraat@riseup.net>
+ * Copyright (c) 2017  Stephen Michel <s@smichel.me>
  *
  *  This file is free software: you may copy, redistribute and/or modify it
  *  under the terms of the GNU General Public License as published by the Free
@@ -27,7 +28,7 @@
     <string name="toast_warning_install">Sie können keine APKs installieren, während der Filter läuft.</string>
     <string name="add_new_profile_dialog_title">Name für das Profil eingeben</string>
     <string name="add_new_profile_edit_hint">Profilname</string>
-    <string name="automatic_filter_title">Filter automatisch einschalten</string>
+    <string name="time_toggle_title">Filter automatisch einschalten</string>
     <string name="button_add_profile">Hinzufügen</string>
     <string name="button_remove_profile">Löschen</string>
     <string name="cancel_dialog">Abbrechen</string>
@@ -38,7 +39,8 @@
     <string name="email_me_summary">Teilen Sie mir Vorschläge oder Fehlerberichte bitte per E-Mail mit</string>
     <string name="email_me_title">Dem Entwickler eine E-Mail senden (marienraat@riseup.net)</string>
     <string name="ok_dialog">OK</string>
-    <string name="pref_title_automatic_filter">Automatischer Filter</string>
+    <string name="time_toggle_activity">Automatischer Filter</string>
+    <string name="pref_title_time_toggle">Automatischer Filter</string>
     <string name="project_page_summary">Mehr Informationen, Feedback und eigener Beitrag</string>
     <string name="project_page_title">Homepage des Projektes</string>
     <string name="remove_profile_dialog_title">Dieses Profil löschen?</string>
@@ -55,17 +57,17 @@ ein-/ausschalten</string>
     <string name="standard_profiles_array_2">Lesen</string>
 
     <!-- Automatic filter -->
-    <!-- automatic_filter_options_array -->
-    <string name="automatic_filter_options_array_0">Niemals</string>
-    <string name="automatic_filter_options_array_1">Sonnenstand</string>
-    <string name="automatic_filter_options_array_2">Benutzerdefinierte Zeiten</string>
+    <!-- time_toggle_options_array -->
+    <string name="time_toggle_options_array_0">Niemals</string>
+    <string name="time_toggle_options_array_1">Sonnenstand</string>
+    <string name="time_toggle_options_array_2">Benutzerdefinierte Zeiten</string>
     <string name="location_not_set">Standort nicht festgelegt</string>
     <string name="location_title">Standort</string>
     <string name="latitude_short">geograph. Breite</string>
     <string name="longitude_short">geograph. Länge</string>
     <string name="pref_title_other">Andere</string>
 <string name="app_name">Red Moon</string>
-    <string name="shades_settings">Red Moon</string>
+    <string name="settings">Red Moon</string>
     <string name="help_snackbar_text">Den Schalter antippen, um Red Moon zu aktivieren</string>
     <string name="searching_location">Standortsuche</string>
 <string name="intro_label">Einführung</string>
@@ -88,12 +90,12 @@ ein-/ausschalten</string>
 
     <string name="text_switch_on">An</string>
     <string name="text_switch_off">Aus</string>
-    <string name="automatic_suspend_preference_activity">Automatisch pausieren</string>
+    <string name="secure_suspend_activity">Automatisch pausieren</string>
 
     <string name="running_no_warning">Wird ausgeführt</string>
-    <string name="automatic_suspend_title">Filter für bestimmten Apps automatisch pausieren</string>
+    <string name="secure_suspend_title">Filter für bestimmten Apps automatisch pausieren</string>
     <string name="usage_stats_dialog_title">Zugriff auf Nutzungsstatistik erlauben</string>
-    <string name="automatic_suspend_summary">Einige Android-Funktionen sind gegen Bildschirm-Überlagerungen geschützt. Zum Beispiel \"Installation von Apps\", oder \"Erteilen von Berechtigungen\" auf Android 6.0+. Diese funktionieren nicht, wenn Red Moon gestartet ist. Aktiviere diese Einstellung, damit Red Moon diese Funktionen erkennt, den Filter automatisch pausiert und wieder anstartet, sobald die Funktion beendet wurde. Auf diese Weise muss du nicht manuell eingreifen. Diese Einstellung kann die Akkulaufzeit des Geräts verkürzen. Außerdem funktioniert es möglicherweise nicht auf allen Geräten.</string>
+    <string name="secure_suspend_summary">Einige Android-Funktionen sind gegen Bildschirm-Überlagerungen geschützt. Zum Beispiel \"Installation von Apps\", oder \"Erteilen von Berechtigungen\" auf Android 6.0+. Diese funktionieren nicht, wenn Red Moon gestartet ist. Aktiviere diese Einstellung, damit Red Moon diese Funktionen erkennt, den Filter automatisch pausiert und wieder anstartet, sobald die Funktion beendet wurde. Auf diese Weise muss du nicht manuell eingreifen. Diese Einstellung kann die Akkulaufzeit des Geräts verkürzen. Außerdem funktioniert es möglicherweise nicht auf allen Geräten.</string>
     <string name="usage_stats_dialog_message">Red Moon erlauben auf Nutzungsstatistiken zuzugreifen, indem du diese Funktion aktivierst.
 
 Red Moon benötigt den Zugriff auf die Daten, um festzustellen, welche App du gerade benutzt, um so ggf. automatisch den Filter pausieren zu können.</string>

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="app_name">Red Moon</string>
-    <string name="shades_settings">Red Moon</string>
+    <string name="settings">Red Moon</string>
     <string name="intro_label">Introdução</string>
     <string name="show_intro_text">Mostrar introdução</string>
 
@@ -16,11 +16,12 @@
 
     <string name="button_add_profile">Adicionar</string>
     <string name="button_remove_profile">Excluir</string>
-    <string name="pref_title_automatic_filter">Horários de funcionamento</string>
+    <string name="time_toggle_activity">Horários de funcionamento</string>
+    <string name="pref_title_time_toggle">Horários de funcionamento</string>
     <string name="shades_intensity_level">Nível de intensidade</string>
     <string name="control_brightness_title">Diminuir brilho</string>
 
-    <string name="automatic_filter_title">Modo de alternância</string>
+    <string name="time_toggle_title">Modo de alternância</string>
     <string name="shades_color_temp">Temperatura da cor</string>
     <string name="custom_start_time_title">Retomar às</string>
     <string name="custom_end_time_title">Pausar às</string>
@@ -70,17 +71,17 @@ interruptor no canto superior direito.</string>
     <string name="standard_profiles_array_1">Padrão</string>
     <string name="standard_profiles_array_2">Leitura</string>
 
-    <string name="automatic_filter_options_array_0">Manual</string>
-    <string name="automatic_filter_options_array_1">Automático (sol)</string>
-    <string name="automatic_filter_options_array_2">Automático (personalizado)</string>
+    <string name="time_toggle_options_array_0">Manual</string>
+    <string name="time_toggle_options_array_1">Automático (sol)</string>
+    <string name="time_toggle_options_array_2">Automático (personalizado)</string>
 
     <string name="shades_dim_level">Nível de escurecimento</string>
     <string name="longitude_short">Long</string>
     <string name="running_no_warning">Rodando</string>
-    <string name="automatic_suspend_preference_activity">Suspender automaticamente</string>
+    <string name="secure_suspend_activity">Suspender automaticamente</string>
 
-    <string name="automatic_suspend_title">Suspender filtro automaticamente em aplicativos seguros</string>
-    <string name="automatic_suspend_summary">Alguns recursos do Android possuem uma proteção contra sobreposições de tela e não funcionarão enquanto o Red moon estiver ativado. Por exemplo, ao instalar APKs ou conceder permissões no Android 6.0 ou superior.
+    <string name="secure_suspend_title">Suspender filtro automaticamente em aplicativos seguros</string>
+    <string name="secure_suspend_summary">Alguns recursos do Android possuem uma proteção contra sobreposições de tela e não funcionarão enquanto o Red moon estiver ativado. Por exemplo, ao instalar APKs ou conceder permissões no Android 6.0 ou superior.
 
 Quando esse recurso estiver ativado, o Red Moon irá suspender automaticamente quando um desses recursos estiver aberto e irá restaurar o filtro quando você tiver terminado. Desse modo, você não precisará se preocupar com ligar e desliga manualmente o Red Moon.
 

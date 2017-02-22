@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
  * Copyright (c) 2016  Marien Raat <marienraat@riseup.net>
+ * Copyright (c) 2017  Stephen Michel <s@smichel.me>
  *
  *  This file is free software: you may copy, redistribute and/or modify it
  *  under the terms of the GNU General Public License as published by the Free
@@ -50,16 +51,16 @@
 
     <application
         android:allowBackup="true"
+        android:name="com.jmstudios.redmoon.application.RedMoonApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:supportsRtl="true" >
         <activity
-            android:name="com.jmstudios.redmoon.activity.ShadesActivity"
-            android:label="@string/shades_settings" >
+            android:name="com.jmstudios.redmoon.activity.MainActivity"
+            android:label="@string/settings" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
@@ -88,9 +89,8 @@
                 android:resource="@xml/switch_appwidget_info" />
         </receiver>
 
-        <receiver android:name="com.jmstudios.redmoon.receiver.AutomaticFilterChangeReceiver">
+        <receiver android:name="com.jmstudios.redmoon.receiver.TimeToggleChangeReceiver">
         </receiver>
-
         <receiver android:name="com.jmstudios.redmoon.receiver.NextProfileCommandReceiver">
         </receiver>
 
@@ -114,20 +114,31 @@
         </activity>
 
         <activity
-            android:name="com.jmstudios.redmoon.activity.AutomaticSuspendPreferenceActivity"
-            android:label="@string/automatic_suspend_preference_activity"
-            android:theme="@style/AppTheme"
-            android:parentActivityName="com.jmstudios.redmoon.activity.ShadesActivity" >
+            android:name=".activity.TimeToggleActivity"
+            android:label="@string/time_toggle_activity"
+            android:parentActivityName="com.jmstudios.redmoon.activity.MainActivity"
+            android:theme="@style/AppTheme" >
 
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="com.jmstudios.redmoon.activity.TimeToggleActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
-        <service
-            android:name="com.jmstudios.redmoon.service.ScreenFilterService"
-            android:enabled="true" />
+        <activity
+            android:name=".activity.SecureSuspendActivity"
+            android:label="@string/secure_suspend_activity"
+            android:parentActivityName="com.jmstudios.redmoon.activity.MainActivity"
+            android:theme="@style/AppTheme" >
+
+            <intent-filter>
+                <action android:name="com.jmstudios.redmoon.activity.SecureSuspendActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <service android:name="com.jmstudios.redmoon.service.LocationUpdateService" />
+        <service android:name="com.jmstudios.redmoon.service.ScreenFilterService" />
         <service
             android:name=".receiver.TileReciever"
             android:icon="@drawable/toggle_icon"

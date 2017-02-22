@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App Name and Activity Labels -->
     <string name="app_name">Red Moon</string>
-    <string name="shades_settings">Red Moon</string>
+    <string name="settings">Red Moon</string>
     <string name="shortcut_activity">Переключатель Red Moon</string>
 
     <!-- Notification -->
@@ -11,7 +11,8 @@
 
     <!-- Preference -->
     <string name="pref_title_appearance">Фильтр</string>
-    <string name="pref_title_automatic_filter">Время фильтра</string>
+    <string name="time_toggle_activity">Время фильтра</string>
+    <string name="pref_title_time_toggle">Время фильтра</string>
     <string name="pref_title_startup">Запуск</string>
     <string name="pref_title_other">Другое</string>
 
@@ -22,7 +23,7 @@
     <string name="shades_color_temp">Цветовая температура</string>
     <string name="control_brightness_title">Снижать яркость</string>
 
-    <string name="automatic_filter_title">Режим переключения</string>
+    <string name="time_toggle_title">Режим переключения</string>
     <string name="custom_start_time_title">Включить в</string>
     <string name="custom_end_time_title">Приостановить в</string>
     <string name="location_title">Местоположение</string>
@@ -62,11 +63,11 @@
     <string name="standard_profiles_array_1">По умолчанию</string>
     <string name="standard_profiles_array_2">Чтение</string>
 
-    <!-- Automatic filter -->
-    <!-- automatic_filter_options_array -->
-    <string name="automatic_filter_options_array_0">Вручную</string>
-    <string name="automatic_filter_options_array_1">Автоматически (по солнцу)</string>
-    <string name="automatic_filter_options_array_2">Автоматически (по времени)</string>
+    <!-- Time Toggle -->
+    <!-- time_toggle_options_array -->
+    <string name="time_toggle_options_array_0">Вручную</string>
+    <string name="time_toggle_options_array_1">Автоматически (по солнцу)</string>
+    <string name="time_toggle_options_array_2">Автоматически (по времени)</string>
 
 <string name="intro_label">Интро</string>
     <string name="show_intro_text">Показать интро</string>
@@ -74,11 +75,11 @@
     <string name="pause_action">Пауза</string>
 
     <string name="resume_action">Продолжить</string>
-    <string name="automatic_suspend_preference_activity">Автоматическая приостановка</string>
+    <string name="secure_suspend_activity">Автоматическая приостановка</string>
 
     <string name="running_no_warning">Запущено</string>
-    <string name="automatic_suspend_title">Автоматически приостанавливать фильтр в безопасных приложениях</string>
-    <string name="automatic_suspend_summary">Некоторые функции Android защищены от перекрытия другими приложениями и не будут работать, когда приложение Red Moon запущено. Например, установка APK-файлов или предоставление разрешений на Android 6.0+.
+    <string name="secure_suspend_title">Автоматически приостанавливать фильтр в безопасных приложениях</string>
+    <string name="secure_suspend_summary">Некоторые функции Android защищены от перекрытия другими приложениями и не будут работать, когда приложение Red Moon запущено. Например, установка APK-файлов или предоставление разрешений на Android 6.0+.
 
 Если эта функция включена, Red Moon автоматически приостановит свою работу, когда одна из таких защищённых функций будет запущена, и восстановит фильтр, когда такая функция завершит работу. Таким образом, вам не нужно будет беспокоиться о выключении и включении Red Moon вручную.
 

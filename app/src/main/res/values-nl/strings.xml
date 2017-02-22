@@ -4,7 +4,8 @@
     <string name="paused">Gepauzeerd</string>
 
     <string name="pref_title_appearance">Filter</string>
-    <string name="pref_title_automatic_filter">Filter tijden</string>
+    <string name="time_toggle_activity">Filter tijden</string>
+    <string name="pref_title_time_toggle">Filter tijden</string>
     <string name="pref_title_startup">Opstarten</string>
     <string name="pref_title_other">Overig</string>
 
@@ -15,7 +16,7 @@
     <string name="shades_color_temp">Kleur temperatuur</string>
     <string name="control_brightness_title">Verminder helderheid</string>
 
-    <string name="automatic_filter_title">Schakel mode</string>
+    <string name="time_toggle_title">Schakel mode</string>
     <string name="custom_start_time_title">Hervat om</string>
     <string name="custom_end_time_title">Pauzeer om</string>
     <string name="location_title">Locatie</string>
@@ -46,14 +47,14 @@
 
     <string name="shortcut_activity">Red Moon schakelaar</string>
 
-    <string name="shades_settings">Red Moon</string>
+    <string name="settings">Red Moon</string>
     <string name="standard_profiles_array_0">Aangepast</string>
     <string name="standard_profiles_array_1">Standaard</string>
     <string name="standard_profiles_array_2">Lezen</string>
 
-    <string name="automatic_filter_options_array_0">Handmatig</string>
-    <string name="automatic_filter_options_array_1">Automatisch (zon)</string>
-    <string name="automatic_filter_options_array_2">Automatisch (aangepast)</string>
+    <string name="time_toggle_options_array_0">Handmatig</string>
+    <string name="time_toggle_options_array_1">Automatisch (zon)</string>
+    <string name="time_toggle_options_array_2">Automatisch (aangepast)</string>
 
     <string name="resume_action">Hervat</string>
     <string name="pause_action">Pauzeer</string>

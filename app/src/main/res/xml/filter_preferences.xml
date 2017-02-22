@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (c) 2016  Marien Raat <marienraat@riseup.net>
+ * Copyright (c) 2017  Stephen Michel <s@smichel.me>
+ *
+ *  This file is free software: you may copy, redistribute and/or modify it
+ *  under the terms of the GNU General Public License as published by the Free
+ *  Software Foundation, either version 3 of the License, or (at your option)
+ *  any later version.
+ *
+ *  This file is distributed in the hope that it will be useful, but WITHOUT ANY
+ *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ *  details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * This file incorporates work covered by the following copyright and
+ * permission notice:
+ *
+ *     Copyright (c) 2015 Chris Nguyen
+ *
+ *     Permission to use, copy, modify, and/or distribute this software
+ *     for any purpose with or without fee is hereby granted, provided
+ *     that the above copyright notice and this permission notice appear
+ *     in all copies.
+ *
+ *     THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL
+ *     WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
+ *     WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE
+ *     AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR
+ *     CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+ *     OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
+ *     NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+ *     CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <PreferenceCategory android:title="@string/pref_title_appearance">
+    <com.jmstudios.redmoon.preference.ProfileSelectorPreference
+        android:key="@string/pref_key_profile_spinner"
+        android:defaultValue="1"/>
+
+    <com.jmstudios.redmoon.preference.ColorSeekBarPreference
+        android:key="@string/pref_key_color"
+        android:defaultValue="10" />
+
+    <com.jmstudios.redmoon.preference.IntensitySeekBarPreference
+        android:key="@string/pref_key_intensity"
+        android:defaultValue="50" />
+
+    <com.jmstudios.redmoon.preference.DimSeekBarPreference
+        android:key="@string/pref_key_dim"
+        android:defaultValue="50" />
+
+    <SwitchPreference
+        android:key="@string/pref_key_lower_brightness"
+        android:title="@string/control_brightness_title"
+        android:defaultValue="true" />
+  </PreferenceCategory>
+
+  <PreferenceCategory android:title="@string/pref_title_other"
+                      android:key="pref_key_other" >
+    <Preference
+        android:title="@string/pref_title_time_toggle"
+        android:key="@string/pref_key_time_toggle_header">
+      <!-- Specifying a specific action for this activity seems like
+           an effective way to ensure that the right Activity is
+           opened. -->
+        <intent
+            android:action="com.jmstudios.redmoon.activity.TimeToggleActivity" />
+  </Preference>
+
+  <Preference
+        android:title="@string/secure_suspend_title"
+        android:key="@string/pref_key_secure_suspend_header">
+      <!-- Specifying a specific action for this activity seems like
+           an effective way to ensure that the right Activity is
+           opened. -->
+        <intent
+            android:action="com.jmstudios.redmoon.activity.SecureSuspendActivity" />
+  </Preference>
+
+    <SwitchPreference
+        android:key="@string/pref_key_dark_theme"
+        android:title="@string/dark_theme"
+        android:defaultValue="false" />
+  </PreferenceCategory>
+</PreferenceScreen>
