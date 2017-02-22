@@ -70,11 +70,8 @@ class TimeToggleFragment : EventPreferenceFragment() {
         useLocationPref.onPreferenceChangeListener =
             Preference.OnPreferenceChangeListener { preference, newValue ->
                 val on = newValue as Boolean
-                if (on && !isLocationPermissionGranted()) {
-                    ActivityCompat.requestPermissions(getActivity(),
-                                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                                0)
-                    false
+                if (on && !Config.requestLocationPermission(getActivity())) {
+                   false
                 } else {
                    true
                 }
@@ -85,12 +82,6 @@ class TimeToggleFragment : EventPreferenceFragment() {
                 LocationUpdateService.start()
                 true
             }
-    }
-
-    private fun isLocationPermissionGranted(): Boolean {
-        return (ContextCompat.checkSelfPermission(getActivity(),
-            (Manifest.permission.ACCESS_COARSE_LOCATION))
-            == PackageManager.PERMISSION_GRANTED)
     }
 
     private fun updatePrefs() {
