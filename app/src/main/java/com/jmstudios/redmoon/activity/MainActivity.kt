@@ -57,11 +57,7 @@ import org.greenrobot.eventbus.Subscribe
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit private var mSwitch: Switch
-    // Initialize to null to make onResume able to check if it has been
-    // initialized and use it if it has. In onCreateOptionsMenu it
-    // will be initialized with the value of mSwitch.
-    private var maybeInitializedSwitch : Switch? = null
+    lateinit private var mSwitch : Switch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ScreenFilterService.start()
@@ -93,22 +89,22 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_activity_menu, menu)
-        mSwitch = menu.findItem(R.id.screen_filter_switch).actionView as Switch
-        mSwitch.isChecked = Config.filterIsOn
-        mSwitch.setOnClickListener {
-            if (Config.requestOverlayPermission(this)) {
-                val state = if (mSwitch.isChecked) ScreenFilterService.Command.ON
-                            else ScreenFilterService.Command.OFF
-                ScreenFilterService.moveToState(state)
-            } else mSwitch.isChecked = false
+        mSwitch = (menu.findItem(R.id.screen_filter_switch).actionView as Switch).apply {
+            isChecked = Config.filterIsOn
+            setOnClickListener {
+                if (Config.requestOverlayPermission(this@MainActivity)) {
+                    val state = if (mSwitch.isChecked) ScreenFilterService.Command.ON
+                    else ScreenFilterService.Command.OFF
+                    ScreenFilterService.moveToState(state)
+                } else mSwitch.isChecked = false
+            }
         }
-        maybeInitializedSwitch = mSwitch;
         return true
     }
 
     override fun onResume() {
         super.onResume()
-        maybeInitializedSwitch?.isChecked = Config.filterIsOn
+        invalidateOptionsMenu()
         EventBus.getDefault().register(this)
     }
     override fun onPause() {
