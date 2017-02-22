@@ -22,6 +22,10 @@ import android.preference.Preference
 import android.preference.SwitchPreference
 import android.util.Log
 import android.widget.Toast
+import android.support.v4.content.ContextCompat;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 
 import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.event.*
@@ -53,17 +57,40 @@ class TimeToggleFragment : EventPreferenceFragment() {
     private val locationPref: Preference
         get() = preferenceScreen.findPreference(getString(R.string.pref_key_location))
 
+    private val useLocationPref: SwitchPreference
+        get() = (preferenceScreen.findPreference
+                (getString(R.string.pref_key_use_location)) as SwitchPreference)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         addPreferencesFromResource(R.xml.time_toggle_preferences)
         updatePrefs()
 
+        useLocationPref.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { preference, newValue ->
+                val on = newValue as Boolean
+                if (on && !isLocationPermissionGranted()) {
+                    ActivityCompat.requestPermissions(getActivity(),
+                                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                                0)
+                    false
+                } else {
+                   true
+                }
+            }
+
         locationPref.onPreferenceClickListener =
             Preference.OnPreferenceClickListener { pref ->
                 LocationUpdateService.start()
                 true
             }
+    }
+
+    private fun isLocationPermissionGranted(): Boolean {
+        return (ContextCompat.checkSelfPermission(getActivity(),
+            (Manifest.permission.ACCESS_COARSE_LOCATION))
+            == PackageManager.PERMISSION_GRANTED)
     }
 
     private fun updatePrefs() {

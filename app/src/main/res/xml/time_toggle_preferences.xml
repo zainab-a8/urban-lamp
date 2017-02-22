@@ -40,8 +40,8 @@
         android:defaultValue="false" />
 
     <Preference
-        android:title="@string/location_title"
         android:key="@string/pref_key_location"
+        android:title="@string/location_title"
         android:dependency="@string/pref_key_use_location" />
 
 </PreferenceScreen>
