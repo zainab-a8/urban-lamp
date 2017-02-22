@@ -89,7 +89,7 @@ object Config {
 
     fun requestLocationPermission(activity: Activity): Boolean {
         if (!hasLocationPermission) {
-            val permission = arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION)
+            val permission = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
             ActivityCompat.requestPermissions(activity, permission, 0)
         }
         return hasLocationPermission

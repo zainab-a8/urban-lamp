@@ -70,21 +70,32 @@ class LocationUpdateService: Service(), LocationListener {
         get() = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
     private val locationServicesEnabled: Boolean
-        get() = locationManager.isProviderEnabled(locationProvider)
+        get() = (locationManager.isProviderEnabled(locationProviderNetwork) ||
+                 locationManager.isProviderEnabled(locationProviderGps))
                     
     private val lastKnownLocation: Location?
-        get() = locationManager.getLastKnownLocation(locationProvider)
+        get() {
+            val networkLocation = locationManager.getLastKnownLocation(locationProviderNetwork)
+            if (networkLocation != null) {
+                return networkLocation
+            } else {
+                return locationManager.getLastKnownLocation(locationProviderGps)
+            }
+        }
 
     override fun onCreate() {
         super.onCreate()
         if (DEBUG) Log.i(TAG, "onCreate")
         if (Config.hasLocationPermission) {
             if (DEBUG) Log.i(TAG, "Requesting location updates")
-            if (locationManager.allProviders.contains(LocationManager.NETWORK_PROVIDER)) {
-                locationManager.requestLocationUpdates(locationProvider, 0, 0f, this)
+            if (DEBUG) Log.i(TAG, "List of providers + ${locationManager.allProviders}")
+            if (locationManager.allProviders.contains(locationProviderNetwork)) {
+                locationManager.requestLocationUpdates(locationProviderNetwork, 0, 0f, this)
+            } else if (locationManager.allProviders.contains(locationProviderGps)) {
+                // Fall back on GPS if there is not network provider
+                locationManager.requestLocationUpdates(locationProviderGps, 0, 0f, this)
             } else {
-                if (DEBUG) Log.i(TAG, "Approximate location not available, stopping.")
-                if (DEBUG) Log.i(TAG, "List of providers + ${locationManager.allProviders}")
+                if (DEBUG) Log.i(TAG, "No suitable location providers available, stopping.")
                 stopSelf()
             }
         }
@@ -153,7 +164,8 @@ class LocationUpdateService: Service(), LocationListener {
     companion object {
         private val TAG = "LocationUpdateService"
         private val DEBUG = true
-        private val locationProvider = LocationManager.NETWORK_PROVIDER
+        private val locationProviderNetwork = LocationManager.NETWORK_PROVIDER
+        private val locationProviderGps = LocationManager.GPS_PROVIDER
 
         //val FOREGROUND = true
         //val BACKGROUND = false
