@@ -92,4 +92,12 @@ Esta característica puede gastar un poco más de batería y no funcionar del to
 Red Moon necesita acceder a los datos de uso para saber si la aplicación en primer plano está protegida y así poder suspender el filtro. Solo se utilizarán estos datos cuando sean necesarios.</string>
 
     <string name="running_no_warning">En funcionamiento</string>
+    <string name="overlay_dialog_title">Superponerse sobre otras aplicaciones</string>
+    <string name="off">No</string>
+    <string name="use_location_title">Desfase horario desde ubicación</string>
+    <string name="action_on">Iniciar</string>
+    <string name="action_off">Detener</string>
+
+    <string name="overlay_dialog_message">Activa la superposición en la siguiente ventana para que Red Moon pueda activar el filtro.</string>
+
     </resources>
