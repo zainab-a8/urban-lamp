@@ -95,9 +95,9 @@ Red Moon necesita acceder a los datos de uso para saber si la aplicación en pri
     <string name="overlay_dialog_title">Superponerse sobre otras aplicaciones</string>
     <string name="off">No</string>
     <string name="use_location_title">Desfase horario desde ubicación</string>
-    <string name="action_on">Iniciar</string>
-    <string name="action_off">Detener</string>
+    <string name="action_on">Reanudar</string>
+    <string name="action_off">Pausar</string>
 
-    <string name="overlay_dialog_message">Activa la superposición en la siguiente ventana para que Red Moon pueda activar el filtro.</string>
+    <string name="overlay_dialog_message">Activa las superposiciones en la siguiente pantalla para que Red Moon pueda activar el filtro.</string>
 
     </resources>
