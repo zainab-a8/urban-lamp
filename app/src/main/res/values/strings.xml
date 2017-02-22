@@ -49,6 +49,12 @@
     <string name="overlay_dialog_title">Drawing over other apps</string>
     <string name="overlay_dialog_message">Permit drawing over other apps in the next screen to allow Red Moon to turn on the filter.</string>
 
+    <!-- Write settings popup -->
+    <string name="write_settings_dialog_title">Modifying system settings</string>
+    <string name="write_settings_dialog_message">Permit modifying system
+    settings in the next screen to allow Red Moon to change your
+    brightness level.</string>
+
     <!-- Notification -->
     <string name="running">Running. Stop to install apks</string>
     <string name="running_no_warning">Running</string>
