@@ -58,6 +58,10 @@ import org.greenrobot.eventbus.Subscribe
 class MainActivity : AppCompatActivity() {
 
     lateinit private var mSwitch: Switch
+    // Initialize to null to make onResume able to check if it has been
+    // initialized and use it if it has. In onCreateOptionsMenu it
+    // will be initialized with the value of mSwitch.
+    private var maybeInitializedSwitch : Switch? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ScreenFilterService.start()
@@ -98,11 +102,13 @@ class MainActivity : AppCompatActivity() {
                 ScreenFilterService.moveToState(state)
             } else mSwitch.isChecked = false
         }
+        maybeInitializedSwitch = mSwitch;
         return true
     }
 
     override fun onResume() {
         super.onResume()
+        maybeInitializedSwitch?.isChecked = Config.filterIsOn
         EventBus.getDefault().register(this)
     }
     override fun onPause() {
