@@ -100,4 +100,7 @@ Red Moon necesita acceder a los datos de uso para saber si la aplicación en pri
 
     <string name="overlay_dialog_message">Activa las superposiciones en la siguiente pantalla para que Red Moon pueda activar el filtro.</string>
 
+    <string name="write_settings_dialog_message">PErmi</string>
+
+    <string name="write_settings_dialog_title">Cambiar ajustes del sistema</string>
     </resources>
