@@ -2,7 +2,7 @@
 <resources><string name="app_name">レッドムーン</string>
     <string name="shortcut_activity">レッドムーンの切り替え</string>
 
-    <string name="running">実行しています。apk をインストールするには一時停止してください</string>
+    <string name="running">実行しています。apk をインストールするには停止してください</string>
     <string name="paused">一時停止しました</string>
 
     <string name="pref_title_appearance">フィルター</string>
@@ -19,8 +19,8 @@
     <string name="control_brightness_title">低輝度</string>
 
     <string name="time_toggle_title">モードの切り替え</string>
-    <string name="custom_start_time_title">再開時刻</string>
-    <string name="custom_end_time_title">一時停止時刻</string>
+    <string name="custom_start_time_title">開始時刻</string>
+    <string name="custom_end_time_title">停止時刻</string>
     <string name="location_title">場所</string>
     <string name="location_not_set">設定されていません</string>
     <string name="latitude_short">緯度</string>
@@ -85,13 +85,24 @@ Red Moon を使用して画面を暗くすることができます。</string>
 この機能を有効にすると、これらのいずれかの機能が開かれたときにRed Moon は自動的に中断し、終わったらフィルターを復元します。この方法で、Red Moon を手動でオン/オフすることについて心配する必要はありません。
 
 この機能は、お使いのデバイスのバッテリー寿命を少し減らすことがあります。さらにこの機能は、すべてのデバイスで動作するわけではありません。</string>
-    <string name="usage_stats_dialog_message">次の画面で、Red Moon にアプリの使用状況へのアクセスを許可して、この機能を有効にしてください。
+    <string name="usage_stats_dialog_message">次の画面で使用状況へのアクセスを許可して、Red Moon がセキュリティで保護されたアプリのフィルターを一時中断できるようにします。
 
-Red Moon は、何のアプリを使用しているかを参照して、セキュリティで保護されたアプリにフィルターを中断するため、使用状況にアクセスする必要があります。Red Moon は、必要なときにフィルターを中断するためだけにこのデータを使用します。</string>
+Red Moon は、フィルターの中断を必要とするアプリを使用しているかどうかを確認するためだけに、このデータを使用します。</string>
 
     <string name="secure_suspend_activity">自動中断</string>
 
     <string name="secure_suspend_title">セキュリティで保護されたアプリで、フィルターを自動的に中断します</string>
-    <string name="usage_stats_dialog_title">使用状況へのアクセスを許可</string>
+    <string name="usage_stats_dialog_title">使用状況のアクセス</string>
     <string name="running_no_warning">実行中</string>
+    <string name="overlay_dialog_title">他のアプリ上に描画</string>
+    <string name="overlay_dialog_message">次の画面で他のアプリ上に描画を許可して、Red Moon がフィルターをオンにできるようにします。</string>
+
+    <string name="write_settings_dialog_title">システム設定の変更</string>
+    <string name="write_settings_dialog_message">次の画面でシステム設定の変更を許可して、Red Moon が明るさレベルを変更できるようにします。</string>
+
+    <string name="off">オフ</string>
+    <string name="action_on">開始</string>
+    <string name="action_off">停止</string>
+
+    <string name="use_location_title">場所からの回数</string>
     </resources>
