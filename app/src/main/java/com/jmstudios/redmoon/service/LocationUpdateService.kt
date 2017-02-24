@@ -65,14 +65,21 @@ import java.util.*
  * something more recent than the last time red moon updated location.
  */
 class LocationUpdateService: Service(), LocationListener {
+    private enum class LocationProvider {
+        NETWORK, GPS
+    }
+
+    private var mLocationProvider = LocationProvider.NETWORK
 
     private val locationManager: LocationManager
         get() = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
     private val locationServicesEnabled: Boolean
-        get() = (locationManager.isProviderEnabled(locationProviderNetwork) ||
-                 locationManager.isProviderEnabled(locationProviderGps))
-                    
+        get() = locationManager.isProviderEnabled(when (mLocationProvider) {
+            LocationProvider.NETWORK -> locationProviderNetwork
+            LocationProvider.GPS     -> locationProviderGps
+        })
+    
     private val lastKnownLocation: Location?
         get() {
             val networkLocation = locationManager.getLastKnownLocation(locationProviderNetwork)
@@ -90,9 +97,11 @@ class LocationUpdateService: Service(), LocationListener {
             if (DEBUG) Log.i(TAG, "Requesting location updates")
             if (DEBUG) Log.i(TAG, "List of providers + ${locationManager.allProviders}")
             if (locationManager.allProviders.contains(locationProviderNetwork)) {
+                mLocationProvider = LocationProvider.NETWORK
                 locationManager.requestLocationUpdates(locationProviderNetwork, 0, 0f, this)
             } else if (locationManager.allProviders.contains(locationProviderGps)) {
                 // Fall back on GPS if there is not network provider
+                mLocationProvider = LocationProvider.GPS
                 locationManager.requestLocationUpdates(locationProviderGps, 0, 0f, this)
             } else {
                 if (DEBUG) Log.i(TAG, "No suitable location providers available, stopping.")
