@@ -62,7 +62,8 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
                 app == "eu.chainfire.supersu" ||
                 app == "com.koushikdutta.superuser" ||
                 app == "me.phh.superuser" ||
-                app == "com.owncloud.android"
+                app == "com.owncloud.android" ||
+                app == "com.google.android.packageinstaller"
     }
 
     @TargetApi(22) // Safe to call at all api levels but Studio doesn't know that
