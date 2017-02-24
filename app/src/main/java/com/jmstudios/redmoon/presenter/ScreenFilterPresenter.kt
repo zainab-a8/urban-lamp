@@ -135,7 +135,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             contentText = context.getString(R.string.off)
             offOrOnDrawableResId = R.drawable.ic_play
             offOrOnCommand = ScreenFilterService.command(ScreenFilterService.Command.ON)
-            offOrOnActionText = context.getString(R.string.resume_action)
+            offOrOnActionText = context.getString(R.string.action_on)
         }
 
         val mainActivityIntent = Intent(context, MainActivity::class.java)
