@@ -7,10 +7,13 @@ makes your screen even darker. With Red Moon, using your phone in the
 dark won't hurt your eyes and thanks to it's red filter feature, you
 will have a healthier sleep.
 
-[![F-Droid](https://f-droid.org/wiki/images/0/06/F-Droid-button_get-it-on.png)](https://f-droid.org/repository/browse/?fdid=com.jmstudios.redmoon)
-
-<a href='https://play.google.com/store/apps/details?id=com.jmstudios.redmoon'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width="200" height="100"/></a> *
-
+[<img src="https://f-droid.org/badge/get-it-on.png"
+      alt="Get it on F-Droid"
+      height="80">](https://f-droid.org/repository/browse/?fdid=com.jmstudios.redmoon)
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" 
+      alt="Download from Google Play" 
+      height="80">](https://play.google.com/store/apps/details?id=com.jmstudios.redmoon)
+      
 [Direct download](https://github.com/raatmarien/red-moon/releases/download/v2.9.0/red-moon-v2.9.0.apk)
 
 [![Translation status](https://hosted.weblate.org/widgets/red-moon/-/svg-badge.svg)](https://hosted.weblate.org/engage/red-moon/?utm_source=widget)
