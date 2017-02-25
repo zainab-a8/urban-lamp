@@ -118,21 +118,17 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         val title = context.getString(R.string.app_name)
         val color = ContextCompat.getColor(context, R.color.color_primary)
         val smallIconResId = R.drawable.notification_icon_half_moon
-        val contentText: String
+        val nextProfile = ProfilesHelper.getProfileName(profilesModel, Config.profile, context)
 
         val offOrOnDrawableResId: Int
         val offOrOnCommand: Intent
         val offOrOnActionText: String
             Log.d(TAG, "Creating notification while in " + mCurrentState)
         if (filterIsOn) {
-            contentText = context.getString(
-                    if (Config.secureSuspend) R.string.running_no_warning
-                    else R.string.running)
             offOrOnDrawableResId = R.drawable.ic_stop
             offOrOnCommand = ScreenFilterService.command(ScreenFilterService.Command.OFF)
             offOrOnActionText = context.getString(R.string.action_off)
         } else {
-            contentText = context.getString(R.string.off)
             offOrOnDrawableResId = R.drawable.ic_play
             offOrOnCommand = ScreenFilterService.command(ScreenFilterService.Command.ON)
             offOrOnActionText = context.getString(R.string.action_on)
@@ -153,15 +149,14 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
                 nextProfileIntent, 0)
 
         val nb = NotificationCompat.Builder(mContext)
+        val nextProfileActionText = context.getString(R.string.action_next_profile)
         nb.setSmallIcon(smallIconResId)
           .setContentTitle(title)
-          .setContentText(contentText)
+          .setContentText(nextProfile)
           .setColor (color)
           .setContentIntent(settingsPI)
           .addAction(offOrOnDrawableResId, offOrOnActionText, offOrOnPI)
-          .addAction(R.drawable.ic_next_profile,
-                     ProfilesHelper.getProfileName(profilesModel, Config.profile, context),
-                     nextProfilePI)
+          .addAction(R.drawable.ic_next_profile, nextProfileActionText, nextProfilePI)
           .setPriority(Notification.PRIORITY_MIN)
 
         if (filterIsOn) {

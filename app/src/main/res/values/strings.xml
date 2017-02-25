@@ -64,6 +64,7 @@
     <string name="pause_action">Pause</string>
     <string name="action_on">Turn on</string>
     <string name="action_off">Turn off</string>
+    <string name="action_next_profile">Next profile</string>
 
     <!-- Preference -->
     <string name="pref_title_appearance">Profile</string>
