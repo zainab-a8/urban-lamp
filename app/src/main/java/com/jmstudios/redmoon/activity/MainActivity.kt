@@ -67,7 +67,6 @@ class MainActivity : ThemedAppCompatActivity() {
         if (fromShortcut) { toggleAndFinish() }
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         // Only create and attach a new fragment on the first Activity creation.
         if (savedInstanceState == null) {

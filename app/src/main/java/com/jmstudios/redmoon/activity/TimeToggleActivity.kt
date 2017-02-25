@@ -49,7 +49,6 @@ import com.jmstudios.redmoon.model.Config
 class TimeToggleActivity : ThemedAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setContentView(R.layout.activity_main)
         super.onCreate(savedInstanceState)
 
         // It seems that this method is abstract and thus throws an
