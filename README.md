@@ -20,13 +20,12 @@ will have a healthier sleep.
 
 * Control the filter with separate color, intensity and dim settings
 * Use the default profiles or create your own to quickly choose the
-right filter settings
-* Schedule automatic turn on and off times, so you don't have to worry
-about turning the filter on at night
-* Use the persistent notification to pause or stop the filter without
-leaving the application you're using
-* Control the filter with a widget or a shortcut, right from your
-homescreen
+right settings
+* Set the timer so you don't have to worry about turning Red Moon on at night
+    and off in the morning.
+* Use the persistent notification to turn Red Moon off without
+leaving the application you're using (and to turn it on again when you're done).
+* Toggle Red Moon with a widget or a shortcut, right from your home screen.
 
 ## Screenshots
 
