@@ -72,7 +72,7 @@ Red Moon を使用して画面を暗くすることができます。</string>
 容易に眠りに落ちることができるようにします。</string>
 
     <string name="intro_slide_4_title">はじめましょう!</string>
-    <string name="intro_slide_4_text">Red Moon を有効にするには、
+    <string name="intro_slide_4_text">Red Moon をオンにするには、
 右上のスイッチを押してください。</string>
 
     <string name="intro_label">イントロ</string>
@@ -107,4 +107,6 @@ Red Moon がオンのときに作動しないと思われるアプリを使用�
     <string name="action_off">オフにする</string>
 
     <string name="use_location_title">場所からの回数</string>
+    <string name="action_next_profile">次のプロファイル</string>
+
     </resources>
