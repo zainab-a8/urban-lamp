@@ -43,14 +43,17 @@
         android:defaultValue="1"/>
 
     <com.jmstudios.redmoon.preference.ColorSeekBarPreference
+        android:title="@string/shades_color_temp"
         android:key="@string/pref_key_color"
         android:defaultValue="10" />
 
     <com.jmstudios.redmoon.preference.IntensitySeekBarPreference
+        android:title="@string/shades_intensity_level"
         android:key="@string/pref_key_intensity"
         android:defaultValue="50" />
 
     <com.jmstudios.redmoon.preference.DimSeekBarPreference
+        android:title="@string/shades_dim_level"
         android:key="@string/pref_key_dim"
         android:defaultValue="50" />
 
