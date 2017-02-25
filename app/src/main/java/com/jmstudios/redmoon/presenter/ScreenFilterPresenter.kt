@@ -389,10 +389,15 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
 
         internal fun moveToState(newState: State) {
             if (DEBUG) Log.i(TAG, "Transitioning from $mCurrentState to $newState")
-            if (newState === this) return
-            if (DEBUG) Log.i(TAG, "Passed check for same state.")
-            mCurrentState = newState
-            mCurrentState.onActivation(this)
+            if (Config.hasOverlayPermission) {
+                if (newState === this) { return }
+                if (DEBUG) Log.i(TAG, "Passed check for same state.")
+                mCurrentState = newState
+                mCurrentState.onActivation(this)
+            } else {
+                if (DEBUG) Log.i(TAG, "No overlay permission.")
+                EventBus.getDefault().post(overlayPermissionDenied())
+            }
         }
 
         open fun onDimLevelChanged() {}

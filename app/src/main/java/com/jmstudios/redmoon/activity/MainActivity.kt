@@ -87,21 +87,22 @@ class MainActivity : ThemedAppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_activity_menu, menu)
+
         mSwitch = (menu.findItem(R.id.screen_filter_switch).actionView as Switch).apply {
             isChecked = Config.filterIsOn
             setOnClickListener {
-                if (Config.requestOverlayPermission(this@MainActivity)) {
-                    val state = if (mSwitch.isChecked) ScreenFilterService.Command.ON
-                    else ScreenFilterService.Command.OFF
-                    ScreenFilterService.moveToState(state)
-                } else mSwitch.isChecked = false
+                val state = if (mSwitch.isChecked) ScreenFilterService.Command.ON
+                            else ScreenFilterService.Command.OFF
+                ScreenFilterService.moveToState(state)
             }
         }
+
         return true
     }
 
     override fun onResume() {
         super.onResume()
+        // The switch is null here, so we can't set it position directly.
         invalidateOptionsMenu()
         EventBus.getDefault().register(this)
     }
@@ -134,16 +135,14 @@ class MainActivity : ThemedAppCompatActivity() {
                 val github = resources.getString(R.string.project_page_url)
                 val projectIntent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(github))
                 startActivity(projectIntent)
-                return super.onOptionsItemSelected(item)
             }
             R.id.email_developer -> {
                 val email = resources.getString(R.string.contact_email_adress)
                 val emailIntent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(email))
                 startActivity(emailIntent)
-                return super.onOptionsItemSelected(item)
             }
-            else -> return super.onOptionsItemSelected(item)
         }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun startIntro() {
@@ -160,6 +159,12 @@ class MainActivity : ThemedAppCompatActivity() {
     @Subscribe
     fun onFilterIsOnChanged(event: filterIsOnChanged) {
         mSwitch.isChecked = Config.filterIsOn
+    }
+
+    @Subscribe
+    fun onOverlayPermissionDenied(event: overlayPermissionDenied) {
+        mSwitch.isChecked = false
+        Config.requestOverlayPermission(this)
     }
 
     companion object {
