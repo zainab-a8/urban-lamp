@@ -39,7 +39,6 @@ package com.jmstudios.redmoon.activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -55,7 +54,7 @@ import com.jmstudios.redmoon.service.ScreenFilterService
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ThemedAppCompatActivity() {
 
     lateinit private var mSwitch : Switch
 
@@ -66,10 +65,9 @@ class MainActivity : AppCompatActivity() {
 
         val fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false)
         if (fromShortcut) { toggleAndFinish() }
-        if (Config.darkThemeFlag) setTheme(R.style.AppThemeDark)
 
-        setContentView(R.layout.activity_main)
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
         // Only create and attach a new fragment on the first Activity creation.
         if (savedInstanceState == null) {

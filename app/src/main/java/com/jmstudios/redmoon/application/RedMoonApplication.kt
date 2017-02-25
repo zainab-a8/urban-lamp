@@ -55,7 +55,7 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
             getString(R.string.pref_key_dim)                  -> dimChanged()
             getString(R.string.pref_key_intensity)            -> intensityChanged()
             getString(R.string.pref_key_color)                -> colorChanged()
-            getString(R.string.pref_key_dark_theme)           -> themeChanged()
+            // getString(R.string.pref_key_dark_theme)           -> themeChanged()
             getString(R.string.pref_key_time_toggle)          -> timeToggleChanged()
             getString(R.string.pref_key_custom_turn_on_time)  -> customTurnOnTimeChanged()
             getString(R.string.pref_key_custom_turn_off_time) -> customTurnOffTimeChanged()

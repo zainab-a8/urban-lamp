@@ -37,7 +37,6 @@
 package com.jmstudios.redmoon.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 
@@ -47,10 +46,9 @@ import com.jmstudios.redmoon.fragment.TimeToggleFragment
 import com.jmstudios.redmoon.model.Config
 
 
-class TimeToggleActivity : AppCompatActivity() {
+class TimeToggleActivity : ThemedAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (Config.darkThemeFlag) setTheme(R.style.AppThemeDark)
         setContentView(R.layout.activity_main)
         super.onCreate(savedInstanceState)
 

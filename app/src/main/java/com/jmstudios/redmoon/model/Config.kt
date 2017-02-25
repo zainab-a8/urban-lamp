@@ -132,6 +132,10 @@ object Config {
             EventBus.getDefault().post(locationPermissionDialogClosed())
         }
     }
+
+    val activeTheme: Int
+        get() = if (darkThemeFlag) { R.style.AppThemeDark } else { R.style.AppTheme }
+
     //endregion
 
     //region preferences
@@ -162,7 +166,7 @@ object Config {
                                     ColorSeekBarPreference.DEFAULT_VALUE)
         set(c) = mSharedPrefs.edit().putInt(getString(R.string.pref_key_color), c).apply()
 
-    val darkThemeFlag: Boolean
+    private val darkThemeFlag: Boolean
         get() = mSharedPrefs.getBoolean(getString(R.string.pref_key_dark_theme), false)
 
     val lowerBrightness: Boolean
