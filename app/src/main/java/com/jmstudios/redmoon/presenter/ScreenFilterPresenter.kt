@@ -199,8 +199,14 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
 
     //region events
     @Subscribe
-    fun onOffStateChanged(event: filterIsOnChanged) {
+    fun onPowerStateChanged(event: filterIsOnChanged) {
         updateWidgets()
+        // If an app like Tasker wants to do something each time
+        // Red Moon is toggled, it can listen for this event
+        val intent = Intent()
+        intent.action = BROADCAST_ACTION
+        intent.putExtra(BROADCAST_FIELD, filterIsOn)
+        mContext.sendBroadcast(intent)
     }
     @Subscribe
     fun onDimLevelChanged(event: dimChanged) {
@@ -600,6 +606,9 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         private val REQUEST_CODE_NEXT_PROFILE = 4000
 
         val FADE_DURATION_MS = 1000
+
+        val BROADCAST_ACTION = "com.jmstudios.redmoon.RED_MOON_TOGGLED"
+        val BROADCAST_FIELD = "jmstudios.bundle.key.FILTER_IS_ON"
 
         // Statically used by BootReceiver
         fun setBrightnessState(brightness: Int, automatic: Boolean, context: Context) {
