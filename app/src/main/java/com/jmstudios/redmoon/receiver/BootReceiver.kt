@@ -71,8 +71,8 @@ class BootReceiver : BroadcastReceiver() {
 
         val filterIsOnPredicted = filterIsOnPrediction(filterIsOnBeforeReboot)
 
-        ScreenFilterService.moveToState(if (filterIsOnPredicted) ScreenFilterService.Command.OFF
-                                        else ScreenFilterService.Command.ON)
+        ScreenFilterService.moveToState(if (filterIsOnPredicted) ScreenFilterService.Command.ON
+                                        else ScreenFilterService.Command.OFF)
 
         if (!filterIsOnPredicted) {
             // We want to dismiss the notification if the filter is turned off
@@ -100,22 +100,20 @@ class BootReceiver : BroadcastReceiver() {
                 val onTime = Config.automaticTurnOnTime
                 val onHour = Integer.parseInt(onTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0])
                 val onMinute = Integer.parseInt(onTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[1])
-                val on = Calendar.getInstance()
-                on.set(Calendar.HOUR_OF_DAY, onHour)
-                on.set(Calendar.MINUTE, onMinute)
-
-                if (on.after(now))
-                    on.add(Calendar.DATE, -1)
+                val on = Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, onHour)
+                    set(Calendar.MINUTE, onMinute)
+                    if (after(now)) { add(Calendar.DATE, -1) } 
+                }
 
                 val offTime = Config.automaticTurnOffTime
                 val offHour = Integer.parseInt(offTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0])
                 val offMinute = Integer.parseInt(offTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[1])
-                val off = Calendar.getInstance()
-                off.set(Calendar.HOUR_OF_DAY, offHour)
-                off.set(Calendar.MINUTE, offMinute)
-
-                while (off.before(on))
-                    off.add(Calendar.DATE, 1)
+                val off = Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, offHour)
+                    set(Calendar.MINUTE, offMinute)
+                    while (before(on)) { add(Calendar.DATE, 1) }
+                }
 
                 if (DEBUG) {
                     Log.d(TAG, "On: $onTime, off: $offTime")
