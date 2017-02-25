@@ -67,7 +67,7 @@ import org.greenrobot.eventbus.EventBus
 object Config {
     //region utilities
     private val mContext = RedMoonApplication.app
-    private val lp = Manifest.permission.ACCESS_COARSE_LOCATION
+    private val lp = Manifest.permission.ACCESS_FINE_LOCATION
     private val granted = PackageManager.PERMISSION_GRANTED
     //private val OVERLAY_PERMISSION_REQ_CODE = 1111
     private val LOCATION_PERMISSION_REQ_CODE = 2222
