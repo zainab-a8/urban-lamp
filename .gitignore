@@ -54,6 +54,9 @@ proguard/
 # Mongo Explorer plugin:
 # .idea/mongoSettings.xml
 
+## Emacs
+*~
+
 ## File-based project format:
 *.ipr
 *.iws

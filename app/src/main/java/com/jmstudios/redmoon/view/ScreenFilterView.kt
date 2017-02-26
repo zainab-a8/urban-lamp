@@ -120,10 +120,11 @@ class ScreenFilterView(context: Context) : View(context) {
         cancelRunningAnimator(mDimAnimator)
     }
 
-    fun animateDimLevel(toDimLevel: Int, listener: Animator.AnimatorListener?) {
+    fun animateDimLevel(toDimLevel: Int, listener: Animator.AnimatorListener?,
+                        animateFromZero: Boolean) {
         cancelRunningAnimator(mDimAnimator)
 
-        val fromDimLevel = filterDimLevel
+        val fromDimLevel = if (animateFromZero) 0 else filterDimLevel
 
         mDimAnimator = ValueAnimator.ofInt(fromDimLevel, toDimLevel)
         mDimAnimator!!.duration = FADE_DURATION_MS.toLong()
@@ -140,10 +141,11 @@ class ScreenFilterView(context: Context) : View(context) {
         cancelRunningAnimator(mIntensityAnimator)
     }
 
-    fun animateIntensityLevel(toIntensityLevel: Int, listener: Animator.AnimatorListener?) {
+    fun animateIntensityLevel(toIntensityLevel: Int, listener: Animator.AnimatorListener?,
+                              animateFromZero: Boolean) {
         cancelRunningAnimator(mIntensityAnimator)
 
-        val fromIntensityLevel = filterIntensityLevel
+        val fromIntensityLevel = if (animateFromZero) 0 else filterIntensityLevel
 
         mIntensityAnimator = ValueAnimator.ofInt(fromIntensityLevel, toIntensityLevel)
         mIntensityAnimator!!.duration = FADE_DURATION_MS.toLong()
