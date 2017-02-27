@@ -34,7 +34,7 @@
     <string name="email_me_summary">Gdy znajdziesz błąd lub z sugestią</string>
     <string name="project_page_title">Odwiedź stronę projektu</string>
     <string name="project_page_summary">Znajdź więcej informacji, zostaw opinię i wesprzyj przy tworzeniu</string>
-    <string name="toast_warning_install">Nie będziesz mógł instalować plików APK, gdy działa filtrowanie.</string>
+    <string name="toast_warning_install">Nie będziesz mógł instalować plików APK podczas działania programu Red Moon.</string>
     <string name="toast_warning_no_location">Włącz usługi lokalizacyjne by znaleźć lokalizację</string>
 
     <string name="help_snackbar_text">Naciśnij przełącznik by włączyć Red Moon</string>
@@ -43,10 +43,10 @@
     <string name="add_new_profile_edit_hint">Nazwa profilu</string>
     <string name="remove_profile_dialog_title">Usunąć profil?</string>
     <string name="set_dialog">Ustaw</string>
-    <string name="ok_dialog">OK</string>
+    <string name="ok_dialog">Dobrze</string>
     <string name="cancel_dialog">Anuluj</string>
 
-    <string name="toggle_shortcut_title">Włącznik filtra</string>
+    <string name="toggle_shortcut_title">Włącznik Red Moon</string>
 
     <string name="standard_profiles_array_0">Własny</string>
     <string name="standard_profiles_array_1">Domyślny</string>
@@ -64,9 +64,9 @@
     <string name="pause_action">Wstrzymaj</string>
 
     <string name="secure_suspend_title">Wstrzymuj filtr w chronionych aplikacjach</string>
-    <string name="usage_stats_dialog_message">W następnym oknie zezwól aplikacji Red Moon na użytkowanie danych monitorujących, by włączyć tą funkcję.
+    <string name="usage_stats_dialog_message">W następnym oknie zezwól aplikacji Red Moon na dostęp do użytkowania, aby włączyć tą funkcję.
 
-Red Moon potrzebuje dostępu do użytkowania, żeby zobaczyć jaką aplikację masz włączoną i by wstrzymać działanie filtru w zaufanych aplikacjach. Red Moon będzie używał tych danych tylko w celu wstrzymywania filtru.</string>
+Red Moon potrzebuje dostępu do użytkowania, żeby zobaczyć czy używasz aplikacji, która nie będzie współpracować z filtrem.</string>
 
     <string name="usage_stats_dialog_title">Dostęp do użytkowania</string>
     <string name="text_switch_on">Włączone</string>
