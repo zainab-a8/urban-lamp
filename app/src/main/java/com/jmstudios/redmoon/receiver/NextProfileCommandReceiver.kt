@@ -23,7 +23,6 @@ import android.content.Intent
 import android.util.Log
 
 import com.jmstudios.redmoon.helper.ProfilesHelper
-import com.jmstudios.redmoon.model.ProfilesModel
 import com.jmstudios.redmoon.model.Config
 
 class NextProfileCommandReceiver : BroadcastReceiver() {
@@ -42,14 +41,11 @@ class NextProfileCommandReceiver : BroadcastReceiver() {
         // Next update the other settings that are based on the
         // profile
         if (newProfile != 0) {
-            // We need a ProfilesModel to get the properties of the
-            // profile from the index
-            val profilesModel = ProfilesModel(context)
-            val profileObject = ProfilesHelper.getProfile(profilesModel, newProfile, context)
+            val profileObject = ProfilesHelper.getProfile(newProfile, context)
 
-            Config.dim = profileObject.mDimProgress
-            Config.intensity = profileObject.mIntensityProgress
-            Config.color = profileObject.mColorProgress
+            Config.dim = profileObject.mDim
+            Config.intensity = profileObject.mIntensity
+            Config.color = profileObject.mColor
         }
     }
 

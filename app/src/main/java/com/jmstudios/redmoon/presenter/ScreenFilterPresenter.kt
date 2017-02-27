@@ -64,7 +64,6 @@ import com.jmstudios.redmoon.helper.*
 import com.jmstudios.redmoon.manager.ScreenManager
 import com.jmstudios.redmoon.manager.WindowViewManager
 import com.jmstudios.redmoon.model.Config
-import com.jmstudios.redmoon.model.ProfilesModel
 import com.jmstudios.redmoon.receiver.NextProfileCommandReceiver
 import com.jmstudios.redmoon.receiver.OrientationChangeReceiver
 import com.jmstudios.redmoon.receiver.ScreenStateReceiver
@@ -113,12 +112,11 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
 
     private fun refreshForegroundNotification() {
         val context = mView.context
-        val profilesModel = ProfilesModel(context)
 
         val title = context.getString(R.string.app_name)
         val color = ContextCompat.getColor(context, R.color.color_primary)
         val smallIconResId = R.drawable.notification_icon_half_moon
-        val nextProfile = ProfilesHelper.getProfileName(profilesModel, Config.profile, context)
+        val nextProfile = ProfilesHelper.getProfileName(Config.profile, context)
 
         val offOrOnDrawableResId: Int
         val offOrOnCommand: Intent

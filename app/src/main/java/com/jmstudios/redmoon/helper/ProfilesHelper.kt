@@ -22,43 +22,29 @@ import android.content.Context
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.model.ProfilesModel
-import com.jmstudios.redmoon.preference.ProfileSelectorPreference
 
 object ProfilesHelper {
-    fun getProfileName(model: ProfilesModel, profile: Int, context: Context): String {
-        if (profile < ProfileSelectorPreference.DEFAULT_OPERATIONS_AM) {
+    const val DEFAULT_OPERATIONS_AM = 3
+
+    private val model: ProfilesModel
+        get() = ProfilesModel()
+
+    fun getProfileName(profile: Int, context: Context): String {
+        if (profile < DEFAULT_OPERATIONS_AM) {
             return context.resources.getStringArray(R.array.standard_profiles_array)[profile]
         } else {
-            return model.getProfile(profile - ProfileSelectorPreference.DEFAULT_OPERATIONS_AM).mProfileName
+            return model.getProfile(profile - DEFAULT_OPERATIONS_AM).mName
         }
     }
 
-    fun getProfile(model: ProfilesModel, profile: Int, context: Context): ProfilesModel.Profile {
-        if (profile < ProfileSelectorPreference.DEFAULT_OPERATIONS_AM) {
-            val name = context.resources.getStringArray(R.array.standard_profiles_array)[profile]
-            val color: Int
-            val intensity: Int
-            val dim: Int
-            when (profile) {
-                1 -> {
-                    color = 10
-                    intensity = 30
-                    dim = 40
-                }
-                2 -> {
-                    color = 20
-                    intensity = 60
-                    dim = 78
-                }
-                else -> {
-                    color = 0
-                    intensity = 0
-                    dim = 0
-                }
-            }
-            return ProfilesModel.Profile(name, color, intensity, dim)
-        } else {
-            return model.getProfile(profile - ProfileSelectorPreference.DEFAULT_OPERATIONS_AM)
+    fun getProfile(profile: Int, context: Context): ProfilesModel.Profile {
+        val name = getProfileName(profile, context)
+        return when (profile) {
+              // ProfilesModel.Profile(name, color, intensity, dim)
+            0 -> ProfilesModel.Profile(name, 0, 0, 0)
+            1 -> ProfilesModel.Profile(name, 10, 30, 40)
+            2 -> ProfilesModel.Profile(name, 20, 60, 78)
+            else -> model.getProfile(profile - DEFAULT_OPERATIONS_AM)
         }
     }
 }

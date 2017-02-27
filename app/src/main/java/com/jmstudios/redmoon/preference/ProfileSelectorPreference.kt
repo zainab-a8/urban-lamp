@@ -52,7 +52,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
     lateinit internal var mArrayAdapter: ArrayAdapter<CharSequence>
 
     private var mProfile: Int = 0
-    private val mProfilesModel: ProfilesModel = ProfilesModel(mContext)
+    private val mProfilesModel: ProfilesModel = ProfilesModel()
     private var mDefaultOperations: ArrayList<CharSequence>? = null
 
     private var currentColor: Int = 0
@@ -110,7 +110,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
     }
 
     private fun updateButtonSetup() {
-        if (mProfile > DEFAULT_OPERATIONS_AM - 1) {
+        if (mProfile > ProfilesHelper.DEFAULT_OPERATIONS_AM - 1) {
             if (DEBUG) Log.i(TAG, "Setting remove button")
             mProfileActionButton.text = context.resources.getString(R.string.button_remove_profile)
             mProfileActionButton.setOnClickListener { openRemoveProfileDialog() }
@@ -131,14 +131,11 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
 
         // Update the dependent settings
         if (mProfile != 0) {
-            // We need a ProfilesModel to get the properties of the
-            // profile from the index
-            val profilesModel = ProfilesModel(mContext)
-            val profileObject = ProfilesHelper.getProfile(profilesModel, mProfile, mContext)
+            val profileObject = ProfilesHelper.getProfile(mProfile, mContext)
 
-            Config.dim = profileObject.mDimProgress
-            Config.intensity = profileObject.mIntensityProgress
-            Config.color = profileObject.mColorProgress
+            Config.dim = profileObject.mDim
+            Config.intensity = profileObject.mIntensity
+            Config.color = profileObject.mColor
         }
     }
 
@@ -152,7 +149,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         val cancelString = context.resources.getString(R.string.cancel_dialog)
 
         builder.setPositiveButton(okString) { dialog, which ->
-            mProfilesModel.removeProfile(mProfile - DEFAULT_OPERATIONS_AM)
+            mProfilesModel.removeProfile(mProfile - ProfilesHelper.DEFAULT_OPERATIONS_AM)
             mProfile = 0
             initLayout()
 
@@ -185,9 +182,10 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
                                                     Config.dim)
 
                 mProfilesModel.addProfile(profile)
-                mArrayAdapter.add(profile.mProfileName as CharSequence)
+                mArrayAdapter.add(profile.mName as CharSequence)
 
-                mProfileSpinner.setSelection(mProfilesModel.profiles.size - 1 + DEFAULT_OPERATIONS_AM)
+                val i = mProfilesModel.profiles.size - 1 + ProfilesHelper.DEFAULT_OPERATIONS_AM
+                mProfileSpinner.setSelection(i)
 
                 updateAmountProfiles()
             } else {
@@ -209,7 +207,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         val profiles = mProfilesModel.profiles
 
         for (profile in profiles) {
-            mArrayAdapter.add(profile.mProfileName as CharSequence)
+            mArrayAdapter.add(profile.mName as CharSequence)
         }
     }
 
@@ -217,7 +215,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
      * Updates the amount of profiles in the shared preferences
      */
     private fun updateAmountProfiles() {
-        val amountProfiles = mProfilesModel.profiles.size + DEFAULT_OPERATIONS_AM
+        val amountProfiles = mProfilesModel.profiles.size + ProfilesHelper.DEFAULT_OPERATIONS_AM
         if (DEBUG) Log.i(TAG, "There are now $amountProfiles profiles.")
         Config.amountProfiles = amountProfiles
     }
@@ -243,11 +241,11 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         mProfileSpinner.setSelection(mProfile)
 
         if (mProfile != 0) {
-            val newProfile = ProfilesHelper.getProfile(mProfilesModel, mProfile, mContext)
+            val newProfile = ProfilesHelper.getProfile(mProfile, mContext)
 
-            currentDim = newProfile.mDimProgress
-            currentIntensity = newProfile.mIntensityProgress
-            currentColor = newProfile.mColorProgress
+            currentDim = newProfile.mDim
+            currentIntensity = newProfile.mIntensity
+            currentColor = newProfile.mColor
         }
     }
 
@@ -256,7 +254,5 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
 
         private val TAG = "ProfileSelectorPref"
         private val DEBUG = false
-
-        val DEFAULT_OPERATIONS_AM = 3
     }
 }

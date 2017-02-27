@@ -18,9 +18,12 @@
 package com.jmstudios.redmoon.model
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
 import java.util.ArrayList
+
+import com.jmstudios.redmoon.application.RedMoonApplication
+
+import org.json.JSONObject
 
 /**
  * This class manages the SharedPreference that store all custom
@@ -33,21 +36,33 @@ import java.util.ArrayList
  * profile created by the user. A string is associated with every key
  * with the format "$PROGRESS_COLOR,$PROGRESS_INTENSITY,$PROGRESS_DIM"
  */
-class ProfilesModel(context: Context) {
+class ProfilesModel {
 
-    private val mSharedPrefs: SharedPreferences
-    private val mPrefsContentsMap: Map<String, *>
+    private val mContext = RedMoonApplication.app
+    private val mSharedPrefs = mContext.getSharedPreferences(preferenceName, mode)
+
     var profiles: ArrayList<Profile>
         private set
 
     init {
         if (DEBUG) Log.i(TAG, "Creating ProfilesModel")
-
-        mSharedPrefs = context.getSharedPreferences(preferenceName, mode)
-        mPrefsContentsMap = mSharedPrefs.all as Map<String, String>
+        val mPrefsContentsMap = mSharedPrefs.all
         profiles = ArrayList<Profile>()
 
-        parsePrefsContents()
+        if (DEBUG) Log.i(TAG, "Parsing preference contents")
+        val amProfiles = mPrefsContentsMap.entries.size
+        if (DEBUG) Log.d(TAG, "Allocating " + amProfiles)
+        profiles.ensureCapacity(amProfiles)
+
+        if (DEBUG) Log.d(TAG, "Allocated " + amProfiles)
+
+        for ((key, value) in mPrefsContentsMap) {
+            if (DEBUG) Log.d(TAG, "Parsing key: $key")
+            val i = Integer.parseInt(key)
+            profiles.add(i, parseProfile(value as String))
+        }
+
+        if (DEBUG) Log.d(TAG, "Done parsing preference contents. Parsed $amProfiles profiles.")
     }
 
     fun addProfile(profile: Profile) {
@@ -67,105 +82,55 @@ class ProfilesModel(context: Context) {
         updateSharedPreferences()
     }
 
-    private fun parsePrefsContents() {
-        if (DEBUG) Log.i(TAG, "Parsing preference contents")
-
-        profiles = ArrayList<Profile>()
-
-        val amProfiles = mPrefsContentsMap.entries.size
-        if (DEBUG) Log.d(TAG, "Allocating " + amProfiles)
-        profiles.ensureCapacity(amProfiles)
-
-        if (DEBUG) Log.d(TAG, "Allocated " + amProfiles)
-
-        for (i in 0..amProfiles - 1) {
-            if (DEBUG) Log.d(TAG, "Parsing " + i)
-            val profileEntry = findProfileEntry(i)
-            profiles.add(parseProfile(profileEntry))
-        }
-
-        if (DEBUG) Log.d(TAG, "Done parsing preference contents. Parsed $amProfiles profiles.")
-    }
-
-    private fun findProfileEntry(index: Int): String {
-        if (DEBUG) Log.i(TAG, "Finding entry at " + index)
-        for ((key, value) in mPrefsContentsMap) {
-            if (getIndexFromString(key) == index)
-                return key + "@" + value as String
-        }
-        return "Profile not found_0,0,0"
-    }
-
-    private fun getIndexFromString(keyString: String): Int {
-        if (DEBUG) Log.i(TAG, "Parsing index from string: " + keyString)
-        val length = keyString.length
-        val idIndex = keyString.lastIndexOf('_') + 1
-        val idString = keyString.substring(idIndex, length)
-
-        if (DEBUG) Log.i(TAG, "Found idString: " + idString)
-
-        return Integer.parseInt(idString)
-    }
-
     private fun parseProfile(entry: String): Profile {
         if (DEBUG) Log.i(TAG, "Parsing entry: " + entry)
-        val key = entry.substring(0, entry.lastIndexOf("@"))
-        val values = entry.substring(entry.lastIndexOf("@") + 1, entry.length)
-
-        val profileName = getProfileNameFromString(key)
-
-        val progressValues = values
-        val firstComma = progressValues.indexOf(',')
-        val colorProgress = Integer.parseInt(progressValues.substring(0, firstComma))
-
-        val secondComma = progressValues.indexOf(',', firstComma + 1)
-        val intensityProgress = Integer.parseInt(progressValues.substring(firstComma + 1, secondComma))
-
-        val dimProgress = Integer.parseInt(progressValues.substring(secondComma + 1, progressValues.length))
-
-        val profile = Profile(profileName, colorProgress, intensityProgress, dimProgress)
-        return profile
+        val json = JSONObject(entry)
+        val name = json.optString(KEY_NAME)
+        val color = json.optInt(KEY_COLOR)
+        val intensity = json.optInt(KEY_INTENSITY)
+        val dim = json.optInt(KEY_DIM)
+        return Profile(name, color, intensity, dim)
     }
 
-    private fun getProfileNameFromString(keyString: String): String {
-        val nameEndIndex = keyString.lastIndexOf('_')
-        val profileNameString = keyString.substring(0, nameEndIndex)
-
-        return profileNameString
-    }
-
-    private fun updateSharedPreferences() {
+        private fun updateSharedPreferences() {
         if (DEBUG) Log.i(TAG, "Updating SharedPreferences")
         val editor = mSharedPrefs.edit()
         editor.clear()
 
         for ((i, profile) in profiles.withIndex()) {
-            editor.putString(profile.getKey(i), profile.values)
+            editor.putString(Integer.toString(i), profile.values)
         }
 
         editor.apply()
         if (DEBUG) Log.d(TAG, "Done updating SharedPreferences")
     }
 
-    class Profile(var mProfileName: String, var mColorProgress: Int,
-                  var mIntensityProgress: Int, var mDimProgress: Int) {
-
-        fun getKey(index: Int): String {
-            val id = Integer.toString(index)
-            return mProfileName + "_" + id
-        }
+    class Profile(var mName: String,
+                  var mColor:     Int,
+                  var mIntensity: Int,
+                  var mDim:       Int){
 
         val values: String
-            get() = Integer.toString(mColorProgress) + "," +
-                    Integer.toString(mIntensityProgress) + "," +
-                    Integer.toString(mDimProgress)
+            get() {
+                val json = JSONObject()
+                json.put(KEY_NAME,      mName)
+                json.put(KEY_COLOR,     mColor)
+                json.put(KEY_INTENSITY, mIntensity)
+                json.put(KEY_DIM,       mDim)
+                return json.toString(2)
+            }
     }
 
     companion object {
         private val preferenceName = "com.jmstudios.redmoon.PROFILES_PREFERENCE"
         private val mode = Context.MODE_PRIVATE
 
+        private const val KEY_NAME = "name"
+        private const val KEY_COLOR = "color"
+        private const val KEY_INTENSITY = "intensity"
+        private const val KEY_DIM = "dim"
+
         private val TAG = "ProfilesModel"
-        private val DEBUG = false
+        private val DEBUG = true
     }
 }
