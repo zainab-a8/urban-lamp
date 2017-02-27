@@ -418,8 +418,8 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             refreshForegroundNotification()
             openScreenFilter()
             Config.filterIsOn = filterIsOn
-            mView.animateDimLevel(Config.dim, null, true)
-            mView.animateIntensityLevel(Config.intensity, null, true)
+            mView.animateDimLevel(Config.dim, null)
+            mView.animateIntensityLevel(Config.intensity, null)
 
             if (Config.lowerBrightness) {
                 saveOldBrightnessState()
@@ -476,11 +476,11 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             if (prevState === mPreviewState) {
                 closeScreenFilter()
             } else {
-                mView.animateIntensityLevel(ScreenFilterView.MIN_INTENSITY, null, false)
+                mView.animateIntensityLevel(ScreenFilterView.MIN_INTENSITY, null)
                 mView.animateDimLevel(ScreenFilterView.MIN_DIM, object : AbstractAnimatorListener() {
                     override fun onAnimationCancel(animator: Animator) { mCurrentState.closeScreenFilter() }
                     override fun onAnimationEnd(animator: Animator) { mCurrentState.closeScreenFilter() }
-                }, false)
+                })
             }
 
             if (Config.lowerBrightness) restoreBrightnessState()
