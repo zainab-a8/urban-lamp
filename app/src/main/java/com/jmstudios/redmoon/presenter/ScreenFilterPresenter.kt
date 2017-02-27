@@ -95,7 +95,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     private val mPreviewState = PreviewState()
     private val mSuspendState = SuspendState()
 
-    private var mCurrentState: State = mOffState
+    private var mCurrentState: State = InitState()
 
     // Screen brightness state
     private var oldScreenBrightness: Int = 0
@@ -410,6 +410,11 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         override fun toString(): String {
             return javaClass.simpleName
         }
+    }
+    
+    private inner class InitState : State() {
+        override val filterIsOn = false
+        override fun onActivation(prevState: State) {}
     }
 
     private inner class OnState : State() {
