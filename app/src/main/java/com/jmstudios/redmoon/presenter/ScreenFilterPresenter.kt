@@ -356,7 +356,10 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         abstract fun onActivation(prevState: State)
 
         internal fun openScreenFilter() {
-            if (!mScreenFilterOpen) {
+            if (mScreenFilterOpen) {
+                if (DEBUG) Log.i(TAG, "Screen filter is already open!")
+            } else {
+                if (DEBUG) Log.i(TAG, "Opening screen filter")
                 // Display the transparent filter
                 mWindowViewManager.openWindow(mView, createFilterLayoutParams())
                 mScreenFilterOpen = true
