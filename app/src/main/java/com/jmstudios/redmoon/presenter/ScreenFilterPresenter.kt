@@ -95,7 +95,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     private val mPreviewState = PreviewState()
     private val mSuspendState = SuspendState()
 
-    private var mCurrentState: State = mOffState
+    private var mCurrentState: State = InitState()
 
     // Screen brightness state
     private var oldScreenBrightness: Int = 0
@@ -411,6 +411,11 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             return javaClass.simpleName
         }
     }
+    
+    private inner class InitState : State() {
+        override val filterIsOn = false
+        override fun onActivation(prevState: State) {}
+    }
 
     private inner class OnState : State() {
         override val filterIsOn = true
@@ -418,8 +423,8 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             refreshForegroundNotification()
             openScreenFilter()
             Config.filterIsOn = filterIsOn
-            mView.animateDimLevel(Config.dim, null, true)
-            mView.animateIntensityLevel(Config.intensity, null, true)
+            mView.animateDimLevel(Config.dim, null)
+            mView.animateIntensityLevel(Config.intensity, null)
 
             if (Config.lowerBrightness) {
                 saveOldBrightnessState()
@@ -476,11 +481,11 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             if (prevState === mPreviewState) {
                 closeScreenFilter()
             } else {
-                mView.animateIntensityLevel(ScreenFilterView.MIN_INTENSITY, null, false)
+                mView.animateIntensityLevel(ScreenFilterView.MIN_INTENSITY, null)
                 mView.animateDimLevel(ScreenFilterView.MIN_DIM, object : AbstractAnimatorListener() {
                     override fun onAnimationCancel(animator: Animator) { mCurrentState.closeScreenFilter() }
                     override fun onAnimationEnd(animator: Animator) { mCurrentState.closeScreenFilter() }
-                }, false)
+                })
             }
 
             if (Config.lowerBrightness) restoreBrightnessState()
