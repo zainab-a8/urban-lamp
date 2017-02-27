@@ -21,8 +21,6 @@ import android.content.Context
 import android.util.Log
 import java.util.ArrayList
 
-import com.jmstudios.redmoon.application.RedMoonApplication
-
 import org.json.JSONObject
 
 /**
@@ -36,10 +34,9 @@ import org.json.JSONObject
  * profile created by the user. A string is associated with every key
  * with the format "$PROGRESS_COLOR,$PROGRESS_INTENSITY,$PROGRESS_DIM"
  */
-class ProfilesModel {
+class ProfilesModel(context: Context) {
 
-    private val mContext = RedMoonApplication.app
-    private val mSharedPrefs = mContext.getSharedPreferences(preferenceName, mode)
+    private val mSharedPrefs = context.getSharedPreferences(preferenceName, mode)
 
     var profiles: ArrayList<Profile>
         private set

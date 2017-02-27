@@ -20,14 +20,16 @@ package com.jmstudios.redmoon.helper
 import android.content.Context
 
 import com.jmstudios.redmoon.R
+import com.jmstudios.redmoon.application.RedMoonApplication
 
 import com.jmstudios.redmoon.model.ProfilesModel
 
 object ProfilesHelper {
     const val DEFAULT_OPERATIONS_AM = 3
 
+    private val mContext = RedMoonApplication.app
     private val model: ProfilesModel
-        get() = ProfilesModel()
+        get() = ProfilesModel(mContext)
 
     fun getProfileName(profile: Int, context: Context): String {
         if (profile < DEFAULT_OPERATIONS_AM) {

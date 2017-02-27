@@ -52,7 +52,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
     lateinit internal var mArrayAdapter: ArrayAdapter<CharSequence>
 
     private var mProfile: Int = 0
-    private val mProfilesModel: ProfilesModel = ProfilesModel()
+    private val mProfilesModel: ProfilesModel = ProfilesModel(mContext)
     private var mDefaultOperations: ArrayList<CharSequence>? = null
 
     private var currentColor: Int = 0
