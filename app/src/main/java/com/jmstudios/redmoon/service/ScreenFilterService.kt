@@ -71,10 +71,11 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         // Initialize helpers and managers
         val context = this
         val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val view = ScreenFilterView(context)
 
         // Wire MVP classes
-        mPresenter = ScreenFilterPresenter(ScreenFilterView(context), this, context,
-                                           WindowViewManager(windowManager),
+        mPresenter = ScreenFilterPresenter(this, context,
+                                           WindowViewManager(windowManager, view),
                                            ScreenManager(this, windowManager))
 
         // Make Presenter listen to settings changes and orientation changes
@@ -117,11 +118,11 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
     }
 
     companion object {
-        private val BUNDLE_KEY_COMMAND = "jmstudios.bundle.key.COMMAND"
-        private val COMMAND_INVALID = -1
+        private const val BUNDLE_KEY_COMMAND = "jmstudios.bundle.key.COMMAND"
+        private const val COMMAND_INVALID = -1
 
-        private val TAG = "ScreenFilterService"
-        private val DEBUG = true
+        private const val TAG = "ScreenFilterService"
+        private const val DEBUG = true
 
         private val context = RedMoonApplication.app
         private val intent: Intent

@@ -77,18 +77,16 @@ import com.jmstudios.redmoon.view.ScreenFilterView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
-class ScreenFilterPresenter(private val mView: ScreenFilterView,
-                            private val mServiceController: ServiceLifeCycleController,
+class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleController,
                             private val mContext: Context,
                             private val mWindowViewManager: WindowViewManager,
                             private val mScreenManager: ScreenManager):
                         OrientationChangeReceiver.OnOrientationChangeListener,
                         ScreenStateReceiver.ScreenStateListener {
+    private var mView: ScreenFilterView = mWindowViewManager.mView
     private var mCamThread: CurrentAppMonitoringThread? = null
     private val mScreenStateReceiver = ScreenStateReceiver(this)
     private var screenOff: Boolean = false
-
-    private var mScreenFilterOpen = false
 
     private val mOnState = OnState()
     private val mOffState = OffState()
@@ -190,10 +188,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     }
 
     private fun reLayoutScreenFilter() {
-        if (!mScreenFilterOpen) {
-            return
-        }
-        mWindowViewManager.reLayoutWindow(mView, createFilterLayoutParams())
+        mWindowViewManager.reLayoutWindow(createFilterLayoutParams())
     }
     //endregion
 
@@ -356,25 +351,11 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
         abstract fun onActivation(prevState: State)
 
         internal fun openScreenFilter() {
-            if (mScreenFilterOpen) {
-                if (DEBUG) Log.i(TAG, "Screen filter is already open!")
-            } else {
-                if (DEBUG) Log.i(TAG, "Opening screen filter")
-                // Display the transparent filter
-                mWindowViewManager.openWindow(mView, createFilterLayoutParams())
-                mScreenFilterOpen = true
-            }
+            mWindowViewManager.openWindow(createFilterLayoutParams())
         }
 
         open internal fun closeScreenFilter() {
-            if (mScreenFilterOpen) {
-                if (DEBUG) Log.i(TAG, "Closing screen filter")
-                // Close the window once the fade-out animation is complete
-                mWindowViewManager.closeWindow(mView)
-                mScreenFilterOpen = false
-            } else {
-                if (DEBUG) Log.i(TAG, "Can't close Screen filter; it's already closed")
-            }
+            mWindowViewManager.closeWindow()
         }
 
         open fun onScreenFilterCommand(command: ScreenFilterService.Command) {
@@ -391,7 +372,7 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
             }
         }
 
-        internal fun moveToState(newState: State) {
+        protected fun moveToState(newState: State) {
             if (DEBUG) Log.i(TAG, "Transitioning from $mCurrentState to $newState")
             if (Config.hasOverlayPermission) {
                 if (newState === this) { return }
@@ -605,18 +586,18 @@ class ScreenFilterPresenter(private val mView: ScreenFilterView,
     }
 
     companion object {
-        private val TAG = "ScreenFilterPresenter"
-        private val DEBUG = true
+        private const val TAG = "ScreenFilterPresenter"
+        private const val DEBUG = true
 
-        val NOTIFICATION_ID = 1
-        private val REQUEST_CODE_ACTION_SETTINGS = 1000
-        private val REQUEST_CODE_ACTION_OFF_OR_ON = 3000
-        private val REQUEST_CODE_NEXT_PROFILE = 4000
+        const val NOTIFICATION_ID = 1
+        private const val REQUEST_CODE_ACTION_SETTINGS = 1000
+        private const val REQUEST_CODE_ACTION_OFF_OR_ON = 3000
+        private const val REQUEST_CODE_NEXT_PROFILE = 4000
 
-        val FADE_DURATION_MS = 1000
+        const val FADE_DURATION_MS = 1000
 
-        val BROADCAST_ACTION = "com.jmstudios.redmoon.RED_MOON_TOGGLED"
-        val BROADCAST_FIELD = "jmstudios.bundle.key.FILTER_IS_ON"
+        const val BROADCAST_ACTION = "com.jmstudios.redmoon.RED_MOON_TOGGLED"
+        const val BROADCAST_FIELD = "jmstudios.bundle.key.FILTER_IS_ON"
 
         // Statically used by BootReceiver
         fun setBrightnessState(brightness: Int, automatic: Boolean, context: Context) {
