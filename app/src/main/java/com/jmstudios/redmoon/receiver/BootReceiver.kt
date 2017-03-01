@@ -61,18 +61,18 @@ class BootReceiver : BroadcastReceiver() {
         // dimmed brightness and we need to restore the saved brightness
         // before proceeding.
         if (filterIsOnBeforeReboot && Config.lowerBrightness) {
-            ScreenFilterPresenter.setBrightnessState(Config.brightnessLevel,
-                    Config.brightnessAutomatic,
-                    context)
+            ScreenFilterPresenter.setBrightnessState(Config.brightness,
+                    Config.brightnessWasAutomatic, context)
         }
 
         TimeToggleChangeReceiver.scheduleNextOnCommand(context)
         TimeToggleChangeReceiver.scheduleNextOffCommand(context)
 
         val filterIsOnPredicted = filterIsOnPrediction(filterIsOnBeforeReboot)
+        val command = if (filterIsOnPredicted) { ScreenFilterService.Command.ON }
+                      else { ScreenFilterService.Command.OFF }
 
-        ScreenFilterService.moveToState(if (filterIsOnPredicted) ScreenFilterService.Command.ON
-                                        else ScreenFilterService.Command.OFF)
+        ScreenFilterService.moveToState(command)
 
         if (!filterIsOnPredicted) {
             // We want to dismiss the notification if the filter is turned off

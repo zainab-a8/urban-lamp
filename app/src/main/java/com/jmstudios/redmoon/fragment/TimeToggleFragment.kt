@@ -25,11 +25,12 @@ import android.widget.Toast
 
 import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.event.*
-
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.preference.TimePickerPreference
 import com.jmstudios.redmoon.receiver.TimeToggleChangeReceiver
 import com.jmstudios.redmoon.service.LocationUpdateService
+import com.jmstudios.redmoon.util.hasLocationPermission
+import com.jmstudios.redmoon.util.requestLocationPermission
 
 import org.greenrobot.eventbus.Subscribe
 
@@ -158,13 +159,13 @@ class TimeToggleFragment : EventPreferenceFragment() {
     @Subscribe
     fun onLocationAccessDenied(event: locationAccessDenied) {
         if (mIsSearchingLocation) {
-            Config.requestLocationPermission(activity)
+            requestLocationPermission(activity)
         }
     }
 
     @Subscribe
     fun onLocationPermissionDialogClosed(event: locationPermissionDialogClosed) {
-        if (Config.hasLocationPermission) {
+        if (hasLocationPermission) {
             LocationUpdateService.start()
         } else {
             useLocationPref.isChecked = false

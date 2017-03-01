@@ -31,6 +31,7 @@ import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.service.LocationUpdateService
 import com.jmstudios.redmoon.service.ScreenFilterService
+import com.jmstudios.redmoon.util.atLeastAPI
 
 import java.util.Calendar
 import java.util.GregorianCalendar
@@ -66,15 +67,15 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        private val TAG = "TimeToggleChange"
-        private val DEBUG = true
+        private const val TAG = "TimeToggleChange"
+        private const val DEBUG = true
         private val intent = { ctx: Context -> Intent(ctx, TimeToggleChangeReceiver::class.java) }
 
         // Conveniences
         val scheduleNextOnCommand = { context: Context -> scheduleNextCommand(context, true) }
         val scheduleNextOffCommand = { context: Context -> scheduleNextCommand(context, false) }
-        val cancelTurnOnAlarm = { context: Context -> cancelAlarm(context, true) }
-        val cancelOffAlarm = { context: Context -> cancelAlarm(context, false) }
+        //val cancelTurnOnAlarm = { context: Context -> cancelAlarm(context, true) }
+        //val cancelOffAlarm = { context: Context -> cancelAlarm(context, false) }
         val rescheduleOnCommand = { context: Context ->
             cancelAlarm(context, true)
             scheduleNextCommand(context, true)
@@ -94,31 +95,29 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
                     val state = if (turnOn) "on" else "off"
                     Log.d(TAG, "Scheduling alarm to turn filter " + state)
                 }
-                val time = if (turnOn) Config.automaticTurnOnTime
-                           else Config.automaticTurnOffTime
+                val time = if (turnOn) { Config.automaticTurnOnTime }
+                           else { Config.automaticTurnOffTime }
 
-                val command = intent(context)
-                command.data = if (turnOn) Uri.parse("turnOnIntent")
-                              else Uri.parse("offIntent")
+                val command = intent(context).apply {
+                    data = Uri.parse(if (turnOn) "turnOnIntent" else "offIntent")
+                    putExtra("turn_on", turnOn)
+                }
 
-                command.putExtra("turn_on", turnOn)
-
-                val calendar = GregorianCalendar()
-                calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0]))
-                calendar.set(Calendar.MINUTE, Integer.parseInt(time.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[1]))
+                val calendar = GregorianCalendar().apply {
+                    set(Calendar.HOUR_OF_DAY, Integer.parseInt(time.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0]))
+                    set(Calendar.MINUTE, Integer.parseInt(time.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[1]))
+                }
 
                 val now = GregorianCalendar()
                 now.add(Calendar.SECOND, 1)
-                if (calendar.before(now)) {
-                    calendar.add(Calendar.DATE, 1)
-                }
+                if (calendar.before(now)) { calendar.add(Calendar.DATE, 1) }
 
                 if (DEBUG) Log.i(TAG, "Scheduling alarm for " + calendar.toString())
 
                 val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                 val pendingIntent = PendingIntent.getBroadcast(context, 0, command, 0)
 
-                if (Config.atLeastAPI(19)) {
+                if (atLeastAPI(19)) {
                     alarmManager.setExact(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
                 } else {
                     alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)

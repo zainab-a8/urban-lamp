@@ -46,12 +46,12 @@ import android.os.IBinder
 import android.util.Log
 import android.view.WindowManager
 
-import com.jmstudios.redmoon.application.RedMoonApplication
 import com.jmstudios.redmoon.manager.ScreenManager
 import com.jmstudios.redmoon.manager.WindowViewManager
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.receiver.OrientationChangeReceiver
 import com.jmstudios.redmoon.view.ScreenFilterView
+import com.jmstudios.redmoon.util.appContext
 
 import org.greenrobot.eventbus.EventBus
 
@@ -69,12 +69,12 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         if (DEBUG) Log.i(TAG, "onCreate")
 
         // Initialize helpers and managers
-        val context = this
+        val ctx = this
         val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val view = ScreenFilterView(context)
+        val view = ScreenFilterView(ctx)
 
         // Wire MVP classes
-        mPresenter = ScreenFilterPresenter(this, context,
+        mPresenter = ScreenFilterPresenter(this, ctx,
                                            WindowViewManager(windowManager, view),
                                            ScreenManager(this, windowManager))
 
@@ -91,9 +91,9 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         if (DEBUG) Log.i(TAG, String.format("onStartCommand(%s, %d, %d", intent, flags, startId))
-        val flag = intent.getIntExtra(ScreenFilterService.BUNDLE_KEY_COMMAND, COMMAND_INVALID)
+        val flag = intent.getIntExtra(ScreenFilterService.BUNDLE_KEY_COMMAND, COMMAND_MISSING)
         if (DEBUG) Log.i(TAG, "Recieved flag: $flag")
-        if (flag != COMMAND_INVALID) mPresenter.onScreenFilterCommand(Command.values()[flag])
+        if (flag != COMMAND_MISSING) mPresenter.onScreenFilterCommand(Command.values()[flag])
 
         // Do not attempt to restart if the hosting process is killed by Android
         return Service.START_NOT_STICKY
@@ -119,21 +119,20 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
 
     companion object {
         private const val BUNDLE_KEY_COMMAND = "jmstudios.bundle.key.COMMAND"
-        private const val COMMAND_INVALID = -1
+        private const val COMMAND_MISSING = -1
 
         private const val TAG = "ScreenFilterService"
         private const val DEBUG = true
 
-        private val context = RedMoonApplication.app
         private val intent: Intent
-            get() = Intent(context, ScreenFilterService::class.java)
+            get() = Intent(appContext, ScreenFilterService::class.java)
 
         val command = { c: Command -> intent.putExtra(BUNDLE_KEY_COMMAND, c.ordinal) }
 
-        fun start()  { context.startService(intent) }
-        fun stop()   { context.stopService(intent)  }
+        fun start()  { appContext.startService(intent) }
+        //fun stop()   { appContext.stopService(intent)  }
 
         fun toggle() { moveToState(Command.TOGGLE)  }
-        fun moveToState(c: Command) { context.startService(command(c)) }
+        fun moveToState(c: Command) { appContext.startService(command(c)) }
     }
 }

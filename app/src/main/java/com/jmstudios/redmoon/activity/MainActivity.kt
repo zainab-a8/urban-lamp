@@ -48,6 +48,7 @@ import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.fragment.FilterFragment
+import com.jmstudios.redmoon.util.requestOverlayPermission
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
 
@@ -163,7 +164,7 @@ class MainActivity : ThemedAppCompatActivity() {
     @Subscribe
     fun onOverlayPermissionDenied(event: overlayPermissionDenied) {
         mSwitch.isChecked = false
-        Config.requestOverlayPermission(this)
+        requestOverlayPermission(this)
     }
 
     companion object {

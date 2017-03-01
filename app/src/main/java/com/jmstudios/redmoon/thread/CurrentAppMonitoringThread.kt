@@ -25,8 +25,9 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.util.Log
 
-import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
+import com.jmstudios.redmoon.util.atLeastAPI
+import com.jmstudios.redmoon.util.belowAPI
 
 import java.lang.Thread
 import java.util.TreeMap
@@ -77,7 +78,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 
         private fun getCurrentApp(context: Context): String {
             // http://stackoverflow.com/q/33581311
-            if (Config.atLeastAPI(21)) {
+            if (atLeastAPI(21)) {
                 return getCurrentAppUsingUsageStats(context)
             } else {
                 return getCurrentAppUsingActivityManager(context)
@@ -87,13 +88,13 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
         @TargetApi(22) // Safe to call at all api levels but Studio doesn't know that
         private fun getCurrentAppUsingUsageStats(context: Context): String {
             try {
-                if (Config.atLeastAPI(21)) {
+                if (atLeastAPI(21)) {
                     // Although the UsageStatsManager was added in API
                     // 21, the constant to specify the
                     // UsageStatsManager wasn't added until API 22. So
                     // we use the value of that constant on API 21.
                     val usageStatsServiceString =
-                        if (Config.atLeastAPI(22)) Context.USAGE_STATS_SERVICE
+                        if (atLeastAPI(22)) Context.USAGE_STATS_SERVICE
                         else "usagestats"
                     val usm = context.getSystemService(usageStatsServiceString)
                                                                 as UsageStatsManager
@@ -123,7 +124,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 
         @Suppress("DEPRECATION") // Needed for pre-lollipop compatibility
         private fun getCurrentAppUsingActivityManager(context: Context): String {
-            if (Config.belowAPI(21)) {
+            if (belowAPI(21)) {
                 val am = ContextWrapper(context).baseContext
                           .getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
                 return am.getRunningTasks(1)[0].topActivity.packageName

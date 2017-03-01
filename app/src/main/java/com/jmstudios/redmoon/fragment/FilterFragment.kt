@@ -49,6 +49,8 @@ import com.jmstudios.redmoon.preference.ColorSeekBarPreference
 import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
 import com.jmstudios.redmoon.preference.ProfileSelectorPreference
+import com.jmstudios.redmoon.util.hasWriteSettingsPermission
+import com.jmstudios.redmoon.util.requestWriteSettingsPermission
 
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -91,14 +93,14 @@ class FilterFragment : EventPreferenceFragment() {
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.filter_preferences)
 
-        if (!Config.hasWriteSettingsPermission) lowerBrightnessPref.isChecked = false
+        if (!hasWriteSettingsPermission) { lowerBrightnessPref.isChecked = false }
         updateSecureSuspendSummary()
         updateTimeToggleSummary()
 
         lowerBrightnessPref.onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { preference, newValue ->
                     val checked = newValue as Boolean
-                    if (checked) Config.requestWriteSettingsPermission(activity) else true
+                    if (checked) { requestWriteSettingsPermission(activity) } else { true }
                 }
 
         /* Normally we'd change theme via an event after the setting gets

@@ -27,16 +27,14 @@ import android.provider.Settings
 import android.util.Log
 
 import com.jmstudios.redmoon.R
-import com.jmstudios.redmoon.application.RedMoonApplication
+import com.jmstudios.redmoon.util.appContext
 
 import com.jmstudios.redmoon.thread.CurrentAppMonitoringThread
 
 class SecureSuspendFragment : PreferenceFragment() {
 
-    private val context = RedMoonApplication.app
-
     private val appMonitoringIsWorking: Boolean
-        get() = CurrentAppMonitoringThread.isAppMonitoringWorking(context)
+        get() = CurrentAppMonitoringThread.isAppMonitoringWorking(appContext)
 
     private val mSwitchBarPreference: SwitchPreference
         get() = (preferenceScreen.findPreference

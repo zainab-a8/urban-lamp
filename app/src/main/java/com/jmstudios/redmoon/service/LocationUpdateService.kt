@@ -48,9 +48,10 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 
-import com.jmstudios.redmoon.application.RedMoonApplication
 import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.model.Config
+import com.jmstudios.redmoon.util.appContext
+import com.jmstudios.redmoon.util.hasLocationPermission
 
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
 import org.greenrobot.eventbus.EventBus
@@ -72,7 +73,7 @@ class LocationUpdateService: Service(), LocationListener {
     private var mLocationProvider = LocationProvider.NETWORK
 
     private val locationManager: LocationManager
-        get() = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        get() = appContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
     private val locationServicesEnabled: Boolean
         get() = locationManager.isProviderEnabled(when (mLocationProvider) {
@@ -93,7 +94,7 @@ class LocationUpdateService: Service(), LocationListener {
     override fun onCreate() {
         super.onCreate()
         if (DEBUG) Log.i(TAG, "onCreate")
-        if (Config.hasLocationPermission) {
+        if (hasLocationPermission) {
             if (DEBUG) Log.i(TAG, "Requesting location updates")
             if (DEBUG) Log.i(TAG, "List of providers + ${locationManager.allProviders}")
             if (locationManager.allProviders.contains(locationProviderNetwork)) {
@@ -113,7 +114,7 @@ class LocationUpdateService: Service(), LocationListener {
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         if (DEBUG) Log.i(TAG, "onStartCommand($intent, $flags, $startId)")
 
-        if (!Config.hasLocationPermission) {
+        if (!hasLocationPermission) {
             EventBus.getDefault().post(locationAccessDenied())
             stopSelf()
         } else if (!locationServicesEnabled) {
@@ -153,7 +154,7 @@ class LocationUpdateService: Service(), LocationListener {
 
     override fun onDestroy() {
         if (DEBUG) Log.i(TAG, "onDestroy")
-        if (Config.hasLocationPermission) {
+        if (hasLocationPermission) {
             locationManager.removeUpdates(this)
             updateLocation(lastKnownLocation)
         }
@@ -179,13 +180,12 @@ class LocationUpdateService: Service(), LocationListener {
         //val FOREGROUND = true
         //val BACKGROUND = false
 
-        private val context = RedMoonApplication.app
         private val intent: Intent
-            get() = Intent(context, LocationUpdateService::class.java)
+            get() = Intent(appContext, LocationUpdateService::class.java)
 
         fun start() {
             if (DEBUG) Log.i(TAG, "Received start request")
-            context.startService(intent)
+            appContext.startService(intent)
         }
     }
 }

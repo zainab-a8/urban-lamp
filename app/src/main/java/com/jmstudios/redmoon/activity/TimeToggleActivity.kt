@@ -43,7 +43,7 @@ import android.view.MenuItem
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.fragment.TimeToggleFragment
-import com.jmstudios.redmoon.model.Config
+import com.jmstudios.redmoon.util.onRequestPermissionsResult
 
 
 class TimeToggleActivity : ThemedAppCompatActivity() {
@@ -75,7 +75,7 @@ class TimeToggleActivity : ThemedAppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
                                             grantResults: IntArray) {
-        Config.onRequestPermissionsResult(requestCode)
+        onRequestPermissionsResult(requestCode)
     }
 
 
