@@ -89,7 +89,7 @@ fun requestWriteSettingsPermission(context: Context): Boolean {
         val builder = AlertDialog.Builder(context)
         builder.setMessage(R.string.write_settings_dialog_message)
                .setTitle(R.string.write_settings_dialog_title)
-               .setPositiveButton(R.string.ok_dialog) { dialog, id ->
+               .setPositiveButton(R.string.ok_dialog) { _, _ ->
                    context.startActivity(intent)
                }.show()
     }
@@ -103,7 +103,7 @@ fun requestOverlayPermission(context: Context): Boolean {
         val builder = AlertDialog.Builder(context)
         builder.setMessage(R.string.overlay_dialog_message)
                .setTitle(R.string.overlay_dialog_title)
-               .setPositiveButton(R.string.ok_dialog) { dialog, id ->
+               .setPositiveButton(R.string.ok_dialog) { _, _ ->
                    context.startActivity(intent)
                }.show()
     }

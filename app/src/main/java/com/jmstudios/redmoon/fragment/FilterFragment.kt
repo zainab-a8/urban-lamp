@@ -98,7 +98,7 @@ class FilterFragment : EventPreferenceFragment() {
         updateTimeToggleSummary()
 
         lowerBrightnessPref.onPreferenceChangeListener =
-                Preference.OnPreferenceChangeListener { preference, newValue ->
+                Preference.OnPreferenceChangeListener { _, newValue ->
                     val checked = newValue as Boolean
                     if (checked) { requestWriteSettingsPermission(activity) } else { true }
                 }
@@ -108,7 +108,7 @@ class FilterFragment : EventPreferenceFragment() {
          * scroll to the top when it gets recreated, which is rather jarring.
          * Doing it this way keeps the same scroll position, which is nice. */
         darkThemePref.onPreferenceChangeListener =
-                Preference.OnPreferenceChangeListener { preference, newValue ->
+                Preference.OnPreferenceChangeListener { _, _ ->
                     activity.recreate()
                     true
                 }

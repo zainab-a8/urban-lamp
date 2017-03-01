@@ -151,7 +151,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         val okString = context.resources.getString(R.string.button_remove_profile)
         val cancelString = context.resources.getString(R.string.cancel_dialog)
 
-        builder.setPositiveButton(okString) { dialog, which ->
+        builder.setPositiveButton(okString) { _, _ ->
             mProfilesModel.removeProfile(mProfile - DEFAULT_OPERATIONS_AM)
             mProfile = 0
             initLayout()
@@ -159,7 +159,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
             updateAmountProfiles()
         }
 
-        builder.setNegativeButton(cancelString) { dialog, which -> dialog.cancel() }
+        builder.setNegativeButton(cancelString) { dialog, _ -> dialog.cancel() }
 
         builder.show()
     }
@@ -177,7 +177,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         val okString = context.resources.getString(R.string.ok_dialog)
         val cancelString = context.resources.getString(R.string.cancel_dialog)
 
-        builder.setPositiveButton(okString) { dialog, which ->
+        builder.setPositiveButton(okString) { dialog, _ ->
             if (nameInput.text.toString().trim { it <= ' ' } != "") {
                 val profile = ProfilesModel.Profile(nameInput.text.toString(),
                                                     Config.color,
@@ -195,7 +195,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
             }
         }
 
-        builder.setNegativeButton(cancelString) { dialog, which -> dialog.cancel() }
+        builder.setNegativeButton(cancelString) { dialog, _ -> dialog.cancel() }
 
         builder.show()
     }

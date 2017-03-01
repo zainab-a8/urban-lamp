@@ -65,7 +65,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
         updatePrefs()
 
         locationPref.onPreferenceClickListener =
-            Preference.OnPreferenceClickListener { pref ->
+            Preference.OnPreferenceClickListener {
                 LocationUpdateService.start()
                 true
             }

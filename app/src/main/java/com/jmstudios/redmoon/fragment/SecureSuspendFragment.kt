@@ -48,7 +48,7 @@ class SecureSuspendFragment : PreferenceFragment() {
         setSwitchBarTitle(mSwitchBarPreference.isChecked)
 
         mSwitchBarPreference.onPreferenceChangeListener =
-            Preference.OnPreferenceChangeListener { preference, newValue ->
+            Preference.OnPreferenceChangeListener { _, newValue ->
                 val on = newValue as Boolean
                 if (!on) {
                     setSwitchBarTitle(on)
@@ -75,7 +75,7 @@ class SecureSuspendFragment : PreferenceFragment() {
 
         builder.setMessage(R.string.usage_stats_dialog_message)
                .setTitle(R.string.usage_stats_dialog_title)
-               .setPositiveButton(R.string.ok_dialog) { dialog, id ->
+               .setPositiveButton(R.string.ok_dialog) { _, _ ->
                     val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
                     startActivityForResult(intent, RESULT_USAGE_ACCESS)
         }
