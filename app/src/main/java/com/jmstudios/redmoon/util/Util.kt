@@ -47,6 +47,7 @@ import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
+import android.util.Log
 
 import com.jmstudios.redmoon.R
 
@@ -56,6 +57,21 @@ import com.jmstudios.redmoon.event.locationPermissionDialogClosed
 import org.greenrobot.eventbus.EventBus
 
 val appContext = RedMoonApplication.app
+
+private const val DEBUG = true
+
+/**
+ * This is a kotlin extension. It adds a Log method that any class can call
+ * as its own member. We use it to set the tag as the caller's class name.
+ * *
+ * @param message What to print.
+ * *
+ * @param enabled Optional: Whether to print this log. By default, it will obey
+ * *                the default global setting from the DEBUG constant above.
+ */
+fun Any.Log(message: String, enabled: Boolean = DEBUG) {
+    if (enabled) { Log.i(this::class.java.simpleName, message) }
+}
 
 val atLeastAPI: (Int) -> Boolean = { it <= android.os.Build.VERSION.SDK_INT }
 val belowAPI: (Int) -> Boolean = { !atLeastAPI(it) }
