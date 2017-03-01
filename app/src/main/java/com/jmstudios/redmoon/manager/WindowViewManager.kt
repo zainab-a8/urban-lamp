@@ -45,8 +45,7 @@ import com.jmstudios.redmoon.view.ScreenFilterView
 class WindowViewManager(private val mWindowManager: WindowManager,
                         val mView: ScreenFilterView) {
 
-    var mScreenFilterOpen = false
-        private set
+    private var mScreenFilterOpen = false
 
     /**
      * Creates and opens a new Window to display `view`.

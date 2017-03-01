@@ -96,17 +96,14 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
     private var mCurrentState: State = InitState()
 
     // Screen brightness state
-    private var oldScreenBrightness: Int = 0
+    private var oldScreenBrightness: Int = -1
     private var oldIsAutomaticBrightness: Boolean = false
 
     private val filterIsOn: Boolean
         get() = mCurrentState.filterIsOn
 
     init {
-        oldScreenBrightness = -1
         mCurrentState.onScreenFilterCommand(ScreenFilterService.Command.OFF)
-        if (DEBUG) Log.d(TAG, "Filter is on? $filterIsOn")
-        Config.filterIsOn = filterIsOn
     }
 
     private fun refreshForegroundNotification() {
@@ -161,6 +158,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
             Log.d(TAG, "Creating a persistent notification")
             mServiceController.startForeground(NOTIFICATION_ID, nb.build())
         } else {
+            mServiceController.stopForeground(false)
             val nm = mContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             nm.notify(NOTIFICATION_ID, nb.build())
         }
@@ -197,10 +195,12 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         intent.putExtra(BROADCAST_FIELD, filterIsOn)
         mContext.sendBroadcast(intent)
     }
+
     @Subscribe
     fun onDimLevelChanged(event: dimChanged) {
         mCurrentState.onDimLevelChanged()
     }
+
     @Subscribe
     fun onIntensityLevelChanged(event: intensityChanged) {
         mCurrentState.onIntensityLevelChanged()
@@ -342,7 +342,10 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
     private abstract inner class State {
         abstract val filterIsOn: Boolean
-        abstract fun onActivation(prevState: State)
+        open internal fun onActivation(prevState: State) {
+            Config.filterIsOn = filterIsOn
+            refreshForegroundNotification()
+        }
 
         internal fun openScreenFilter() {
             mWindowViewManager.openWindow(filterLayoutParams)
@@ -392,15 +395,13 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
     
     private inner class InitState : State() {
         override val filterIsOn = false
-        override fun onActivation(prevState: State) {}
     }
 
     private inner class OnState : State() {
         override val filterIsOn = true
         override fun onActivation(prevState: State) {
-            refreshForegroundNotification()
             openScreenFilter()
-            Config.filterIsOn = filterIsOn
+            super.onActivation(prevState)
             mView.animateDimLevel(Config.dim, null)
             mView.animateIntensityLevel(Config.intensity, null)
 
@@ -452,18 +453,16 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
     private inner class OffState : State() {
         override val filterIsOn = false
         override fun onActivation(prevState: State) {
-            Config.filterIsOn = filterIsOn
-            mServiceController.stopForeground(false)
-            refreshForegroundNotification()
+            super.onActivation(prevState)
 
-            if (prevState === mPreviewState) {
-                closeScreenFilter()
-            } else {
+            if (prevState.filterIsOn) {
                 mView.animateIntensityLevel(ScreenFilterView.MIN_INTENSITY, null)
                 mView.animateDimLevel(ScreenFilterView.MIN_DIM, object : AbstractAnimatorListener() {
                     override fun onAnimationCancel(animator: Animator) { mCurrentState.closeScreenFilter() }
                     override fun onAnimationEnd(animator: Animator) { mCurrentState.closeScreenFilter() }
                 })
+            } else {
+                closeScreenFilter()
             }
 
             if (Config.lowerBrightness) restoreBrightnessState()
@@ -490,9 +489,8 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
         override fun onActivation(prevState: State) {
             stateToReturnTo = prevState
-            Config.filterIsOn = filterIsOn
             pressesActive = 1
-            refreshForegroundNotification()
+            super.onActivation(prevState)
             // If the animators are not canceled, preview does not work when filter is turning off
             mView.cancelDimAnimator()
             mView.cancelIntensityAnimator()
@@ -514,11 +512,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
                     pressesActive--
                     if (DEBUG) Log.d(TAG, String.format("%d presses active", pressesActive))
                     if (pressesActive <= 0) {
-                        if (false) Log.d(TAG, String.format("Moving back to state %d", stateToReturnTo))
-                        if (!filterIsOn) {
-                            mServiceController.stopForeground(false)
-                            closeScreenFilter()
-                        }
+                        if (DEBUG) Log.d(TAG, "Moving back to state: $stateToReturnTo")
                         moveToState(stateToReturnTo)
                     }
                 }
@@ -527,7 +521,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         }
 
         override val nextState: (ScreenFilterService.Command) -> State = {
-            stateToReturnTo.nextState(it)
+            command -> stateToReturnTo.nextState(command)
         }
 
         override fun onDimLevelChanged() {
@@ -560,9 +554,8 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
         override fun onActivation(prevState: State) {
             stateToReturnTo = prevState
-            mServiceController.stopForeground(false)
             closeScreenFilter()
-            refreshForegroundNotification()
+            super.onActivation(prevState)
         }
 
         override fun onScreenFilterCommand(command: ScreenFilterService.Command) {
@@ -575,7 +568,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         }
 
         override val nextState: (ScreenFilterService.Command) -> State = {
-            stateToReturnTo.nextState(it)
+            command -> stateToReturnTo.nextState(command)
         }
     }
 
