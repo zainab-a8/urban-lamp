@@ -166,30 +166,24 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         }
     }
 
-    private fun createFilterLayoutParams(): WindowManager.LayoutParams {
-        val wlp = WindowManager.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                mScreenManager.screenHeight,
-                0,
-                -mScreenManager.statusBarHeightPx,
-                WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
-                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
-                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
-                        WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR or
-                        WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
-                PixelFormat.TRANSLUCENT)
-
-        wlp.gravity = Gravity.TOP or Gravity.START
-        wlp.buttonBrightness = (if (Config.dimButtons) 0 else -1).toFloat()
-
-        return wlp
-    }
-
-    private fun reLayoutScreenFilter() {
-        mWindowViewManager.reLayoutWindow(createFilterLayoutParams())
-    }
+    private val filterLayoutParams: WindowManager.LayoutParams
+        get() = WindowManager.LayoutParams(
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    mScreenManager.screenHeight,
+                    0,
+                    -mScreenManager.statusBarHeightPx,
+                    WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                        or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                        or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                        or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+                        or WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR
+                        or WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                    PixelFormat.TRANSLUCENT
+                ).apply{
+                    gravity = Gravity.TOP or Gravity.START
+                    buttonBrightness = (if (Config.dimButtons) 0 else -1).toFloat()
+                }
     //endregion
 
     //region events
@@ -263,11 +257,11 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
     //region OnOrientationChangeListener
     override fun onPortraitOrientation() {
-        reLayoutScreenFilter()
+        mWindowViewManager.reLayoutWindow(filterLayoutParams)
     }
 
     override fun onLandscapeOrientation() {
-        reLayoutScreenFilter()
+        mWindowViewManager.reLayoutWindow(filterLayoutParams)
     }
     //endregion
 
@@ -351,7 +345,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         abstract fun onActivation(prevState: State)
 
         internal fun openScreenFilter() {
-            mWindowViewManager.openWindow(createFilterLayoutParams())
+            mWindowViewManager.openWindow(filterLayoutParams)
         }
 
         open internal fun closeScreenFilter() {
