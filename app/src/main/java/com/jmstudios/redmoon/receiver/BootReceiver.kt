@@ -62,8 +62,8 @@ class BootReceiver : BroadcastReceiver() {
         // dimmed brightness and we need to restore the saved brightness
         // before proceeding.
         if (filterIsOnBeforeReboot && Config.lowerBrightness) {
-            ScreenFilterPresenter.setBrightnessState(Config.brightness,
-                    Config.brightnessWasAutomatic, context)
+            ScreenFilterPresenter.setBrightness(Config.brightness,
+                    Config.automaticBrightness, context)
         }
 
         TimeToggleChangeReceiver.scheduleNextOnCommand(context)

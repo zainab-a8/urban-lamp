@@ -156,8 +156,8 @@ object Config {
         get()  = getIntPref(R.string.pref_key_brightness, 0)
         set(b) = putIntPref(R.string.pref_key_brightness, b)
     
-    var brightnessWasAutomatic: Boolean
-        get()  = getBooleanPref(R.string.pref_key_brightness_automatic, true)
-        set(a) = putBooleanPref(R.string.pref_key_brightness_automatic, a)
+    var automaticBrightness: Boolean
+        get()  = getBooleanPref(R.string.pref_key_automatic_brightness, true)
+        set(a) = putBooleanPref(R.string.pref_key_automatic_brightness, a)
     //endregion
 }

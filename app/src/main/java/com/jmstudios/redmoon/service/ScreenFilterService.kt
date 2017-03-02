@@ -69,14 +69,14 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         Log("onCreate")
 
         // Initialize helpers and managers
-        val ctx = this
+        val context = this
         val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val view = ScreenFilterView(ctx)
+        val view = ScreenFilterView(context)
+        val wvm = WindowViewManager(windowManager, view)
+        val sm = ScreenManager(this, windowManager)
 
         // Wire MVP classes
-        mPresenter = ScreenFilterPresenter(this, ctx,
-                                           WindowViewManager(windowManager, view),
-                                           ScreenManager(this, windowManager))
+        mPresenter = ScreenFilterPresenter(this, context, wvm, sm)
 
         // Make Presenter listen to settings changes and orientation changes
         EventBus.getDefault().register(mPresenter)
