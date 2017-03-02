@@ -65,6 +65,7 @@
   <string name="pref_key_intro_shown" translatable="false">pref_key_intro_shown</string>
   <string name="pref_key_secure_suspend" translatable="false">pref_key_automatic_suspend</string>
   <string name="pref_key_secure_suspend_header" translatable="false">pref_key_secure_suspend_header</string>
+  <string name="pref_key_from_version_code" translatable="false">pref_key_from_version_code</string>
 
   <!-- Other -->
   <string name="version_name" translatable="false">2.10.0</string>

@@ -113,8 +113,9 @@ object Config {
     private val darkThemeFlag: Boolean
         get() = getBooleanPref(R.string.pref_key_dark_theme, false)
 
-    val timeToggle: Boolean
+    var timeToggle: Boolean
         get() = getBooleanPref(R.string.pref_key_time_toggle, false)
+        set(t) = putBooleanPref(R.string.pref_key_time_toggle, t)
 
     val customTurnOnTime: String
         get() = getStringPref(R.string.pref_key_custom_turn_on_time, "22:00")
@@ -122,8 +123,9 @@ object Config {
     val customTurnOffTime: String
         get() = getStringPref(R.string.pref_key_custom_turn_off_time, "06:00")
 
-    val useLocation: Boolean
+    var useLocation: Boolean
         get() = getBooleanPref(R.string.pref_key_use_location, false)
+        set(t) = putBooleanPref(R.string.pref_key_use_location, t)
 
     var sunsetTime: String
         get()  = getStringPref(R.string.pref_key_sunset_time, "19:30")
@@ -159,5 +161,11 @@ object Config {
     var automaticBrightness: Boolean
         get()  = getBooleanPref(R.string.pref_key_automatic_brightness, true)
         set(a) = putBooleanPref(R.string.pref_key_automatic_brightness, a)
+    //endregion
+
+    //region application
+    var fromVersionCode: Int
+        get() = getIntPref(R.string.pref_key_from_version_code, 0)
+        set(c) = putIntPref(R.string.pref_key_from_version_code, c)
     //endregion
 }
