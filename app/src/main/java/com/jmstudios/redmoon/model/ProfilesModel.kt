@@ -19,9 +19,11 @@ package com.jmstudios.redmoon.model
 
 import android.content.Context
 import android.util.Log
-import java.util.ArrayList
 
+import java.util.ArrayList
 import org.json.JSONObject
+
+import com.jmstudios.redmoon.util.Log
 
 /**
  * This class manages the SharedPreference that store all custom
@@ -42,11 +44,11 @@ class ProfilesModel(context: Context) {
         private set
 
     init {
-        if (DEBUG) Log.i(TAG, "Creating ProfilesModel")
+        Log("Creating ProfilesModel")
         val mPrefsContentsMap = mSharedPrefs.all
         profiles = ArrayList<Profile>()
 
-        if (DEBUG) Log.i(TAG, "Parsing preference contents")
+        Log("Parsing preference contents")
         val amProfiles = mPrefsContentsMap.entries.size
         if (DEBUG) Log.d(TAG, "Allocating " + amProfiles)
         profiles.ensureCapacity(amProfiles)
@@ -63,7 +65,7 @@ class ProfilesModel(context: Context) {
     }
 
     fun addProfile(profile: Profile) {
-        if (DEBUG) Log.i(TAG, "Adding new profile")
+        Log("Adding new profile")
         profiles.add(profile)
 
         updateSharedPreferences()
@@ -80,7 +82,7 @@ class ProfilesModel(context: Context) {
     }
 
     private fun parseProfile(entry: String): Profile {
-        if (DEBUG) Log.i(TAG, "Parsing entry: " + entry)
+        Log("Parsing entry: $entry")
         val json = JSONObject(entry)
         val name = json.optString(KEY_NAME)
         val color = json.optInt(KEY_COLOR)
@@ -89,8 +91,8 @@ class ProfilesModel(context: Context) {
         return Profile(name, color, intensity, dim)
     }
 
-        private fun updateSharedPreferences() {
-        if (DEBUG) Log.i(TAG, "Updating SharedPreferences")
+    private fun updateSharedPreferences() {
+        Log("Updating SharedPreferences")
         val editor = mSharedPrefs.edit()
         editor.clear()
 
@@ -119,15 +121,15 @@ class ProfilesModel(context: Context) {
     }
 
     companion object {
-        private val preferenceName = "com.jmstudios.redmoon.PROFILES_PREFERENCE"
-        private val mode = Context.MODE_PRIVATE
+        private const val preferenceName = "com.jmstudios.redmoon.PROFILES_PREFERENCE"
+        private const val mode = Context.MODE_PRIVATE
 
         private const val KEY_NAME = "name"
         private const val KEY_COLOR = "color"
         private const val KEY_INTENSITY = "intensity"
         private const val KEY_DIM = "dim"
 
-        private val TAG = "ProfilesModel"
-        private val DEBUG = true
+        private const val TAG = "ProfilesModel"
+        private const val DEBUG = true
     }
 }

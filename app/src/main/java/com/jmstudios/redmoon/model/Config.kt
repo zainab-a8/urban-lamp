@@ -36,208 +36,128 @@
  */
 package com.jmstudios.redmoon.model
 
-import android.Manifest
-import android.annotation.TargetApi
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.preference.PreferenceManager
-import android.provider.Settings
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.application.RedMoonApplication
-import com.jmstudios.redmoon.event.locationPermissionDialogClosed
 import com.jmstudios.redmoon.fragment.TimeToggleFragment
 import com.jmstudios.redmoon.preference.ColorSeekBarPreference
 import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
-
-import org.greenrobot.eventbus.EventBus
+import com.jmstudios.redmoon.util.appContext
 
 /**
- * TODO: Better comment.
- * This singleton provides a way to interact with settings and permissions
+ * This singleton provides allows easy access to the shared preferences
  */
 object Config {
-    //region utilities
-    private val mContext = RedMoonApplication.app
-    private val lp = Manifest.permission.ACCESS_FINE_LOCATION
-    private val granted = PackageManager.PERMISSION_GRANTED
-    //private val OVERLAY_PERMISSION_REQ_CODE = 1111
-    private val LOCATION_PERMISSION_REQ_CODE = 2222
+    private val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(appContext)
 
-    val atLeastAPI: (Int) -> Boolean = { it <= android.os.Build.VERSION.SDK_INT }
-    val belowAPI: (Int) -> Boolean = { it > android.os.Build.VERSION.SDK_INT }
-    val getString: (Int) -> String = { mContext.getString(it) }
+    private fun getBooleanPref(resId: Int, default: Boolean): Boolean {
+        return sharedPrefs.getBoolean(appContext.getString(resId), default)
+    }
 
-    val hasLocationPermission: Boolean
-        get() = ContextCompat.checkSelfPermission(mContext, lp) == granted
+    private fun putBooleanPref(resId: Int, v: Boolean) {
+        sharedPrefs.edit().putBoolean(appContext.getString(resId), v).apply()
+    }
 
-    val hasWriteSettingsPermission: Boolean
-        get() = if (atLeastAPI(23)) Settings.System.canWrite(mContext) else true
+    private fun getIntPref(resId: Int, default: Int): Int {
+        return sharedPrefs.getInt(appContext.getString(resId), default)
+    }
 
-    val hasOverlayPermission: Boolean
-        get() = if (atLeastAPI(23)) Settings.canDrawOverlays(mContext) else true
+    private fun putIntPref(resId: Int, v: Int) {
+        sharedPrefs.edit().putInt(appContext.getString(resId), v).apply()
+    }
+
+    private fun getStringPref(resId: Int, default: String): String {
+        return sharedPrefs.getString(appContext.getString(resId), default)
+    }
+
+    private fun putStringPref(resId: Int, v: String) {
+        sharedPrefs.edit().putString(appContext.getString(resId), v).apply()
+    }
+
+    //region preferences
+    var filterIsOn: Boolean
+        get()   = getBooleanPref(R.string.pref_key_filter_is_on, false)
+        set(on) = putBooleanPref(R.string.pref_key_filter_is_on, on)
+    
+    var amountProfiles: Int
+        get()  = getIntPref(R.string.pref_key_num_profiles, 3)
+        set(n) = putIntPref(R.string.pref_key_num_profiles, n)
+
+    var profile: Int
+        get()  = getIntPref(R.string.pref_key_profile_spinner, 1)
+        set(p) = putIntPref(R.string.pref_key_profile_spinner, p)
+    
+    var color: Int
+        get()  = getIntPref(R.string.pref_key_color, ColorSeekBarPreference.DEFAULT_VALUE)
+        set(c) = putIntPref(R.string.pref_key_color, c)
+
+    var intensity: Int
+        get()  = getIntPref(R.string.pref_key_intensity, IntensitySeekBarPreference.DEFAULT_VALUE)
+        set(i) = putIntPref(R.string.pref_key_intensity, i)
+
+    var dim: Int
+        get()  = getIntPref(R.string.pref_key_dim, DimSeekBarPreference.DEFAULT_VALUE)
+        set(d) = putIntPref(R.string.pref_key_dim, d)
+
+    val lowerBrightness: Boolean
+        get() = getBooleanPref(R.string.pref_key_lower_brightness, false)
+
+    val secureSuspend: Boolean
+        get() = getBooleanPref(R.string.pref_key_secure_suspend, false)
+
+    val dimButtons: Boolean
+        get() = getBooleanPref(R.string.pref_key_dim_buttons, true)
+    
+    private val darkThemeFlag: Boolean
+        get() = getBooleanPref(R.string.pref_key_dark_theme, false)
+
+    val timeToggle: Boolean
+        get() = getBooleanPref(R.string.pref_key_time_toggle, false)
+
+    val customTurnOnTime: String
+        get() = getStringPref(R.string.pref_key_custom_turn_on_time, "22:00")
+
+    val customTurnOffTime: String
+        get() = getStringPref(R.string.pref_key_custom_turn_off_time, "06:00")
+
+    val useLocation: Boolean
+        get() = getBooleanPref(R.string.pref_key_use_location, false)
+
+    var sunsetTime: String
+        get()  = getStringPref(R.string.pref_key_sunset_time, "19:30")
+        set(t) = putStringPref(R.string.pref_key_sunset_time, t)
+
+    var sunriseTime: String
+        get()  = getStringPref(R.string.pref_key_sunrise_time, "06:30")
+        set(t) = putStringPref(R.string.pref_key_sunrise_time, t)
+    //endregion
+
+    //region state
+    val activeTheme: Int
+        get() = if (darkThemeFlag) { R.style.AppThemeDark } else { R.style.AppTheme }
 
     val automaticTurnOnTime: String
         get() = if (useLocation) sunsetTime else customTurnOnTime
 
     val automaticTurnOffTime: String
         get() = if (useLocation) sunriseTime else customTurnOffTime
-
-    fun requestLocationPermission(activity: Activity): Boolean {
-        if (!hasLocationPermission) {
-            val permission = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
-            ActivityCompat.requestPermissions(activity, permission, LOCATION_PERMISSION_REQ_CODE)
-        }
-        return hasLocationPermission
-    }
-
-    fun requestWriteSettingsPermission(context: Context): Boolean {
-        if (!hasWriteSettingsPermission) @TargetApi(23) {
-            val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
-                                Uri.parse("package:" + context.packageName))
-            val builder = AlertDialog.Builder(context)
-            builder.setMessage(R.string.write_settings_dialog_message)
-                   .setTitle(R.string.write_settings_dialog_title)
-                   .setPositiveButton(R.string.ok_dialog) { dialog, id ->
-                       context.startActivity(intent)
-                   }.show()
-        }
-        return hasWriteSettingsPermission
-    }
-
-    fun requestOverlayPermission(context: Context): Boolean {
-        if (!hasOverlayPermission) @TargetApi(23) {
-            val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                                Uri.parse("package:" + context.packageName))
-            val builder = AlertDialog.Builder(context)
-            builder.setMessage(R.string.overlay_dialog_message)
-                   .setTitle(R.string.overlay_dialog_title)
-                   .setPositiveButton(R.string.ok_dialog) { dialog, id ->
-                       context.startActivity(intent)
-                   }.show()
-        }
-        return hasOverlayPermission
-    }
-
-    fun onRequestPermissionsResult(requestCode: Int) {
-        if (requestCode == Config.LOCATION_PERMISSION_REQ_CODE) {
-            EventBus.getDefault().post(locationPermissionDialogClosed())
-        }
-    }
-
-    val activeTheme: Int
-        get() = if (darkThemeFlag) { R.style.AppThemeDark } else { R.style.AppTheme }
-
-    //endregion
-
-    //region preferences
-    private val mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext)
-
-    var filterIsOn: Boolean
-        get() = mSharedPrefs.getBoolean(getString(R.string.pref_key_filter_is_on), false)
-        set(isOn) {
-            mSharedPrefs.edit()
-                        .putBoolean(getString(R.string.pref_key_filter_is_on), isOn)
-                        .apply()
-        }
     
-    var dim: Int
-        get() = mSharedPrefs.getInt(getString(R.string.pref_key_dim),
-                                    DimSeekBarPreference.DEFAULT_VALUE)
-        set(dim) = mSharedPrefs.edit().putInt(getString(R.string.pref_key_dim), dim).apply()
-
-    var intensity: Int
-        get() = mSharedPrefs.getInt(getString(R.string.pref_key_intensity),
-                                    IntensitySeekBarPreference.DEFAULT_VALUE)
-        set(i) = mSharedPrefs.edit()
-                             .putInt(getString(R.string.pref_key_intensity), i)
-                             .apply()
-
-    var color: Int
-        get() = mSharedPrefs.getInt(getString(R.string.pref_key_color),
-                                    ColorSeekBarPreference.DEFAULT_VALUE)
-        set(c) = mSharedPrefs.edit().putInt(getString(R.string.pref_key_color), c).apply()
-
-    private val darkThemeFlag: Boolean
-        get() = mSharedPrefs.getBoolean(getString(R.string.pref_key_dark_theme), false)
-
-    val lowerBrightness: Boolean
-        get() = mSharedPrefs.getBoolean(getString(R.string.pref_key_lower_brightness), false)
-
-    val timeToggle: Boolean
-        get() = mSharedPrefs.getBoolean(getString(R.string.pref_key_time_toggle), false)
-    
-    val dimButtons: Boolean
-        get() = mSharedPrefs.getBoolean(getString(R.string.pref_key_dim_buttons), true)
-
-    
-    var brightnessAutomatic: Boolean
-        get() = mSharedPrefs.getBoolean(getString(R.string.pref_key_brightness_automatic),true)
-        set(auto) = mSharedPrefs.edit()
-                                .putBoolean(getString(R.string.pref_key_brightness_automatic), auto)
-                                .apply()
-    
-    var brightnessLevel: Int
-        get() = mSharedPrefs.getInt(getString(R.string.pref_key_brightness_level), 0)
-        set(level) = mSharedPrefs.edit()
-                                 .putInt(getString(R.string.pref_key_brightness_level), level)
-                                 .apply()
-    
-    var profile: Int
-        get() = mSharedPrefs.getInt(getString(R.string.pref_key_profile_spinner), 1)
-        set(p) = mSharedPrefs.edit()
-                             .putInt(getString(R.string.pref_key_profile_spinner), p)
-                             .apply()
-    
-    var amountProfiles: Int
-        get() = mSharedPrefs.getInt(getString(R.string.pref_key_num_profiles), 3)
-        set(num) = mSharedPrefs.edit()
-                               .putInt(getString(R.string.pref_key_num_profiles), num)
-                               .apply()
+    var location: String
+        get()  = getStringPref(R.string.pref_key_location, TimeToggleFragment.DEFAULT_LOCATION)
+        set(l) = putStringPref(R.string.pref_key_location, l)
 
     var introShown: Boolean
-        get() = mSharedPrefs.getBoolean(getString(R.string.pref_key_intro_shown), false)
-        set(shown) = mSharedPrefs.edit()
-                                 .putBoolean(getString(R.string.pref_key_intro_shown), shown)
-                                 .apply()
+        get()  = getBooleanPref(R.string.pref_key_intro_shown, false)
+        set(s) = putBooleanPref(R.string.pref_key_intro_shown, s)
+
+    var brightness: Int
+        get()  = getIntPref(R.string.pref_key_brightness, 0)
+        set(b) = putIntPref(R.string.pref_key_brightness, b)
     
-    val secureSuspend: Boolean
-        get() = mSharedPrefs.getBoolean(getString(R.string.pref_key_secure_suspend), false)
-
-    var location: String
-        get() = mSharedPrefs.getString(getString(R.string.pref_key_location),
-                                       TimeToggleFragment.DEFAULT_LOCATION)
-        set(shown) = mSharedPrefs.edit()
-                                 .putString(getString(R.string.pref_key_location), shown)
-                                 .apply()
-
-    val useLocation: Boolean
-        get() = mSharedPrefs.getBoolean(getString(R.string.pref_key_use_location), false)
-
-    val customTurnOnTime: String
-        get() = mSharedPrefs.getString(getString(R.string.pref_key_custom_turn_on_time), "22:00")
-
-    val customTurnOffTime: String
-        get() = mSharedPrefs.getString(getString(R.string.pref_key_custom_turn_off_time), "06:00")
-
-    var sunsetTime: String
-        get() = mSharedPrefs.getString(getString(R.string.pref_key_sunset_time), "19:30")
-        set(time) = mSharedPrefs.edit()
-                                .putString(getString(R.string.pref_key_sunset_time), time)
-                                .apply()
-
-    var sunriseTime: String
-        get() = mSharedPrefs.getString(getString(R.string.pref_key_sunrise_time), "06:30")
-        set(time) = mSharedPrefs.edit()
-                                .putString(getString(R.string.pref_key_sunrise_time), time)
-                                .apply()
+    var automaticBrightness: Boolean
+        get()  = getBooleanPref(R.string.pref_key_automatic_brightness, true)
+        set(a) = putBooleanPref(R.string.pref_key_automatic_brightness, a)
     //endregion
 }

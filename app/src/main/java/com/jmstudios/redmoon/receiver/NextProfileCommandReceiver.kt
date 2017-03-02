@@ -20,15 +20,15 @@ package com.jmstudios.redmoon.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 
 import com.jmstudios.redmoon.helper.ProfilesHelper
 import com.jmstudios.redmoon.model.Config
+import com.jmstudios.redmoon.util.Log
 
 class NextProfileCommandReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (DEBUG) Log.i(TAG, "Next profile requested")
+        Log("Next profile requested")
 
         // Here we just change the profile (cycles back to default
         // when it reaches the max).
@@ -47,10 +47,5 @@ class NextProfileCommandReceiver : BroadcastReceiver() {
             Config.intensity = profileObject.mIntensity
             Config.color = profileObject.mColor
         }
-    }
-
-    companion object {
-        val DEBUG = false
-        val TAG = "NextProfileCommandRcv"
     }
 }

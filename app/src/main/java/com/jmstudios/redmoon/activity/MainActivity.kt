@@ -39,7 +39,6 @@ package com.jmstudios.redmoon.activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Switch
@@ -48,40 +47,32 @@ import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.fragment.FilterFragment
+import com.jmstudios.redmoon.util.requestOverlayPermission
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
+import com.jmstudios.redmoon.util.Log
 
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 class MainActivity : ThemedAppCompatActivity() {
 
+    override val fragment = FilterFragment()
+    override val tag = "jmstudios.fragment.tag.FILTER"
+
     lateinit private var mSwitch : Switch
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        ScreenFilterService.start()
         val intent = intent
-        if (DEBUG) Log.i(TAG, "Got intent")
-
+        Log("Got intent")
         val fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false)
         if (fromShortcut) { toggleAndFinish() }
 
         super.onCreate(savedInstanceState)
+        if (!Config.introShown) { startIntro() }
 
-        // Only create and attach a new fragment on the first Activity creation.
-        if (savedInstanceState == null) {
-            if (DEBUG) Log.i(TAG, "onCreate - First creation")
-
-            val view = FilterFragment()
-            val tag = FRAGMENT_TAG_FILTER
-            fragmentManager.beginTransaction()
-                           .replace(R.id.fragment_container, view, tag)
-                           .commit()
-        }
-
-        if (!Config.introShown) {
-            startIntro()
-        }
+        // The preview will appear faster if we don't have to start the service
+        ScreenFilterService.start()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -90,8 +81,8 @@ class MainActivity : ThemedAppCompatActivity() {
         mSwitch = (menu.findItem(R.id.screen_filter_switch).actionView as Switch).apply {
             isChecked = Config.filterIsOn
             setOnClickListener {
-                val state = if (mSwitch.isChecked) ScreenFilterService.Command.ON
-                            else ScreenFilterService.Command.OFF
+                val state = if (mSwitch.isChecked) { ScreenFilterService.Command.ON }
+                            else { ScreenFilterService.Command.OFF }
                 ScreenFilterService.moveToState(state)
             }
         }
@@ -101,10 +92,11 @@ class MainActivity : ThemedAppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        // The switch is null here, so we can't set it position directly.
+        // The switch is null here, so we can't set its position directly.
         invalidateOptionsMenu()
         EventBus.getDefault().register(this)
     }
+
     override fun onPause() {
         EventBus.getDefault().unregister(this)
         super.onPause()
@@ -120,7 +112,7 @@ class MainActivity : ThemedAppCompatActivity() {
     override fun onNewIntent(intent: Intent) {
         val fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false)
         if (fromShortcut) { toggleAndFinish() }
-        if (DEBUG) Log.i(TAG, "onNewIntent")
+        Log("onNewIntent")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -163,13 +155,10 @@ class MainActivity : ThemedAppCompatActivity() {
     @Subscribe
     fun onOverlayPermissionDenied(event: overlayPermissionDenied) {
         mSwitch.isChecked = false
-        Config.requestOverlayPermission(this)
+        requestOverlayPermission(this)
     }
 
     companion object {
-        private val TAG = "MainActivity"
-        private val DEBUG = true
-        private val FRAGMENT_TAG_FILTER = "jmstudios.fragment.tag.FILTER"
-        val EXTRA_FROM_SHORTCUT_BOOL = "com.jmstudios.redmoon.activity.MainActivity.EXTRA_FROM_SHORTCUT_BOOL"
+        const val EXTRA_FROM_SHORTCUT_BOOL = "com.jmstudios.redmoon.activity.MainActivity.EXTRA_FROM_SHORTCUT_BOOL"
     }
 }

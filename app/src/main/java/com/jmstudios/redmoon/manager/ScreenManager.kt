@@ -39,9 +39,10 @@ import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.util.DisplayMetrics
-import android.util.Log
 import android.util.TypedValue
 import android.view.WindowManager
+
+import com.jmstudios.redmoon.util.Log
 
 class ScreenManager(context: Context, private val mWindowManager: WindowManager) {
 
@@ -71,10 +72,10 @@ class ScreenManager(context: Context, private val mWindowManager: WindowManager)
 
                 if (statusBarHeightId > 0) {
                     mStatusBarHeight = mResources.getDimensionPixelSize(statusBarHeightId)
-                    if (DEBUG) Log.i(TAG, "Found Status Bar Height: " + mStatusBarHeight)
+                    Log("Found Status Bar Height: " + mStatusBarHeight)
                 } else {
                     mStatusBarHeight = dpToPx(DEFAULT_STATUS_BAR_HEIGHT_DP.toFloat()).toInt()
-                    if (DEBUG) Log.i(TAG, "Using default Status Bar Height: " + mStatusBarHeight)
+                    Log("Using default Status Bar Height: " + mStatusBarHeight)
                 }
             }
 
@@ -88,10 +89,10 @@ class ScreenManager(context: Context, private val mWindowManager: WindowManager)
 
                 if (navBarHeightId > 0) {
                     mNavigationBarHeight = mResources.getDimensionPixelSize(navBarHeightId)
-                    if (DEBUG) Log.i(TAG, "Found Navigation Bar Height: " + mNavigationBarHeight)
+                    Log("Found Navigation Bar Height: " + mNavigationBarHeight)
                 } else {
                     mNavigationBarHeight = dpToPx(DEFAULT_NAV_BAR_HEIGHT_DP.toFloat()).toInt()
-                    if (DEBUG) Log.i(TAG, "Using default Navigation Bar Height: " + mNavigationBarHeight)
+                    Log("Using default Navigation Bar Height: " + mNavigationBarHeight)
                 }
             }
 
@@ -107,10 +108,7 @@ class ScreenManager(context: Context, private val mWindowManager: WindowManager)
     }
 
     companion object {
-        private val TAG = "ScreenManager"
-        private val DEBUG = false
-
-        private val DEFAULT_NAV_BAR_HEIGHT_DP = 48
-        private val DEFAULT_STATUS_BAR_HEIGHT_DP = 25
+        private const val DEFAULT_NAV_BAR_HEIGHT_DP = 48
+        private const val DEFAULT_STATUS_BAR_HEIGHT_DP = 25
     }
 }

@@ -43,18 +43,18 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.widget.RemoteViews
 
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
+import com.jmstudios.redmoon.util.Log
 
 class SwitchAppWidgetProvider : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        if (DEBUG) Log.i(TAG, "Updating!")
+        Log("Updating!")
 
         for (i in appWidgetIds.indices) {
             val appWidgetId = appWidgetIds[i]
@@ -82,7 +82,7 @@ class SwitchAppWidgetProvider : AppWidgetProvider() {
     }
 
     internal fun updateImage(context: Context, filterIsOn: Boolean) {
-        if (DEBUG) Log.i(TAG, "Updating image!")
+        Log("Updating image!")
         val views = RemoteViews(context.packageName, R.layout.appwidget_switch)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetComponent = ComponentName(context, SwitchAppWidgetProvider::class.java.name)
@@ -94,10 +94,8 @@ class SwitchAppWidgetProvider : AppWidgetProvider() {
     }
 
     companion object {
-        val ACTION_TOGGLE = "com.jmstudios.redmoon.action.APPWIDGET_TOGGLE"
-        val ACTION_UPDATE = "com.jmstudios.redmoon.action.APPWIDGET_UPDATE"
-        val EXTRA_POWER = "com.jmstudios.redmoon.action.APPWIDGET_EXTRA_POWER"
-        private val TAG = "SwitchAppWidgetProvider"
-        private val DEBUG = false
+        const val ACTION_TOGGLE = "com.jmstudios.redmoon.action.APPWIDGET_TOGGLE"
+        const val ACTION_UPDATE = "com.jmstudios.redmoon.action.APPWIDGET_UPDATE"
+        const val EXTRA_POWER = "com.jmstudios.redmoon.action.APPWIDGET_EXTRA_POWER"
     }
 }

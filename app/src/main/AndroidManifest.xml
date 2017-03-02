@@ -105,15 +105,6 @@
         </activity>
 
         <activity
-            android:name="com.jmstudios.redmoon.activity.ShortcutToggleActivity"
-            android:label="@string/shortcut_activity"
-            android:theme="@style/TransparentTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
-
-        <activity
             android:name=".activity.TimeToggleActivity"
             android:label="@string/time_toggle_activity"
             android:parentActivityName="com.jmstudios.redmoon.activity.MainActivity"

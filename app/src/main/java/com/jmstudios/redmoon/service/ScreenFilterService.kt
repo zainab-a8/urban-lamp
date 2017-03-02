@@ -43,15 +43,15 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.IBinder
-import android.util.Log
 import android.view.WindowManager
 
-import com.jmstudios.redmoon.application.RedMoonApplication
 import com.jmstudios.redmoon.manager.ScreenManager
 import com.jmstudios.redmoon.manager.WindowViewManager
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.receiver.OrientationChangeReceiver
 import com.jmstudios.redmoon.view.ScreenFilterView
+import com.jmstudios.redmoon.util.appContext
+import com.jmstudios.redmoon.util.Log
 
 import org.greenrobot.eventbus.EventBus
 
@@ -66,16 +66,17 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
     override fun onCreate() {
         super.onCreate()
 
-        if (DEBUG) Log.i(TAG, "onCreate")
+        Log("onCreate")
 
         // Initialize helpers and managers
         val context = this
         val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val view = ScreenFilterView(context)
+        val wvm = WindowViewManager(windowManager, view)
+        val sm = ScreenManager(this, windowManager)
 
         // Wire MVP classes
-        mPresenter = ScreenFilterPresenter(ScreenFilterView(context), this, context,
-                                           WindowViewManager(windowManager),
-                                           ScreenManager(this, windowManager))
+        mPresenter = ScreenFilterPresenter(this, context, wvm, sm)
 
         // Make Presenter listen to settings changes and orientation changes
         EventBus.getDefault().register(mPresenter)
@@ -89,10 +90,10 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        if (DEBUG) Log.i(TAG, String.format("onStartCommand(%s, %d, %d", intent, flags, startId))
-        val flag = intent.getIntExtra(ScreenFilterService.BUNDLE_KEY_COMMAND, COMMAND_INVALID)
-        if (DEBUG) Log.i(TAG, "Recieved flag: $flag")
-        if (flag != COMMAND_INVALID) mPresenter.onScreenFilterCommand(Command.values()[flag])
+        Log(String.format("onStartCommand(%s, %d, %d", intent, flags, startId))
+        val flag = intent.getIntExtra(ScreenFilterService.BUNDLE_KEY_COMMAND, COMMAND_MISSING)
+        Log("Recieved flag: $flag")
+        if (flag != COMMAND_MISSING) mPresenter.onScreenFilterCommand(Command.values()[flag])
 
         // Do not attempt to restart if the hosting process is killed by Android
         return Service.START_NOT_STICKY
@@ -104,7 +105,7 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
     }
 
     override fun onDestroy() {
-        if (DEBUG) Log.i(TAG, "onDestroy")
+        Log("onDestroy")
 
         // TODO: make sure the filterView gets closed. Not a problem right now
         // but without it this is brittle and bug-prone
@@ -117,22 +118,18 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
     }
 
     companion object {
-        private val BUNDLE_KEY_COMMAND = "jmstudios.bundle.key.COMMAND"
-        private val COMMAND_INVALID = -1
+        private const val BUNDLE_KEY_COMMAND = "jmstudios.bundle.key.COMMAND"
+        private const val COMMAND_MISSING = -1
 
-        private val TAG = "ScreenFilterService"
-        private val DEBUG = true
-
-        private val context = RedMoonApplication.app
         private val intent: Intent
-            get() = Intent(context, ScreenFilterService::class.java)
+            get() = Intent(appContext, ScreenFilterService::class.java)
 
         val command = { c: Command -> intent.putExtra(BUNDLE_KEY_COMMAND, c.ordinal) }
 
-        fun start()  { context.startService(intent) }
-        fun stop()   { context.stopService(intent)  }
+        fun start()  { appContext.startService(intent) }
+        //fun stop()   { appContext.stopService(intent)  }
 
         fun toggle() { moveToState(Command.TOGGLE)  }
-        fun moveToState(c: Command) { context.startService(command(c)) }
+        fun moveToState(c: Command) { appContext.startService(command(c)) }
     }
 }
