@@ -195,7 +195,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
             // Set notification appearance
             setSmallIcon(R.drawable.notification_icon_half_moon)
             setContentTitle(context.getString(R.string.app_name))
-            setContentText(ProfilesHelper.getProfileName(Config.profile, context))
+            setContentText(ProfilesHelper.getProfileName(Config.profile))
             setColor(ContextCompat.getColor(context, R.color.color_primary))
             setPriority(Notification.PRIORITY_MIN)
 
@@ -286,13 +286,13 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
     private fun stopAppMonitoring() {
         Log("Stopping app monitoring")
+        stopCamThread()
         try {
             mContext.unregisterReceiver(mScreenStateReceiver)
         } catch (e: IllegalArgumentException) {
             // Catch errors when receiver is unregistered more than
             // once, it is not a problem, so we just ignore it.
         }
-
     }
 
     private fun saveBrightness() {

@@ -69,7 +69,6 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
             getString(R.string.pref_key_secure_suspend)       -> secureSuspendChanged()
             else -> return
             /* Preferences for which no Event is posted */
-            // getString(R.string.pref_key_lower_brightness)
             // getString(R.string.pref_key_brightness_level)
             // getString(R.string.pref_key_num_profiles)
             // getString(R.string.pref_key_intro_shown)

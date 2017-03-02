@@ -34,6 +34,7 @@ import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
+import com.jmstudios.redmoon.util.Log
 import com.jmstudios.redmoon.view.ScreenFilterView
 
 abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Preference(context, attrs), SeekBar.OnSeekBarChangeListener {
@@ -71,6 +72,7 @@ abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
     }
 
     override fun onBindView(view: View) {
+        Log("onBindView")
         super.onBindView(view)
         mView = view
         mSeekBar = view.findViewById(R.id.seekbar) as SeekBar
@@ -82,6 +84,7 @@ abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
 
     //region OnSeekBarChangedListener
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+        Log("onSeekbarProgressChanged, storing value")
         mProgress = progress
         persistInt(mProgress)
         updateMoonIcon()

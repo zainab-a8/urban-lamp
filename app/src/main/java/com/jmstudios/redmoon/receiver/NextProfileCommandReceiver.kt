@@ -36,16 +36,7 @@ class NextProfileCommandReceiver : BroadcastReceiver() {
         val amProfiles = Config.amountProfiles
         val newProfile = if (profile + 1 >= amProfiles) 1
                          else profile + 1
-        Config.profile = newProfile
 
-        // Next update the other settings that are based on the
-        // profile
-        if (newProfile != 0) {
-            val profileObject = ProfilesHelper.getProfile(newProfile, context)
-
-            Config.dim = profileObject.mDim
-            Config.intensity = profileObject.mIntensity
-            Config.color = profileObject.mColor
-        }
+        ProfilesHelper.setProfile(newProfile)
     }
 }

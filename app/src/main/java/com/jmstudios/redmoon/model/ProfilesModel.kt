@@ -88,7 +88,8 @@ class ProfilesModel(context: Context) {
         val color = json.optInt(KEY_COLOR)
         val intensity = json.optInt(KEY_INTENSITY)
         val dim = json.optInt(KEY_DIM)
-        return Profile(name, color, intensity, dim)
+        val lowerBrightness = json.optBoolean(KEY_LOWER_BRIGHTNESS)
+        return Profile(name, color, intensity, dim, lowerBrightness)
     }
 
     private fun updateSharedPreferences() {
@@ -107,7 +108,8 @@ class ProfilesModel(context: Context) {
     class Profile(var mName: String,
                   var mColor:     Int,
                   var mIntensity: Int,
-                  var mDim:       Int){
+                  var mDim:       Int,
+                  val mLowerBrightness: Boolean){
 
         val values: String
             get() {
@@ -116,6 +118,7 @@ class ProfilesModel(context: Context) {
                 json.put(KEY_COLOR,     mColor)
                 json.put(KEY_INTENSITY, mIntensity)
                 json.put(KEY_DIM,       mDim)
+                json.put(KEY_LOWER_BRIGHTNESS, mLowerBrightness)
                 return json.toString(2)
             }
     }
@@ -128,6 +131,7 @@ class ProfilesModel(context: Context) {
         private const val KEY_COLOR = "color"
         private const val KEY_INTENSITY = "intensity"
         private const val KEY_DIM = "dim"
+        private const val KEY_LOWER_BRIGHTNESS = "lower-brightness"
 
         private const val TAG = "ProfilesModel"
         private const val DEBUG = true

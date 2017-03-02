@@ -44,7 +44,7 @@ import org.greenrobot.eventbus.Subscribe
 import java.util.ArrayList
 import java.util.Arrays
 
-class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeSet) : Preference(mContext, attrs), OnItemSelectedListener {
+class ProfileSelectorPreference(mContext: Context, attrs: AttributeSet) : Preference(mContext, attrs), OnItemSelectedListener {
 
     lateinit private var mProfileSpinner: Spinner
     lateinit private var mProfileActionButton: Button
@@ -52,13 +52,13 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
 
     lateinit internal var mArrayAdapter: ArrayAdapter<CharSequence>
 
-    private var mProfile: Int = 0
     private val mProfilesModel: ProfilesModel = ProfilesModel(mContext)
     private var mDefaultOperations: ArrayList<CharSequence>? = null
 
     private var currentColor: Int = 0
     private var currentIntensity: Int = 0
     private var currentDim: Int = 0
+    private var currentLowerBrightness: Boolean = false
 
     private var mIsListenerRegistered: Boolean = false
 
@@ -73,14 +73,14 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
 
     override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any?) {
         if (restorePersistedValue) {
-            mProfile = getPersistedInt(DEFAULT_VALUE)
+            Config.profile = getPersistedInt(DEFAULT_VALUE)
         } else {
-            mProfile = (defaultValue as Int?)?: 0
-            persistInt(mProfile)
+            Config.profile = (defaultValue as Int?)?: 0
         }
     }
 
     override fun onBindView(view: View) {
+        Log("onBindView")
         super.onBindView(view)
 
         mView = view
@@ -106,12 +106,12 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         readProfiles()
 
         mProfileSpinner.adapter = mArrayAdapter
-        mProfileSpinner.setSelection(mProfile)
+        mProfileSpinner.setSelection(Config.profile)
         mProfileSpinner.onItemSelectedListener = this
     }
 
     private fun updateButtonSetup() {
-        if (mProfile > ProfilesHelper.DEFAULT_OPERATIONS_AM - 1) {
+        if (Config.profile > ProfilesHelper.DEFAULT_OPERATIONS_AM - 1) {
             Log("Setting remove button")
             mProfileActionButton.text = context.resources.getString(R.string.button_remove_profile)
             mProfileActionButton.setOnClickListener { openRemoveProfileDialog() }
@@ -125,19 +125,9 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
 
     override fun onItemSelected(parent: AdapterView<*>, view: View,
                                 pos: Int, id: Long) {
-        Log("Item $pos selected")
-        mProfile = pos
-        persistInt(mProfile)
+        Log("onItemSelected: $pos")
+        ProfilesHelper.setProfile(pos)
         updateButtonSetup()
-
-        // Update the dependent settings
-        if (mProfile != 0) {
-            val profileObject = ProfilesHelper.getProfile(mProfile, mContext)
-
-            Config.dim = profileObject.mDim
-            Config.intensity = profileObject.mIntensity
-            Config.color = profileObject.mColor
-        }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) { }
@@ -150,8 +140,8 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         val cancelString = context.resources.getString(R.string.cancel_dialog)
 
         builder.setPositiveButton(okString) { _, _ ->
-            mProfilesModel.removeProfile(mProfile - ProfilesHelper.DEFAULT_OPERATIONS_AM)
-            mProfile = 0
+            mProfilesModel.removeProfile(Config.profile - ProfilesHelper.DEFAULT_OPERATIONS_AM)
+            ProfilesHelper.setProfile(0)
             initLayout()
 
             updateAmountProfiles()
@@ -180,13 +170,14 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
                 val profile = ProfilesModel.Profile(nameInput.text.toString(),
                                                     Config.color,
                                                     Config.intensity,
-                                                    Config.dim)
+                                                    Config.dim,
+                                                    Config.lowerBrightness)
 
                 mProfilesModel.addProfile(profile)
                 mArrayAdapter.add(profile.mName as CharSequence)
 
                 val i = mProfilesModel.profiles.size - 1 + ProfilesHelper.DEFAULT_OPERATIONS_AM
-                mProfileSpinner.setSelection(i)
+                ProfilesHelper.setProfile(i)
 
                 updateAmountProfiles()
             } else {
@@ -222,32 +213,43 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
     }
 
     @Subscribe
-    fun onDimLevelChanged(event: dimChanged) {
-        if (Config.dim != currentDim) mProfileSpinner.setSelection(0)
-    }
-
-    @Subscribe
-    fun onIntensityLevelChanged(event: intensityChanged) {
-        if (Config.intensity != currentIntensity) mProfileSpinner.setSelection(0)
-    }
-
-    @Subscribe
-    fun onColorChanged(event: colorChanged) {
-        if (Config.color != currentColor) mProfileSpinner.setSelection(0)
-    }
-
-    @Subscribe
     fun onProfileChanged(event: profileChanged) {
-        mProfile = Config.profile
-        mProfileSpinner.setSelection(mProfile)
+        Log("onProfileChanged")
+        val pos = Config.profile
+        mProfileSpinner.setSelection(pos)
 
-        if (mProfile != 0) {
-            val newProfile = ProfilesHelper.getProfile(mProfile, mContext)
+        if (pos != 0) {
+            val newProfile = ProfilesHelper.getProfile(pos)
 
             currentDim = newProfile.mDim
             currentIntensity = newProfile.mIntensity
             currentColor = newProfile.mColor
+            currentLowerBrightness = newProfile.mLowerBrightness
         }
+    }
+
+    @Subscribe
+    fun onDimChanged(event: dimChanged) {
+        Log("onDimChanged")
+        if (Config.dim != currentDim) ProfilesHelper.setProfile(0)
+    }
+
+    @Subscribe
+    fun onIntensityChanged(event: intensityChanged) {
+        Log("onIntensityChanged")
+        if (Config.intensity != currentIntensity) ProfilesHelper.setProfile(0)
+    }
+
+    @Subscribe
+    fun onColorChanged(event: colorChanged) {
+        Log("onColorChanged")
+        if (Config.color != currentColor) ProfilesHelper.setProfile(0)
+    }
+
+    @Subscribe
+    fun onLowerBrightnessChanged(event: lowerBrightnessChanged) {
+        Log("onLowerBrightnessChanged")
+        if (Config.lowerBrightness != currentLowerBrightness) { ProfilesHelper.setProfile(0) }
     }
 
     companion object {

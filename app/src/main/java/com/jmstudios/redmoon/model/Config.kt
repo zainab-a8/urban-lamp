@@ -44,6 +44,7 @@ import com.jmstudios.redmoon.fragment.TimeToggleFragment
 import com.jmstudios.redmoon.preference.ColorSeekBarPreference
 import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
+import com.jmstudios.redmoon.util.Log
 import com.jmstudios.redmoon.util.appContext
 
 /**
@@ -101,8 +102,9 @@ object Config {
         get()  = getIntPref(R.string.pref_key_dim, DimSeekBarPreference.DEFAULT_VALUE)
         set(d) = putIntPref(R.string.pref_key_dim, d)
 
-    val lowerBrightness: Boolean
-        get() = getBooleanPref(R.string.pref_key_lower_brightness, false)
+    var lowerBrightness: Boolean
+        get()   = getBooleanPref(R.string.pref_key_lower_brightness, false)
+        set(lb) = putBooleanPref(R.string.pref_key_lower_brightness, lb)
 
     val secureSuspend: Boolean
         get() = getBooleanPref(R.string.pref_key_secure_suspend, false)

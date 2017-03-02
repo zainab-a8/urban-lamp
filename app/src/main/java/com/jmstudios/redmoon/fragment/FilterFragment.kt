@@ -139,18 +139,13 @@ class FilterFragment : EventPreferenceFragment() {
 
     //region presenter
     @Subscribe
-    fun onColorChanged(event: colorChanged) {
+    fun onProfileChanged(event: profileChanged) {
+        Log("Profile changed. profile: ${Config.profile}, color: ${Config.color}, intensity: " +
+            "${Config.intensity}, dim: ${Config.dim}, lowerBrightness: ${Config.lowerBrightness}")
         colorPref.setProgress(Config.color)
-    }
-
-    @Subscribe
-    fun onIntensityLevelChanged(event: intensityChanged) {
         intensityPref.setProgress(Config.intensity)
-    }
-
-    @Subscribe
-    fun onDimLevelChanged(event: dimChanged) {
         dimPref.setProgress(Config.dim)
+        lowerBrightnessPref.isChecked = Config.lowerBrightness
     }
     //endregion
 }

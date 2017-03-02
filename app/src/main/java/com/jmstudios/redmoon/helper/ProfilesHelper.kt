@@ -17,36 +17,52 @@
  */
 package com.jmstudios.redmoon.helper
 
-import android.content.Context
-
 import com.jmstudios.redmoon.R
-import com.jmstudios.redmoon.application.RedMoonApplication
+import com.jmstudios.redmoon.model.Config
+import com.jmstudios.redmoon.util.appContext
+import com.jmstudios.redmoon.util.Log
 
 import com.jmstudios.redmoon.model.ProfilesModel
 
 object ProfilesHelper {
     const val DEFAULT_OPERATIONS_AM = 3
 
-    private val mContext = RedMoonApplication.app
     private val model: ProfilesModel
-        get() = ProfilesModel(mContext)
+        get() = ProfilesModel(appContext)
 
-    fun getProfileName(profile: Int, context: Context): String {
+    fun getProfileName(profile: Int): String {
         if (profile < DEFAULT_OPERATIONS_AM) {
-            return context.resources.getStringArray(R.array.standard_profiles_array)[profile]
+            return appContext.resources.getStringArray(R.array.standard_profiles_array)[profile]
         } else {
             return model.getProfile(profile - DEFAULT_OPERATIONS_AM).mName
         }
     }
 
-    fun getProfile(profile: Int, context: Context): ProfilesModel.Profile {
-        val name = getProfileName(profile, context)
-        return when (profile) {
-              // ProfilesModel.Profile(name, color, intensity, dim)
-            0 -> ProfilesModel.Profile(name, 0, 0, 0)
-            1 -> ProfilesModel.Profile(name, 10, 30, 40)
-            2 -> ProfilesModel.Profile(name, 20, 60, 78)
+    fun getProfile(profile: Int): ProfilesModel.Profile {
+        Log("getProfile $profile")
+        val name = getProfileName(profile)
+        return  when (profile) {
+              // ProfilesModel.Profile(name, color, intensity, dim, lowerBrightness)
+            0 -> ProfilesModel.Profile(name, 0, 0, 0, false)
+            1 -> ProfilesModel.Profile(name, 10, 30, 40, false)
+            2 -> ProfilesModel.Profile(name, 20, 60, 78, false)
             else -> model.getProfile(profile - DEFAULT_OPERATIONS_AM)
         }
+    }
+
+    fun setProfile(profile: Int) {
+        Log("setProfile: $profile")
+        // TODO: Allow updating the profile before the related settings without causing bugs
+        // Update settings that are based on the profile
+        if (profile != 0) {
+            ProfilesHelper.getProfile(profile).apply {
+                Log("Setting config color=$mColor, intensity=$mIntensity, dim=$mDim, lb=$mLowerBrightness")
+                Config.color = mColor
+                Config.intensity = mIntensity
+                Config.dim = mDim
+                Config.lowerBrightness = mLowerBrightness
+            }
+        }
+        Config.profile = profile
     }
 }
