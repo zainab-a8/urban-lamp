@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 
 import com.jmstudios.redmoon.R
+import com.jmstudios.redmoon.fragment.AboutFragment
 import com.jmstudios.redmoon.fragment.SecureSuspendFragment
 import com.jmstudios.redmoon.fragment.TimeToggleFragment
 import com.jmstudios.redmoon.model.Config
@@ -38,6 +39,7 @@ abstract class ThemedAppCompatActivity : AppCompatActivity() {
                 finish()
                 return true
             }
+
         }
         return super.onOptionsItemSelected(item)
     }
@@ -58,4 +60,9 @@ class SecureSuspendActivity : ThemedAppCompatActivity() {
 class TimeToggleActivity : ThemedAppCompatActivity() {
     override val fragment = TimeToggleFragment()
     override val tag = "jmstudios.fragment.tag.TIME_TOGGLE"
+}
+
+class AboutActivity : ThemedAppCompatActivity() {
+    override val fragment = AboutFragment()
+    override val tag = "jmstudios.fragment.tag.ABOUT"
 }

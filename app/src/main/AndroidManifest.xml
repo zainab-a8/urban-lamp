@@ -128,6 +128,12 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activity.AboutActivity"
+            android:label="@string/activity_about"
+            android:parentActivityName="com.jmstudios.redmoon.activity.MainActivity"
+            android:theme="@style/AppTheme" />
+
         <service android:name="com.jmstudios.redmoon.service.LocationUpdateService" />
         <service android:name="com.jmstudios.redmoon.service.ScreenFilterService" />
         <service

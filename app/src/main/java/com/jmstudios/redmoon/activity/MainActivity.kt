@@ -122,15 +122,9 @@ class MainActivity : ThemedAppCompatActivity() {
                 startIntro()
                 return true
             }
-            R.id.view_github -> {
-                val github = resources.getString(R.string.project_page_url)
-                val projectIntent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(github))
-                startActivity(projectIntent)
-            }
-            R.id.email_developer -> {
-                val email = resources.getString(R.string.contact_email_adress)
-                val emailIntent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(email))
-                startActivity(emailIntent)
+            R.id.about_button -> {
+                val aboutIntent = Intent(this, AboutActivity::class.java)
+                startActivity(aboutIntent)
             }
         }
         return super.onOptionsItemSelected(item)

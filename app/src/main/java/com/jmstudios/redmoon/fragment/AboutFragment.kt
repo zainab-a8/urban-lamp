@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+/*
  * Copyright (c) 2016 Marien Raat <marienraat@riseup.net>
+ * Copyright (c) 2017  Stephen Michel <s@smichel.me>
  *
  *  This file is free software: you may copy, redistribute and/or modify it
  *  under the terms of the GNU General Public License as published by the Free
@@ -14,11 +14,19 @@
  *
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
--->
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/secure_suspend_summary_text"
-    android:text="@string/secure_suspend_summary"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:padding="16dip" />
+ */
+package com.jmstudios.redmoon.fragment
+
+import android.os.Bundle
+import android.preference.PreferenceFragment
+
+import com.jmstudios.redmoon.R
+import com.jmstudios.redmoon.util.Log
+
+class AboutFragment : PreferenceFragment() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Log("onCreate()")
+        super.onCreate(savedInstanceState)
+        addPreferencesFromResource(R.xml.about)
+    }
+}

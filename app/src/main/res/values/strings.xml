@@ -42,7 +42,9 @@
     <string name="settings">Red Moon</string>
     <string name="shortcut_activity">Red Moon Toggle</string>
     <string name="intro_label">Intro</string>
-    <string name="show_intro_text">Show intro</string>
+    <string name="show_intro_text">Replay intro</string>
+    <string name="menu_about">About</string>
+    <string name="activity_about">About Red Moon</string>
     <string name="secure_suspend_activity">Pause in secure apps</string>
 
     <!-- Overlay popup -->
@@ -100,12 +102,14 @@
 
     <string name="dark_theme">Dark theme</string>
 
+    <!-- About subscreen -->
     <string name="email_me_title">Email me at marienraat@riseup.net</string>
     <string name="email_me_summary">Email me with bugs or suggestions</string>
-    <string name="contact_email_adress" translatable="false">mailto:marienraat@riseup.net</string>
     <string name="project_page_title">Visit the project page</string>
     <string name="project_page_summary">Find more info, leave feedback and contribute</string>
-    <string name="project_page_url" translatable="false">https://github.com/raatmarien/red-moon</string>
+    <string name="pref_title_integration">Integration with other apps</string>
+    <string name="pref_summary_integration">Some apps, like LibreTasks or Tasker, allow you to automate tasks when certain events happen. Red Moon sends a public notification when it turns on and off, so those apps can respond. If you don\'t use or develop one of those apps, you can ignore the next paragraph.\n\nRed Moon broadcasts a public intent with the action `com.jmstudios.redmoon.RED_MOON_TOGGLED`. The intent contains a boolean extra with the key `jmstudios.bundle.key.FILTER_IS_ON`, which indicates whether the filter is toggling on or off.</string>
+    <string name="pref_title_version">Version</string>
 
     <!-- Toasts -->
     <string name="toast_warning_install">You won\'t be able to install APKs while the Red Moon is on.</string>
@@ -154,11 +158,4 @@
     <string name="time_toggle_options_array_0">Manual</string>
     <string name="time_toggle_options_array_1">Automatic (sun)</string>
     <string name="time_toggle_options_array_2">Automatic (custom)</string>
-
-    <string-array name="time_toggle_values_array"
-                  translatable="false">
-      <item>never</item>
-      <item>sun</item>
-      <item>custom</item>
-    </string-array>
 </resources>
