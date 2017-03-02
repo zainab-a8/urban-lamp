@@ -44,7 +44,6 @@ import com.jmstudios.redmoon.fragment.TimeToggleFragment
 import com.jmstudios.redmoon.preference.ColorSeekBarPreference
 import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
-import com.jmstudios.redmoon.util.Log
 import com.jmstudios.redmoon.util.appContext
 
 /**

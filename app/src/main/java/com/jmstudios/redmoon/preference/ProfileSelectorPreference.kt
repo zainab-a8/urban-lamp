@@ -35,14 +35,10 @@ import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.helper.ProfilesHelper
-import com.jmstudios.redmoon.model.ProfilesModel
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.util.Log
 
 import org.greenrobot.eventbus.Subscribe
-
-import java.util.ArrayList
-import java.util.Arrays
 
 class ProfileSelectorPreference(mContext: Context, attrs: AttributeSet) : Preference(mContext, attrs), OnItemSelectedListener {
 
@@ -51,9 +47,6 @@ class ProfileSelectorPreference(mContext: Context, attrs: AttributeSet) : Prefer
     lateinit private var mView: View
 
     lateinit internal var mArrayAdapter: ArrayAdapter<CharSequence>
-
-    private val mProfilesModel: ProfilesModel = ProfilesModel(mContext)
-    private var mDefaultOperations: ArrayList<CharSequence>? = null
 
     private var currentColor: Int = 0
     private var currentIntensity: Int = 0
@@ -95,15 +88,12 @@ class ProfileSelectorPreference(mContext: Context, attrs: AttributeSet) : Prefer
 
     private fun initLayout() {
         Log("Starting initLayout")
-        // The default operations first need to be converted to an ArrayList,
-        // because the ArrayAdapter will turn it into an AbstractList otherwise,
-        // which doesn't support certain actions, like adding elements.
-        // See: http://stackoverflow.com/a/3200631
-        mDefaultOperations = ArrayList<CharSequence>(Arrays.asList(*context.resources.getStringArray(R.array.standard_profiles_array)))
-        mArrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, mDefaultOperations)
+        mArrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item)
         mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        readProfiles()
+        for (i in 0..Config.amountProfiles-1) {
+            mArrayAdapter.add(ProfilesHelper.getProfileName(i) as CharSequence)
+        }
 
         mProfileSpinner.adapter = mArrayAdapter
         mProfileSpinner.setSelection(Config.profile)
@@ -133,85 +123,46 @@ class ProfileSelectorPreference(mContext: Context, attrs: AttributeSet) : Prefer
     override fun onNothingSelected(parent: AdapterView<*>) { }
 
     private fun openRemoveProfileDialog() {
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle(context.resources.getString(R.string.remove_profile_dialog_title))
+        val builder = AlertDialog.Builder(context).apply {
+            setTitle(context.resources.getString(R.string.remove_profile_dialog_title))
 
-        val okString = context.resources.getString(R.string.button_remove_profile)
-        val cancelString = context.resources.getString(R.string.cancel_dialog)
+            val okString = context.resources.getString(R.string.button_remove_profile)
+            val cancelString = context.resources.getString(R.string.cancel_dialog)
 
-        builder.setPositiveButton(okString) { _, _ ->
-            mProfilesModel.removeProfile(Config.profile - ProfilesHelper.DEFAULT_OPERATIONS_AM)
-            ProfilesHelper.setProfile(0)
-            initLayout()
-
-            updateAmountProfiles()
+            setNegativeButton(cancelString) { dialog, _ -> dialog.cancel() }
+            setPositiveButton(okString) { _, _ ->
+                ProfilesHelper.removeProfile(Config.profile)
+            }
         }
-
-        builder.setNegativeButton(cancelString) { dialog, _ -> dialog.cancel() }
-
         builder.show()
     }
 
     private fun openAddNewProfileDialog() {
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle(context.resources.getString(R.string.add_new_profile_dialog_title))
+        val builder = AlertDialog.Builder(context).apply {
+            setTitle(context.resources.getString(R.string.add_new_profile_dialog_title))
 
-        val nameInput = EditText(context)
-        nameInput.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
-        nameInput.hint = context.resources.getString(R.string.add_new_profile_edit_hint)
+            val nameInput = EditText(context).apply {
+                inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+                hint = context.resources.getString(R.string.add_new_profile_edit_hint)
+            }
+            setView(nameInput)
 
-        builder.setView(nameInput)
+            val okString = context.resources.getString(R.string.ok_dialog)
+            val cancelString = context.resources.getString(R.string.cancel_dialog)
 
-        val okString = context.resources.getString(R.string.ok_dialog)
-        val cancelString = context.resources.getString(R.string.cancel_dialog)
-
-        builder.setPositiveButton(okString) { dialog, _ ->
-            if (nameInput.text.toString().trim { it <= ' ' } != "") {
-                val profile = ProfilesModel.Profile(nameInput.text.toString(),
-                                                    Config.color,
-                                                    Config.intensity,
-                                                    Config.dim,
-                                                    Config.lowerBrightness)
-
-                mProfilesModel.addProfile(profile)
-                mArrayAdapter.add(profile.mName as CharSequence)
-
-                val i = mProfilesModel.profiles.size - 1 + ProfilesHelper.DEFAULT_OPERATIONS_AM
-                ProfilesHelper.setProfile(i)
-
-                updateAmountProfiles()
-            } else {
-                dialog.cancel()
+            setNegativeButton(cancelString) { dialog, _ -> dialog.cancel() }
+            setPositiveButton(okString) { dialog, _ ->
+                if (nameInput.text.toString().trim { it <= ' ' } != "") {
+                    ProfilesHelper.addProfile(nameInput.text.toString())
+                } else {
+                    dialog.cancel()
+                }
             }
         }
-
-        builder.setNegativeButton(cancelString) { dialog, _ -> dialog.cancel() }
-
         builder.show()
     }
 
-    //Section: Reading and writing profiles
-
-    /**
-     * Reads the profiles saved in the SharedPreference in the spinner
-     */
-    fun readProfiles() {
-        val profiles = mProfilesModel.profiles
-
-        for (profile in profiles) {
-            mArrayAdapter.add(profile.mName as CharSequence)
-        }
-    }
-
-    /**
-     * Updates the amount of profiles in the shared preferences
-     */
-    private fun updateAmountProfiles() {
-        val amountProfiles = mProfilesModel.profiles.size + ProfilesHelper.DEFAULT_OPERATIONS_AM
-        Log("There are now $amountProfiles profiles.")
-        Config.amountProfiles = amountProfiles
-    }
-
+    //region presenter
     @Subscribe
     fun onProfileChanged(event: profileChanged) {
         Log("onProfileChanged")
@@ -226,6 +177,11 @@ class ProfileSelectorPreference(mContext: Context, attrs: AttributeSet) : Prefer
             currentColor = newProfile.mColor
             currentLowerBrightness = newProfile.mLowerBrightness
         }
+    }
+
+    @Subscribe
+    fun onAmountProfilesChanged(event: amountProfilesChanged) {
+        initLayout()
     }
 
     @Subscribe
@@ -251,6 +207,7 @@ class ProfileSelectorPreference(mContext: Context, attrs: AttributeSet) : Prefer
         Log("onLowerBrightnessChanged")
         if (Config.lowerBrightness != currentLowerBrightness) { ProfilesHelper.setProfile(0) }
     }
+    //endregion
 
     companion object {
         const val DEFAULT_VALUE = 1

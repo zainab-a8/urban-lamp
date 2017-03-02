@@ -62,6 +62,7 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
             getString(R.string.pref_key_custom_turn_off_time) -> customTurnOffTimeChanged()
             getString(R.string.pref_key_lower_brightness)     -> lowerBrightnessChanged()
             getString(R.string.pref_key_profile_spinner)      -> profileChanged()
+            getString(R.string.pref_key_num_profiles)         -> amountProfilesChanged()
             getString(R.string.pref_key_use_location)         -> useLocationChanged()
             getString(R.string.pref_key_location)             -> locationChanged()
             getString(R.string.pref_key_sunset_time)          -> sunsetTimeChanged()
@@ -70,7 +71,6 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
             else -> return
             /* Preferences for which no Event is posted */
             // getString(R.string.pref_key_brightness_level)
-            // getString(R.string.pref_key_num_profiles)
             // getString(R.string.pref_key_intro_shown)
             // getString(R.string.pref_key_dim_buttons)
         })

@@ -27,10 +27,12 @@ import com.jmstudios.redmoon.model.ProfilesModel
 object ProfilesHelper {
     const val DEFAULT_OPERATIONS_AM = 3
 
+    // TODO: Hold a reference instead of getting a new model each time
     private val model: ProfilesModel
         get() = ProfilesModel(appContext)
 
     fun getProfileName(profile: Int): String {
+        Log("getProfileName $profile")
         if (profile < DEFAULT_OPERATIONS_AM) {
             return appContext.resources.getStringArray(R.array.standard_profiles_array)[profile]
         } else {
@@ -55,8 +57,8 @@ object ProfilesHelper {
         // TODO: Allow updating the profile before the related settings without causing bugs
         // Update settings that are based on the profile
         if (profile != 0) {
-            ProfilesHelper.getProfile(profile).apply {
-                Log("Setting config color=$mColor, intensity=$mIntensity, dim=$mDim, lb=$mLowerBrightness")
+            getProfile(profile).apply {
+                Log("color=$mColor, intensity=$mIntensity, dim=$mDim, lb=$mLowerBrightness")
                 Config.color = mColor
                 Config.intensity = mIntensity
                 Config.dim = mDim
@@ -65,4 +67,30 @@ object ProfilesHelper {
         }
         Config.profile = profile
     }
+
+    fun addProfile(name: String) {
+        Log("addProfile $name")
+        val profile = ProfilesModel.Profile(name,
+                                            Config.color,
+                                            Config.intensity,
+                                            Config.dim,
+                                            Config.lowerBrightness)
+        model.addProfile(profile)
+        updateAmountProfiles()
+        val i = model.profiles.size - 1 + DEFAULT_OPERATIONS_AM
+        setProfile(i)
+    }
+
+    fun removeProfile(profile: Int) {
+        Log("removeProfile $profile")
+        model.removeProfile(profile - DEFAULT_OPERATIONS_AM)
+        updateAmountProfiles()
+        setProfile(0)
+    }
+
+    private fun updateAmountProfiles() {
+        Config.amountProfiles = model.profiles.size + DEFAULT_OPERATIONS_AM
+        Log("There are now ${Config.amountProfiles} profiles.")
+    }
+
 }

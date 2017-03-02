@@ -48,41 +48,37 @@ class ProfilesModel(context: Context) {
         val mPrefsContentsMap = mSharedPrefs.all
         profiles = ArrayList<Profile>()
 
-        Log("Parsing preference contents")
         val amProfiles = mPrefsContentsMap.entries.size
-        if (DEBUG) Log.d(TAG, "Allocating " + amProfiles)
+        if (DEBUG) Log.d(TAG, "Allocating $amProfiles profiles")
         profiles.ensureCapacity(amProfiles)
-
-        if (DEBUG) Log.d(TAG, "Allocated " + amProfiles)
 
         for ((key, value) in mPrefsContentsMap) {
             if (DEBUG) Log.d(TAG, "Parsing key: $key")
             val i = Integer.parseInt(key)
             profiles.add(i, parseProfile(value as String))
         }
-
-        if (DEBUG) Log.d(TAG, "Done parsing preference contents. Parsed $amProfiles profiles.")
     }
 
     fun addProfile(profile: Profile) {
-        Log("Adding new profile")
+        Log("addProfile ${profile.name}; Current Size: ${profiles.size}")
         profiles.add(profile)
-
         updateSharedPreferences()
     }
 
     fun getProfile(index: Int): Profile {
-        return profiles[index]
+        val p = profiles[index]
+        Log("getProfile $index of ${profiles.size}, ${p.name}")
+        return p
     }
 
     fun removeProfile(index: Int) {
+        Log("removeProfile $index")
         profiles.removeAt(index)
-
         updateSharedPreferences()
     }
 
     private fun parseProfile(entry: String): Profile {
-        Log("Parsing entry: $entry")
+        Log("ParseProfile: $entry", false)
         val json = JSONObject(entry)
         val name = json.optString(KEY_NAME)
         val color = json.optInt(KEY_COLOR)
@@ -98,6 +94,7 @@ class ProfilesModel(context: Context) {
         editor.clear()
 
         for ((i, profile) in profiles.withIndex()) {
+            Log("Storing profile $i, ${profile.mName}")
             editor.putString(Integer.toString(i), profile.values)
         }
 
