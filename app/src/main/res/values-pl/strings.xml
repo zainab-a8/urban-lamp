@@ -114,7 +114,7 @@ przesuń włącznik w prawym górnym rogu.</string>
     <string name="pref_title_integration">Integracja z innymi aplikacjami</string>
     <string name="pref_summary_integration">Niektóre aplikacje, takie jak LibreTasks lub Tasker pozwalają na wywoływanie zadań pod wpływem określonych zdarzeń. Red Moon wysyła publiczne powiadomienie podczas włączania i wyłączania, więc te aplikacje mogą odpowiedzieć. Jeżeli nie używasz lub programujesz tych aplikacji, możesz pominąć następny akapit.
 
-Red Moon rozsyła publiczny zamiar (intent) \'com.jmstudios.redmoon.RED_MOON_TOGGLED\'. Ten zamiar zawiera dodatkową wartość logiczną z kluczem \'jmstudios.bundle.key.FILTER_IS_ON\', która wskazuje czy filtr jest włączany, czy wyłączany.</string>
+Red Moon rozsyła publiczny zamiar (intent) \'com.jmstudios.redmoon.RED_MOON_TOGGLED\'. Ten zamiar zawiera dodatkową wartość logiczną z kluczem \'jmstudios.bundle.key.FILTER_IS_ON\', która wskazuje czy Red Moon jest włączany, czy wyłączany.</string>
     <string name="pref_title_version">Wersja</string>
 
     <!-- Currently unused -->
