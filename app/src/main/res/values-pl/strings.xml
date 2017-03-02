@@ -57,7 +57,7 @@
     <string name="time_toggle_options_array_2">Automatyczny (własny)</string>
 
     <string name="intro_label">Wprowadzenie</string>
-    <string name="show_intro_text">Pokaż wprowadzenie</string>
+    <string name="show_intro_text">Powtórz wprowadzenie</string>
     <string name="secure_suspend_activity">Wstrzymuj w chronionych aplikacjach</string>
 
     <string name="resume_action">Wznów</string>
@@ -109,4 +109,12 @@ przesuń włącznik w prawym górnym rogu.</string>
     <string name="action_next_profile">Następny profil</string>
 
     <string name="use_location_title">Czas z lokalizacji</string>
+    <string name="menu_about">O programie</string>
+    <string name="activity_about">O Red Moon</string>
+    <string name="pref_title_integration">Integracja z innymi aplikacjami</string>
+    <string name="pref_summary_integration">Niektóre aplikacje, takie jak LibreTasks lub Tasker pozwalają na wywoływanie zadań pod wpływem określonych zdarzeń. Red Moon wysyła publiczne powiadomienie podczas włączania i wyłączania, więc te aplikacje mogą odpowiedzieć. Jeżeli nie używasz lub programujesz tych aplikacji, możesz pominąć następny akapit.
+
+Red Moon rozsyła publiczny zamiar (intent) \'com.jmstudios.redmoon.RED_MOON_TOGGLED\'. Ten zamiar zawiera dodatkową wartość logiczną z kluczem \'jmstudios.bundle.key.FILTER_IS_ON\', która wskazuje czy filtr jest włączany, czy wyłączany.</string>
+    <string name="pref_title_version">Wersja</string>
+
     </resources>
