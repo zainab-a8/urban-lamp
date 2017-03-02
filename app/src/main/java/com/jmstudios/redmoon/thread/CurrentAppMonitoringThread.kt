@@ -68,7 +68,6 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
                 app == "com.google.android.packageinstaller"
     }
 
-    @TargetApi(22) // Safe to call at all api levels but Studio doesn't know that
     companion object {
         private const val TAG = "CurrentAppMonitoring"
         private const val DEBUG = true
@@ -86,10 +85,9 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
             }
         }
 
-        @TargetApi(22) // Safe to call at all api levels but Studio doesn't know that
         private fun getCurrentAppUsingUsageStats(context: Context): String {
             try {
-                if (atLeastAPI(21)) {
+                if (atLeastAPI(21)) @TargetApi(21) {
                     // Although the UsageStatsManager was added in API
                     // 21, the constant to specify the
                     // UsageStatsManager wasn't added until API 22. So
@@ -97,8 +95,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
                     val usageStatsServiceString =
                         if (atLeastAPI(22)) Context.USAGE_STATS_SERVICE
                         else "usagestats"
-                    val usm = context.getSystemService(usageStatsServiceString)
-                                                                as UsageStatsManager
+                    val usm = context.getSystemService(usageStatsServiceString) as UsageStatsManager
                     val time = System.currentTimeMillis()
                     val appList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
                             time - 1000 * 1000, time)
@@ -123,9 +120,8 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
             return ""
         }
 
-        @Suppress("DEPRECATION") // Needed for pre-lollipop compatibility
         private fun getCurrentAppUsingActivityManager(context: Context): String {
-            if (belowAPI(21)) {
+            if (belowAPI(21)) @Suppress("DEPRECATION") {
                 val am = ContextWrapper(context).baseContext
                           .getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
                 return am.getRunningTasks(1)[0].topActivity.packageName

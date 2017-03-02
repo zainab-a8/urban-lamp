@@ -39,7 +39,6 @@
 package com.jmstudios.redmoon.presenter
 
 import android.animation.Animator
-import android.annotation.TargetApi
 import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -274,12 +273,11 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         mCurrentState.onScreenFilterCommand(command)
     }
 
-    @Suppress("DEPRECATION")
     fun startAppMonitoring() {
         Log("Starting app monitoring")
         val powerManager = mContext.getSystemService(Context.POWER_SERVICE) as PowerManager
-        screenOff = if (atLeastAPI(20)) @TargetApi(20){ !powerManager.isInteractive }
-                    else { !powerManager.isScreenOn }
+        screenOff = if (atLeastAPI(20)) { !powerManager.isInteractive }
+                    else @Suppress("DEPRECATION") { !powerManager.isScreenOn }
 
         val filter = IntentFilter()
         filter.addAction(Intent.ACTION_SCREEN_OFF)
@@ -599,7 +597,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         // Statically used by BootReceiver
         fun setBrightnessState(brightness: Int, automatic: Boolean, context: Context) {
             Log("Setting brightness to: $brightness, automatic: $automatic")
-            @TargetApi(23) if (atLeastAPI(23) && !Settings.System.canWrite(context)) return
+            if (atLeastAPI(23) && !Settings.System.canWrite(context)) return
             if (brightness >= 0) {
                 val resolver = context.contentResolver
                 Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, brightness)

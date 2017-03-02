@@ -92,6 +92,6 @@ open class TimePickerPreference(context: Context, attrs: AttributeSet) : DialogP
     }
 
     companion object {
-        val DEFAULT_VALUE = "00:00"
+        const val DEFAULT_VALUE = "00:00"
     }
 }
