@@ -90,9 +90,9 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        if (DEBUG) Log(String.format("onStartCommand(%s, %d, %d", intent, flags, startId))
+        Log(String.format("onStartCommand(%s, %d, %d", intent, flags, startId), DEBUG)
         val flag = intent.getIntExtra(ScreenFilterService.BUNDLE_KEY_COMMAND, COMMAND_MISSING)
-        if (DEBUG) Log("Recieved flag: $flag")
+        Log("Recieved flag: $flag", DEBUG)
         if (flag != COMMAND_MISSING) mPresenter.onScreenFilterCommand(Command.values()[flag])
 
         // Do not attempt to restart if the hosting process is killed by Android

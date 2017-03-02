@@ -40,7 +40,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
     }
 
     override fun run() {
-        if (DEBUG) Log("CurrentAppMonitoringThread running")
+        Log("CurrentAppMonitoringThread running", DEBUG)
 
         try {
             while (!Thread.interrupted()) {
@@ -56,7 +56,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
         } catch (e: InterruptedException) {
         }
 
-        if (DEBUG) Log("Shutting down CurrentAppMonitoringThread")
+        Log("Shutting down CurrentAppMonitoringThread", DEBUG)
     }
 
     private fun isAppSecured(app: String): Boolean {
