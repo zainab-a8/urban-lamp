@@ -29,18 +29,18 @@ leaving the application you're using (and to turn it on again when you're done).
 
 ## Screenshots
 
-<img src="https://lut.im/UCDOb028ya/L8Tr7OH2tFedCecr.png" width="180" height="320" />
-<img src="https://lut.im/fHFiGVkVCE/GyYBXwlMqF1a0P0Y.png" width="180" height="320" />
-<img src="https://lut.im/qpg8N8dOre/dyyaoAOxAiBCecXE.png" width="180" height="320" />
-<img src="https://lut.im/ZlANzMLu60/ZlIVyUG8VNWxnNIc.png" width="180" height="320" />
-<img src="https://lut.im/k4qVX9nWZM/LAno9qNrTm7ARweT.png" width="180" height="320" />
-<img src="https://lut.im/UWimrSsPP9/HkyHR2pu7OWli3PI.png" width="180" height="320" />
-<img src="https://lut.im/tpijkCL6XC/JSBUepBbw2NTdcPj.png" width="180" height="320" />
-<img src="https://lut.im/caWHk3pqNt/dXcbHtO2PGwtl4de.png" width="180" height="320" />
-<img src="https://lut.im/ZeTGZaex3n/hbaoW1ELBbUiHF5T.png" width="180" height="320" />
-<img src="https://lut.im/uMRoVV8iKl/j8TNR31acQhVovZc.png" width="180" height="320" />
-<img src="https://lut.im/pGb91isyUa/jXIIGKXV64UbMyYO.png" width="180" height="320" />
-<img src="https://lut.im/hrMQXPXu60/awPk41FXTGtgkUp8.png" width="180" height="320" />
+<img src="https://lut.im/uMUMujZSZU/rfHRfhIrDnDznetz.png" width="180" height="320" />
+<img src="https://lut.im/nZBsmMs4KI/RutzvgfCCPSR2vDd.png" width="180" height="320" />
+<img src="https://lut.im/MxfTcNiz5b/xhJDuKvyxEOJlc39.png" width="180" height="320" />
+<img src="https://lut.im/O5bUIZVPDR/ddcBY3akDK6Sq1zU.png" width="180" height="320" />
+<img src="https://lut.im/0YrVNYZbj2/lr0SDpIqy7jlpg13.png" width="180" height="320" />
+<img src="https://lut.im/LPf77AuSRG/MsJbEeHXHxyQ7XSf.png" width="180" height="320" />
+<img src="https://lut.im/7eRSVHlsoS/2OJNIqCG3NQTExZI.png" width="180" height="320" />
+<img src="https://lut.im/CU0bQLa8RN/3o90N3QNCuNrOKnu.png" width="180" height="320" />
+<img src="https://lut.im/7QAYwUXjqi/pWiBEF8fP8D3fpAp.png" width="180" height="320" />
+<img src="https://lut.im/d9a4QT8Nek/9jgcvxedO1pnAfXl.png" width="180" height="320" />
+<img src="https://lut.im/BQODkgLLGg/VGFnSMufAVBQoOSt.png" width="180" height="320" />
+<img src="https://lut.im/t3Ll6xBLle/XrhZCJmIcggRHeHf.png" width="180" height="320" />
 
 ## License
 
@@ -50,13 +50,14 @@ leaving the application you're using (and to turn it on again when you're done).
 [MIT License](https://github.com/cngu/shades/blob/e240edc1df3e6dd319cd475a739570ff8367d7f8/LICENSE). "Red
 Moon" is licensed under the
 [GNU General Public License version 3](https://www.gnu.org/licenses/gpl-3.0.html),
-or (at your option) any later version by Marien Raat.
+or (at your option) any later version by [the contributors](https://github.com/raatmarien/red-moon/graphs/contributors).
 
 [![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)
 
 All used artwork is released into the public domain. Some of the icons
 use cliparts from [openclipart.org](https://openclipart.org/), which
 are all released in the public domain, namely:
+
 * https://openclipart.org/detail/121903/full-moon
 * https://openclipart.org/detail/219211/option-button-symbol-minimal-svg-markup
 * https://openclipart.org/detail/20806/wolf-head-howl-1
