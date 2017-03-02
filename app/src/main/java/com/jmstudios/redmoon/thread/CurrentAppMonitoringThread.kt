@@ -40,7 +40,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
     }
 
     override fun run() {
-        Log("CurrentAppMonitoringThread running")
+        if (DEBUG) Log("CurrentAppMonitoringThread running")
 
         try {
             while (!Thread.interrupted()) {
@@ -56,7 +56,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
         } catch (e: InterruptedException) {
         }
 
-        Log("Shutting down CurrentAppMonitoringThread")
+        if (DEBUG) Log("Shutting down CurrentAppMonitoringThread")
     }
 
     private fun isAppSecured(app: String): Boolean {
@@ -70,7 +70,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 
     companion object {
         private const val TAG = "CurrentAppMonitoring"
-        private const val DEBUG = true
+        private const val DEBUG = false
 
         fun isAppMonitoringWorking(context: Context): Boolean {
             return getCurrentApp(context) != ""
