@@ -105,4 +105,12 @@ Red Moon necesita acceder a los datos de uso para saber si la aplicación en pri
     <string name="write_settings_dialog_title">Cambiar ajustes del sistema</string>
     <string name="action_next_profile">Siguiente perfil</string>
 
+    <string name="menu_about">Acerca de</string>
+    <string name="activity_about">Acerca de Red Moon</string>
+    <string name="pref_title_version">Versión</string>
+
+    <string name="pref_title_integration">Integración con otras aplicaciones</string>
+    <string name="pref_summary_integration">Algunas aplicaciones como LibreTasks o Tasker permiten automatizar tareas. Red Moon envía una notificación global cuando se suspende y reanuda, por lo que esas aplicaciones pueden hacer cosas al cambiar el filtro. Puedes saltarte el siguiente párrafo si no eres desarrollador o no te interesa.
+
+Red Moon emite un «intent» público con la acción `com.jmstudios.redmoon.RED_MOON_TOGGLED`. El «intent» contiene un valor booleano extra con la clave `jmstudios.bundle.key.FILTER_IS_ON`, indicando el estado del filtro.</string>
     </resources>
