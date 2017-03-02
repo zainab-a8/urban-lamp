@@ -46,12 +46,12 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.IBinder
-import android.util.Log
 
 import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.util.appContext
 import com.jmstudios.redmoon.util.hasLocationPermission
+import com.jmstudios.redmoon.util.Log
 
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
 import org.greenrobot.eventbus.EventBus
@@ -93,10 +93,10 @@ class LocationUpdateService: Service(), LocationListener {
 
     override fun onCreate() {
         super.onCreate()
-        if (DEBUG) Log.i(TAG, "onCreate")
+        Log("onCreate")
         if (hasLocationPermission) {
-            if (DEBUG) Log.i(TAG, "Requesting location updates")
-            if (DEBUG) Log.i(TAG, "List of providers + ${locationManager.allProviders}")
+            Log("Requesting location updates")
+            Log("List of providers + ${locationManager.allProviders}")
             if (locationManager.allProviders.contains(locationProviderNetwork)) {
                 mLocationProvider = LocationProvider.NETWORK
                 locationManager.requestLocationUpdates(locationProviderNetwork, 0, 0f, this)
@@ -105,14 +105,14 @@ class LocationUpdateService: Service(), LocationListener {
                 mLocationProvider = LocationProvider.GPS
                 locationManager.requestLocationUpdates(locationProviderGps, 0, 0f, this)
             } else {
-                if (DEBUG) Log.i(TAG, "No suitable location providers available, stopping.")
+                Log("No suitable location providers available, stopping.")
                 stopSelf()
             }
         }
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        if (DEBUG) Log.i(TAG, "onStartCommand($intent, $flags, $startId)")
+        Log("onStartCommand($intent, $flags, $startId)")
 
         if (!hasLocationPermission) {
             EventBus.getDefault().post(locationAccessDenied())
@@ -134,12 +134,12 @@ class LocationUpdateService: Service(), LocationListener {
     }
 
     override fun onLocationChanged(location: Location) {
-        if (DEBUG) Log.i(TAG, "Location search succeeded")
+        Log("Location search succeeded")
         stopSelf()
     }
 
     override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
-        if (DEBUG) Log.i(TAG, "Status changed for " + provider)
+        Log("Status changed for " + provider)
     }
 
     override fun onProviderEnabled(provider: String) {
@@ -148,12 +148,12 @@ class LocationUpdateService: Service(), LocationListener {
     }
 
     override fun onProviderDisabled(provider: String) {
-        if (DEBUG) Log.i(TAG, "Location search failed, using last known location")
+        Log("Location search failed, using last known location")
         stopSelf()
     }
 
     override fun onDestroy() {
-        if (DEBUG) Log.i(TAG, "onDestroy")
+        Log("onDestroy")
         if (hasLocationPermission) {
             locationManager.removeUpdates(this)
             updateLocation(lastKnownLocation)
@@ -172,10 +172,8 @@ class LocationUpdateService: Service(), LocationListener {
     }
 
     companion object {
-        private val TAG = "LocationUpdateService"
-        private val DEBUG = true
-        private val locationProviderNetwork = LocationManager.NETWORK_PROVIDER
-        private val locationProviderGps = LocationManager.GPS_PROVIDER
+        private const val locationProviderNetwork = LocationManager.NETWORK_PROVIDER
+        private const val locationProviderGps = LocationManager.GPS_PROVIDER
 
         //val FOREGROUND = true
         //val BACKGROUND = false
@@ -184,7 +182,7 @@ class LocationUpdateService: Service(), LocationListener {
             get() = Intent(appContext, LocationUpdateService::class.java)
 
         fun start() {
-            if (DEBUG) Log.i(TAG, "Received start request")
+            Log("Received start request")
             appContext.startService(intent)
         }
     }

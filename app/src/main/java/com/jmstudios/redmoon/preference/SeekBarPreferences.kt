@@ -31,8 +31,8 @@ import android.widget.SeekBar
 import android.widget.TextView
 
 import com.jmstudios.redmoon.R
-import com.jmstudios.redmoon.model.Config
 
+import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
 import com.jmstudios.redmoon.view.ScreenFilterView
 
@@ -89,7 +89,7 @@ abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar) {
-        Log.i(TAG, "Touch down on a seek bar")
+        Log.d(TAG, "Touch down on a seek bar")
         ScreenFilterService.moveToState(ScreenFilterService.Command.SHOW_PREVIEW)
     }
 

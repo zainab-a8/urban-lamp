@@ -28,6 +28,7 @@ import android.util.Log
 import com.jmstudios.redmoon.service.ScreenFilterService
 import com.jmstudios.redmoon.util.atLeastAPI
 import com.jmstudios.redmoon.util.belowAPI
+import com.jmstudios.redmoon.util.Log
 
 import java.lang.Thread
 import java.util.TreeMap
@@ -39,7 +40,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
     }
 
     override fun run() {
-        if (DEBUG) Log.i(TAG, "CurrentAppMonitoringThread running")
+        Log("CurrentAppMonitoringThread running")
 
         try {
             while (!Thread.interrupted()) {
@@ -55,7 +56,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
         } catch (e: InterruptedException) {
         }
 
-        if (DEBUG) Log.i(TAG, "Shutting down CurrentAppMonitoringThread")
+        Log("Shutting down CurrentAppMonitoringThread")
     }
 
     private fun isAppSecured(app: String): Boolean {
@@ -69,8 +70,8 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 
     @TargetApi(22) // Safe to call at all api levels but Studio doesn't know that
     companion object {
-        private val TAG = "CurrentAppMonitoring"
-        private val DEBUG = true
+        private const val TAG = "CurrentAppMonitoring"
+        private const val DEBUG = true
 
         fun isAppMonitoringWorking(context: Context): Boolean {
             return getCurrentApp(context) != ""

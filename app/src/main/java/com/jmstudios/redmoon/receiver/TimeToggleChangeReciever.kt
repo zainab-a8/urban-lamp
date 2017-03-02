@@ -32,6 +32,7 @@ import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.service.LocationUpdateService
 import com.jmstudios.redmoon.service.ScreenFilterService
 import com.jmstudios.redmoon.util.atLeastAPI
+import com.jmstudios.redmoon.util.Log
 
 import java.util.Calendar
 import java.util.GregorianCalendar
@@ -40,7 +41,7 @@ import java.util.GregorianCalendar
 class TimeToggleChangeReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (DEBUG) Log.i(TAG, "Alarm received")
+        Log("Alarm received")
 
         val turnOn = intent.data.toString() == "turnOnIntent"
 
@@ -93,7 +94,7 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
             if (Config.timeToggle) {
                 if (DEBUG) {
                     val state = if (turnOn) "on" else "off"
-                    Log.d(TAG, "Scheduling alarm to turn filter " + state)
+                    Log.d(TAG, "Scheduling alarm to turn filter $state")
                 }
                 val time = if (turnOn) { Config.automaticTurnOnTime }
                            else { Config.automaticTurnOffTime }
@@ -112,7 +113,7 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
                 now.add(Calendar.SECOND, 1)
                 if (calendar.before(now)) { calendar.add(Calendar.DATE, 1) }
 
-                if (DEBUG) Log.i(TAG, "Scheduling alarm for " + calendar.toString())
+                Log("Scheduling alarm for " + calendar.toString())
 
                 val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                 val pendingIntent = PendingIntent.getBroadcast(context, 0, command, 0)
@@ -123,7 +124,7 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
                     alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
                 }
             } else {
-                if (DEBUG) Log.i(TAG, "Tried to schedule alarm, but timer is disabled.")
+                Log("Tried to schedule alarm, but timer is disabled.")
             }
         }
 

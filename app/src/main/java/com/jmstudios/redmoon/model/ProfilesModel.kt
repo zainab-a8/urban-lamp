@@ -20,7 +20,10 @@ package com.jmstudios.redmoon.model
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+
 import java.util.ArrayList
+
+import com.jmstudios.redmoon.util.Log
 
 /**
  * This class manages the SharedPreference that store all custom
@@ -41,7 +44,7 @@ class ProfilesModel(context: Context) {
         private set
 
     init {
-        if (DEBUG) Log.i(TAG, "Creating ProfilesModel")
+        Log("Creating ProfilesModel")
 
         mSharedPrefs = context.getSharedPreferences(preferenceName, mode)
         mPrefsContentsMap = mSharedPrefs.all as Map<String, String>
@@ -51,7 +54,7 @@ class ProfilesModel(context: Context) {
     }
 
     fun addProfile(profile: Profile) {
-        if (DEBUG) Log.i(TAG, "Adding new profile")
+        Log("Adding new profile")
         profiles.add(profile)
 
         updateSharedPreferences()
@@ -68,7 +71,7 @@ class ProfilesModel(context: Context) {
     }
 
     private fun parsePrefsContents() {
-        if (DEBUG) Log.i(TAG, "Parsing preference contents")
+        Log("Parsing preference contents")
 
         profiles = ArrayList<Profile>()
 
@@ -88,7 +91,7 @@ class ProfilesModel(context: Context) {
     }
 
     private fun findProfileEntry(index: Int): String {
-        if (DEBUG) Log.i(TAG, "Finding entry at " + index)
+        Log("Finding entry at " + index)
         for ((key, value) in mPrefsContentsMap) {
             if (getIndexFromString(key) == index)
                 return key + "@" + value as String
@@ -97,18 +100,18 @@ class ProfilesModel(context: Context) {
     }
 
     private fun getIndexFromString(keyString: String): Int {
-        if (DEBUG) Log.i(TAG, "Parsing index from string: " + keyString)
+        Log("Parsing index from string: " + keyString)
         val length = keyString.length
         val idIndex = keyString.lastIndexOf('_') + 1
         val idString = keyString.substring(idIndex, length)
 
-        if (DEBUG) Log.i(TAG, "Found idString: " + idString)
+        Log("Found idString: " + idString)
 
         return Integer.parseInt(idString)
     }
 
     private fun parseProfile(entry: String): Profile {
-        if (DEBUG) Log.i(TAG, "Parsing entry: " + entry)
+        Log("Parsing entry: " + entry)
         val key = entry.substring(0, entry.lastIndexOf("@"))
         val values = entry.substring(entry.lastIndexOf("@") + 1, entry.length)
 
@@ -135,7 +138,7 @@ class ProfilesModel(context: Context) {
     }
 
     private fun updateSharedPreferences() {
-        if (DEBUG) Log.i(TAG, "Updating SharedPreferences")
+        Log("Updating SharedPreferences")
         val editor = mSharedPrefs.edit()
         editor.clear()
 
@@ -162,10 +165,10 @@ class ProfilesModel(context: Context) {
     }
 
     companion object {
-        private val preferenceName = "com.jmstudios.redmoon.PROFILES_PREFERENCE"
-        private val mode = Context.MODE_PRIVATE
+        private const val preferenceName = "com.jmstudios.redmoon.PROFILES_PREFERENCE"
+        private const val mode = Context.MODE_PRIVATE
 
-        private val TAG = "ProfilesModel"
-        private val DEBUG = false
+        private const val TAG = "ProfilesModel"
+        private const val DEBUG = false
     }
 }

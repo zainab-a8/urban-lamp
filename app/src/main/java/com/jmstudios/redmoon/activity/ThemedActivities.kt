@@ -9,7 +9,7 @@ import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.fragment.SecureSuspendFragment
 import com.jmstudios.redmoon.fragment.TimeToggleFragment
 import com.jmstudios.redmoon.model.Config
-import com.jmstudios.redmoon.util.Logger
+import com.jmstudios.redmoon.util.Log
 import com.jmstudios.redmoon.util.onRequestPermissionsResult
 
 abstract class ThemedAppCompatActivity : AppCompatActivity() {
@@ -17,16 +17,13 @@ abstract class ThemedAppCompatActivity : AppCompatActivity() {
     abstract protected val fragment: PreferenceFragment
     abstract protected val tag: String
 
-    protected val log
-        get() = Logger(this)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(Config.activeTheme)
         setContentView(R.layout.activity_main)
 
         // Only create and attach a new fragment on the first Activity creation.
         if (savedInstanceState == null) {
-            log.i("onCreate - First creation")
+            Log("onCreate - First creation")
             fragmentManager.beginTransaction()
                            .replace(R.id.fragment_container, fragment, tag)
                            .commit()

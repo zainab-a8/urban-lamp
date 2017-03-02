@@ -72,9 +72,7 @@ import com.jmstudios.redmoon.receiver.SwitchAppWidgetProvider
 import com.jmstudios.redmoon.service.ScreenFilterService
 import com.jmstudios.redmoon.service.ServiceLifeCycleController
 import com.jmstudios.redmoon.thread.CurrentAppMonitoringThread
-import com.jmstudios.redmoon.util.atLeastAPI
-import com.jmstudios.redmoon.util.hasOverlayPermission
-import com.jmstudios.redmoon.util.hasWriteSettingsPermission
+import com.jmstudios.redmoon.util.*
 import com.jmstudios.redmoon.view.ScreenFilterView
 
 import org.greenrobot.eventbus.EventBus
@@ -239,7 +237,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
     //region ScreenStateListener
     override fun onScreenTurnedOn() {
-        if (DEBUG) Log.i(TAG, "Screen turn on received")
+        Log("Screen turn on received")
         screenOff = false
 
         if (mCamThread == null) {
@@ -249,7 +247,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
     }
 
     override fun onScreenTurnedOff() {
-        if (DEBUG) Log.i(TAG, "Screen turn off received")
+        Log("Screen turn off received")
         screenOff = true
 
         if (mCamThread != null) {
@@ -272,13 +270,13 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
     //endregion
 
     fun onScreenFilterCommand(command: ScreenFilterService.Command) {
-        if (DEBUG) Log.i(TAG, "Handling command ${command.name} in state: $this")
+        Log("Handling command ${command.name} in state: $this")
         mCurrentState.onScreenFilterCommand(command)
     }
 
     @Suppress("DEPRECATION")
     fun startAppMonitoring() {
-        if (DEBUG) Log.i(TAG, "Starting app monitoring")
+        Log("Starting app monitoring")
         val powerManager = mContext.getSystemService(Context.POWER_SERVICE) as PowerManager
         screenOff = if (atLeastAPI(20)) @TargetApi(20){ !powerManager.isInteractive }
                     else { !powerManager.isScreenOn }
@@ -295,7 +293,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
     }
 
     fun stopAppMonitoring() {
-        if (DEBUG) Log.i(TAG, "Stopping app monitoring")
+        Log("Stopping app monitoring")
         if (mCamThread != null) {
             if (!mCamThread!!.isInterrupted) {
                 mCamThread!!.interrupt()
@@ -314,7 +312,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
     fun updateWidgets() {
         //Broadcast to keep appwidgets in sync
-        if (DEBUG) Log.i(TAG, "Sending update broadcast")
+        Log("Sending update broadcast")
         val updateAppWidgetIntent = Intent(mContext, SwitchAppWidgetProvider::class.java)
         updateAppWidgetIntent.action = SwitchAppWidgetProvider.ACTION_UPDATE
         updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_POWER, filterIsOn)
@@ -347,7 +345,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         abstract val filterIsOn: Boolean
 
         open internal fun onActivation(prevState: State) {
-            if (DEBUG) Log.i(TAG, "super($this).onActivation($prevState)")
+            Log("super($this).onActivation($prevState)")
             Config.filterIsOn = filterIsOn
             refreshForegroundNotification()
         }
@@ -368,10 +366,10 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
         protected fun moveToState(newState: State) {
             if (!hasOverlayPermission) {
-                if (DEBUG) Log.i(TAG, "No overlay permission.")
+                Log("No overlay permission.")
                 EventBus.getDefault().post(overlayPermissionDenied())
             } else if (newState !== this) {
-                if (DEBUG) Log.i(TAG, "Transitioning from $this to $newState")
+                Log("Transitioning from $this to $newState")
                 mCurrentState = newState
                 mCurrentState.onActivation(this)
             }
@@ -439,7 +437,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
         override fun onLowerBrightnessChanged() {
             val lowerBrightness = Config.lowerBrightness
-            if (DEBUG) Log.i(TAG, "Lower brightness flag changed to: " + lowerBrightness)
+            Log("Lower brightness flag changed to: " + lowerBrightness)
             if (lowerBrightness) {
                 saveOldBrightnessState()
                 setBrightnessState(0, false, mContext)
@@ -454,7 +452,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         }
 
         override fun closeScreenFilter() {
-            if (DEBUG) Log.i(TAG, "Filter is turning on again; don't close it.")
+            Log("Filter is turning on again; don't close it.")
         }
     }
 
@@ -600,7 +598,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
         // Statically used by BootReceiver
         fun setBrightnessState(brightness: Int, automatic: Boolean, context: Context) {
-            if (DEBUG) Log.i(TAG, "Setting brightness to: $brightness, automatic: $automatic")
+            Log("Setting brightness to: $brightness, automatic: $automatic")
             @TargetApi(23) if (atLeastAPI(23) && !Settings.System.canWrite(context)) return
             if (brightness >= 0) {
                 val resolver = context.contentResolver

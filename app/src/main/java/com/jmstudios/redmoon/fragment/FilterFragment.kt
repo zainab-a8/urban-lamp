@@ -39,7 +39,6 @@ package com.jmstudios.redmoon.fragment
 import android.os.Bundle
 import android.preference.Preference
 import android.preference.SwitchPreference
-import android.util.Log
 
 import com.jmstudios.redmoon.R
 
@@ -50,6 +49,7 @@ import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
 import com.jmstudios.redmoon.preference.ProfileSelectorPreference
 import com.jmstudios.redmoon.util.hasWriteSettingsPermission
+import com.jmstudios.redmoon.util.Log
 import com.jmstudios.redmoon.util.requestWriteSettingsPermission
 
 import org.greenrobot.eventbus.EventBus
@@ -115,7 +115,7 @@ class FilterFragment : EventPreferenceFragment() {
     }
 
     override fun onResume() {
-        if (DEBUG) Log.i(TAG, "onResume")
+        Log("onResume")
         super.onResume()
         EventBus.getDefault().register(profileSelectorPref)
         updateSecureSuspendSummary()
@@ -153,9 +153,4 @@ class FilterFragment : EventPreferenceFragment() {
         dimPref.setProgress(Config.dim)
     }
     //endregion
-
-    companion object {
-        private val TAG = "FilterFragment"
-        private val DEBUG = true
-    }
-}// Android Fragments require an explicit public default constructor for re-creation
+}

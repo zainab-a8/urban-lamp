@@ -35,8 +35,9 @@
  */
 package com.jmstudios.redmoon.manager
 
-import android.util.Log
+import com.jmstudios.redmoon.util.Log
 import android.view.WindowManager
+
 import com.jmstudios.redmoon.view.ScreenFilterView
 
 /**
@@ -54,9 +55,9 @@ class WindowViewManager(private val mWindowManager: WindowManager,
      */
     fun openWindow(wlp: WindowManager.LayoutParams) {
         if (mScreenFilterOpen) {
-            if (DEBUG) Log.i(TAG, "Screen filter is already open!")
+            Log("Screen filter is already open!")
         } else {
-            if (DEBUG) Log.i(TAG, "Opening screen filter")
+            Log("Opening screen filter")
             // Display the transparent filter
             mWindowManager.addView(mView, wlp)
             mScreenFilterOpen = true
@@ -73,17 +74,12 @@ class WindowViewManager(private val mWindowManager: WindowManager,
     // Closes the Window that is currently displaying `mView`.
     fun closeWindow() {
         if (mScreenFilterOpen) {
-            if (DEBUG) Log.i(TAG, "Closing screen filter")
+            Log("Closing screen filter")
             // Close the window once the fade-out animation is complete
             mWindowManager.removeView(mView)
             mScreenFilterOpen = false
         } else {
-            if (DEBUG) Log.i(TAG, "Can't close Screen filter; it's already closed")
+            Log("Can't close Screen filter; it's already closed")
         }
-    }
-
-    companion object {
-        private const val DEBUG = true
-        private const val TAG = "WindowViewManager"
     }
 }

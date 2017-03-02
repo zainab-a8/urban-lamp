@@ -46,13 +46,14 @@ import com.jmstudios.redmoon.helper.DismissNotificationRunnable
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.service.ScreenFilterService
+import com.jmstudios.redmoon.util.Log
 
 import java.util.Calendar
 
 class BootReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (DEBUG) Log.i(TAG, "Boot broadcast received!")
+        Log("Boot broadcast received!")
 
         val filterIsOnBeforeReboot = Config.filterIsOn
 
@@ -90,8 +91,8 @@ class BootReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        private val TAG = "BootReceiver"
-        private val DEBUG = false
+        private const val TAG = "BootReceiver"
+        private const val DEBUG = false
 
         private fun filterIsOnPrediction(filterIsOnBeforeReboot: Boolean): Boolean {
             if (Config.timeToggle) {

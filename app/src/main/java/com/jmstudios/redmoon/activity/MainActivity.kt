@@ -112,7 +112,7 @@ class MainActivity : ThemedAppCompatActivity() {
     override fun onNewIntent(intent: Intent) {
         val fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false)
         if (fromShortcut) { toggleAndFinish() }
-        log.i("onNewIntent")
+        Log("onNewIntent")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
