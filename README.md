@@ -4,7 +4,7 @@
 Red Moon is a screen filter app for night time phone use. When the
 lowest brightness setting of your phone won't do the trick, Red Moon
 makes your screen even darker. With Red Moon, using your phone in the
-dark won't hurt your eyes and thanks to it's red filter feature, you
+dark won't hurt your eyes and thanks to its red filter feature, you
 will have a healthier sleep.
 
 [<img src="https://f-droid.org/badge/get-it-on.png"
@@ -18,7 +18,7 @@ will have a healthier sleep.
 
 ## Features
 
-* Control the filter with separate color, intensity and dim settings
+* Excercise fine control with separate color, intensity and dim settings.
 * Use the default profiles or create your own to quickly choose the
 right settings
 * Set the timer so you don't have to worry about turning Red Moon on at night
@@ -36,11 +36,11 @@ leaving the application you're using (and to turn it on again when you're done).
 <img src="https://lut.im/0YrVNYZbj2/lr0SDpIqy7jlpg13.png" width="180" height="320" />
 <img src="https://lut.im/LPf77AuSRG/MsJbEeHXHxyQ7XSf.png" width="180" height="320" />
 <img src="https://lut.im/7eRSVHlsoS/2OJNIqCG3NQTExZI.png" width="180" height="320" />
+<img src="https://lut.im/t3Ll6xBLle/XrhZCJmIcggRHeHf.png" width="180" height="320" />
 <img src="https://lut.im/CU0bQLa8RN/3o90N3QNCuNrOKnu.png" width="180" height="320" />
 <img src="https://lut.im/7QAYwUXjqi/pWiBEF8fP8D3fpAp.png" width="180" height="320" />
 <img src="https://lut.im/d9a4QT8Nek/9jgcvxedO1pnAfXl.png" width="180" height="320" />
 <img src="https://lut.im/BQODkgLLGg/VGFnSMufAVBQoOSt.png" width="180" height="320" />
-<img src="https://lut.im/t3Ll6xBLle/XrhZCJmIcggRHeHf.png" width="180" height="320" />
 
 ## License
 
@@ -80,11 +80,10 @@ to install the app on a connected device.
 
 ## How it works
 
-Red Moon displays a constant transparant overlay to dim and color the
-screen when the filter is on. If, for example, you have the intensity
-set to 0%, then the overlay will be black with a transparency equal to
-the dim level you selected. If you choose a higher intensity, the
-color will be saturated with the selected color.
+Red Moon dims and colors the screen by displaying a constant transparent overlay
+If, for example, you have the intensity set to 0%, then the overlay will be
+black with a transparency equal to the dim level you selected. If you choose a
+higher intensity, the overlay will be saturated with the selected color.
 
 ## Contributing
 
