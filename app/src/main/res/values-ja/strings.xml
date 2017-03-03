@@ -76,7 +76,7 @@ Red Moon を使用して画面を暗くすることができます。</string>
 右上のスイッチを押してください。</string>
 
     <string name="intro_label">イントロ</string>
-    <string name="show_intro_text">イントロを表示</string>
+    <string name="show_intro_text">イントロをリプレイ</string>
 
     <string name="text_switch_on">オン</string>
     <string name="text_switch_off">オフ</string>
@@ -109,4 +109,12 @@ Red Moon がオンのときに作動しないと思われるアプリを使用�
     <string name="use_location_title">場所からの回数</string>
     <string name="action_next_profile">次のプロファイル</string>
 
+    <string name="menu_about">アプリについて</string>
+    <string name="activity_about">Red Moon について</string>
+    <string name="pref_title_integration">他のアプリと統合</string>
+    <string name="pref_title_version">バージョン</string>
+
+    <string name="pref_summary_integration">LibreTasks や Tasker のような一部のアプリでは、特定のイベントが発生したときに、タスクを自動化することができます。Red Moon はオンまたはオフになったときに、それらのアプリが応答できるように公開の通知を送信します。使用しない、またはこれらのアプリを開発する場合、次のパラグラフを無視することができます。
+
+Red Moon は、アクション \'com.jmstudios.redmoon.RED_MOON_TOGGLED\' で公開インテントをブロードキャストします。インテントにはキー \'jmstudios.bundle.key.FILTER_IS_ON\' と、フィルターがオンまたはオフに切り替えられているかどうかを示すブール値の追加が含まれます。</string>
     </resources>
