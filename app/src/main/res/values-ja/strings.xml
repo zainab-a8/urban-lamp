@@ -116,7 +116,7 @@ Red Moon がオンのときに作動しないと思われるアプリを使用�
 
     <string name="pref_summary_integration">LibreTasks や Tasker のような一部のアプリでは、特定のイベントが発生したときに、タスクを自動化することができます。Red Moon はオンまたはオフになったときに、それらのアプリが応答できるように公開の通知を送信します。使用しない、またはこれらのアプリを開発する場合、次のパラグラフを無視することができます。
 
-Red Moon は、アクション \'com.jmstudios.redmoon.RED_MOON_TOGGLED\' で公開インテントをブロードキャストします。インテントにはキー \'jmstudios.bundle.key.FILTER_IS_ON\' と、フィルターがオンまたはオフに切り替えられているかどうかを示すブール値の追加が含まれます。</string>
+Red Moon は、アクション \'com.jmstudios.redmoon.RED_MOON_TOGGLED\' で公開インテントをブロードキャストします。インテントには、Red Moon がオンまたはオフに切り替えられているかどうかを示すブール値の拡張がキー \'jmstudios.bundle.key.FILTER_IS_ON\' で含まれます。</string>
 <!-- Currently unused -->
     <string name="add_new_profile_dialog_title">プロファイル名を入力してください</string>
     <string name="add_new_profile_edit_hint">プロファイル名</string>
