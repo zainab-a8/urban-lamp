@@ -1,18 +1,18 @@
 ext {
-    android_support_version = '24.2.1'
+    android_support_version = '25.2.0'
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.jmstudios.redmoon"
         minSdkVersion 17
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 26
         versionName "2.10.0"
         javaCompileOptions {
