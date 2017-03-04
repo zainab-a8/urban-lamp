@@ -105,7 +105,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
         val auto = Config.timeToggle
         val useLocation = Config.useLocation
         val enabled = auto && !useLocation
-        Log("auto: $auto, useLocation: $useLocation, enabled: $enabled")
+        Log.i("auto: $auto, useLocation: $useLocation, enabled: $enabled")
         automaticTurnOnPref.isEnabled = enabled
         automaticTurnOffPref.isEnabled = enabled
         automaticTurnOnPref.summary = Config.automaticTurnOnTime
@@ -115,7 +115,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
     //region presenter
     @Subscribe
     fun onTimeToggleChanged(event: timeToggleChanged) {
-        Log("Filter mode changed to " + Config.timeToggle)
+        Log.i("Filter mode changed to " + Config.timeToggle)
         updatePrefs()
         if (Config.timeToggle) {
             TimeToggleChangeReceiver.rescheduleOnCommand(activity)

@@ -40,7 +40,7 @@ class SecureSuspendFragment : PreferenceFragment() {
                 (getString(R.string.pref_key_secure_suspend)) as SwitchPreference)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log("onCreate()")
+        Log.i("onCreate()")
         super.onCreate(savedInstanceState)
 
         addPreferencesFromResource(R.xml.secure_suspend_preferences)

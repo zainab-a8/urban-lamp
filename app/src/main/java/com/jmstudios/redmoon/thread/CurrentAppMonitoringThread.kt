@@ -23,7 +23,6 @@ import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.ContextWrapper
-import android.util.Log
 
 import com.jmstudios.redmoon.service.ScreenFilterService
 import com.jmstudios.redmoon.util.atLeastAPI
@@ -36,17 +35,17 @@ import java.util.TreeMap
 class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
 
     init {
-        if (DEBUG) Log.d(TAG, "CurrentAppMonitoringThread created")
+        Log.d("CurrentAppMonitoringThread created")
     }
 
     override fun run() {
-        Log("CurrentAppMonitoringThread running", DEBUG)
+        Log.i("CurrentAppMonitoringThread running", DEBUG)
 
         try {
             while (!Thread.interrupted()) {
                 val currentApp = getCurrentApp(mContext)
 
-                if (DEBUG) Log.d(TAG, String.format("Current app is: %s", currentApp))
+                Log.d(String.format("Current app is: %s", currentApp))
 
                 val state = if (isAppSecured(currentApp)) ScreenFilterService.Command.START_SUSPEND
                             else ScreenFilterService.Command.STOP_SUSPEND
@@ -56,7 +55,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
         } catch (e: InterruptedException) {
         }
 
-        Log("Shutting down CurrentAppMonitoringThread", DEBUG)
+        Log.i("Shutting down CurrentAppMonitoringThread", DEBUG)
     }
 
     private fun isAppSecured(app: String): Boolean {
@@ -69,7 +68,6 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
     }
 
     companion object {
-        private const val TAG = "CurrentAppMonitoring"
         private const val DEBUG = false
 
         fun isAppMonitoringWorking(context: Context): Boolean {

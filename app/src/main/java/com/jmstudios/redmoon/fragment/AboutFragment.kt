@@ -25,7 +25,7 @@ import com.jmstudios.redmoon.util.Log
 
 class AboutFragment : PreferenceFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log("onCreate()")
+        Log.i("onCreate()")
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.about)
     }

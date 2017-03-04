@@ -24,7 +24,7 @@ abstract class ThemedAppCompatActivity : AppCompatActivity() {
 
         // Only create and attach a new fragment on the first Activity creation.
         if (savedInstanceState == null) {
-            Log("onCreate - First creation")
+            Log.i("onCreate - First creation")
             fragmentManager.beginTransaction()
                            .replace(R.id.fragment_container, fragment, tag)
                            .commit()

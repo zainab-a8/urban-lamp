@@ -29,7 +29,7 @@ import com.jmstudios.redmoon.util.Log
 class NextProfileCommandReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        Log("Next profile requested")
+        Log.i("Next profile requested")
 
         // Here we just change the profile (cycles back to default
         // when it reaches the max).

@@ -93,10 +93,10 @@ class LocationUpdateService: Service(), LocationListener {
 
     override fun onCreate() {
         super.onCreate()
-        Log("onCreate")
+        Log.i("onCreate")
         if (hasLocationPermission) {
-            Log("Requesting location updates")
-            Log("List of providers + ${locationManager.allProviders}")
+            Log.i("Requesting location updates")
+            Log.i("List of providers + ${locationManager.allProviders}")
             if (locationManager.allProviders.contains(locationProviderNetwork)) {
                 mLocationProvider = LocationProvider.NETWORK
                 locationManager.requestLocationUpdates(locationProviderNetwork, 0, 0f, this)
@@ -105,14 +105,14 @@ class LocationUpdateService: Service(), LocationListener {
                 mLocationProvider = LocationProvider.GPS
                 locationManager.requestLocationUpdates(locationProviderGps, 0, 0f, this)
             } else {
-                Log("No suitable location providers available, stopping.")
+                Log.i("No suitable location providers available, stopping.")
                 stopSelf()
             }
         }
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        Log("onStartCommand($intent, $flags, $startId)")
+        Log.i("onStartCommand($intent, $flags, $startId)")
 
         if (!hasLocationPermission) {
             EventBus.getDefault().post(locationAccessDenied())
@@ -134,12 +134,12 @@ class LocationUpdateService: Service(), LocationListener {
     }
 
     override fun onLocationChanged(location: Location) {
-        Log("Location search succeeded")
+        Log.i("Location search succeeded")
         stopSelf()
     }
 
     override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
-        Log("Status changed for " + provider)
+        Log.i("Status changed for " + provider)
     }
 
     override fun onProviderEnabled(provider: String) {
@@ -148,12 +148,12 @@ class LocationUpdateService: Service(), LocationListener {
     }
 
     override fun onProviderDisabled(provider: String) {
-        Log("Location search failed, using last known location")
+        Log.i("Location search failed, using last known location")
         stopSelf()
     }
 
     override fun onDestroy() {
-        Log("onDestroy")
+        Log.i("onDestroy")
         if (hasLocationPermission) {
             locationManager.removeUpdates(this)
             updateLocation(lastKnownLocation)
@@ -182,7 +182,7 @@ class LocationUpdateService: Service(), LocationListener {
             get() = Intent(appContext, LocationUpdateService::class.java)
 
         fun start() {
-            Log("Received start request")
+            Log.i("Received start request")
             appContext.startService(intent)
         }
     }

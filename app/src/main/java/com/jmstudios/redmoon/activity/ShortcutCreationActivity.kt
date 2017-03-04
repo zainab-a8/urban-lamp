@@ -27,7 +27,7 @@ import com.jmstudios.redmoon.util.Log
 class ShortcutCreationActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log("Create ShortcutCreationActivity")
+        Log.i("Create ShortcutCreationActivity")
         super.onCreate(savedInstanceState)
 
         val shortcutIntent = Intent(this, MainActivity::class.java)

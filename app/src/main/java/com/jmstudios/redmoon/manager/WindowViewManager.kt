@@ -55,9 +55,9 @@ class WindowViewManager(private val mWindowManager: WindowManager,
      */
     fun openWindow(wlp: WindowManager.LayoutParams) {
         if (mScreenFilterOpen) {
-            Log("Screen filter is already open!")
+            Log.i("Screen filter is already open!")
         } else {
-            Log("Opening screen filter")
+            Log.i("Opening screen filter")
             // Display the transparent filter
             mWindowManager.addView(mView, wlp)
             mScreenFilterOpen = true
@@ -74,12 +74,12 @@ class WindowViewManager(private val mWindowManager: WindowManager,
     // Closes the Window that is currently displaying `mView`.
     fun closeWindow() {
         if (mScreenFilterOpen) {
-            Log("Closing screen filter")
+            Log.i("Closing screen filter")
             // Close the window once the fade-out animation is complete
             mWindowManager.removeView(mView)
             mScreenFilterOpen = false
         } else {
-            Log("Can't close Screen filter; it's already closed")
+            Log.i("Can't close Screen filter; it's already closed")
         }
     }
 }

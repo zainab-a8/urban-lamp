@@ -66,7 +66,7 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
     override fun onCreate() {
         super.onCreate()
 
-        Log("onCreate")
+        Log.i("onCreate")
 
         // Initialize helpers and managers
         val context = this
@@ -90,9 +90,9 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        Log(String.format("onStartCommand(%s, %d, %d", intent, flags, startId), DEBUG)
+        Log.i(String.format("onStartCommand(%s, %d, %d", intent, flags, startId), DEBUG)
         val flag = intent.getIntExtra(ScreenFilterService.BUNDLE_KEY_COMMAND, COMMAND_MISSING)
-        Log("Recieved flag: $flag", DEBUG)
+        Log.i("Recieved flag: $flag", DEBUG)
         if (flag != COMMAND_MISSING) mPresenter.onScreenFilterCommand(Command.values()[flag])
 
         // Do not attempt to restart if the hosting process is killed by Android
@@ -105,7 +105,7 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
     }
 
     override fun onDestroy() {
-        Log("onDestroy")
+        Log.i("onDestroy")
 
         // TODO: make sure the filterView gets closed. Not a problem right now
         // but without it this is brittle and bug-prone

@@ -51,7 +51,6 @@ import android.provider.Settings
 import android.provider.Settings.SettingNotFoundException
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.view.Gravity
 import android.view.WindowManager
 
@@ -110,7 +109,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
     fun updateWidgets() {
         //Broadcast to keep appwidgets in sync
-        Log("Sending update broadcast")
+        Log.i("Sending update broadcast")
         val updateAppWidgetIntent = Intent(mContext, SwitchAppWidgetProvider::class.java)
         updateAppWidgetIntent.action = SwitchAppWidgetProvider.ACTION_UPDATE
         updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_POWER, filterIsOn)
@@ -118,7 +117,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
     }
 
     fun onScreenFilterCommand(command: ScreenFilterService.Command) {
-        Log("Handling command ${command.name} in state: $this")
+        Log.i("Handling command ${command.name} in state: $this")
         mCurrentState.onScreenFilterCommand(command)
     }
 
@@ -168,13 +167,13 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
     }
 
     override fun onScreenTurnedOn() {
-        Log("Screen turn on received")
+        Log.i("Screen turn on received")
         screenOff = false
         startCamThread()
     }
 
     override fun onScreenTurnedOff() {
-        Log("Screen turn off received")
+        Log.i("Screen turn off received")
         screenOff = true
         stopCamThread()
     }
@@ -188,7 +187,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
     }
 
     private fun refreshForegroundNotification() {
-        Log.d(TAG, "Creating notification while in $mCurrentState")
+        Log.d("Creating notification while in $mCurrentState")
 
         val nb = NotificationCompat.Builder(mContext).apply {
             val context = mView.context
@@ -231,7 +230,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         }
 
         if (filterIsOn) {
-            Log.d(TAG, "Creating a persistent notification")
+            Log.d("Creating a persistent notification")
             mServiceController.startForeground(NOTIFICATION_ID, nb.build())
         } else {
             mServiceController.stopForeground(false)
@@ -274,7 +273,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
     }
 
     private fun startAppMonitoring() {
-        Log("Starting app monitoring")
+        Log.i("Starting app monitoring")
         val powerManager = mContext.getSystemService(Context.POWER_SERVICE) as PowerManager
         screenOff = if (atLeastAPI(20)) { !powerManager.isInteractive }
                     else @Suppress("DEPRECATION") { !powerManager.isScreenOn }
@@ -287,7 +286,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
     }
 
     private fun stopAppMonitoring() {
-        Log("Stopping app monitoring")
+        Log.i("Stopping app monitoring")
         try {
             mContext.unregisterReceiver(mScreenStateReceiver)
         } catch (e: IllegalArgumentException) {
@@ -304,7 +303,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
                 oldBrightness = Settings.System.getInt(resolver, Settings.System.SCREEN_BRIGHTNESS)
                 oldAutomaticBrightness = 1 == Settings.System.getInt(resolver, "screen_brightness_mode")
             } catch (e: SettingNotFoundException) {
-                Log.e(TAG, "Error reading brightness state", e)
+                Log.i("Error reading brightness state $e")
                 oldAutomaticBrightness = false
             }
         } else {
@@ -322,7 +321,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         abstract val filterIsOn: Boolean
 
         open internal fun onActivation(prevState: State) {
-            Log("super($this).onActivation($prevState)")
+            Log.i("super($this).onActivation($prevState)")
             Config.filterIsOn = filterIsOn
             refreshForegroundNotification()
         }
@@ -343,10 +342,10 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
         protected fun moveToState(newState: State) {
             if (!hasOverlayPermission) {
-                Log("No overlay permission.")
+                Log.i("No overlay permission.")
                 EventBus.getDefault().post(overlayPermissionDenied())
             } else if (newState !== this) {
-                Log("Transitioning from $this to $newState")
+                Log.i("Transitioning from $this to $newState")
                 mCurrentState = newState
                 mCurrentState.onActivation(this)
             }
@@ -414,7 +413,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
         override fun onLowerBrightnessChanged() {
             val lowerBrightness = Config.lowerBrightness
-            Log("Lower brightness flag changed to: $lowerBrightness")
+            Log.i("Lower brightness flag changed to: $lowerBrightness")
             if (lowerBrightness) {
                 saveBrightness()
                 setBrightness(0, false, mContext)
@@ -429,7 +428,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         }
 
         override fun closeScreenFilter() {
-            Log("Filter is turning on again; don't close it.")
+            Log.i("Filter is turning on again; don't close it.")
         }
     }
 
@@ -491,17 +490,17 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         }
 
         override fun onScreenFilterCommand(command: ScreenFilterService.Command) {
-            if (DEBUG) Log.d(TAG, "Preview, got command: " + command.name)
+            Log.d("Preview, got command: " + command.name)
             when (command) {
                 ScreenFilterService.Command.SHOW_PREVIEW -> {
                     pressesActive++
-                    if (DEBUG) Log.d(TAG, String.format("%d presses active", pressesActive))
+                    Log.d(String.format("%d presses active", pressesActive))
                 }
                 ScreenFilterService.Command.HIDE_PREVIEW -> {
                     pressesActive--
-                    if (DEBUG) Log.d(TAG, String.format("%d presses active", pressesActive))
+                    Log.d(String.format("%d presses active", pressesActive))
                     if (pressesActive <= 0) {
-                        if (DEBUG) Log.d(TAG, "Moving back to state: $stateToReturnTo")
+                        Log.d("Moving back to state: $stateToReturnTo")
                         moveToState(stateToReturnTo)
                     }
                 }
@@ -550,7 +549,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         }
 
         override fun onScreenFilterCommand(command: ScreenFilterService.Command) {
-            if (DEBUG) Log.d(TAG, "In Suspend, got command: " + command.name)
+            Log.d("In Suspend, got command: " + command.name)
             when (command) {
                 ScreenFilterService.Command.STOP_SUSPEND -> moveToState(stateToReturnTo)
                 ScreenFilterService.Command.START_SUSPEND -> {}
@@ -560,9 +559,6 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
     }
 
     companion object {
-        private const val TAG = "ScreenFilterPresenter"
-        private const val DEBUG = true
-
         const val NOTIFICATION_ID = 1
         private const val REQUEST_CODE_ACTION_SETTINGS = 1000
         private const val REQUEST_CODE_ACTION_TOGGLE = 3000
@@ -575,7 +571,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
         // Statically used by BootReceiver
         fun setBrightness(brightness: Int, automatic: Boolean, context: Context) {
-            Log("Setting brightness to: $brightness, automatic: $automatic")
+            Log.i("Setting brightness to: $brightness, automatic: $automatic")
             if (atLeastAPI(23) && !Settings.System.canWrite(context)) return
             if (brightness >= 0) {
                 val resolver = context.contentResolver

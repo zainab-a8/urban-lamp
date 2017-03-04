@@ -115,7 +115,7 @@ class FilterFragment : EventPreferenceFragment() {
     }
 
     override fun onResume() {
-        Log("onResume")
+        Log.i("onResume")
         super.onResume()
         EventBus.getDefault().register(profileSelectorPref)
         updateSecureSuspendSummary()

@@ -40,7 +40,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Handler
-import android.util.Log
 
 import com.jmstudios.redmoon.helper.DismissNotificationRunnable
 import com.jmstudios.redmoon.model.Config
@@ -53,7 +52,7 @@ import java.util.Calendar
 class BootReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        Log("Boot broadcast received!")
+        Log.i("Boot broadcast received!")
 
         val filterIsOnBeforeReboot = Config.filterIsOn
 
@@ -116,11 +115,9 @@ class BootReceiver : BroadcastReceiver() {
                     while (before(on)) { add(Calendar.DATE, 1) }
                 }
 
-                if (DEBUG) {
-                    Log.d(TAG, "On: $onTime, off: $offTime")
-                    Log.d(TAG, "On DAY_OF_MONTH: " + Integer.toString(on.get(Calendar.DAY_OF_MONTH)))
-                    Log.d(TAG, "Off DAY_OF_MONTH: " + Integer.toString(off.get(Calendar.DAY_OF_MONTH)))
-                }
+                Log.d("On: $onTime, off: $offTime")
+                Log.d("On DAY_OF_MONTH: " + Integer.toString(on.get(Calendar.DAY_OF_MONTH)))
+                Log.d("Off DAY_OF_MONTH: " + Integer.toString(off.get(Calendar.DAY_OF_MONTH)))
 
                 return (now.after(on) && now.before(off))
             } else {

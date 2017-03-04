@@ -20,7 +20,6 @@ package com.jmstudios.redmoon.application
 import android.app.Application
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import android.util.Log
 
 import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.event.*
@@ -38,19 +37,19 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
         super.onCreate()
         //EventBus.builder().addIndex(eventBusIndex()).installDefaultEventBus()
         mSharedPrefs.registerOnSharedPreferenceChangeListener(this)
-        if (DEBUG) Log.d(TAG, "Opened Settings change listener")
+        Log.d("Opened Settings change listener")
     }
 
     // Only called in emulated environments. In production, just gets killed.
     override fun onTerminate() {
         mSharedPrefs.unregisterOnSharedPreferenceChangeListener(this)
-        if (DEBUG) Log.d(TAG, "Closed Settings change listener")
+        Log.d("Closed Settings change listener")
         super.onTerminate()
     }
 
     //region OnSharedPreferenceChangeListener
     override fun onSharedPreferenceChanged(sp: SharedPreferences, key: String) {
-        Log("onPreferenceChanged: $key")
+        Log.i("onPreferenceChanged: $key")
         EventBus.getDefault().post(when (key) {
             getString(R.string.pref_key_filter_is_on)         -> filterIsOnChanged()
             getString(R.string.pref_key_dim)                  -> dimChanged()
@@ -79,9 +78,6 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
 
     //endregion
     companion object {
-        private const val TAG = "RedMoonApplication"
-        private const val DEBUG = true
-
         lateinit var app: RedMoonApplication
     }
 }

@@ -37,7 +37,6 @@
 package com.jmstudios.redmoon.activity
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.Menu
@@ -67,7 +66,7 @@ class MainActivity : ThemedAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val intent = intent
-        Log("Got intent")
+        Log.i("Got intent")
         val fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false)
         if (fromShortcut) { toggleAndFinish() }
 
@@ -117,7 +116,7 @@ class MainActivity : ThemedAppCompatActivity() {
     override fun onNewIntent(intent: Intent) {
         val fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false)
         if (fromShortcut) { toggleAndFinish() }
-        Log("onNewIntent")
+        Log.i("onNewIntent")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -148,7 +147,7 @@ class MainActivity : ThemedAppCompatActivity() {
 
     private fun handleUpgrades() {
         if (Config.fromVersionCode < 26) {
-            upgradeToggleModePreferences();
+            upgradeToggleModePreferences()
         }
         Config.fromVersionCode = BuildConfig.VERSION_CODE
     }
@@ -156,7 +155,7 @@ class MainActivity : ThemedAppCompatActivity() {
     private fun upgradeToggleModePreferences() {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(appContext)
         val currentToggleMode: String =
-                sharedPrefs.getString(getString(R.string.pref_key_time_toggle), "manual");
+                sharedPrefs.getString(getString(R.string.pref_key_time_toggle), "manual")
         sharedPrefs.edit().remove(getString(R.string.pref_key_time_toggle)).apply()
         Config.timeToggle = currentToggleMode != "manual"
         Config.useLocation = currentToggleMode == "sun"
