@@ -13,8 +13,8 @@ android {
         applicationId "com.jmstudios.redmoon"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 25
-        versionName "2.9.2"
+        versionCode 26
+        versionName "2.10.0"
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [ eventBusIndex : 'com.jmstudios.redmoon.event.EventBusIndex' ]

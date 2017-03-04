@@ -39,7 +39,6 @@ package com.jmstudios.redmoon.fragment
 import android.os.Bundle
 import android.preference.Preference
 import android.preference.SwitchPreference
-import android.util.Log
 
 import com.jmstudios.redmoon.R
 
@@ -49,6 +48,9 @@ import com.jmstudios.redmoon.preference.ColorSeekBarPreference
 import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
 import com.jmstudios.redmoon.preference.ProfileSelectorPreference
+import com.jmstudios.redmoon.util.hasWriteSettingsPermission
+import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.requestWriteSettingsPermission
 
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -91,14 +93,14 @@ class FilterFragment : EventPreferenceFragment() {
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.filter_preferences)
 
-        if (!Config.hasWriteSettingsPermission) lowerBrightnessPref.isChecked = false
+        if (!hasWriteSettingsPermission) { lowerBrightnessPref.isChecked = false }
         updateSecureSuspendSummary()
         updateTimeToggleSummary()
 
         lowerBrightnessPref.onPreferenceChangeListener =
-                Preference.OnPreferenceChangeListener { preference, newValue ->
+                Preference.OnPreferenceChangeListener { _, newValue ->
                     val checked = newValue as Boolean
-                    if (checked) Config.requestWriteSettingsPermission(activity) else true
+                    if (checked) { requestWriteSettingsPermission(activity) } else { true }
                 }
 
         /* Normally we'd change theme via an event after the setting gets
@@ -106,14 +108,14 @@ class FilterFragment : EventPreferenceFragment() {
          * scroll to the top when it gets recreated, which is rather jarring.
          * Doing it this way keeps the same scroll position, which is nice. */
         darkThemePref.onPreferenceChangeListener =
-                Preference.OnPreferenceChangeListener { preference, newValue ->
+                Preference.OnPreferenceChangeListener { _, _ ->
                     activity.recreate()
                     true
                 }
     }
 
     override fun onResume() {
-        if (DEBUG) Log.i(TAG, "onResume")
+        Log("onResume")
         super.onResume()
         EventBus.getDefault().register(profileSelectorPref)
         updateSecureSuspendSummary()
@@ -151,9 +153,4 @@ class FilterFragment : EventPreferenceFragment() {
         dimPref.setProgress(Config.dim)
     }
     //endregion
-
-    companion object {
-        private val TAG = "FilterFragment"
-        private val DEBUG = true
-    }
-}// Android Fragments require an explicit public default constructor for re-creation
+}

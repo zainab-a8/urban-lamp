@@ -24,33 +24,30 @@ import android.os.Bundle
 import android.preference.Preference
 import android.preference.SwitchPreference
 import android.provider.Settings
-import android.util.Log
 
 import com.jmstudios.redmoon.R
-import com.jmstudios.redmoon.application.RedMoonApplication
-
 import com.jmstudios.redmoon.thread.CurrentAppMonitoringThread
+import com.jmstudios.redmoon.util.appContext
+import com.jmstudios.redmoon.util.Log
 
 class SecureSuspendFragment : PreferenceFragment() {
 
-    private val context = RedMoonApplication.app
-
     private val appMonitoringIsWorking: Boolean
-        get() = CurrentAppMonitoringThread.isAppMonitoringWorking(context)
+        get() = CurrentAppMonitoringThread.isAppMonitoringWorking(appContext)
 
     private val mSwitchBarPreference: SwitchPreference
         get() = (preferenceScreen.findPreference
                 (getString(R.string.pref_key_secure_suspend)) as SwitchPreference)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (DEBUG) Log.i(TAG, "onCreate()")
+        Log("onCreate()")
         super.onCreate(savedInstanceState)
 
         addPreferencesFromResource(R.xml.secure_suspend_preferences)
         setSwitchBarTitle(mSwitchBarPreference.isChecked)
 
         mSwitchBarPreference.onPreferenceChangeListener =
-            Preference.OnPreferenceChangeListener { preference, newValue ->
+            Preference.OnPreferenceChangeListener { _, newValue ->
                 val on = newValue as Boolean
                 if (!on) {
                     setSwitchBarTitle(on)
@@ -77,7 +74,7 @@ class SecureSuspendFragment : PreferenceFragment() {
 
         builder.setMessage(R.string.usage_stats_dialog_message)
                .setTitle(R.string.usage_stats_dialog_title)
-               .setPositiveButton(R.string.ok_dialog) { dialog, id ->
+               .setPositiveButton(R.string.ok_dialog) { _, _ ->
                     val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
                     startActivityForResult(intent, RESULT_USAGE_ACCESS)
         }
@@ -86,8 +83,6 @@ class SecureSuspendFragment : PreferenceFragment() {
     }
 
     companion object {
-        val RESULT_USAGE_ACCESS = 1
-        private val TAG = "SecureSuspendFragment"
-        private val DEBUG = false
+        const val RESULT_USAGE_ACCESS = 1
     }
 }

@@ -39,13 +39,13 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import com.jmstudios.redmoon.application.RedMoonApplication
+import com.jmstudios.redmoon.util.appContext
 
 class OrientationChangeReceiver(private val mListener: OrientationChangeReceiver.OnOrientationChangeListener) : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_CONFIGURATION_CHANGED) {
-            val r = RedMoonApplication.app.resources
+            val r = appContext.resources
             if (r.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                 mListener.onPortraitOrientation()
             } else {

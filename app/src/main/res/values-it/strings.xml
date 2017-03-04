@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="app_name">Red Moon</string>
+    <string name="settings">Red Moon</string>
+    <string name="shortcut_activity">Pulsante di Red Moon</string>
+    <string name="intro_label">Introduzione</string>
+    <string name="show_intro_text">Mostra Introduzione</string>
+
+    <string name="running">In esecuzione. Mettere in pausa per installare apk</string>
+    <string name="paused">In pausa</string>
+    <string name="resume_action">Riprendi</string>
+    <string name="pause_action">Ferma</string>
+
+    <string name="pref_title_appearance">Filtro</string>
+    <string name="time_toggle_activity">Tempo di funzionamento</string>
+    <string name="pref_title_time_toggle">Tempo di funzionamento</string>
+    <string name="pref_title_startup">Avvio</string>
+    <string name="pref_title_other">Altro</string>
+
+    <string name="button_add_profile">Aggiungi</string>
+    <string name="button_remove_profile">Elimina</string>
+    <string name="shades_dim_level">>Livello di oscuramento</string>
+    <string name="shades_intensity_level">Livello di intensità</string>
+    <string name="shades_color_temp">Temperatura del colore</string>
+    <string name="control_brightness_title">Riduci luminosià</string>
+
+    <string name="time_toggle_title">Modalità di attivazione</string>
+    <string name="custom_start_time_title">Riprendi alle</string>
+    <string name="custom_end_time_title">Ferma alle</string>
+    <string name="location_title">Posizione</string>
+    <string name="location_not_set">Non impostata</string>
+    <string name="latitude_short">Lat</string>
+    <string name="longitude_short">Long</string>
+    <string name="searching_location">Cercando la posizione</string>
+
+    <string name="dark_theme">Tema scuro</string>
+
+    <string name="email_me_title">Inviami mail all\'indirizzo marienraat@riseup.net</string>
+    <string name="email_me_summary">Inviami mail con bug e proposte</string>
+    <string name="project_page_title">Visita la pagina del progetto </string>
+    <string name="project_page_summary">Trova più informazioni, lascia feedback e contribuisci</string>
+    <string name="toast_warning_install">Non sarai in grado di installare APK quando il filtro é in esecuzione.</string>
+    <string name="toast_warning_no_location">Attiva is servizi di geolocalizzazione per aggiornare la posizione</string>
+
+    <string name="help_snackbar_text">Premi il pulsante per attivare Red Moon</string>
+
+    <string name="add_new_profile_dialog_title">Inserisci il nome del profilo</string>
+    <string name="add_new_profile_edit_hint">Nome del profilo</string>
+    <string name="remove_profile_dialog_title">Cancella questo profilo?</string>
+    <string name="set_dialog">Imposta</string>
+    <string name="ok_dialog">OK</string>
+    <string name="cancel_dialog">Annulla</string>
+
+    <string name="toggle_shortcut_title">Attiva Filtro</string>
+
+    <string name="intro_slide_1_title">Benvenuto!</string>
+    <string name="intro_slide_1_text">Benvenuto in Red Moon!</string>
+
+    <string name="intro_slide_2_title">Protegge i tuoi occhi</string>
+    <string name="intro_slide_2_text">Di notte, quando guardare il tuo smartphone fa male agli occhi, puoi usare Red Moon per oscurare il tuo schermo.</string>
+
+    <string name="intro_slide_3_title">Migliora il sonno</string>
+    <string name="intro_slide_3_text">La luce blu sopprime la produzione di Melatonina, un ormone che ti aiuta ad addormentarti la notte. Red Moon rimuove la luce blu dal tuo schermo, facendo sì che tu possa addormentarti facilmente.</string>
+
+    <string name="intro_slide_4_title">Inizia!</string>
+    <string name="intro_slide_4_text">Per abilitare Red Moon, premi il pulsante in alto a destra.</string>
+
+    <string name="standard_profiles_array_0">Personalizzato</string>
+    <string name="standard_profiles_array_1">Default</string>
+    <string name="standard_profiles_array_2">Lettura</string>
+
+    <string name="time_toggle_options_array_0">Manualo</string>
+    <string name="time_toggle_options_array_1">Automatico (sole)</string>
+    <string name="time_toggle_options_array_2">Automatico (personalizzato)</string>
+
+    </resources>

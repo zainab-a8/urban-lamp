@@ -1,6 +1,7 @@
-/*
+<?xml version="1.0" encoding="utf-8"?>
+<!--
  * Copyright (c) 2016  Marien Raat <marienraat@riseup.net>
- * Copyright (c) 2017  Stephen Michel <s@smichel.me>
+ * Copyright (c) 2016  Stephen Michel <stephen.michel@tufts.edu>
  *
  *  This file is free software: you may copy, redistribute and/or modify it
  *  under the terms of the GNU General Public License as published by the Free
@@ -33,50 +34,30 @@
  *     OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
  *     NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  *     CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- */
-package com.jmstudios.redmoon.activity
+-->
+<resources>
+    <style name="LaunchScreenTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+      <item name="colorPrimary">@color/color_primary</item>
+      <item name="colorPrimaryDark">@color/color_primary_dark</item>
+      <item name="android:windowBackground">@color/color_primary</item>
+    </style>
 
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import android.view.MenuItem
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+      <item name="colorPrimary">@color/color_primary</item>
+      <item name="colorPrimaryDark">@color/color_primary_dark</item>
+    </style>
 
-import com.jmstudios.redmoon.R
+    <style name="AppThemeDark" parent="Theme.AppCompat">
+      <item name="colorPrimary">@color/color_primary</item>
+      <item name="colorPrimaryDark">@color/color_primary_dark</item>
+    </style>
 
-import com.jmstudios.redmoon.fragment.SecureSuspendFragment
-import com.jmstudios.redmoon.model.Config
-
-class SecureSuspendActivity : AppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        if (Config.darkThemeFlag) setTheme(R.style.AppThemeDark)
-        setContentView(R.layout.activity_main)
-        super.onCreate(savedInstanceState)
-
-        // It seems that this method is abstract and thus throws an
-        // error. I'm not sure what to replace it with.
-        // actionBar.setDisplayHomeAsUpEnabled(true)
-
-        // Only create and attach a new fragment on the first Activity creation.
-        if (savedInstanceState == null) {
-            if (DEBUG) Log.i(TAG, "onCreate - First creation")
-            val view = SecureSuspendFragment()
-            fragmentManager.beginTransaction().replace(R.id.fragment_container, view).commit()
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                finish();
-                return true;
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    companion object {
-        private val TAG = "SecureSuspendActivity"
-        private val DEBUG = true
-    }
-}
+    <style name="AppThemeNoActionBar"
+           parent="Theme.AppCompat.Light.NoActionBar"
+           xmlns:tools="http://schemas.android.com/tools" >
+      <!-- Translucent status bar is only available in API 19+ -->
+      <item
+          tools:targetApi="19"
+          name="android:windowTranslucentStatus">true</item>
+    </style>
+</resources>

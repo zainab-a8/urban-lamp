@@ -28,7 +28,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
 
         <TextView
             android:id="@android:id/title"
@@ -42,8 +44,8 @@
             android:id="@+id/seekbar_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/color_preference_title"
-            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@android:id/title"
+            android:layout_alignBottom="@android:id/title"
             android:paddingStart="6dp"
             android:paddingEnd="6dp"
             style="@style/PreferenceSecondaryTextStyle" />

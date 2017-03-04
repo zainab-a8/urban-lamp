@@ -24,6 +24,7 @@ import android.util.Log
 
 import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.event.*
+import com.jmstudios.redmoon.util.Log
 
 import org.greenrobot.eventbus.EventBus
 
@@ -49,13 +50,13 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
 
     //region OnSharedPreferenceChangeListener
     override fun onSharedPreferenceChanged(sp: SharedPreferences, key: String) {
-        if (DEBUG) Log.i(TAG, "onPreferenceChanged: " + key)
+        Log("onPreferenceChanged: $key")
         EventBus.getDefault().post(when (key) {
             getString(R.string.pref_key_filter_is_on)         -> filterIsOnChanged()
             getString(R.string.pref_key_dim)                  -> dimChanged()
             getString(R.string.pref_key_intensity)            -> intensityChanged()
             getString(R.string.pref_key_color)                -> colorChanged()
-            getString(R.string.pref_key_dark_theme)           -> themeChanged()
+            // getString(R.string.pref_key_dark_theme)           -> themeChanged()
             getString(R.string.pref_key_time_toggle)          -> timeToggleChanged()
             getString(R.string.pref_key_custom_turn_on_time)  -> customTurnOnTimeChanged()
             getString(R.string.pref_key_custom_turn_off_time) -> customTurnOffTimeChanged()
@@ -78,8 +79,8 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
 
     //endregion
     companion object {
-        private val TAG = "RedMoonApplication"
-        private val DEBUG = true
+        private const val TAG = "RedMoonApplication"
+        private const val DEBUG = true
 
         lateinit var app: RedMoonApplication
     }

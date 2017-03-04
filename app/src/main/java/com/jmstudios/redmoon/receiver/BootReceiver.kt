@@ -46,13 +46,14 @@ import com.jmstudios.redmoon.helper.DismissNotificationRunnable
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.service.ScreenFilterService
+import com.jmstudios.redmoon.util.Log
 
 import java.util.Calendar
 
 class BootReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (DEBUG) Log.i(TAG, "Boot broadcast received!")
+        Log("Boot broadcast received!")
 
         val filterIsOnBeforeReboot = Config.filterIsOn
 
@@ -61,18 +62,18 @@ class BootReceiver : BroadcastReceiver() {
         // dimmed brightness and we need to restore the saved brightness
         // before proceeding.
         if (filterIsOnBeforeReboot && Config.lowerBrightness) {
-            ScreenFilterPresenter.setBrightnessState(Config.brightnessLevel,
-                    Config.brightnessAutomatic,
-                    context)
+            ScreenFilterPresenter.setBrightness(Config.brightness,
+                    Config.automaticBrightness, context)
         }
 
         TimeToggleChangeReceiver.scheduleNextOnCommand(context)
         TimeToggleChangeReceiver.scheduleNextOffCommand(context)
 
         val filterIsOnPredicted = filterIsOnPrediction(filterIsOnBeforeReboot)
+        val command = if (filterIsOnPredicted) { ScreenFilterService.Command.ON }
+                      else { ScreenFilterService.Command.OFF }
 
-        ScreenFilterService.moveToState(if (filterIsOnPredicted) ScreenFilterService.Command.OFF
-                                        else ScreenFilterService.Command.ON)
+        ScreenFilterService.moveToState(command)
 
         if (!filterIsOnPredicted) {
             // We want to dismiss the notification if the filter is turned off
@@ -90,8 +91,8 @@ class BootReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        private val TAG = "BootReceiver"
-        private val DEBUG = false
+        private const val TAG = "BootReceiver"
+        private const val DEBUG = false
 
         private fun filterIsOnPrediction(filterIsOnBeforeReboot: Boolean): Boolean {
             if (Config.timeToggle) {
@@ -100,22 +101,20 @@ class BootReceiver : BroadcastReceiver() {
                 val onTime = Config.automaticTurnOnTime
                 val onHour = Integer.parseInt(onTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0])
                 val onMinute = Integer.parseInt(onTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[1])
-                val on = Calendar.getInstance()
-                on.set(Calendar.HOUR_OF_DAY, onHour)
-                on.set(Calendar.MINUTE, onMinute)
-
-                if (on.after(now))
-                    on.add(Calendar.DATE, -1)
+                val on = Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, onHour)
+                    set(Calendar.MINUTE, onMinute)
+                    if (after(now)) { add(Calendar.DATE, -1) } 
+                }
 
                 val offTime = Config.automaticTurnOffTime
                 val offHour = Integer.parseInt(offTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0])
                 val offMinute = Integer.parseInt(offTime.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[1])
-                val off = Calendar.getInstance()
-                off.set(Calendar.HOUR_OF_DAY, offHour)
-                off.set(Calendar.MINUTE, offMinute)
-
-                while (off.before(on))
-                    off.add(Calendar.DATE, 1)
+                val off = Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, offHour)
+                    set(Calendar.MINUTE, offMinute)
+                    while (before(on)) { add(Calendar.DATE, 1) }
+                }
 
                 if (DEBUG) {
                     Log.d(TAG, "On: $onTime, off: $offTime")

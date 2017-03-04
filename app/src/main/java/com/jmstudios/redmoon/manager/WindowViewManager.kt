@@ -35,41 +35,51 @@
  */
 package com.jmstudios.redmoon.manager
 
-import android.view.View
+import com.jmstudios.redmoon.util.Log
 import android.view.WindowManager
+
+import com.jmstudios.redmoon.view.ScreenFilterView
 
 /**
  * Convenience class that wraps [WindowManager] for dependency injection.
  */
-class WindowViewManager(private val mWindowManager: WindowManager) {
+class WindowViewManager(private val mWindowManager: WindowManager,
+                        val mView: ScreenFilterView) {
+
+    private var mScreenFilterOpen = false
 
     /**
      * Creates and opens a new Window to display `view`.
-     * @param view the view to render in the new Window.
      * *
      * @param wlp the [android.view.WindowManager.LayoutParams] to use when laying out the window.
      */
-    fun openWindow(view: View, wlp: WindowManager.LayoutParams) {
-        mWindowManager.addView(view, wlp)
+    fun openWindow(wlp: WindowManager.LayoutParams) {
+        if (mScreenFilterOpen) {
+            Log("Screen filter is already open!")
+        } else {
+            Log("Opening screen filter")
+            // Display the transparent filter
+            mWindowManager.addView(mView, wlp)
+            mScreenFilterOpen = true
+        }
     }
 
-    /**
-     * Triggers a Window undergo a screen measurement and layout pass with the provided
-     * [android.view.WindowManager.LayoutParams].
-     *
-     * @param view the Window containing this view will have its LayoutParams set to `wlp`.
-     * *
-     * @param wlp the new LayoutParams to set on the Window.
-     */
-    fun reLayoutWindow(view: View, wlp: WindowManager.LayoutParams) {
-        mWindowManager.updateViewLayout(view, wlp)
+    // Triggers a Window undergo a screen measurement and layout pass
+    fun reLayoutWindow(wlp: WindowManager.LayoutParams) {
+        if (mScreenFilterOpen) {
+            mWindowManager.updateViewLayout(mView, wlp)
+        }
     }
 
-    /**
-     * Closes the Window that is currently displaying `view`.
-     * @param view the Window containing this view will be closed.
-     */
-    fun closeWindow(view: View) {
-        mWindowManager.removeView(view)
+    // Closes the Window that is currently displaying `mView`.
+    fun closeWindow() {
+        if (mScreenFilterOpen) {
+            Log("Closing screen filter")
+            // Close the window once the fade-out animation is complete
+            mWindowManager.removeView(mView)
+            mScreenFilterOpen = false
+        } else {
+            Log("Can't close Screen filter; it's already closed")
+        }
     }
 }

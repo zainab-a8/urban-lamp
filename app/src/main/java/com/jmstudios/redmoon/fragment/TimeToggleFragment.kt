@@ -20,16 +20,17 @@ package com.jmstudios.redmoon.fragment
 import android.os.Bundle
 import android.preference.Preference
 import android.preference.SwitchPreference
-import android.util.Log
 import android.widget.Toast
 
 import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.event.*
-
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.preference.TimePickerPreference
 import com.jmstudios.redmoon.receiver.TimeToggleChangeReceiver
 import com.jmstudios.redmoon.service.LocationUpdateService
+import com.jmstudios.redmoon.util.hasLocationPermission
+import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.requestLocationPermission
 
 import org.greenrobot.eventbus.Subscribe
 
@@ -64,7 +65,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
         updatePrefs()
 
         locationPref.onPreferenceClickListener =
-            Preference.OnPreferenceClickListener { pref ->
+            Preference.OnPreferenceClickListener {
                 LocationUpdateService.start()
                 true
             }
@@ -104,7 +105,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
         val auto = Config.timeToggle
         val useLocation = Config.useLocation
         val enabled = auto && !useLocation
-        if (DEBUG) Log.i(TAG, "auto: $auto, useLocation: $useLocation, enabled: $enabled")
+        Log("auto: $auto, useLocation: $useLocation, enabled: $enabled")
         automaticTurnOnPref.isEnabled = enabled
         automaticTurnOffPref.isEnabled = enabled
         automaticTurnOnPref.summary = Config.automaticTurnOnTime
@@ -114,7 +115,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
     //region presenter
     @Subscribe
     fun onTimeToggleChanged(event: timeToggleChanged) {
-        if (DEBUG) Log.i(TAG, "Filter mode changed to " + Config.timeToggle)
+        Log("Filter mode changed to " + Config.timeToggle)
         updatePrefs()
         if (Config.timeToggle) {
             TimeToggleChangeReceiver.rescheduleOnCommand(activity)
@@ -158,13 +159,13 @@ class TimeToggleFragment : EventPreferenceFragment() {
     @Subscribe
     fun onLocationAccessDenied(event: locationAccessDenied) {
         if (mIsSearchingLocation) {
-            Config.requestLocationPermission(activity)
+            requestLocationPermission(activity)
         }
     }
 
     @Subscribe
     fun onLocationPermissionDialogClosed(event: locationPermissionDialogClosed) {
-        if (Config.hasLocationPermission) {
+        if (hasLocationPermission) {
             LocationUpdateService.start()
         } else {
             useLocationPref.isChecked = false
@@ -195,8 +196,6 @@ class TimeToggleFragment : EventPreferenceFragment() {
     //endregion
 
     companion object {
-        private val TAG = "TimeToggleFragment"
-        private val DEBUG = true
-        val DEFAULT_LOCATION = "not set"
+        const val DEFAULT_LOCATION = "not set"
     }
-}// Android Fragments require an explicit public default constructor for re-creation
+}
