@@ -22,7 +22,7 @@ import android.content.SharedPreferences
 
 import java.util.ArrayList
 
-import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.Logger
 
 /**
  * This class manages the SharedPreference that store all custom
@@ -163,7 +163,7 @@ class ProfilesModel(context: Context) {
                     Integer.toString(mDimProgress)
     }
 
-    companion object {
+    companion object : Logger() {
         private const val preferenceName = "com.jmstudios.redmoon.PROFILES_PREFERENCE"
         private const val mode = Context.MODE_PRIVATE
     }

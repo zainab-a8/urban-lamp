@@ -49,7 +49,7 @@ import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
-import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.Logger
 
 class SwitchAppWidgetProvider : AppWidgetProvider() {
 
@@ -93,7 +93,7 @@ class SwitchAppWidgetProvider : AppWidgetProvider() {
         appWidgetManager.updateAppWidget(appWidgetComponent, views)
     }
 
-    companion object {
+    companion object : Logger() {
         const val ACTION_TOGGLE = "com.jmstudios.redmoon.action.APPWIDGET_TOGGLE"
         const val ACTION_UPDATE = "com.jmstudios.redmoon.action.APPWIDGET_UPDATE"
         const val EXTRA_POWER = "com.jmstudios.redmoon.action.APPWIDGET_EXTRA_POWER"

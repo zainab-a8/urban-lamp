@@ -42,7 +42,7 @@ import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.WindowManager
 
-import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.Logger
 
 class ScreenManager(context: Context, private val mWindowManager: WindowManager) {
 
@@ -107,7 +107,7 @@ class ScreenManager(context: Context, private val mWindowManager: WindowManager)
         return mResources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
     }
 
-    companion object {
+    companion object : Logger() {
         private const val DEFAULT_NAV_BAR_HEIGHT_DP = 48
         private const val DEFAULT_STATUS_BAR_HEIGHT_DP = 25
     }

@@ -35,7 +35,7 @@
  */
 package com.jmstudios.redmoon.manager
 
-import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.Logger
 import android.view.WindowManager
 
 import com.jmstudios.redmoon.view.ScreenFilterView
@@ -45,6 +45,8 @@ import com.jmstudios.redmoon.view.ScreenFilterView
  */
 class WindowViewManager(private val mWindowManager: WindowManager,
                         val mView: ScreenFilterView) {
+
+    companion object : Logger()
 
     private var mScreenFilterOpen = false
 

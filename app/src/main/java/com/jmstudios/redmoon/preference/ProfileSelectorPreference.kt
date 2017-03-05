@@ -37,7 +37,7 @@ import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.helper.ProfilesHelper
 import com.jmstudios.redmoon.model.ProfilesModel
 import com.jmstudios.redmoon.model.Config
-import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.Logger
 
 import org.greenrobot.eventbus.Subscribe
 
@@ -252,7 +252,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         }
     }
 
-    companion object {
+    companion object : Logger() {
         const val DEFAULT_VALUE = 1
         const val DEFAULT_OPERATIONS_AM = 3
     }

@@ -29,7 +29,7 @@ import com.jmstudios.redmoon.preference.TimePickerPreference
 import com.jmstudios.redmoon.receiver.TimeToggleChangeReceiver
 import com.jmstudios.redmoon.service.LocationUpdateService
 import com.jmstudios.redmoon.util.hasLocationPermission
-import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.Logger
 import com.jmstudios.redmoon.util.requestLocationPermission
 
 import org.greenrobot.eventbus.Subscribe
@@ -195,7 +195,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
     }
     //endregion
 
-    companion object {
+    companion object : Logger() {
         const val DEFAULT_LOCATION = "not set"
     }
 }

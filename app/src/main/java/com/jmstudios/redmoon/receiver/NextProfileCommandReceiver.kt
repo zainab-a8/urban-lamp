@@ -24,9 +24,11 @@ import android.content.Intent
 import com.jmstudios.redmoon.helper.ProfilesHelper
 import com.jmstudios.redmoon.model.ProfilesModel
 import com.jmstudios.redmoon.model.Config
-import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.Logger
 
 class NextProfileCommandReceiver : BroadcastReceiver() {
+
+    companion object : Logger()
 
     override fun onReceive(context: Context, intent: Intent) {
         Log.i("Next profile requested")

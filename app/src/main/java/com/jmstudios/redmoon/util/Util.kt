@@ -57,28 +57,6 @@ import org.greenrobot.eventbus.EventBus
 
 val appContext = RedMoonApplication.app
 
-/**
- * This is a kotlin extension. It adds a Log method that any class can call
- * as its own member. THat way we can pass the caller's class name to the
- * Logger implicitly.
- */
-inline val Any.Log: Logger
-    get() = Logger(this::class.java.simpleName)
-
-class Logger(inline val TAG: String) {
-    inline fun i(message: String, enabled: Boolean = DEBUG, tag: String = TAG) {
-        if (enabled) { android.util.Log.i(tag, message) }
-    }
-
-    inline fun d(message: String, enabled: Boolean = DEBUG, tag: String = TAG) {
-        if (enabled) { android.util.Log.d(tag, message) }
-    }
-
-    companion object {
-        const val DEBUG = true
-    }
-}
-
 val atLeastAPI: (Int) -> Boolean = { it <= android.os.Build.VERSION.SDK_INT }
 val belowAPI: (Int) -> Boolean = { !atLeastAPI(it) }
 

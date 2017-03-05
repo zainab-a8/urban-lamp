@@ -21,7 +21,7 @@ import android.os.Bundle
 import android.preference.PreferenceFragment
 
 import com.jmstudios.redmoon.R
-import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.Logger
 
 class AboutFragment : PreferenceFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,4 +29,5 @@ class AboutFragment : PreferenceFragment() {
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.about)
     }
+    companion object : Logger()
 }

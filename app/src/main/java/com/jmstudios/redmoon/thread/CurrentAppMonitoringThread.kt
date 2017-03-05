@@ -27,7 +27,7 @@ import android.content.ContextWrapper
 import com.jmstudios.redmoon.service.ScreenFilterService
 import com.jmstudios.redmoon.util.atLeastAPI
 import com.jmstudios.redmoon.util.belowAPI
-import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.Logger
 
 import java.lang.Thread
 import java.util.TreeMap
@@ -39,7 +39,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
     }
 
     override fun run() {
-        Log.i("CurrentAppMonitoringThread running", DEBUG)
+        Log.i("CurrentAppMonitoringThread running")
 
         try {
             while (!Thread.interrupted()) {
@@ -55,7 +55,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
         } catch (e: InterruptedException) {
         }
 
-        Log.i("Shutting down CurrentAppMonitoringThread", DEBUG)
+        Log.i("Shutting down CurrentAppMonitoringThread")
     }
 
     private fun isAppSecured(app: String): Boolean {
@@ -67,8 +67,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
                 app == "com.google.android.packageinstaller"
     }
 
-    companion object {
-        private const val DEBUG = false
+    companion object : Logger(false) {
 
         fun isAppMonitoringWorking(context: Context): Boolean {
             return getCurrentApp(context) != ""

@@ -558,7 +558,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         }
     }
 
-    companion object {
+    companion object : Logger() {
         const val NOTIFICATION_ID = 1
         private const val REQUEST_CODE_ACTION_SETTINGS = 1000
         private const val REQUEST_CODE_ACTION_TOGGLE = 3000

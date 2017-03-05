@@ -31,7 +31,7 @@ import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.service.LocationUpdateService
 import com.jmstudios.redmoon.service.ScreenFilterService
 import com.jmstudios.redmoon.util.atLeastAPI
-import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.Logger
 
 import java.util.Calendar
 import java.util.GregorianCalendar
@@ -66,9 +66,7 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
         }
     }
 
-    companion object {
-        private const val TAG = "TimeToggleChange"
-        private const val DEBUG = true
+    companion object : Logger() {
         private val intent = { ctx: Context -> Intent(ctx, TimeToggleChangeReceiver::class.java) }
 
         // Conveniences

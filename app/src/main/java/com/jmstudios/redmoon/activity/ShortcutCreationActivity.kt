@@ -22,7 +22,7 @@ import android.content.Intent
 import android.os.Bundle
 
 import com.jmstudios.redmoon.R
-import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.Logger
 
 class ShortcutCreationActivity : Activity() {
 
@@ -46,4 +46,5 @@ class ShortcutCreationActivity : Activity() {
 
         finish()
     }
+    companion object : Logger()
 }

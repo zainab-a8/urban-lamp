@@ -49,14 +49,15 @@ import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
 import com.jmstudios.redmoon.preference.ProfileSelectorPreference
 import com.jmstudios.redmoon.util.hasWriteSettingsPermission
-import com.jmstudios.redmoon.util.Log
 import com.jmstudios.redmoon.util.requestWriteSettingsPermission
+import com.jmstudios.redmoon.util.Logger
 
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 class FilterFragment : EventPreferenceFragment() {
     //private var hasShownWarningToast = false
+    companion object : Logger()
 
     // Preferences
     private val profileSelectorPref: ProfileSelectorPreference

@@ -23,7 +23,7 @@ import android.preference.PreferenceManager
 
 import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.event.*
-import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.Logger
 
 import org.greenrobot.eventbus.EventBus
 
@@ -77,7 +77,7 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
     }
 
     //endregion
-    companion object {
+    companion object : Logger() {
         lateinit var app: RedMoonApplication
     }
 }

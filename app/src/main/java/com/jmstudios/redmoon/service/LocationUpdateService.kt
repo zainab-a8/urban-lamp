@@ -51,7 +51,7 @@ import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.util.appContext
 import com.jmstudios.redmoon.util.hasLocationPermission
-import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.Logger
 
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
 import org.greenrobot.eventbus.EventBus
@@ -171,7 +171,7 @@ class LocationUpdateService: Service(), LocationListener {
         }
     }
 
-    companion object {
+    companion object : Logger() {
         private const val locationProviderNetwork = LocationManager.NETWORK_PROVIDER
         private const val locationProviderGps = LocationManager.GPS_PROVIDER
 

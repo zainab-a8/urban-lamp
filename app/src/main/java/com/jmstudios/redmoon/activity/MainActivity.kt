@@ -48,16 +48,20 @@ import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.fragment.FilterFragment
-import com.jmstudios.redmoon.util.requestOverlayPermission
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
-import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.Logger
 import com.jmstudios.redmoon.util.appContext
+import com.jmstudios.redmoon.util.requestOverlayPermission
 
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 class MainActivity : ThemedAppCompatActivity() {
+
+    companion object : Logger() {
+        const val EXTRA_FROM_SHORTCUT_BOOL = "com.jmstudios.redmoon.activity.MainActivity.EXTRA_FROM_SHORTCUT_BOOL"
+    }
 
     override val fragment = FilterFragment()
     override val tag = "jmstudios.fragment.tag.FILTER"
@@ -170,9 +174,5 @@ class MainActivity : ThemedAppCompatActivity() {
     fun onOverlayPermissionDenied(event: overlayPermissionDenied) {
         mSwitch.isChecked = false
         requestOverlayPermission(this)
-    }
-
-    companion object {
-        const val EXTRA_FROM_SHORTCUT_BOOL = "com.jmstudios.redmoon.activity.MainActivity.EXTRA_FROM_SHORTCUT_BOOL"
     }
 }

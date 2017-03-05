@@ -21,9 +21,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 
-import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.Logger
 
 class ScreenStateReceiver(private val mListener: ScreenStateReceiver.ScreenStateListener?) : BroadcastReceiver() {
+
+    companion object : Logger()
 
     interface ScreenStateListener {
         fun onScreenTurnedOn()
