@@ -23,8 +23,8 @@ your screen even darker.
 * Switch between filters right in the notification, without leaving the app you're using.
 * Turn Red Moon on and off without opening the app using:
   * A widget or a shortcut on your home screen.
-  * The notification (if Red Moon is on).
   * A quick settings tile, like WiFi or Airplane mode (Android 7.0+). 
+  * The notification (if Red Moon is on, or was recently on).
 
 ## Screenshots
 
