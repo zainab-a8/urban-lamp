@@ -18,7 +18,7 @@
 
     <string name="button_add_profile">Aggiungi</string>
     <string name="button_remove_profile">Elimina</string>
-    <string name="shades_dim_level">>Livello di oscuramento</string>
+    <string name="shades_dim_level">Livello di oscuramento</string>
     <string name="shades_intensity_level">Livello di intensità</string>
     <string name="shades_color_temp">Temperatura del colore</string>
     <string name="control_brightness_title">Riduci luminosià</string>
