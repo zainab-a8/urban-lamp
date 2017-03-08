@@ -74,6 +74,8 @@
     <string name="pref_title_time_toggle">Timer</string>
     <string name="pref_title_startup">Startup</string>
     <string name="pref_title_other">Other</string>
+    <string name="pref_title_button_backlight_disclaimer">No effect on some devices</string>
+    <string name="pref_title_button_backlight">Hardware button backlight</string>
 
     <string name="button_add_profile">Add</string>
     <string name="button_remove_profile">Delete</string>
@@ -158,4 +160,9 @@
     <string name="time_toggle_options_array_0">Manual</string>
     <string name="time_toggle_options_array_1">Automatic (sun)</string>
     <string name="time_toggle_options_array_2">Automatic (custom)</string>
+
+    <!-- button_backlight_entries -->
+    <string name="pref_button_backlight_entries_array_0">System managed</string>
+    <string name="pref_button_backlight_entries_array_1">Use filter dim level</string>
+    <string name="pref_button_backlight_entries_array_2">Turn off</string>
 </resources>

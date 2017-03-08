@@ -36,6 +36,7 @@ class locationChanged          : Event()
 class sunsetTimeChanged        : Event()
 class sunriseTimeChanged       : Event()
 class secureSuspendChanged     : Event()
+class buttonBacklightChanged  : Event()
 
 class overlayPermissionDenied  : Event()
 class locationServicesDisabled : Event()

@@ -166,6 +166,11 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         mCurrentState.onSecureSuspendChanged()
     }
 
+    @Subscribe
+    fun onButtonBacklightChanged(event: buttonBacklightChanged) {
+        mWindowViewManager.reLayoutWindow(filterLayoutParams)
+    }
+
     override fun onScreenTurnedOn() {
         Log.i("Screen turn on received")
         screenOff = false
@@ -255,7 +260,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
                     PixelFormat.TRANSLUCENT
                 ).apply{
                     gravity = Gravity.TOP or Gravity.START
-                    buttonBrightness = (if (Config.dimButtons) 0 else -1).toFloat()
+                    buttonBrightness = Config.buttonBacklightLevel
                 }
 
     private fun startCamThread() {

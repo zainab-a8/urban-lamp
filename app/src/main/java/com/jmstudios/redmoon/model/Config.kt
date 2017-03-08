@@ -45,6 +45,7 @@ import com.jmstudios.redmoon.preference.ColorSeekBarPreference
 import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
 import com.jmstudios.redmoon.util.appContext
+import com.jmstudios.redmoon.view.ScreenFilterView
 
 /**
  * This singleton provides allows easy access to the shared preferences
@@ -107,8 +108,8 @@ object Config {
     val secureSuspend: Boolean
         get() = getBooleanPref(R.string.pref_key_secure_suspend, false)
 
-    val dimButtons: Boolean
-        get() = getBooleanPref(R.string.pref_key_dim_buttons, true)
+    val buttonBacklightFlag: String
+        get() = getStringPref(R.string.pref_key_button_backlight, "off")
     
     private val darkThemeFlag: Boolean
         get() = getBooleanPref(R.string.pref_key_dark_theme, false)
@@ -139,6 +140,16 @@ object Config {
     //region state
     val activeTheme: Int
         get() = if (darkThemeFlag) { R.style.AppThemeDark } else { R.style.AppTheme }
+
+    val buttonBacklightLevel: Float
+        get() = when (buttonBacklightFlag) {
+                    "system" -> -1.toFloat()
+                    "dim" -> {
+                        val progress = (dim.toFloat() * ScreenFilterView.DIM_MAX_ALPHA)
+                        1 - (progress / 100)
+                    }
+                    else -> 0.toFloat()
+                }
 
     val automaticTurnOnTime: String
         get() = if (useLocation) sunsetTime else customTurnOnTime

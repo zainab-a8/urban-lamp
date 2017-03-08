@@ -58,7 +58,8 @@
   <string name="pref_key_github" translatable="false">pref_key_github</string>
   <string name="pref_key_email" translatable="false">pref_key_email</string>
   <string name="pref_key_other" translatable="false">pref_key_other</string>
-  <string name="pref_key_dim_buttons" translatable="false">pref_key_dim_buttons</string>
+  <!-- <string name="pref_key_dim_buttons" translatable="false">pref_key_dim_buttons</string> -->
+  <string name="pref_key_button_backlight" translatable="false">pref_key_button_backlight</string>
   <string name="pref_key_automatic_brightness" translatable="false">pref_key_brightness_automatic</string>
   <string name="pref_key_brightness" translatable="false">pref_key_brightness_level</string>
   <string name="pref_key_num_profiles" translatable="false">pref_key_ammount_profiles</string>
@@ -66,6 +67,11 @@
   <string name="pref_key_secure_suspend" translatable="false">pref_key_automatic_suspend</string>
   <string name="pref_key_secure_suspend_header" translatable="false">pref_key_secure_suspend_header</string>
   <string name="pref_key_from_version_code" translatable="false">pref_key_from_version_code</string>
+
+  <!-- button_backlight_entries -->
+  <string name="pref_button_backlight_values_array_0" translatable="false">system</string>
+  <string name="pref_button_backlight_values_array_1" translatable="false">dim</string>
+  <string name="pref_button_backlight_values_array_2" translatable="false">off</string>
 
   <!-- Other -->
   <string name="version_name" translatable="false">2.10.0</string>
