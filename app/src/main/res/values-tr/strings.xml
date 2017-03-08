@@ -5,25 +5,22 @@
     <string name="button_remove_profile">Sil</string>
     <string name="shades_color_temp">Renk sıcaklığı</string>
     <string name="project_page_title">Tasarı sayfasını ziyaret et</string>
-    <string name="add_new_profile_edit_hint">Profil ismi</string>
+    <string name="add_new_filter_edit_hint">Profil ismi</string>
     <string name="intro_slide_1_title">Hoş geldiniz!</string>
     <string name="intro_slide_3_text">Mavi ışık geceleri uyumanı sağlayan Melatonin hormonu üretimini baskılar. Red Moon daha kolay uyumanız için ekranınızdaki mavi ışığı kaldırır.</string>
 
-    <string name="standard_profiles_array_0">Özel</string>
-    <string name="standard_profiles_array_1">Varsayılan</string>
-    <string name="pref_title_appearance">Süzgeç</string>
+    <string name="pref_title_filter">Süzgeç</string>
     <string name="resume_action">Devam et</string>
     <string name="pref_title_other">Diğer</string>
 
     <string name="paused">Durduruldu</string>
     <string name="shades_dim_level">Karartma düzeyi</string>
     <string name="shades_intensity_level">Yoğunluk düzeyi</string>
-    <string name="add_new_profile_dialog_title">Profil ismini gir</string>
+    <string name="add_new_filter_dialog_title">Profil ismini gir</string>
     <string name="cancel_dialog">İptal</string>
 
     <string name="ok_dialog">Tamam</string>
     <string name="time_toggle_options_array_0">Elle</string>
-    <string name="standard_profiles_array_2">Okuma</string>
 
     <string name="running">Çalışıyor. Apk kurmak için durdurun</string>
     <string name="app_name">Red Moon</string>
@@ -62,9 +59,12 @@
 
     <string name="help_snackbar_text">Red Moon\'u etkinleştirmek için düğmeye bas</string>
 
-    <string name="remove_profile_dialog_title">Bu profili sil?</string>
+    <string name="remove_filter_dialog_title">Bu profili sil?</string>
     <string name="intro_slide_2_text">Gece telefonuna bakmak gözlerine zarar verir, Red Moon\'u kullanıp ekranını karartabilirsin.</string>
 
+    <string name="standard_profiles_array_0">Özel</string>
+    <string name="standard_profiles_array_1">Varsayılan</string>
+    <string name="standard_profiles_array_2">Okuma</string>
     <string name="secure_suspend_activity">Kendiliğinden askıya al</string>
 
     <string name="latitude_short">Enlem</string>
@@ -83,4 +83,9 @@ Bu özellik aygıtınızın pil ömrünü azıcık düşürebilir. Üstelik bu �
 
 Red Moon güvenli uygulamalarda süzgeci askıya almak ve hangi uygulamanın içinde olduğunuzu görmek için kullanım iznine gereksinir. Red Moon bu veriyi gerektiğinde sadece süzgeci askıya almak için kullanacak.</string>
 
+<!-- Currently unused -->
+    <string name="add_new_profile_edit_hint">Profil ismi</string>
+    <string name="add_new_profile_dialog_title">Profil ismini gir</string>
+    <string name="remove_profile_dialog_title">Bu profili sil?</string>
+    <string name="pref_title_appearance">Süzgeç</string>
     </resources>
