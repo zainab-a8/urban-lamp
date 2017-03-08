@@ -3,9 +3,9 @@
 
 Red Moon is a screen filter app for night time phone use. When the
 lowest brightness setting of your phone won't do the trick, Red Moon
-makes your screen even darker. It also helps you sleep healthier by
-filtering out blue light, which can disrupt your sleep cycle (circadian
-rhythm).
+protects your eyes by making your screen even darker. It also helps
+you sleep healthier by filtering out blue light, which can disrupt
+your sleep cycle (circadian rhythm).
 
 [<img src="https://f-droid.org/badge/get-it-on.png"
       alt="Get it on F-Droid"
