@@ -1,11 +1,11 @@
 <img align="right" height="256" src="https://lut.im/3IqLwsAZWH/piFLRMOgNLWmiqB8.png">
 # Red Moon [![Translation status](https://hosted.weblate.org/widgets/red-moon/-/svg-badge.svg)](https://hosted.weblate.org/engage/red-moon/?utm_source=widget)
 
-Red Moon is a screen filter app for night time phone use. When the
-lowest brightness setting of your phone won't do the trick, Red Moon
-protects your eyes by making your screen even darker. It also helps
+Red Moon is a screen filter app for night time phone use. It helps
 you sleep healthier by filtering out blue light, which can disrupt
-your sleep cycle (circadian rhythm).
+your sleep cycle (circadian rhythm). And when your phone's lowest
+brightness isn't low enough, Red Moon protects your eyes by making
+your screen even darker. 
 
 [<img src="https://f-droid.org/badge/get-it-on.png"
       alt="Get it on F-Droid"
