@@ -66,10 +66,10 @@
     <string name="pause_action">Pause</string>
     <string name="action_on">Turn on</string>
     <string name="action_off">Turn off</string>
-    <string name="action_next_filter">Next profile</string>
+    <string name="action_next_filter">Next filter</string>
 
     <!-- Preference -->
-    <string name="pref_title_filter">Profile</string>
+    <string name="pref_title_filter">Filter</string>
     <string name="time_toggle_activity">Timer</string>
     <string name="pref_title_time_toggle">Timer</string>
     <string name="pref_title_startup">Startup</string>
@@ -119,9 +119,9 @@
     <string name="help_snackbar_text">Press the switch to enable Red Moon</string>
 
     <!-- Dialog -->
-    <string name="add_new_filter_dialog_title">Enter profile name</string>
-    <string name="add_new_filter_edit_hint">Profile name</string>
-    <string name="remove_filter_dialog_title">Delete this profile?</string>
+    <string name="add_new_filter_dialog_title">Enter filter name</string>
+    <string name="add_new_filter_edit_hint">Filter name</string>
+    <string name="remove_filter_dialog_title">Delete this filter?</string>
     <string name="set_dialog">Set</string>
     <string name="ok_dialog">OK</string>
     <string name="cancel_dialog">Cancel</string>
