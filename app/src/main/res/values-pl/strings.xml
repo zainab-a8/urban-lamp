@@ -93,8 +93,8 @@ Red Moon usuwa niebieskie światło z Twojego ekranu,
 zapewniając Ci lepszy łatwiejsze zaśnięcie.</string>
 
     <string name="intro_slide_4_title">Rozpocznij!</string>
-    <string name="intro_slide_4_text">Żeby włączyć Red Moon
-przesuń włącznik w prawym górnym rogu.</string>
+    <string name="intro_slide_4_text">Możesz włączyć lub wyłączyć Red Moona przełącznikiem
+ w prawym górnym rogu.</string>
 
     <string name="overlay_dialog_title">Wyświetlanie nad innymi aplikacjami</string>
     <string name="overlay_dialog_message">Zezwól na wyświetlanie nad innymi aplikacjami, aby Red Moon mógł zacząć działać.</string>
