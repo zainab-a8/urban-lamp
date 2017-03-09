@@ -414,6 +414,9 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
             val dim = Config.dim
             mView.cancelDimAnimator()
             mView.filterDimLevel = dim
+            if (Config.buttonBacklightFlag == "dim") {
+                mWindowViewManager.reLayoutWindow(filterLayoutParams)
+            }
         }
 
         override fun onLowerBrightnessChanged() {
@@ -527,6 +530,9 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
             val dim = Config.dim
             mView.cancelDimAnimator()
             mView.filterDimLevel = dim
+            if (Config.buttonBacklightFlag == "dim") {
+                mWindowViewManager.reLayoutWindow(filterLayoutParams)
+            }
         }
     }
 

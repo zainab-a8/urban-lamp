@@ -45,7 +45,6 @@ import com.jmstudios.redmoon.preference.ColorSeekBarPreference
 import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
 import com.jmstudios.redmoon.util.appContext
-import com.jmstudios.redmoon.view.ScreenFilterView
 
 /**
  * This singleton provides allows easy access to the shared preferences
@@ -144,10 +143,7 @@ object Config {
     val buttonBacklightLevel: Float
         get() = when (buttonBacklightFlag) {
                     "system" -> -1.toFloat()
-                    "dim" -> {
-                        val progress = (dim.toFloat() * ScreenFilterView.DIM_MAX_ALPHA)
-                        1 - (progress / 100)
-                    }
+                    "dim" -> 1 - (dim.toFloat() / 100)
                     else -> 0.toFloat()
                 }
 
