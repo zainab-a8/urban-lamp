@@ -123,4 +123,11 @@ Red Moon rozsyła publiczny zamiar (intent) \'com.jmstudios.redmoon.RED_MOON_TOG
     <string name="remove_profile_dialog_title">Usunąć profil?</string>
     <string name="action_next_profile">Następny profil</string>
     <string name="pref_title_appearance">Profil</string>
+    <string name="pref_title_button_backlight_disclaimer">Brak efektu na niektórych urządzeniach</string>
+    <string name="pref_title_button_backlight">Podświetlenie przycisków sprzętowych</string>
+
+    <string name="pref_button_backlight_entries_array_0">Zarządzane przez system</string>
+    <string name="pref_button_backlight_entries_array_1">Użyj poziomu filtra przygaszania</string>
+    <string name="pref_button_backlight_entries_array_2">Wyłącz</string>
+
     </resources>
