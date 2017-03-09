@@ -134,7 +134,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
     @Subscribe
     fun onProfileChanged(event: profileChanged) {
-        refreshForegroundNotification()
+        mCurrentState.refreshNotification()
     }
 
     @Subscribe
@@ -189,59 +189,6 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
     override fun onLandscapeOrientation() {
         mWindowViewManager.reLayoutWindow(filterLayoutParams)
-    }
-
-    private fun refreshForegroundNotification() {
-        Log.d("Creating notification while in $mCurrentState")
-
-        val nb = NotificationCompat.Builder(mContext).apply {
-            val context = mView.context
-            val profilesModel = ProfilesModel(context)
-
-            // Set notification appearance
-            setSmallIcon(R.drawable.notification_icon_half_moon)
-            setContentTitle(context.getString(R.string.app_name))
-            setContentText(ProfilesHelper.getProfileName(profilesModel, Config.profile, context))
-            setColor(ContextCompat.getColor(context, R.color.color_primary))
-            setPriority(Notification.PRIORITY_MIN)
-
-            // Open Red Moon when tapping notification body
-            val mainActivityIntent = Intent(context, MainActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            }
-            val mainActivityPI = PendingIntent.getActivity(context, REQUEST_CODE_ACTION_SETTINGS,
-                                           mainActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-            setContentIntent(mainActivityPI)
-
-            // Add toggle action
-            val toggleIconResId = if (filterIsOn) { R.drawable.ic_stop }
-                                  else { R.drawable.ic_play }
-            val toggleActionText = if (filterIsOn) { context.getString(R.string.action_off) }
-                                   else { context.getString(R.string.action_on) }
-            val toggleCommand = with (ScreenFilterService) {
-                if (filterIsOn) { command(ScreenFilterService.Command.OFF) }
-                else { command(ScreenFilterService.Command.ON) }
-            }
-            val togglePI = PendingIntent.getService(context, REQUEST_CODE_ACTION_TOGGLE,
-                                         toggleCommand, PendingIntent.FLAG_UPDATE_CURRENT)
-            addAction(toggleIconResId, toggleActionText, togglePI)
-
-            // Add profile switch action
-            val nextProfileText   = context.getString(R.string.action_next_filter)
-            val nextProfileIntent = Intent(context, NextProfileCommandReceiver::class.java)
-            val nextProfilePI     = PendingIntent.getBroadcast(context, REQUEST_CODE_NEXT_PROFILE,
-                                                               nextProfileIntent, 0)
-            addAction(R.drawable.ic_next_profile, nextProfileText, nextProfilePI)
-        }
-
-        if (filterIsOn) {
-            Log.d("Creating a persistent notification")
-            mServiceController.startForeground(NOTIFICATION_ID, nb.build())
-        } else {
-            mServiceController.stopForeground(false)
-            val nm = mContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            nm.notify(NOTIFICATION_ID, nb.build())
-        }
     }
 
     private val filterLayoutParams: WindowManager.LayoutParams
@@ -323,12 +270,53 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
     }
 
     private abstract inner class State {
+
         abstract val filterIsOn: Boolean
+
+        internal val notification: NotificationCompat.Builder
+            get() = NotificationCompat.Builder(mContext).apply {
+                val context = mView.context
+                val profilesModel = ProfilesModel(context)
+
+                // Set notification appearance
+                setSmallIcon(R.drawable.notification_icon_half_moon)
+                setContentTitle(context.getString(R.string.app_name))
+                setContentText(ProfilesHelper.getProfileName(profilesModel, Config.profile, context))
+                setColor(ContextCompat.getColor(context, R.color.color_primary))
+                setPriority(Notification.PRIORITY_MIN)
+
+                // Open Red Moon when tapping notification body
+                val mainActivityIntent = Intent(context, MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                }
+                setContentIntent(PendingIntent.getActivity(context, REQUEST_CODE_ACTION_SETTINGS,
+                                            mainActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT))
+
+                // Add toggle action
+                val toggleIconResId = if (filterIsOn) { R.drawable.ic_stop }
+                                      else { R.drawable.ic_play }
+                val toggleActionText = if (filterIsOn) { context.getString(R.string.action_off) }
+                                       else { context.getString(R.string.action_on) }
+                val toggleCommand = with(ScreenFilterService) {
+                    if (filterIsOn) { command(ScreenFilterService.Command.OFF) }
+                    else { command(ScreenFilterService.Command.ON) }
+                }
+                val togglePI = PendingIntent.getService(context, REQUEST_CODE_ACTION_TOGGLE,
+                                            toggleCommand, PendingIntent.FLAG_UPDATE_CURRENT)
+                addAction(toggleIconResId, toggleActionText, togglePI)
+
+                // Add profile switch action
+                val nextProfileText = context.getString(R.string.action_next_filter)
+                val nextProfileIntent = Intent(context, NextProfileCommandReceiver::class.java)
+                val nextProfilePI = PendingIntent.getBroadcast(context, REQUEST_CODE_NEXT_PROFILE,
+                                                               nextProfileIntent, 0)
+                addAction(R.drawable.ic_next_profile, nextProfileText, nextProfilePI)
+            }
 
         open internal fun onActivation(prevState: State) {
             Log.i("super($this).onActivation($prevState)")
             Config.filterIsOn = filterIsOn
-            refreshForegroundNotification()
+            mCurrentState.refreshNotification()
         }
 
         open internal val nextState: (ScreenFilterService.Command) -> State = {
@@ -354,6 +342,10 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
                 mCurrentState = newState
                 mCurrentState.onActivation(this)
             }
+        }
+
+        open fun refreshNotification() {
+            Log.d("Creating notification while in $this")
         }
 
         open fun onColorChanged() {}
@@ -398,6 +390,12 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         override val nextState: (ScreenFilterService.Command) -> State = {
             if (it == ScreenFilterService.Command.TOGGLE) { mOffState }
             else { super.nextState(it) }
+        }
+
+        override fun refreshNotification() {
+            super.refreshNotification()
+            Log.d("Creating a persistent notification")
+            mServiceController.startForeground(NOTIFICATION_ID, notification.build())
         }
 
         override fun onColorChanged() {
@@ -464,6 +462,13 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         override val nextState: (ScreenFilterService.Command) -> State = {
             if (it == ScreenFilterService.Command.TOGGLE) mOnState
             else super.nextState(it)
+        }
+
+        override fun refreshNotification() {
+            super.refreshNotification()
+            mServiceController.stopForeground(false)
+            val nm = mContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            nm.notify(NOTIFICATION_ID, notification.build())
         }
     }
 
@@ -566,6 +571,13 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
                 ScreenFilterService.Command.START_SUSPEND -> {}
                 else -> stateToReturnTo = nextState(command)
             }
+        }
+
+        override fun refreshNotification() {
+            super.refreshNotification()
+            mServiceController.stopForeground(false)
+            val nm = mContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            nm.notify(NOTIFICATION_ID, notification.build())
         }
     }
 
