@@ -72,8 +72,8 @@ Red Moon を使用して画面を暗くすることができます。</string>
 容易に眠りに落ちることができるようにします。</string>
 
     <string name="intro_slide_4_title">はじめましょう!</string>
-    <string name="intro_slide_4_text">Red Moon をオンにするには、
-右上のスイッチを押してください。</string>
+    <string name="intro_slide_4_text">右上のスイッチで Red Moon 
+をオン、オフにします。</string>
 
     <string name="intro_label">イントロ</string>
     <string name="show_intro_text">イントロをリプレイ</string>
