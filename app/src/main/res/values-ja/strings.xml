@@ -123,4 +123,11 @@ Red Moon は、アクション \'com.jmstudios.redmoon.RED_MOON_TOGGLED\' で公
     <string name="remove_profile_dialog_title">このプロファイルを削除しますか?</string>
     <string name="action_next_profile">次のプロファイル</string>
     <string name="pref_title_appearance">プロファイル</string>
+    <string name="pref_title_button_backlight_disclaimer">一部のデバイスでは効果がありません</string>
+    <string name="pref_title_button_backlight">ハードウェアボタンのバックライト</string>
+
+    <string name="pref_button_backlight_entries_array_0">システム管理</string>
+    <string name="pref_button_backlight_entries_array_1">薄暗いレベルのフィルターを使用</string>
+    <string name="pref_button_backlight_entries_array_2">オフにする</string>
+
     </resources>
