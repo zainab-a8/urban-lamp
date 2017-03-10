@@ -98,10 +98,6 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
     private var oldBrightness: Int = -1
     private var oldAutomaticBrightness: Boolean = false
 
-    // Just a convenience
-    private val filterIsOn: Boolean
-        get() = mCurrentState.filterIsOn
-
     init {
         // Always initialize to off
         onScreenFilterCommand(ScreenFilterService.Command.OFF)
@@ -112,12 +108,12 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         Log.i("Sending update broadcast")
         val updateAppWidgetIntent = Intent(mContext, SwitchAppWidgetProvider::class.java)
         updateAppWidgetIntent.action = SwitchAppWidgetProvider.ACTION_UPDATE
-        updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_POWER, filterIsOn)
+        updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_POWER, mCurrentState.filterIsOn)
         mContext.sendBroadcast(updateAppWidgetIntent)
     }
 
     fun onScreenFilterCommand(command: ScreenFilterService.Command) {
-        Log.i("Handling command ${command.name} in state: $this")
+        Log.i("Handling command ${command.name} in state: $mCurrentState")
         mCurrentState.onScreenFilterCommand(command)
     }
 
@@ -128,7 +124,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         // Red Moon is toggled, it can listen for this event
         val intent = Intent()
         intent.action = BROADCAST_ACTION
-        intent.putExtra(BROADCAST_FIELD, filterIsOn)
+        intent.putExtra(BROADCAST_FIELD, mCurrentState.filterIsOn)
         mContext.sendBroadcast(intent)
     }
 
@@ -272,18 +268,23 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
     private abstract inner class State {
 
         abstract val filterIsOn: Boolean
+        open protected val toggleIconResId = R.drawable.ic_play
+        open protected val toggleActionText: String = appContext.getString(R.string.action_on)
+        open protected val toggleCommand = ScreenFilterService.Command.ON
+        open protected val notificationContentText
+            get() = ProfilesHelper.getProfileName(ProfilesModel(appContext), Config.profile, appContext)
 
         internal val notification: NotificationCompat.Builder
             get() = NotificationCompat.Builder(mContext).apply {
                 val context = mView.context
-                val profilesModel = ProfilesModel(context)
 
                 // Set notification appearance
                 setSmallIcon(R.drawable.notification_icon_half_moon)
-                setContentTitle(context.getString(R.string.app_name))
-                setContentText(ProfilesHelper.getProfileName(profilesModel, Config.profile, context))
-                setColor(ContextCompat.getColor(context, R.color.color_primary))
-                setPriority(Notification.PRIORITY_MIN)
+                color    = ContextCompat.getColor(context, R.color.color_primary)
+                priority = Notification.PRIORITY_MIN
+
+                if (belowAPI(24)) { setContentTitle(context.getString(R.string.app_name)) }
+                setContentText(notificationContentText)
 
                 // Open Red Moon when tapping notification body
                 val mainActivityIntent = Intent(context, MainActivity::class.java).apply {
@@ -293,16 +294,9 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
                                             mainActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT))
 
                 // Add toggle action
-                val toggleIconResId = if (filterIsOn) { R.drawable.ic_stop }
-                                      else { R.drawable.ic_play }
-                val toggleActionText = if (filterIsOn) { context.getString(R.string.action_off) }
-                                       else { context.getString(R.string.action_on) }
-                val toggleCommand = with(ScreenFilterService) {
-                    if (filterIsOn) { command(ScreenFilterService.Command.OFF) }
-                    else { command(ScreenFilterService.Command.ON) }
-                }
                 val togglePI = PendingIntent.getService(context, REQUEST_CODE_ACTION_TOGGLE,
-                                            toggleCommand, PendingIntent.FLAG_UPDATE_CURRENT)
+                                                        ScreenFilterService.command(toggleCommand),
+                                                        PendingIntent.FLAG_UPDATE_CURRENT)
                 addAction(toggleIconResId, toggleActionText, togglePI)
 
                 // Add profile switch action
@@ -373,6 +367,9 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
     private inner class OnState : State() {
         override val filterIsOn = true
+        override val toggleIconResId = R.drawable.ic_stop
+        override val toggleActionText: String = appContext.getString(R.string.action_off)
+        override val toggleCommand = ScreenFilterService.Command.OFF
 
         override fun onActivation(prevState: State) {
             openScreenFilter()
@@ -553,6 +550,11 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         
         override val filterIsOn: Boolean
             get() = stateToReturnTo.filterIsOn
+
+        override val toggleIconResId = R.drawable.ic_stop
+        override val toggleActionText: String = appContext.getString(R.string.action_off)
+        override val toggleCommand = ScreenFilterService.Command.OFF
+        override val notificationContentText: String = appContext.getString(R.string.paused)
 
         override fun onActivation(prevState: State) {
             stateToReturnTo = prevState
