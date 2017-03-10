@@ -19,7 +19,7 @@
 -->
 <resources>
     <string name="paused">Angehalten</string>
-    <string name="running">Red Moon wird ausgeführt. Red Moon anhalten, um APKs installieren zu können</string>
+    <string name="running">Red Moon läuft. Red Moon anhalten, um APKs installieren zu können</string>
     <string name="shades_color_temp">Farbtemperatur</string>
     <string name="pref_title_filter">Filter</string>
     <string name="shades_dim_level">Grad der Abblendung</string>
@@ -71,7 +71,7 @@ ein-/ausschalten</string>
     <string name="help_snackbar_text">Den Schalter antippen, um Red Moon zu aktivieren</string>
     <string name="searching_location">Standortsuche</string>
 <string name="intro_label">Einführung</string>
-    <string name="show_intro_text">Einführung anzeigen</string>
+    <string name="show_intro_text">Einführung erneut anzeigen</string>
 
     <string name="resume_action">Fortsetzen</string>
     <string name="pause_action">Anhalten</string>
@@ -90,7 +90,7 @@ ein-/ausschalten</string>
 
     <string name="text_switch_on">An</string>
     <string name="text_switch_off">Aus</string>
-    <string name="secure_suspend_activity">Automatisch pausieren</string>
+    <string name="secure_suspend_activity">Automatisch in sicheren Apps pausieren</string>
 
     <string name="running_no_warning">Wird ausgeführt</string>
     <string name="secure_suspend_title">Filter für bestimmten Apps automatisch pausieren</string>
@@ -105,4 +105,20 @@ Red Moon benötigt den Zugriff auf die Daten, um festzustellen, welche App du ge
     <string name="add_new_profile_edit_hint">Profilname</string>
     <string name="remove_profile_dialog_title">Dieses Profil löschen?</string>
     <string name="pref_title_appearance">Filter</string>
+    <string name="menu_about">Über</string>
+    <string name="activity_about">Über Red Moon</string>
+    <string name="off">Aus</string>
+    <string name="action_on">Anschalten</string>
+    <string name="action_off">Ausschalten</string>
+    <string name="action_next_filter">Nächster Filter</string>
+
+    <string name="pref_title_button_backlight_disclaimer">Kein Effekt auf manchen Geräten</string>
+    <string name="use_location_title">Zeiten vom Ort</string>
+    <string name="pref_title_integration">Integration mit anderen Apps</string>
+    <string name="pref_title_version">Version</string>
+
+    <string name="pref_button_backlight_entries_array_1">Benutze Filter Dimm-Level</string>
+    <string name="pref_button_backlight_entries_array_2">Ausschalten</string>
+
+    <string name="action_next_profile">Nächstes Profil</string>
     </resources>
