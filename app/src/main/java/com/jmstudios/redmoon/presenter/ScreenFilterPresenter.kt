@@ -256,7 +256,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
                 val nextProfileIntent = Intent(context, NextProfileCommandReceiver::class.java)
                 val nextProfilePI = PendingIntent.getBroadcast(context, REQUEST_CODE_NEXT_PROFILE,
                                                                nextProfileIntent, 0)
-                addAction(R.drawable.ic_next_profile, nextProfileText, nextProfilePI)
+                addAction(R.drawable.ic_skip_next_white_36dp, nextProfileText, nextProfilePI)
             }
 
         open protected fun onActivation(prevState: State) {
@@ -329,7 +329,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
     private inner class OnState : State() {
         override val filterIsOn = true
-        override val toggleIconResId = R.drawable.ic_stop
+        override val toggleIconResId = R.drawable.ic_stop_circle_outline_white_36dp
         override val toggleActionText: String = appContext.getString(R.string.action_off)
         override val toggleCommand = ScreenFilterService.Command.OFF
 
@@ -534,7 +534,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         override val filterIsOn: Boolean
             get() = stateToReturnTo.filterIsOn
 
-        override val toggleIconResId = R.drawable.ic_stop
+        override val toggleIconResId = R.drawable.ic_stop_circle_outline_white_36dp
         override val toggleActionText: String = appContext.getString(R.string.action_off)
         override val toggleCommand = ScreenFilterService.Command.OFF
         override val notificationContentText: String = appContext.getString(R.string.paused)
