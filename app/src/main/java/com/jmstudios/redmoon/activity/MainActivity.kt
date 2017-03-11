@@ -38,11 +38,9 @@ package com.jmstudios.redmoon.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Switch
-import com.jmstudios.redmoon.BuildConfig
 
 import com.jmstudios.redmoon.R
 
@@ -51,7 +49,7 @@ import com.jmstudios.redmoon.fragment.FilterFragment
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
 import com.jmstudios.redmoon.util.Logger
-import com.jmstudios.redmoon.util.appContext
+import com.jmstudios.redmoon.util.handleUpgrades
 import com.jmstudios.redmoon.util.requestOverlayPermission
 
 import org.greenrobot.eventbus.EventBus
@@ -80,7 +78,7 @@ class MainActivity : ThemedAppCompatActivity() {
         // The preview will appear faster if we don't have to start the service
         ScreenFilterService.start()
 
-        handleUpgrades()
+        handleUpgrades() // From utils
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -111,9 +109,7 @@ class MainActivity : ThemedAppCompatActivity() {
     }
 
     override fun onDestroy() {
-        // Really we want to post an eventbus event, "uiClosed"
-        // So the service can turn itself off if the filter is paused
-        /* ScreenFilterService.stop() */
+        EventBus.getDefault().post(uiClosed())
         super.onDestroy()
     }
 
@@ -147,22 +143,6 @@ class MainActivity : ThemedAppCompatActivity() {
     private fun toggleAndFinish() {
         ScreenFilterService.toggle()
         finish()
-    }
-
-    private fun handleUpgrades() {
-        if (Config.fromVersionCode < 26) {
-            upgradeToggleModePreferences()
-        }
-        Config.fromVersionCode = BuildConfig.VERSION_CODE
-    }
-
-    private fun upgradeToggleModePreferences() {
-        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(appContext)
-        val currentToggleMode: String =
-                sharedPrefs.getString(getString(R.string.pref_key_time_toggle), "manual")
-        sharedPrefs.edit().remove(getString(R.string.pref_key_time_toggle)).apply()
-        Config.timeToggle = currentToggleMode != "manual"
-        Config.useLocation = currentToggleMode == "sun"
     }
 
     @Subscribe

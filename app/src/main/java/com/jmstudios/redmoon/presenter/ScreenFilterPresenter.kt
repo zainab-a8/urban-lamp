@@ -79,7 +79,7 @@ import org.greenrobot.eventbus.Subscribe
 class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleController,
                             private val mContext: Context,
                             private val mWindowViewManager: WindowViewManager,
-                            private val mScreenManager: ScreenManager):
+                            private val mScreenManager: ScreenManager) :
                         OrientationChangeReceiver.OnOrientationChangeListener,
                         ScreenStateReceiver.ScreenStateListener {
     private var mView: ScreenFilterView = mWindowViewManager.mView
@@ -108,63 +108,14 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         Log.i("Sending update broadcast")
         val updateAppWidgetIntent = Intent(mContext, SwitchAppWidgetProvider::class.java)
         updateAppWidgetIntent.action = SwitchAppWidgetProvider.ACTION_UPDATE
-        updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_POWER, mCurrentState.filterIsOn)
+        updateAppWidgetIntent.putExtra(SwitchAppWidgetProvider.EXTRA_POWER,
+                                       mCurrentState.filterIsOn)
         mContext.sendBroadcast(updateAppWidgetIntent)
     }
 
     fun onScreenFilterCommand(command: ScreenFilterService.Command) {
         Log.i("Handling command ${command.name} in state: $mCurrentState")
         mCurrentState.onScreenFilterCommand(command)
-    }
-
-    @Subscribe
-    fun onPowerStateChanged(event: filterIsOnChanged) {
-        updateWidgets()
-        // If an app like Tasker wants to do something each time
-        // Red Moon is toggled, it can listen for this event
-        val intent = Intent()
-        intent.action = BROADCAST_ACTION
-        intent.putExtra(BROADCAST_FIELD, mCurrentState.filterIsOn)
-        mContext.sendBroadcast(intent)
-    }
-
-    @Subscribe
-    fun onProfileChanged(event: profileChanged) {
-        mCurrentState.refreshNotification()
-    }
-
-    @Subscribe
-    fun onColorChanged(event: colorChanged) {
-        mCurrentState.onColorChanged()
-    }
-
-    @Subscribe
-    fun onIntensityChanged(event: intensityChanged) {
-        mCurrentState.onIntensityChanged()
-    }
-
-    @Subscribe
-    fun onDimChanged(event: dimChanged) {
-        mCurrentState.onDimChanged()
-    }
-
-    @Subscribe
-    fun onLowerBrightnessChanged(event: lowerBrightnessChanged) {
-        if (hasWriteSettingsPermission) {
-            mCurrentState.onLowerBrightnessChanged()
-        } else {
-            EventBus.getDefault().post(changeBrightnessDenied())
-        }
-    }
-
-    @Subscribe
-    fun onSecureSuspendChanged(event: secureSuspendChanged) {
-        mCurrentState.onSecureSuspendChanged()
-    }
-
-    @Subscribe
-    fun onButtonBacklightChanged(event: buttonBacklightChanged) {
-        mWindowViewManager.reLayoutWindow(filterLayoutParams)
     }
 
     override fun onScreenTurnedOn() {
@@ -265,6 +216,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         setBrightness(Config.brightness, Config.automaticBrightness, mContext)
     }
 
+    // TODO: Clean up notification refresh code
     private abstract inner class State {
 
         abstract val filterIsOn: Boolean
@@ -274,7 +226,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         open protected val notificationContentText
             get() = ProfilesHelper.getProfileName(ProfilesModel(appContext), Config.profile, appContext)
 
-        internal val notification: NotificationCompat.Builder
+        protected val notification: NotificationCompat.Builder
             get() = NotificationCompat.Builder(mContext).apply {
                 val context = mView.context
 
@@ -307,10 +259,11 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
                 addAction(R.drawable.ic_next_profile, nextProfileText, nextProfilePI)
             }
 
-        open internal fun onActivation(prevState: State) {
+        open protected fun onActivation(prevState: State) {
             Log.i("super($this).onActivation($prevState)")
+            EventBus.getDefault().register(this)
             Config.filterIsOn = filterIsOn
-            mCurrentState.refreshNotification()
+            refreshNotification()
         }
 
         open internal val nextState: (ScreenFilterService.Command) -> State = {
@@ -323,7 +276,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
             }
         }
 
-        open fun onScreenFilterCommand(command: ScreenFilterService.Command) {
+        open internal fun onScreenFilterCommand(command: ScreenFilterService.Command) {
             moveToState(nextState(command))
         }
 
@@ -333,20 +286,29 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
                 EventBus.getDefault().post(overlayPermissionDenied())
             } else if (newState !== this) {
                 Log.i("Transitioning from $this to $newState")
+                EventBus.getDefault().unregister(this)
                 mCurrentState = newState
                 mCurrentState.onActivation(this)
             }
         }
 
-        open fun refreshNotification() {
-            Log.d("Creating notification while in $this")
+        @Subscribe
+        fun onProfileChanged(event: profileChanged) {
+            refreshNotification()
         }
 
-        open fun onColorChanged() {}
-        open fun onIntensityChanged() {}
-        open fun onDimChanged() {}
-        open fun onLowerBrightnessChanged() {}
-        open fun onSecureSuspendChanged() {}
+        @Subscribe
+        fun onPowerStateChanged(event: filterIsOnChanged) {
+            updateWidgets()
+            // If an app like Tasker wants to do something each time
+            // Red Moon is toggled, it can listen for this event
+            val intent = Intent()
+            intent.action = BROADCAST_ACTION
+            intent.putExtra(BROADCAST_FIELD, filterIsOn)
+            mContext.sendBroadcast(intent)
+        }
+
+        open protected fun refreshNotification() {}
 
         internal fun openScreenFilter() {
             mWindowViewManager.openWindow(filterLayoutParams)
@@ -390,22 +352,24 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         }
 
         override fun refreshNotification() {
-            super.refreshNotification()
             Log.d("Creating a persistent notification")
             mServiceController.startForeground(NOTIFICATION_ID, notification.build())
         }
 
-        override fun onColorChanged() {
+        @Subscribe
+        fun onColorChanged(event: colorChanged) {
             mView.colorTempProgress = Config.color
         }
 
-        override fun onIntensityChanged() {
+        @Subscribe
+        fun onIntensityChanged(event: intensityChanged) {
             val intensity= Config.intensity
             mView.cancelIntensityAnimator()
             mView.filterIntensityLevel = intensity
         }
 
-        override fun onDimChanged() {
+        @Subscribe
+        fun onDimChanged(event: dimChanged) {
             val dim = Config.dim
             mView.cancelDimAnimator()
             mView.filterDimLevel = dim
@@ -414,20 +378,31 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
             }
         }
 
-        override fun onLowerBrightnessChanged() {
-            val lowerBrightness = Config.lowerBrightness
-            Log.i("Lower brightness flag changed to: $lowerBrightness")
-            if (lowerBrightness) {
-                saveBrightness()
-                setBrightness(0, false, mContext)
+        @Subscribe
+        fun onLowerBrightnessChanged(event: lowerBrightnessChanged) {
+            if (hasWriteSettingsPermission) {
+                val lowerBrightness = Config.lowerBrightness
+                Log.i("Lower brightness flag changed to: $lowerBrightness")
+                if (lowerBrightness) {
+                    saveBrightness()
+                    setBrightness(0, false, mContext)
+                } else {
+                    restoreBrightness()
+                }
             } else {
-                restoreBrightness()
+                EventBus.getDefault().post(changeBrightnessDenied())
             }
         }
 
-        override fun onSecureSuspendChanged() {
+        @Subscribe
+        fun onSecureSuspendChanged(event: secureSuspendChanged) {
             if (Config.secureSuspend) startAppMonitoring()
             else stopAppMonitoring()
+        }
+
+        @Subscribe
+        fun onButtonBacklightChanged(event: buttonBacklightChanged) {
+            mWindowViewManager.reLayoutWindow(filterLayoutParams)
         }
 
         override fun closeScreenFilter() {
@@ -462,10 +437,15 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         }
 
         override fun refreshNotification() {
-            super.refreshNotification()
+            Log.d("Creating notification while in $this")
             mServiceController.stopForeground(false)
             val nm = mContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             nm.notify(NOTIFICATION_ID, notification.build())
+        }
+
+        @Subscribe
+        fun onUiClosed(event: uiClosed) {
+            mServiceController.stopForeground(true)
         }
     }
 
@@ -518,17 +498,20 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
             }
         }
 
-        override fun onColorChanged() {
+        @Subscribe
+        fun onColorChanged(event: colorChanged) {
             mView.colorTempProgress = Config.color
         }
 
-        override fun onIntensityChanged() {
+        @Subscribe
+        fun onIntensityChanged(event: intensityChanged) {
             val intensity = Config.intensity
             mView.cancelDimAnimator()
             mView.filterIntensityLevel = intensity
         }
 
-        override fun onDimChanged() {
+        @Subscribe
+        fun onDimChanged(event: dimChanged) {
             val dim = Config.dim
             mView.cancelDimAnimator()
             mView.filterDimLevel = dim
@@ -576,7 +559,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         }
 
         override fun refreshNotification() {
-            super.refreshNotification()
+            Log.d("Creating notification while in $this")
             mServiceController.stopForeground(false)
             val nm = mContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             nm.notify(NOTIFICATION_ID, notification.build())
@@ -597,7 +580,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         // Statically used by BootReceiver
         fun setBrightness(brightness: Int, automatic: Boolean, context: Context) {
             Log.i("Setting brightness to: $brightness, automatic: $automatic")
-            if (atLeastAPI(23) && !Settings.System.canWrite(context)) return
+            if (atLeastAPI(23) && !hasWriteSettingsPermission) return
             if (brightness >= 0) {
                 val resolver = context.contentResolver
                 Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, brightness)

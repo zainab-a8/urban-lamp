@@ -43,15 +43,18 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.preference.PreferenceManager
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 
+import com.jmstudios.redmoon.BuildConfig
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.application.RedMoonApplication
 import com.jmstudios.redmoon.event.locationPermissionDialogClosed
+import com.jmstudios.redmoon.model.Config
 
 import org.greenrobot.eventbus.EventBus
 
@@ -114,4 +117,20 @@ fun onRequestPermissionsResult(requestCode: Int) {
     if (requestCode == LOCATION_PERMISSION_REQ_CODE) {
         EventBus.getDefault().post(locationPermissionDialogClosed())
     }
+}
+
+fun handleUpgrades() {
+    if (Config.fromVersionCode < 26) {
+        upgradeToggleModePreferences()
+    }
+    Config.fromVersionCode = BuildConfig.VERSION_CODE
+}
+
+private fun upgradeToggleModePreferences() {
+    val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(appContext)
+    val timerKey = appContext.getString(R.string.pref_key_time_toggle)
+    val currentToggleMode: String = sharedPrefs.getString(timerKey, "manual")
+    sharedPrefs.edit().remove(timerKey).apply()
+    Config.timeToggle = currentToggleMode != "manual"
+    Config.useLocation = currentToggleMode == "sun"
 }
