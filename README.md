@@ -19,7 +19,7 @@ your screen even darker.
 ## Features
 
 * Use the default filters or create your own, with separate color, intensity and dim settings.
-* Automatically turn Red Moon on from sunset to sunrise, or set custom times.
+* Automatically turn Red Moon on while the sun is down, or set custom times.
 * Switch between filters right in the notification, without leaving the app you're using.
 * Turn Red Moon on and off without opening the app using:
   * A widget or a shortcut on your home screen.
