@@ -117,15 +117,15 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         private const val BUNDLE_KEY_COMMAND = "jmstudios.bundle.key.COMMAND"
         private const val COMMAND_MISSING = -1
 
-        private val intent: Intent
+        private val emptyIntent: Intent
             get() = Intent(appContext, ScreenFilterService::class.java)
 
-        val command = { c: Command -> intent.putExtra(BUNDLE_KEY_COMMAND, c.ordinal) }
+        fun intent(c: Command): Intent = emptyIntent.putExtra(BUNDLE_KEY_COMMAND, c.ordinal)
 
-        fun start()  { appContext.startService(intent) }
+        fun start()  { appContext.startService(emptyIntent) }
         //fun stop()   { appContext.stopService(intent)  }
 
         fun toggle() { moveToState(Command.TOGGLE)  }
-        fun moveToState(c: Command) { appContext.startService(command(c)) }
+        fun moveToState(c: Command) { appContext.startService(intent(c)) }
     }
 }

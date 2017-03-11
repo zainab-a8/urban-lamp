@@ -220,9 +220,11 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
     private abstract inner class State {
 
         abstract val filterIsOn: Boolean
-        open protected val toggleIconResId = R.drawable.ic_play
-        open protected val toggleActionText: String = appContext.getString(R.string.action_on)
-        open protected val toggleCommand = ScreenFilterService.Command.ON
+
+        open protected val toggleIconResId  = R.drawable.ic_play
+        open protected val toggleActionText = getString(R.string.action_on)
+        open protected val toggleCommand    = ScreenFilterService.Command.ON
+
         open protected val notificationContentText
             get() = ProfilesHelper.getProfileName(ProfilesModel(appContext), Config.profile, appContext)
 
@@ -235,7 +237,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
                 color    = ContextCompat.getColor(context, R.color.color_primary)
                 priority = Notification.PRIORITY_MIN
 
-                if (belowAPI(24)) { setContentTitle(context.getString(R.string.app_name)) }
+                if (belowAPI(24)) { setContentTitle(getString(R.string.app_name)) }
                 setContentText(notificationContentText)
 
                 // Open Red Moon when tapping notification body
@@ -247,12 +249,12 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
                 // Add toggle action
                 val togglePI = PendingIntent.getService(context, REQUEST_CODE_ACTION_TOGGLE,
-                                                        ScreenFilterService.command(toggleCommand),
+                                                        ScreenFilterService.intent(toggleCommand),
                                                         PendingIntent.FLAG_UPDATE_CURRENT)
                 addAction(toggleIconResId, toggleActionText, togglePI)
 
                 // Add profile switch action
-                val nextProfileText = context.getString(R.string.action_next_filter)
+                val nextProfileText = getString(R.string.action_next_filter)
                 val nextProfileIntent = Intent(context, NextProfileCommandReceiver::class.java)
                 val nextProfilePI = PendingIntent.getBroadcast(context, REQUEST_CODE_NEXT_PROFILE,
                                                                nextProfileIntent, 0)
@@ -329,9 +331,10 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
     private inner class OnState : State() {
         override val filterIsOn = true
-        override val toggleIconResId = R.drawable.ic_stop_circle_outline_white_36dp
-        override val toggleActionText: String = appContext.getString(R.string.action_off)
-        override val toggleCommand = ScreenFilterService.Command.OFF
+
+        override val toggleIconResId  = R.drawable.ic_stop_circle_outline_white_36dp
+        override val toggleActionText = getString(R.string.action_off)
+        override val toggleCommand    = ScreenFilterService.Command.OFF
 
         override fun onActivation(prevState: State) {
             openScreenFilter()
@@ -534,10 +537,11 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         override val filterIsOn: Boolean
             get() = stateToReturnTo.filterIsOn
 
-        override val toggleIconResId = R.drawable.ic_stop_circle_outline_white_36dp
-        override val toggleActionText: String = appContext.getString(R.string.action_off)
-        override val toggleCommand = ScreenFilterService.Command.OFF
-        override val notificationContentText: String = appContext.getString(R.string.paused)
+        override val toggleIconResId  = R.drawable.ic_stop_circle_outline_white_36dp
+        override val toggleActionText = getString(R.string.action_off)
+        override val toggleCommand    = ScreenFilterService.Command.OFF
+
+        override val notificationContentText = getString(R.string.paused)
 
         override fun onActivation(prevState: State) {
             stateToReturnTo = prevState

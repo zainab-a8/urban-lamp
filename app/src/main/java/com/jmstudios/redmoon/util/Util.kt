@@ -60,6 +60,8 @@ import org.greenrobot.eventbus.EventBus
 
 val appContext = RedMoonApplication.app
 
+fun getString(resId: Int): String = appContext.getString(resId)
+
 val atLeastAPI: (Int) -> Boolean = { it <= android.os.Build.VERSION.SDK_INT }
 val belowAPI: (Int) -> Boolean = { !atLeastAPI(it) }
 
