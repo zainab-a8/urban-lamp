@@ -53,8 +53,6 @@ import com.jmstudios.redmoon.view.ScreenFilterView
 import com.jmstudios.redmoon.util.appContext
 import com.jmstudios.redmoon.util.Logger
 
-import org.greenrobot.eventbus.EventBus
-
 class ScreenFilterService : Service(), ServiceLifeCycleController {
     enum class Command {
         ON, OFF, SHOW_PREVIEW, HIDE_PREVIEW, START_SUSPEND, STOP_SUSPEND, TOGGLE
@@ -79,7 +77,6 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         mPresenter = ScreenFilterPresenter(this, context, wvm, sm)
 
         // Make Presenter listen to settings changes and orientation changes
-        EventBus.getDefault().register(mPresenter)
         if (mOrientationReceiver == null) {
             val orientationIntentFilter = IntentFilter()
             orientationIntentFilter.addAction(Intent.ACTION_CONFIGURATION_CHANGED)
@@ -109,7 +106,6 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
 
         // TODO: make sure the filterView gets closed. Not a problem right now
         // but without it this is brittle and bug-prone
-        EventBus.getDefault().unregister(mPresenter)
         unregisterReceiver(mOrientationReceiver)
         mOrientationReceiver = null
         mPresenter.updateWidgets()
