@@ -77,7 +77,7 @@ strings in multiple places, even if the English word could be reused.
 Translation progress:
 
 <a href="https://hosted.weblate.org/engage/red-moon/?utm_source=widget">
-<img src="https://hosted.weblate.org/widgets/red-moon/-/multi-red.svg" alt="Translation status" />
+<img src="https://hosted.weblate.org/widgets/red-moon/-/multi-auto.svg" alt="Translation status" />
 </a>
 
 ### Pull requests
