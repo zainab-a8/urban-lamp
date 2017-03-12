@@ -84,7 +84,7 @@ if it requires increasing Red Moon's complexity (ie, adding more options).
 
 ### Coding Style
 
-**Prioritize legibility over dogatism.** That said, consistency is nice, so here's a short list of what I've been doing. 
+**Prioritize legibility over dogmatism.** That said, consistency is nice, so here's a short list of what I've been doing. 
 
 - Try very hard to stay under 100 characters per line. Try less hard to stay under 80.
 - Indent 4 spaces
