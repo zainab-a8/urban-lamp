@@ -1,11 +1,13 @@
 <img align="right" height="256" src="https://lut.im/3IqLwsAZWH/piFLRMOgNLWmiqB8.png">
+
 # Red Moon [![Translation status](https://hosted.weblate.org/widgets/red-moon/-/svg-badge.svg)](https://hosted.weblate.org/engage/red-moon/?utm_source=widget)
 
-Red Moon is a screen filter app for night time phone use. It helps
-you sleep healthier by filtering out blue light, which can disrupt
-your sleep cycle (circadian rhythm). And when your phone's lowest
-brightness isn't low enough, Red Moon protects your eyes by making
-your screen even darker. 
+Blue light can interfere with your natural circadian rhythm (sleep-wake cycle),
+and many phones' brightness just isn't low enough for night time use. Red Moon
+shows a filter over your screen that blocks blue light and dims your screen
+below its normal minimum, protecting your eyes and safeguarding your sleep. Its
+simple yet powerful options strike the perfect balance between flexibility and
+quick setup.
 
 [<img src="https://f-droid.org/badge/get-it-on.png"
       alt="Get it on F-Droid"
@@ -13,8 +15,9 @@ your screen even darker.
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" 
       alt="Download from Google Play" 
       height="80">](https://play.google.com/store/apps/details?id=com.jmstudios.redmoon)
-
-[Direct download](https://github.com/raatmarien/red-moon/releases)
+[<img src="art/direct-download.png" 
+      alt="Direct download" 
+      height="80">](https://github.com/raatmarien/red-moon/releases)
 
 ## Features
 
@@ -41,7 +44,89 @@ your screen even darker.
 <img src="https://lut.im/d9a4QT8Nek/9jgcvxedO1pnAfXl.png" width="180" height="320" />
 <img src="https://lut.im/BQODkgLLGg/VGFnSMufAVBQoOSt.png" width="180" height="320" />
 
-## License
+
+## Contributing
+
+**All help is welcome!** Code is great and saves us work, but sometimes a
+comment that clarifies a design issue or a link to the relevant part of some
+documentation is just as helpful (and often more efficient, since you don't need
+to familiarize yourself with Red Moon's code base).
+
+### Bugs, feedback, and ideas
+
+Issues are tagged based on what needs to be done next, with
+[`feedback wanted`], [`needs design`], [`can't replicate`],
+or [`needs information`] (this one's usually technical).
+There are also tags about priorities:
+- [`planned`]: The most important issues.
+- [`help wanted`]: These would be `planned`, but there's a question or problem that we're stuck on. We'd love help getting un-stuck!
+- [`someday/maybe`]: Worth adding, but not that important.
+
+### Translations
+
+[Weblate](https://hosted.weblate.org/projects/red-moon/strings/) is the easiest
+way for most people. You can work in your browser instead of crawling through
+text files, and your translations will be automatically be merged into this
+repository. If you'd prefer to make a pull request, that's fine too, but if
+you're also changing code, please keep that in a separate PR.
+
+Trust your judgement! If there is a loose translation that you think is simpler
+and clearer than the literal translation, go for it. We'll try not to use
+strings in multiple places, even if the English word could be reused.
+
+Translation progress:
+
+<a href="https://hosted.weblate.org/engage/red-moon/?utm_source=widget">
+<img src="https://hosted.weblate.org/widgets/red-moon/-/multi-red.svg" alt="Translation status" />
+</a>
+
+### Pull requests
+
+[Bugfixes] are very safe PRs, and a good way to learn the code base, but often
+not as exciting as adding something new. Issues marked [`patches welcome`] are
+also safe, since they have the design worked out. If you have something else in
+mind, [open a new issue] about it first, especially if it requires increasing
+Red Moon's complexity (ie, adding more options).
+
+#### Coding Style
+
+Consistency is nice, so here's a short list of what I've been doing. That said,
+this is not a rulebook. **Prioritize legibility over dogatism.**
+
+- It's nice to keep to 80 characters per line (it lets you read split screen on
+    a laptop), but is often impossible. Try very hard to stay under 100
+    characters, though.
+- Indent 4 spaces
+- vars start with `m`, vals and functions are `camelCase`, constants are
+    `CAPS_WITH_UNDERSCORES`
+- Align similar actions: cases of a `when` statement, multiple similar calls in
+    a builder, `=` when you're doing a lot of assignment, arguments in function
+    calls or declarations that wrap..
+- Use brackets with `if`, even for one-liners, unless it's a one-liner that
+    includes `else` on the same line (eg, `x = if (p) q else r` is okay)
+    - I (@smichel17) used to prefer omitting parenthesis from one-liners because
+        it's cleaner, so some code still uses that style.
+- Consider using `apply` with builders. It lets you give the builder result a
+    more descriptive name without impacting line length.
+- Probably other things, but again, **prioritize legibility over dogmatism.**
+
+## Technical information
+
+### Building
+
+To build the app on GNU+Linux, clone the repository and run
+
+`./gradlew build`
+
+in the root directory.
+
+Use
+
+`./gradlew installDebug`
+
+to install the app on a connected device or running emulator.
+
+### License
 
 "Red Moon" is a derivative of
 "[Shades](https://github.com/cngu/shades)" by
@@ -63,41 +148,17 @@ are all released in the public domain, namely:
 * https://openclipart.org/detail/213998/nexus-5-flat
 * https://openclipart.org/detail/192689/press-button
 
-## Building
-
-To build the app on GNU+Linux, clone the repository and run
-
-``` ./gradlew build ```
-
-in the root directory.
-
-Use
-
-``` ./gradlew installDebug ```
-
-to install the app on a connected device.
-
-## How it works
-
-Red Moon dims and colors the screen by displaying a constant transparent overlay
-If, for example, you have the intensity set to 0%, then the overlay will be
-black with a transparency equal to the dim level you selected. If you choose a
-higher intensity, the overlay will be saturated with the selected color.
-
-## Contributing
-
-All help is welcome! If you have found a bug or have an idea for a new
-feature, just
-[open a new issue](https://github.com/raatmarien/red-moon/issues/new). If
-you can implement it yourself, simply fork this repository, make your
-changes and open a pull request.
-
-## Translating
-
-Translating is very much appreciated! Just go to
-[Weblate](https://hosted.weblate.org/projects/red-moon/strings/), create
-an account and start a new translation or update an existing one.
-
-## Footnotes
+### Footnotes
 
 \* Google Play and the Google Play logo are trademarks of Google Inc.
+
+[`can't replicate`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3A%22can%27t+replicate%22
+[`needs design`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3A%22needs+design%22
+[`needs information`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3A%22needs+information%22
+[`feedback wanted`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3A%22feedback+wanted%22
+[`planned`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3Aplanned
+[`help wanted`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22
+[`someday/maybe`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3Asomeday%2Fmaybe
+[`patches welcome`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3A%22patches+welcome%22
+[open a new issue]: https://github.com/raatmarien/red-moon/issues/new
+[Bugfixes]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3Abug
