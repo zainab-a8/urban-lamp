@@ -118,21 +118,11 @@ class TimeToggleFragment : EventPreferenceFragment() {
         Log.i("Filter mode changed to " + Config.timeToggle)
         updatePrefs()
         if (Config.timeToggle) {
-            TimeToggleChangeReceiver.rescheduleOnCommand(activity)
-            TimeToggleChangeReceiver.rescheduleOffCommand(activity)
+            TimeToggleChangeReceiver.rescheduleOnCommand()
+            TimeToggleChangeReceiver.rescheduleOffCommand()
         } else {
-            TimeToggleChangeReceiver.cancelAlarms(activity)
+            TimeToggleChangeReceiver.cancelAlarms()
         }
-    }
-
-    @Subscribe
-    fun onCustomTurnOnTimeChanged(event: customTurnOnTimeChanged) {
-        TimeToggleChangeReceiver.rescheduleOnCommand(activity)
-    }
-
-    @Subscribe
-    fun onCustomTurnOffTimeChanged(event: customTurnOffTimeChanged) {
-        TimeToggleChangeReceiver.rescheduleOffCommand(activity)
     }
 
     @Subscribe
@@ -182,16 +172,6 @@ class TimeToggleFragment : EventPreferenceFragment() {
             mIsSearchingLocation = false
             updateLocationPref()
         }
-    }
-
-    @Subscribe
-    fun onSunsetTimeChanged(event: sunsetTimeChanged) {
-        TimeToggleChangeReceiver.rescheduleOnCommand(activity)
-    }
-
-    @Subscribe
-    fun onSunriseTimeChanged(event: sunriseTimeChanged) {
-        TimeToggleChangeReceiver.rescheduleOffCommand(activity)
     }
     //endregion
 

@@ -23,9 +23,11 @@ import android.preference.PreferenceManager
 
 import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.event.*
+import com.jmstudios.redmoon.receiver.TimeToggleChangeReceiver
 import com.jmstudios.redmoon.util.Logger
 
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -36,6 +38,7 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
         app = this
         super.onCreate()
         //EventBus.builder().addIndex(eventBusIndex()).installDefaultEventBus()
+        EventBus.getDefault().register(this)
         mSharedPrefs.registerOnSharedPreferenceChangeListener(this)
         Log.d("Opened Settings change listener")
     }
@@ -43,6 +46,7 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
     // Only called in emulated environments. In production, just gets killed.
     override fun onTerminate() {
         mSharedPrefs.unregisterOnSharedPreferenceChangeListener(this)
+        EventBus.getDefault().unregister(this)
         Log.d("Closed Settings change listener")
         super.onTerminate()
     }
@@ -76,8 +80,30 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
             // getString(R.string.pref_key_dim_buttons)
         })
     }
-
     //endregion
+
+    // There's probably a better place to do this to keep this class clean
+    // For now it works, though
+    @Subscribe
+    fun onCustomTurnOnTimeChanged(event: customTurnOnTimeChanged) {
+        TimeToggleChangeReceiver.rescheduleOnCommand()
+    }
+
+    @Subscribe
+    fun onCustomTurnOffTimeChanged(event: customTurnOffTimeChanged) {
+        TimeToggleChangeReceiver.rescheduleOffCommand()
+    }
+
+    @Subscribe
+    fun onSunsetTimeChanged(event: sunsetTimeChanged) {
+        TimeToggleChangeReceiver.rescheduleOnCommand()
+    }
+
+    @Subscribe
+    fun onSunriseTimeChanged(event: sunriseTimeChanged) {
+        TimeToggleChangeReceiver.rescheduleOffCommand()
+    }
+
     companion object : Logger() {
         lateinit var app: RedMoonApplication
     }

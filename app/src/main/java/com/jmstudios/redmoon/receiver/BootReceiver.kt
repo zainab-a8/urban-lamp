@@ -65,8 +65,8 @@ class BootReceiver : BroadcastReceiver() {
                     Config.automaticBrightness, context)
         }
 
-        TimeToggleChangeReceiver.scheduleNextOnCommand(context)
-        TimeToggleChangeReceiver.scheduleNextOffCommand(context)
+        TimeToggleChangeReceiver.scheduleNextOnCommand()
+        TimeToggleChangeReceiver.scheduleNextOffCommand()
 
         val filterIsOnPredicted = filterIsOnPrediction(filterIsOnBeforeReboot)
         val command = if (filterIsOnPredicted) { ScreenFilterService.Command.ON }

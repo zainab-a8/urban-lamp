@@ -30,6 +30,7 @@ import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.service.LocationUpdateService
 import com.jmstudios.redmoon.service.ScreenFilterService
+import com.jmstudios.redmoon.util.appContext
 import com.jmstudios.redmoon.util.atLeastAPI
 import com.jmstudios.redmoon.util.Logger
 
@@ -47,8 +48,8 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
         val command = if (turnOn) ScreenFilterService.Command.ON
         else ScreenFilterService.Command.OFF
         ScreenFilterService.moveToState(command)
-        cancelAlarm(context, turnOn)
-        scheduleNextCommand(context, turnOn)
+        cancelAlarm(turnOn)
+        scheduleNextCommand(turnOn)
 
         // We want to dismiss the notification if the filter is turned off
         // automatically.
@@ -67,33 +68,35 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
     }
 
     companion object : Logger() {
-        private val intent = { ctx: Context -> Intent(ctx, TimeToggleChangeReceiver::class.java) }
+        private val intent: Intent
+            get() = Intent(appContext, TimeToggleChangeReceiver::class.java)
+
+        private val alarmManager: AlarmManager
+            get() = appContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         // Conveniences
-        val scheduleNextOnCommand = { context: Context -> scheduleNextCommand(context, true) }
-        val scheduleNextOffCommand = { context: Context -> scheduleNextCommand(context, false) }
-        //val cancelTurnOnAlarm = { context: Context -> cancelAlarm(context, true) }
-        //val cancelOffAlarm = { context: Context -> cancelAlarm(context, false) }
-        val rescheduleOnCommand = { context: Context ->
-            cancelAlarm(context, true)
-            scheduleNextCommand(context, true)
+        fun scheduleNextOnCommand() = scheduleNextCommand(true)
+        fun scheduleNextOffCommand() = scheduleNextCommand(false)
+        fun rescheduleOnCommand() {
+            cancelAlarm(true)
+            scheduleNextCommand(true)
         }
-        val rescheduleOffCommand = { context: Context ->
-            cancelAlarm(context, false)
-            scheduleNextCommand(context, false)
+        fun rescheduleOffCommand() {
+            cancelAlarm(false)
+            scheduleNextCommand(false)
         }
-        val cancelAlarms = { context: Context ->
-            cancelAlarm(context, true)
-            cancelAlarm(context, false)
+        fun cancelAlarms() {
+            cancelAlarm(true)
+            cancelAlarm(false)
         }
 
-        private fun scheduleNextCommand(context: Context, turnOn: Boolean) {
+        private fun scheduleNextCommand(turnOn: Boolean) {
             if (Config.timeToggle) {
                 Log.d("Scheduling alarm to turn filter ${if (turnOn) "on" else "off"}")
                 val time = if (turnOn) { Config.automaticTurnOnTime }
                            else { Config.automaticTurnOffTime }
 
-                val command = intent(context).apply {
+                val command = intent.apply {
                     data = Uri.parse(if (turnOn) "turnOnIntent" else "offIntent")
                     putExtra("turn_on", turnOn)
                 }
@@ -109,8 +112,7 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
 
                 Log.i("Scheduling alarm for " + calendar.toString())
 
-                val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                val pendingIntent = PendingIntent.getBroadcast(context, 0, command, 0)
+                val pendingIntent = PendingIntent.getBroadcast(appContext, 0, command, 0)
 
                 if (atLeastAPI(19)) {
                     alarmManager.setExact(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
@@ -122,13 +124,12 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
             }
         }
 
-        private fun cancelAlarm(context: Context, turnOn: Boolean) {
+        private fun cancelAlarm(turnOn: Boolean) {
             Log.d("Canceling alarm to turn filter ${if (turnOn) "on" else "off"}")
-            val command = intent(context)
-            command.data = if (turnOn) Uri.parse("turnOnIntent")
-                            else Uri.parse("offIntent")
-            val pendingIntent = PendingIntent.getBroadcast(context, 0, command, 0)
-            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val command = intent.apply {
+                data = Uri.parse(if (turnOn) "turnOnIntent" else "offIntent")
+            }
+            val pendingIntent = PendingIntent.getBroadcast(appContext, 0, command, 0)
             alarmManager.cancel(pendingIntent)
         }
     }
