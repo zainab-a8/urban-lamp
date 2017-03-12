@@ -1,3 +1,10 @@
+*~
+*#
+keystore.properties
+app/keystore.ks
+app/build.gradle
+
+
 # Created by https://www.gitignore.io
 
 ### Android ###
