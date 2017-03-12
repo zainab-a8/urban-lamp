@@ -64,15 +64,15 @@ based on what needs to be done next. There are also tags about priorities:
 
 ## Translations
 
-[Weblate](https://hosted.weblate.org/projects/red-moon/strings/) is the easiest
-way for most people. You can work in your browser instead of crawling through
-text files, and your translations will be automatically be merged into this
-repository. If you'd prefer to make a pull request, that's fine too, but if
-you're also changing code, please keep that in a separate PR.
+**[Weblate] is the easiest way for most people.** You can work in your browser
+instead of crawling through text files, and your translations will be
+automatically be merged into this repository. If you'd prefer to make a pull
+request, that's fine too, but if you're also changing code, please keep that
+in a separate PR.
 
-Trust your judgement! If there is a loose translation that you think is simpler
-and clearer than the literal translation, go for it. We'll try not to use
-strings in multiple places, even if the English word could be reused.
+**Trust your judgement!** If there is a loose translation that you think is
+simpler and clearer than the literal translation, go for it. We'll try not to
+use strings in multiple places, even if the English word could be reused.
 
 ## Pull requests
 
@@ -149,3 +149,4 @@ are all released in the public domain, namely:
 [`patches welcome`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3A%22patches+welcome%22
 [open a new issue]: https://github.com/raatmarien/red-moon/issues/new
 [Bugfixes]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3Abug
+[Weblate]: https://hosted.weblate.org/projects/red-moon/strings/
