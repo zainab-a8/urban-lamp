@@ -2,12 +2,10 @@
 
 # Red Moon [![Translation status](https://hosted.weblate.org/widgets/red-moon/-/svg-badge.svg)](https://hosted.weblate.org/engage/red-moon/?utm_source=widget)
 
-Blue light can interfere with your natural circadian rhythm (sleep-wake cycle),
-and many phones' brightness just isn't low enough for night time use. Red Moon
-shows a filter over your screen that blocks blue light and dims your screen
-below its normal minimum, protecting your eyes and safeguarding your sleep. Its
-simple yet powerful options strike the perfect balance between flexibility and
-quick setup.
+Red Moon is a simple screen filter app for night time phone use. It helps you sleep
+healthier by filtering out blue light, which can disrupt your sleep cycle
+(circadian rhythm). And when your phone's lowest brightness isn't low enough,
+Red Moon protects your eyes by making your screen even darker. 
 
 [<img src="https://f-droid.org/badge/get-it-on.png"
       alt="Get it on F-Droid"
@@ -44,25 +42,27 @@ quick setup.
 <img src="https://lut.im/d9a4QT8Nek/9jgcvxedO1pnAfXl.png" width="180" height="320" />
 <img src="https://lut.im/BQODkgLLGg/VGFnSMufAVBQoOSt.png" width="180" height="320" />
 
-
-## Contributing
+---
+---
 
 **All help is welcome!** Code is great and saves us work, but sometimes a
 comment that clarifies a design issue or a link to the relevant part of some
 documentation is just as helpful (and often more efficient, since you don't need
 to familiarize yourself with Red Moon's code base).
 
-### Bugs, feedback, and ideas
+## Bugs, feedback, and ideas
 
-Issues are tagged based on what needs to be done next, with
-[`feedback wanted`], [`needs design`], [`can't replicate`],
-or [`needs information`] (this one's usually technical).
-There are also tags about priorities:
+Issues are tagged with [`feedback wanted`], [`needs design`],
+[`can't replicate`], or [`needs information`] (this one's usually technical)
+based on what needs to be done next. There are also tags about priorities:  
+<a href="https://hosted.weblate.org/engage/red-moon/?utm_source=widget">
+<img align="right" src="https://hosted.weblate.org/widgets/red-moon/-/multi-auto.svg" alt="Translation status" />
+</a>
 - [`planned`]: The most important issues.
 - [`help wanted`]: These would be `planned`, but there's a question or problem that we're stuck on. We'd love help getting un-stuck!
 - [`someday/maybe`]: Worth adding, but not that important.
 
-### Translations
+## Translations
 
 [Weblate](https://hosted.weblate.org/projects/red-moon/strings/) is the easiest
 way for most people. You can work in your browser instead of crawling through
@@ -74,45 +74,32 @@ Trust your judgement! If there is a loose translation that you think is simpler
 and clearer than the literal translation, go for it. We'll try not to use
 strings in multiple places, even if the English word could be reused.
 
-Translation progress:
+## Pull requests
 
-<a href="https://hosted.weblate.org/engage/red-moon/?utm_source=widget">
-<img src="https://hosted.weblate.org/widgets/red-moon/-/multi-auto.svg" alt="Translation status" />
-</a>
+[Bugfixes] are very safe PRs (likely to be merged), and a good way to learn the
+code base, but often not as exciting as adding something new. Issues tagged
+[`patches welcome`] are also safe, since they have the design worked out. If
+you have something else in mind, [open a new issue] about it first, especially
+if it requires increasing Red Moon's complexity (ie, adding more options).
 
-### Pull requests
+### Coding Style
 
-[Bugfixes] are very safe PRs, and a good way to learn the code base, but often
-not as exciting as adding something new. Issues marked [`patches welcome`] are
-also safe, since they have the design worked out. If you have something else in
-mind, [open a new issue] about it first, especially if it requires increasing
-Red Moon's complexity (ie, adding more options).
+**Prioritize legibility over dogatism.** That said, consistency is nice, so here's a short list of what I've been doing. 
 
-#### Coding Style
-
-Consistency is nice, so here's a short list of what I've been doing. That said,
-this is not a rulebook. **Prioritize legibility over dogatism.**
-
-- It's nice to keep to 80 characters per line (it lets you read split screen on
-    a laptop), but is often impossible. Try very hard to stay under 100
-    characters, though.
+- Try very hard to stay under 100 characters per line. Try less hard to stay under 80.
 - Indent 4 spaces
 - vars start with `m`, vals and functions are `camelCase`, constants are
     `CAPS_WITH_UNDERSCORES`
-- Align similar actions: cases of a `when` statement, multiple similar calls in
-    a builder, `=` when you're doing a lot of assignment, arguments in function
-    calls or declarations that wrap..
-- Use brackets with `if`, even for one-liners, unless it's a one-liner that
-    includes `else` on the same line (eg, `x = if (p) q else r` is okay)
-    - I (@smichel17) used to prefer omitting parenthesis from one-liners because
-        it's cleaner, so some code still uses that style.
-- Consider using `apply` with builders. It lets you give the builder result a
-    more descriptive name without impacting line length.
-- Probably other things, but again, **prioritize legibility over dogmatism.**
+- Align similar actions (`when` cases, function arguments with line wrap, `=` when you're doing a lot of assignment)
+- Use brackets with `if`, even for one-liners, unless that line includes `else` (`x = if (p) q else r` is okay)
+    - note: I (@smichel17) used to prefer omitting parenthesis from one-liners; some code still uses that style.
 
-## Technical information
+Again, **prioritize legibility over dogmatism.**
 
-### Building
+---
+---
+
+## Building
 
 To build the app on GNU+Linux, clone the repository and run
 
@@ -126,7 +113,7 @@ Use
 
 to install the app on a connected device or running emulator.
 
-### License
+## License
 
 "Red Moon" is a derivative of
 "[Shades](https://github.com/cngu/shades)" by
@@ -148,7 +135,7 @@ are all released in the public domain, namely:
 * https://openclipart.org/detail/213998/nexus-5-flat
 * https://openclipart.org/detail/192689/press-button
 
-### Footnotes
+## Footnotes
 
 \* Google Play and the Google Play logo are trademarks of Google Inc.
 
