@@ -66,46 +66,59 @@ import java.util.*
  * something more recent than the last time red moon updated location.
  */
 class LocationUpdateService: Service(), LocationListener {
-    private enum class LocationProvider {
-        NETWORK, GPS
+
+    private inner class Provider(val provider: String) {
+        private var searching = false
+
+        val exists: Boolean
+            get() = locationManager.allProviders.contains(provider)
+
+        /* val enabled: Boolean */
+        /*     get() = exists && locationManager.isProviderEnabled(provider) */
+
+        val lastKnownLocation: Location?
+            get() = locationManager.getLastKnownLocation(provider)
+
+        fun requestUpdates(listener: LocationListener): Boolean {
+            if (!searching && exists) {
+                Log.i("Requesting location updates from $provider")
+                searching = true
+                locationManager.requestLocationUpdates(provider, 0, 0f, listener)
+                return true // success
+            } else {
+                return false // failure
+            }
+        }
     }
 
-    private var mLocationProvider = LocationProvider.NETWORK
+    private var mNetworkProvider = Provider(LocationManager.NETWORK_PROVIDER)
+    private var mGpsProvider     = Provider(LocationManager.GPS_PROVIDER)
 
     private val locationManager: LocationManager
         get() = appContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-    private val locationServicesEnabled: Boolean
-        get() = locationManager.isProviderEnabled(when (mLocationProvider) {
-            LocationProvider.NETWORK -> locationProviderNetwork
-            LocationProvider.GPS     -> locationProviderGps
-        })
-    
     private val lastKnownLocation: Location?
-        get() {
-            val networkLocation = locationManager.getLastKnownLocation(locationProviderNetwork)
-            if (networkLocation != null) {
-                return networkLocation
-            } else {
-                return locationManager.getLastKnownLocation(locationProviderGps)
-            }
-        }
+        get() = mGpsProvider.lastKnownLocation ?: mNetworkProvider.lastKnownLocation
+
+    /* private val locationUpToDate: Boolean */
+    /*     get() = isRecent(lastKnownLocation?.time) */
 
     override fun onCreate() {
         super.onCreate()
         Log.i("onCreate")
-        if (hasLocationPermission) {
-            Log.i("Requesting location updates")
-            Log.i("List of providers + ${locationManager.allProviders}")
-            if (locationManager.allProviders.contains(locationProviderNetwork)) {
-                mLocationProvider = LocationProvider.NETWORK
-                locationManager.requestLocationUpdates(locationProviderNetwork, 0, 0f, this)
-            } else if (locationManager.allProviders.contains(locationProviderGps)) {
-                // Fall back on GPS if there is not network provider
-                mLocationProvider = LocationProvider.GPS
-                locationManager.requestLocationUpdates(locationProviderGps, 0, 0f, this)
-            } else {
-                Log.i("No suitable location providers available, stopping.")
+        when {
+            !hasLocationPermission -> {
+                EventBus.getDefault().post(locationAccessDenied())
+                stopSelf()
+            /* } locationUpToDate -> { */
+            /*     Log.i("Last known location is recent enough.") */
+            /*     stopSelf() */
+            } mNetworkProvider.exists -> {
+                mNetworkProvider.requestUpdates(this)
+            } mGpsProvider.exists -> {
+                mGpsProvider.requestUpdates(this)
+            } else -> {
+                Log.i("No good providers, only: ${locationManager.allProviders}")
                 stopSelf()
             }
         }
@@ -113,17 +126,6 @@ class LocationUpdateService: Service(), LocationListener {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         Log.i("onStartCommand($intent, $flags, $startId)")
-
-        if (!hasLocationPermission) {
-            EventBus.getDefault().post(locationAccessDenied())
-            stopSelf()
-        } else if (!locationServicesEnabled) {
-            EventBus.getDefault().post(locationServicesDisabled())
-        } else {
-            // TODO: startForeground() and show notification instead of sending event
-            EventBus.getDefault().post(locationUpdating())
-        }
-
         // Do not attempt to restart if the hosting process is killed by Android
         return Service.START_NOT_STICKY
     }
@@ -139,17 +141,23 @@ class LocationUpdateService: Service(), LocationListener {
     }
 
     override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
-        Log.i("Status changed for " + provider)
+        Log.i("Provider $provider changed to status $status with extras $extras")
     }
 
     override fun onProviderEnabled(provider: String) {
-        // TODO: startForeground() and show notification instead of sending event
         EventBus.getDefault().post(locationUpdating())
     }
 
+    // Called immediately if we register for updates on a disabled provider
     override fun onProviderDisabled(provider: String) {
-        Log.i("Location search failed, using last known location")
-        stopSelf()
+        Log.i("$provider disabled")
+        when (provider) {
+            mNetworkProvider.provider, mGpsProvider.provider -> {
+                if (!mGpsProvider.requestUpdates(this)) {
+                    notifyLocationServicesDisabled()
+                }
+            } else -> Log.w("We shouldn't be getting updates $provider updates")
+        }
     }
 
     override fun onDestroy() {
@@ -159,6 +167,11 @@ class LocationUpdateService: Service(), LocationListener {
             updateLocation(lastKnownLocation)
         }
         super.onDestroy()
+    }
+
+    private fun notifyLocationServicesDisabled() {
+        Log.i("All available location providers are disabled.")
+        EventBus.getDefault().post(locationServicesDisabled())
     }
 
     private fun updateLocation(location: Location?) {
@@ -172,9 +185,6 @@ class LocationUpdateService: Service(), LocationListener {
     }
 
     companion object : Logger() {
-        private const val locationProviderNetwork = LocationManager.NETWORK_PROVIDER
-        private const val locationProviderGps = LocationManager.GPS_PROVIDER
-
         //val FOREGROUND = true
         //val BACKGROUND = false
 
