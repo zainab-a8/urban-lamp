@@ -71,6 +71,11 @@ class TimeToggleFragment : EventPreferenceFragment() {
             }
     }
 
+    override fun onStart() {
+        super.onStart()
+        startSearchingLocation()
+    }
+
     private fun updatePrefs() {
         updateSwitchBarTitle()
         updateTimePrefs()
@@ -112,10 +117,22 @@ class TimeToggleFragment : EventPreferenceFragment() {
         automaticTurnOffPref.summary = Config.automaticTurnOffTime
     }
 
+    private fun startSearchingLocation() {
+        if (Config.timeToggle && Config.useLocation) {
+            if (hasLocationPermission) {
+                mIsSearchingLocation = true
+                LocationUpdateService.start()
+            } else {
+                useLocationPref.isChecked = false
+            }
+        }
+        updateTimePrefs()
+    }
+
     //region presenter
     @Subscribe
     fun onTimeToggleChanged(event: timeToggleChanged) {
-        Log.i("Filter mode changed to " + Config.timeToggle)
+        Log.i("Filter mode changed to ${Config.timeToggle}")
         updatePrefs()
         if (Config.timeToggle) {
             TimeToggleChangeReceiver.rescheduleOnCommand()
@@ -127,11 +144,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
 
     @Subscribe
     fun onUseLocationChanged(event: useLocationChanged) {
-        if (Config.useLocation) {
-            mIsSearchingLocation = true
-            LocationUpdateService.start()
-        }
-        updateTimePrefs()
+        startSearchingLocation()
     }
 
     @Subscribe
