@@ -57,6 +57,7 @@ import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
 import org.greenrobot.eventbus.EventBus
 
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * When the service starts, we request location updates. When we get a new
@@ -102,8 +103,11 @@ class LocationUpdateService: Service(), LocationListener {
     private val lastKnownLocation: Location?
         get() = mGpsProvider.lastKnownLocation ?: mNetworkProvider.lastKnownLocation
 
-    /* private val locationUpToDate: Boolean */
-    /*     get() = isRecent(lastKnownLocation?.time) */
+    private val locationUpToDate: Boolean
+        get() = lastKnownLocation?.isRecent ?: false
+
+    private val Location.isRecent: Boolean
+        get() = 1 > TimeUnit.MILLISECONDS.toHours(System.currentTimeMillis() - time)
 
     override fun onCreate() {
         super.onCreate()
@@ -112,9 +116,9 @@ class LocationUpdateService: Service(), LocationListener {
             !hasLocationPermission -> {
                 EventBus.getDefault().post(locationAccessDenied())
                 stopSelf()
-            /* } locationUpToDate -> { */
-            /*     Log.i("Last known location is recent enough.") */
-            /*     stopSelf() */
+            } locationUpToDate -> {
+                Log.i("Last known location is recent enough.")
+                stopSelf()
             } mNetworkProvider.exists -> {
                 mNetworkProvider.requestUpdates(this)
             } mGpsProvider.exists -> {
