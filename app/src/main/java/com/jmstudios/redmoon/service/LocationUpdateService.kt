@@ -68,7 +68,7 @@ import java.util.*
 class LocationUpdateService: Service(), LocationListener {
 
     private inner class Provider(val provider: String) {
-        private var searching = false
+        private var mSearching = false
 
         val exists: Boolean
             get() = locationManager.allProviders.contains(provider)
@@ -80,9 +80,9 @@ class LocationUpdateService: Service(), LocationListener {
             get() = locationManager.getLastKnownLocation(provider)
 
         fun requestUpdates(listener: LocationListener): Boolean {
-            if (!searching && exists) {
+            if (!mSearching && exists) {
                 Log.i("Requesting location updates from $provider")
-                searching = true
+                mSearching = true
                 locationManager.requestLocationUpdates(provider, 0, 0f, listener)
                 return true // success
             } else {
@@ -90,6 +90,8 @@ class LocationUpdateService: Service(), LocationListener {
             }
         }
     }
+
+    private var mIsForeground = false
 
     private var mNetworkProvider = Provider(LocationManager.NETWORK_PROVIDER)
     private var mGpsProvider     = Provider(LocationManager.GPS_PROVIDER)
@@ -126,6 +128,8 @@ class LocationUpdateService: Service(), LocationListener {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         Log.i("onStartCommand($intent, $flags, $startId)")
+        val fg = intent.getBooleanExtra(BUNDLE_KEY_FOREGROUND, false)
+        mIsForeground = mIsForeground && fg
         // Do not attempt to restart if the hosting process is killed by Android
         return Service.START_NOT_STICKY
     }
@@ -151,12 +155,15 @@ class LocationUpdateService: Service(), LocationListener {
     // Called immediately if we register for updates on a disabled provider
     override fun onProviderDisabled(provider: String) {
         Log.i("$provider disabled")
-        when (provider) {
+        if (!mIsForeground) {
+            Log.d("Avoiding gps for background updates")
+            stopSelf()
+        } else when (provider) {
             mNetworkProvider.provider, mGpsProvider.provider -> {
                 if (!mGpsProvider.requestUpdates(this)) {
                     notifyLocationServicesDisabled()
                 }
-            } else -> Log.w("We shouldn't be getting updates $provider updates")
+            } else -> Log.w("We shouldn't be getting $provider updates")
         }
     }
 
@@ -185,15 +192,15 @@ class LocationUpdateService: Service(), LocationListener {
     }
 
     companion object : Logger() {
-        //val FOREGROUND = true
-        //val BACKGROUND = false
+        private const val BUNDLE_KEY_FOREGROUND = "jmstudios.bundle.key.FOREGROUND"
 
         private val intent: Intent
             get() = Intent(appContext, LocationUpdateService::class.java)
 
-        fun start() {
+        fun start(foreground: Boolean = true) {
             Log.i("Received start request")
-            appContext.startService(intent)
+            val i = intent.putExtra(BUNDLE_KEY_FOREGROUND, foreground)
+            appContext.startService(i)
         }
     }
 }

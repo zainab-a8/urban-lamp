@@ -88,7 +88,7 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         Log.i(String.format("onStartCommand(%s, %d, %d", intent, flags, startId))
-        val flag = intent.getIntExtra(ScreenFilterService.BUNDLE_KEY_COMMAND, COMMAND_MISSING)
+        val flag = intent.getIntExtra(BUNDLE_KEY_COMMAND, COMMAND_MISSING)
         Log.i("Recieved flag: $flag")
         if (flag != COMMAND_MISSING) mPresenter.onScreenFilterCommand(Command.values()[flag])
 

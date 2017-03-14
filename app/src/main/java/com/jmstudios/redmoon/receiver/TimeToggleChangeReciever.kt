@@ -63,7 +63,7 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
         handler.postDelayed(runnable, (ScreenFilterPresenter.FADE_DURATION_MS + 100).toLong())
 
         if (Config.timeToggle && Config.useLocation) {
-            LocationUpdateService.start()
+            LocationUpdateService.start(false)
         }
     }
 
