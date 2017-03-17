@@ -122,4 +122,12 @@ Red Moon emite un «intent» público con la acción `com.jmstudios.redmoon.RED_
     <string name="pref_title_appearance">Filtro</string>
     <string name="searching_location">Buscando ubicación</string>
     <string name="toast_warning_no_location">Activa los servicios de ubicación para actualizar tu posición</string>
-</resources>
+<string name="pref_title_button_backlight_disclaimer">Inútil en ciertos dispositivos</string>
+    <string name="snackbar_location_updated">Se ha encontrado la ubicación.</string>
+    <string name="pref_button_backlight_entries_array_0">Gestionado por el sistema</string>
+    <string name="pref_button_backlight_entries_array_2">Apagar</string>
+
+    <string name="pref_button_backlight_entries_array_1">Filtrar igual que la pantalla</string>
+    <string name="pref_title_button_backlight">Botones retroiluminados</string>
+
+    </resources>
