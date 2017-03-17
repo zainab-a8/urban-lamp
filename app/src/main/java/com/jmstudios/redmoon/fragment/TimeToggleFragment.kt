@@ -124,6 +124,12 @@ class TimeToggleFragment : EventPreferenceFragment() {
         mSnackbar?.show()
     }
 
+    private fun dismissSnackBar() {
+        if (mSnackbar?.duration == Snackbar.LENGTH_INDEFINITE) {
+            mSnackbar?.dismiss()
+        }
+    }
+
     //region presenter
     @Subscribe
     fun onTimeToggleChanged(event: timeToggleChanged) {
@@ -140,7 +146,9 @@ class TimeToggleFragment : EventPreferenceFragment() {
     @Subscribe
     fun onLocationServiceEvent(service: locationService) {
         Log.i("onLocationEvent: ${service.isSearching}")
-        if (service.isSearching) {
+        if (!service.isRunning) {
+            dismissSnackBar()
+        } else if (service.isSearching) {
             showSnackbar(R.string.snackbar_searching_location)
         } else {
             showSnackbar(R.string.snackbar_warning_no_location)
@@ -149,7 +157,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
 
     @Subscribe
     fun onLocationChanged(event: locationChanged) {
-        showSnackbar(R.string.snackbar_location_updated, Snackbar.LENGTH_LONG)
+        showSnackbar(R.string.snackbar_location_updated, Snackbar.LENGTH_SHORT)
         updateLocationPref()
     }
 

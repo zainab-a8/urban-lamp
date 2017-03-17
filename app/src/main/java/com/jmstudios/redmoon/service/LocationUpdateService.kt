@@ -56,8 +56,9 @@ import com.jmstudios.redmoon.util.Logger
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
 import org.greenrobot.eventbus.EventBus
 
-import java.util.*
+import java.util.Calendar
 import java.util.concurrent.TimeUnit
+import java.util.TimeZone
 
 /**
  * When the service starts, we request location updates. When we get a new
@@ -193,6 +194,7 @@ class LocationUpdateService: Service(), LocationListener {
             updateLocation(lastKnownLocation)
         }
         super.onDestroy()
+        EventBus.getDefault().post(locationService(false, isRunning = false))
     }
 
     // Filters duplicates
@@ -221,7 +223,7 @@ class LocationUpdateService: Service(), LocationListener {
             get() = Intent(appContext, LocationUpdateService::class.java)
 
         fun update(foreground: Boolean = true) {
-            Log.i("Received start request")
+            Log.i("Received request")
             if (!hasLocationPermission) {
                 EventBus.getDefault().post(locationAccessDenied())
             } else if (Config.timeToggle && Config.useLocation) {

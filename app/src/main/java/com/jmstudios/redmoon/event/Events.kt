@@ -44,4 +44,4 @@ class changeBrightnessDenied   : Event()
 class locationPermissionDialogClosed : Event()
 class uiClosed : Event()
 
-data class locationService(val isSearching: Boolean) : Event()
+data class locationService(val isSearching: Boolean, val isRunning: Boolean = true) : Event()
