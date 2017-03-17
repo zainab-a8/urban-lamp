@@ -24,7 +24,7 @@
     <string name="custom_start_time_title">Wznawiaj o</string>
     <string name="custom_end_time_title">Zatrzymuj o</string>
     <string name="location_title">Lokalizacja</string>
-    <string name="location_not_set">Nie ustawiono</string>
+    <string name="location_not_set">Nie ustawiono lokalizacji</string>
     <string name="latitude_short">Szer.</string>
     <string name="longitude_short">Dł.</string>
     <string name="snackbar_searching_location">Szukanie lokalizacji</string>
@@ -133,4 +133,5 @@ Red Moon rozsyła publiczny zamiar (intent) \'com.jmstudios.redmoon.RED_MOON_TOG
 
     <string name="searching_location">Szukanie lokalizacji</string>
     <string name="toast_warning_no_location">Włącz usługi lokalizacyjne by znaleźć lokalizację</string>
+    <string name="snackbar_location_updated">Ustalono lokalizację!</string>
     </resources>
