@@ -79,7 +79,7 @@ use strings in multiple places, even if the English word could be reused.
 code base, but often not as exciting as adding something new. Issues tagged
 [`patches welcome`] are also safe, since they have the design worked out. If
 you have something else in mind, [open a new issue] about it first, especially
-if it requires increasing Red Moon's complexity (ie, adding more options).
+if it requires increasing Red Moon's complexity (ie, adding options).
 
 ### Coding Style
 
