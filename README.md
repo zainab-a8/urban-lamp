@@ -87,7 +87,7 @@ if it requires increasing Red Moon's complexity (ie, adding more options).
 **Prioritize legibility over dogmatism.** That said, consistency is nice, so here's a short list of what I've been doing. 
 
 - Try very hard to stay under 100 characters per line. Try less hard to stay under 80.
-- Indent 4 spaces
+- Indent 4 spaces, (exception: 8 spaces for the second line of variable assignments that have to wrap)
 - vars start with `m`, vals and functions are `camelCase`, constants are
     `CAPS_WITH_UNDERSCORES`
 - Align similar actions (`when` cases, function arguments with line wrap, `=` when you're doing a lot of assignment)
