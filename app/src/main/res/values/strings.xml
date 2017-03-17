@@ -88,7 +88,7 @@
     <string name="custom_end_time_title">Turn off at</string>
     <string name="use_location_title">Times from location</string>
     <string name="location_title">Location</string>
-    <string name="location_not_set">Not set</string>
+    <string name="location_not_set">Location not set</string>
     <string name="latitude_short">Lat</string>
     <string name="longitude_short">Long</string>
 
