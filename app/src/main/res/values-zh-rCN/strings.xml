@@ -27,7 +27,7 @@
     <string name="location_not_set">未设置</string>
     <string name="set_dialog">设置</string>
     <string name="remove_filter_dialog_title">是否删除配置？</string>
-    <string name="searching_location">正在搜索位置</string>
+    <string name="snackbar_searching_location">正在搜索位置</string>
     <string name="project_page_title">浏览官方网站</string>
     <string name="toggle_shortcut_title">切换</string>
     <string name="help_snackbar_text">点击按钮切换红月模式</string>
@@ -46,7 +46,7 @@
     <string name="standard_profiles_array_2">阅读</string>
     <string name="email_me_summary">发邮件给我报告Bug或者提意见</string>
     <string name="project_page_summary">查看更多信息，提交反馈和贡献</string>
-    <string name="toast_warning_no_location">启用位置服务来更新位置</string>
+    <string name="snackbar_warning_no_location">启用位置服务来更新位置</string>
     <string name="toast_warning_install">滤镜运行时无法安装APK</string>
 
 <string name="resume_action">恢复</string>
@@ -57,4 +57,6 @@
     <string name="add_new_profile_edit_hint">配置文件名</string>
     <string name="add_new_profile_dialog_title">输入配置文件名</string>
     <string name="pref_title_appearance">滤镜</string>
+    <string name="searching_location">正在搜索位置</string>
+    <string name="toast_warning_no_location">启用位置服务来更新位置</string>
     </resources>

@@ -76,7 +76,7 @@ import java.lang.reflect.Modifier
  *
  */
 const val DEBUG = true
-abstract class Logger(val enabled: Boolean = DEBUG, TAG: String? = null) {
+abstract class Logger(inline private val enabled: Boolean = DEBUG, TAG: String? = null) {
 
     /**
      * The member that performs the actual logging

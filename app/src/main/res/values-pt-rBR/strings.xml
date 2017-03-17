@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">Red Moon</string>
+<resources>
+    <string name="app_name">Red Moon</string>
     <string name="settings">Red Moon</string>
     <string name="intro_label">Introdução</string>
     <string name="show_intro_text">Repetir introdução</string>
@@ -28,7 +29,7 @@
     <string name="location_title">Localização</string>
     <string name="location_not_set">Não definido</string>
     <string name="latitude_short">Latititude</string>
-    <string name="searching_location">Procurando por localização</string>
+    <string name="snackbar_searching_location">Procurando por localização</string>
 
     <string name="dark_theme">Tema escuro</string>
 
@@ -37,7 +38,7 @@
     <string name="project_page_title">Visitar a página do projeto</string>
     <string name="project_page_summary">Encontre mais informações, deixe um feedback e contribua</string>
     <string name="toast_warning_install">Você não poderá instalar APKs enquanto o Red Moon estiver ligado.</string>
-    <string name="toast_warning_no_location">Ative os serviços de localização para atualizar a sua localização</string>
+    <string name="snackbar_warning_no_location">Ative os serviços de localização para atualizar a sua localização</string>
 
     <string name="help_snackbar_text">Pressione o botão para ativar Red Moon</string>
 
@@ -123,4 +124,6 @@ O Red Moon difunde um Intent público com a ação `com.jmstudios.redmoon.RED_MO
     <string name="remove_profile_dialog_title">Gostaria de excluir esse perfil?</string>
     <string name="action_next_profile">Próximo perfil</string>
     <string name="pref_title_appearance">Perfil</string>
+    <string name="searching_location">Procurando por localização</string>
+    <string name="toast_warning_no_location">Ative os serviços de localização para atualizar a sua localização</string>
     </resources>

@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">Red Moon</string>
+<resources>
+    <string name="app_name">Red Moon</string>
     <string name="settings">Red Moon</string>
     <string name="shortcut_activity">Pulsante di Red Moon</string>
     <string name="intro_label">Introduzione</string>
@@ -30,7 +31,7 @@
     <string name="location_not_set">Non impostata</string>
     <string name="latitude_short">Lat</string>
     <string name="longitude_short">Long</string>
-    <string name="searching_location">Cercando la posizione</string>
+    <string name="snackbar_searching_location">Cercando la posizione</string>
 
     <string name="dark_theme">Tema scuro</string>
 
@@ -39,7 +40,7 @@
     <string name="project_page_title">Visita la pagina del progetto </string>
     <string name="project_page_summary">Trova più informazioni, lascia feedback e contribuisci</string>
     <string name="toast_warning_install">Non sarai in grado di installare APK quando il filtro é in esecuzione.</string>
-    <string name="toast_warning_no_location">Attiva is servizi di geolocalizzazione per aggiornare la posizione</string>
+    <string name="snackbar_warning_no_location">Attiva is servizi di geolocalizzazione per aggiornare la posizione</string>
 
     <string name="help_snackbar_text">Premi il pulsante per attivare Red Moon</string>
 
@@ -77,4 +78,6 @@
     <string name="add_new_profile_edit_hint">Nome del profilo</string>
     <string name="remove_profile_dialog_title">Cancella questo profilo?</string>
     <string name="pref_title_appearance">Filtro</string>
+    <string name="searching_location">Cercando la posizione</string>
+    <string name="toast_warning_no_location">Attiva is servizi di geolocalizzazione per aggiornare la posizione</string>
     </resources>

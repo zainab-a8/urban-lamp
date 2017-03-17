@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">Црвени месец</string>
+<resources>
+    <string name="app_name">Црвени месец</string>
     <string name="settings">Црвени месец</string>
     <string name="intro_label">Увод</string>
     <string name="show_intro_text">Поново прикажи увод</string>
@@ -26,13 +27,13 @@
     <string name="location_not_set">Није постављена</string>
     <string name="latitude_short">Ширина</string>
     <string name="longitude_short">Дужина</string>
-    <string name="searching_location">Тражим локацију</string>
+    <string name="snackbar_searching_location">Тражим локацију</string>
 
     <string name="dark_theme">Тамна тема</string>
 
     <string name="email_me_title">Пошаљите ми е-поруку на marienraat@riseup.net</string>
     <string name="project_page_title">Посетите страницу пројекта</string>
-    <string name="toast_warning_no_location">Укључите услугу лоцирања да бисте ажурирали локацију</string>
+    <string name="snackbar_warning_no_location">Укључите услугу лоцирања да бисте ажурирали локацију</string>
 
     <string name="help_snackbar_text">Притисните прекидач да укључите Црвени месец</string>
 
@@ -128,4 +129,6 @@
 
     <string name="pref_title_button_backlight">Осветљење хардверских тастера</string>
 
+    <string name="searching_location">Тражим локацију</string>
+    <string name="toast_warning_no_location">Укључите услугу лоцирања да бисте ажурирали локацију</string>
     </resources>

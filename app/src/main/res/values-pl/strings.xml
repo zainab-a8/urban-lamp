@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">Red Moon</string>
+<resources>
+    <string name="app_name">Red Moon</string>
     <string name="settings">Red Moon</string>
     <string name="shortcut_activity">Włącznik Red Moon</string>
 
@@ -26,7 +27,7 @@
     <string name="location_not_set">Nie ustawiono</string>
     <string name="latitude_short">Szer.</string>
     <string name="longitude_short">Dł.</string>
-    <string name="searching_location">Szukanie lokalizacji</string>
+    <string name="snackbar_searching_location">Szukanie lokalizacji</string>
 
     <string name="dark_theme">Ciemny motyw</string>
 
@@ -35,7 +36,7 @@
     <string name="project_page_title">Odwiedź stronę projektu</string>
     <string name="project_page_summary">Znajdź więcej informacji, zostaw opinię i wesprzyj przy tworzeniu</string>
     <string name="toast_warning_install">Nie będziesz mógł instalować plików APK podczas działania programu Red Moon.</string>
-    <string name="toast_warning_no_location">Włącz usługi lokalizacyjne by znaleźć lokalizację</string>
+    <string name="snackbar_warning_no_location">Włącz usługi lokalizacyjne by znaleźć lokalizację</string>
 
     <string name="help_snackbar_text">Naciśnij przełącznik by włączyć Red Moon</string>
 
@@ -130,4 +131,6 @@ Red Moon rozsyła publiczny zamiar (intent) \'com.jmstudios.redmoon.RED_MOON_TOG
     <string name="pref_button_backlight_entries_array_1">Użyj poziomu filtra przygaszania</string>
     <string name="pref_button_backlight_entries_array_2">Wyłącz</string>
 
+    <string name="searching_location">Szukanie lokalizacji</string>
+    <string name="toast_warning_no_location">Włącz usługi lokalizacyjne by znaleźć lokalizację</string>
     </resources>

@@ -39,10 +39,9 @@ class secureSuspendChanged     : Event()
 class buttonBacklightChanged   : Event()
 
 class overlayPermissionDenied  : Event()
-class locationServicesDisabled : Event()
 class locationAccessDenied     : Event()
-class locationUpdating         : Event()
 class changeBrightnessDenied   : Event()
-
 class locationPermissionDialogClosed : Event()
 class uiClosed : Event()
+
+data class locationService(val isSearching: Boolean) : Event()

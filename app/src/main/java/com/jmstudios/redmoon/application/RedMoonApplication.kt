@@ -23,6 +23,7 @@ import android.preference.PreferenceManager
 
 import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.event.*
+import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.receiver.TimeToggleChangeReceiver
 import com.jmstudios.redmoon.util.Logger
 
@@ -84,6 +85,17 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
 
     // There's probably a better place to do this to keep this class clean
     // For now it works, though
+    @Subscribe
+    fun onTimeToggleChanged(event: timeToggleChanged) {
+        Log.i("Timer turned ${if (Config.timeToggle) "on" else "off"}")
+        if (Config.timeToggle) {
+            TimeToggleChangeReceiver.rescheduleOnCommand()
+            TimeToggleChangeReceiver.rescheduleOffCommand()
+        } else {
+            TimeToggleChangeReceiver.cancelAlarms()
+        }
+    }
+
     @Subscribe
     fun onCustomTurnOnTimeChanged(event: customTurnOnTimeChanged) {
         TimeToggleChangeReceiver.rescheduleOnCommand()

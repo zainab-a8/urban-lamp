@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">مانگی سوور</string>
+<resources>
+    <string name="app_name">مانگی سوور</string>
     <string name="settings">مانگی سوور</string>
     <string name="intro_label">پێشەکی</string>
     <string name="show_intro_text">پیشاندانی پێشەکی</string>
@@ -27,7 +28,7 @@
     <string name="location_not_set"/>
     <string name="latitude_short"/>
     <string name="longitude_short"/>
-    <string name="searching_location"/>
+    <string name="snackbar_searching_location"/>
 
     <string name="secure_suspend_title"/>
     <string name="secure_suspend_summary"/>
@@ -36,7 +37,7 @@
     <string name="project_page_title">سەردانکردنی پەڕەی پڕۆژە</string>
     <string name="project_page_summary"/>
     <string name="toast_warning_install"/>
-    <string name="toast_warning_no_location"/>
+    <string name="snackbar_warning_no_location"/>
 
     <string name="add_new_filter_dialog_title">ناوی پرۆفایل بنووسە</string>
     <string name="add_new_filter_edit_hint">ناوی پرۆفایل</string>
@@ -69,4 +70,6 @@
     <string name="add_new_profile_edit_hint">ناوی پرۆفایل</string>
     <string name="remove_profile_dialog_title">دەتەوێت ئەم پرۆفایلە بسڕیتەوە؟</string>
     <string name="pref_title_appearance"/>
+    <string name="searching_location"/>
+    <string name="toast_warning_no_location"/>
 </resources>

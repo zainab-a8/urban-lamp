@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">レッドムーン</string>
+<resources>
+    <string name="app_name">レッドムーン</string>
     <string name="shortcut_activity">レッドムーンの切り替え</string>
 
     <string name="running">実行中です。オフにして apk をインストールしてください</string>
@@ -25,7 +26,7 @@
     <string name="location_not_set">設定されていません</string>
     <string name="latitude_short">緯度</string>
     <string name="longitude_short">経度</string>
-    <string name="searching_location">場所の検索中</string>
+    <string name="snackbar_searching_location">場所の検索中</string>
 
     <string name="dark_theme">ダークテーマ</string>
 
@@ -34,7 +35,7 @@
     <string name="project_page_title">プロジェクトページをご覧ください</string>
     <string name="project_page_summary">さらに詳しい情報を探す、フィードバックを残す、貢献する</string>
     <string name="toast_warning_install">Red Moon がオンのときは APK をインストールできません。</string>
-    <string name="toast_warning_no_location">位置情報サービスを有効にして、場所を更新してください</string>
+    <string name="snackbar_warning_no_location">位置情報サービスを有効にして、場所を更新してください</string>
 
     <string name="help_snackbar_text">スイッチを押すと、レッドムーンを有効にします</string>
 
@@ -130,4 +131,6 @@ Red Moon は、アクション \'com.jmstudios.redmoon.RED_MOON_TOGGLED\' で公
     <string name="pref_button_backlight_entries_array_1">薄暗いレベルのフィルターを使用</string>
     <string name="pref_button_backlight_entries_array_2">オフにする</string>
 
+    <string name="searching_location">場所の検索中</string>
+    <string name="toast_warning_no_location">位置情報サービスを有効にして、場所を更新してください</string>
     </resources>

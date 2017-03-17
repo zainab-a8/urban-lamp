@@ -64,7 +64,7 @@
     <string name="location_not_set">Nenustatyta</string>
     <string name="latitude_short">Platuma</string>
     <string name="longitude_short">Ilguma</string>
-    <string name="searching_location">Ieškoma vieta</string>
+    <string name="snackbar_searching_location">Ieškoma vieta</string>
 
     <string name="dark_theme">Tamsi tema</string>
 
@@ -75,7 +75,7 @@
 
     <!-- Toasts -->
     <string name="toast_warning_install">negalima instaliuoti programėlių, kai filtras įjungtas.</string>
-    <string name="toast_warning_no_location">Vietos nustatymo paslauga neįjungta, bus naudojamas pritaikytas laikas. Prašome įjungti vietos nustatymo paslaugą, kad nustatyti saulėtekio ir saulėlydžio laiką</string>
+    <string name="snackbar_warning_no_location">Vietos nustatymo paslauga neįjungta, bus naudojamas pritaikytas laikas. Prašome įjungti vietos nustatymo paslaugą, kad nustatyti saulėtekio ir saulėlydžio laiką</string>
 
 	 <!-- Snackbar -->
     <string name="help_snackbar_text">Paslinkite įjungimo slinktuką, kad įgalintumėte Red Moon</string>
@@ -108,4 +108,6 @@
     <string name="add_new_profile_edit_hint">Profilio pavadinimas</string>
     <string name="remove_profile_dialog_title">Ištrinti šį profilį?</string>
     <string name="pref_title_appearance">Filtras</string>
+    <string name="searching_location">Ieškoma vieta</string>
+    <string name="toast_warning_no_location">Vietos nustatymo paslauga neįjungta, bus naudojamas pritaikytas laikas. Prašome įjungti vietos nustatymo paslaugą, kad nustatyti saulėtekio ir saulėlydžio laiką</string>
     </resources>

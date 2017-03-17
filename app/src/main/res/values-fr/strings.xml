@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">Red Moon</string>
+<resources>
+    <string name="app_name">Red Moon</string>
     <string name="shortcut_activity">Activer Red Moon</string>
 
     <string name="running">En exécution. Suspendre pour installer des apks</string>
@@ -25,7 +26,7 @@
     <string name="location_not_set">Non définie</string>
     <string name="latitude_short">Lat</string>
     <string name="longitude_short">Long</string>
-    <string name="searching_location">Recherche de localisation</string>
+    <string name="snackbar_searching_location">Recherche de localisation</string>
 
     <string name="dark_theme">Thème sombre</string>
 
@@ -34,7 +35,7 @@
     <string name="project_page_title">Accéder au projet</string>
     <string name="project_page_summary">Pour trouver plus d\'informations, laisser un commentaire et contribuer</string>
     <string name="toast_warning_install">Impossible d\'installer des fichiers APK quand le filtre est en cours d\'exécution.</string>
-    <string name="toast_warning_no_location">Activer les services de localisation pour actualiser la position</string>
+    <string name="snackbar_warning_no_location">Activer les services de localisation pour actualiser la position</string>
 
     <string name="help_snackbar_text">Appuyer sur le bouton pour activer Red Moon</string>
 
@@ -97,4 +98,6 @@ Red Moon nécessite cette autorisation pour voir dans quelle application vous vo
     <string name="add_new_profile_edit_hint">Nom de profil</string>
     <string name="remove_profile_dialog_title">Supprimer ce profil ?</string>
     <string name="pref_title_appearance">Filtre</string>
+    <string name="searching_location">Recherche de localisation</string>
+    <string name="toast_warning_no_location">Activer les services de localisation pour actualiser la position</string>
     </resources>

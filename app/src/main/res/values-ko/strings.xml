@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="toast_warning_install">필터가 작동 중일 때는 APK를 설치할 수 없습니다.</string>
+<resources>
+    <string name="toast_warning_install">필터가 작동 중일 때는 APK를 설치할 수 없습니다.</string>
     <string name="intro_label">소개</string>
     <string name="show_intro_text">소개 보기</string>
     <string name="running">작동 중. apk를 설치하려면 일시중지하세요.</string>

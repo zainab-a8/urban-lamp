@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">Red Moon</string>
+<resources>
+    <string name="app_name">Red Moon</string>
     <string name="running">Loopt. Zet uit om apks te installeren</string>
     <string name="paused">Gepauzeerd</string>
 
@@ -23,7 +24,7 @@
     <string name="location_not_set">Niet ingesteld</string>
     <string name="latitude_short">Breedte</string>
     <string name="longitude_short">Lengte</string>
-    <string name="searching_location">Locatie aan het zoeken</string>
+    <string name="snackbar_searching_location">Locatie aan het zoeken</string>
 
     <string name="dark_theme">Donker thema</string>
 
@@ -32,7 +33,7 @@
     <string name="project_page_title">Bezoek de project pagina</string>
     <string name="project_page_summary">Vind informatie, geef feedback en help mee</string>
     <string name="toast_warning_install">Je kan geen APKs installeren terwijl Red Moon aan is.</string>
-    <string name="toast_warning_no_location">Zet locatiediensten aan om de locatie te hernieuwen</string>
+    <string name="snackbar_warning_no_location">Zet locatiediensten aan om de locatie te hernieuwen</string>
 
     <string name="help_snackbar_text">Druk de schakelaar om Red Moon in te schakelen</string>
 
@@ -124,4 +125,6 @@ Red Moon verstuurd een publieke Intent met the actie `com.jmstudios.redmoon.RED_
     <string name="pref_button_backlight_entries_array_1">Gebruik het filter verduister niveau</string>
     <string name="pref_button_backlight_entries_array_2">Zet uit</string>
 
+    <string name="searching_location">Locatie aan het zoeken</string>
+    <string name="toast_warning_no_location">Zet locatiediensten aan om de locatie te hernieuwen</string>
     </resources>

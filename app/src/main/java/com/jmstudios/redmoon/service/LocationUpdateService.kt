@@ -69,33 +69,48 @@ import java.util.concurrent.TimeUnit
 class LocationUpdateService: Service(), LocationListener {
 
     private inner class Provider(val provider: String) {
-        private var mSearching = false
+        private var mRequested = false
 
         val exists: Boolean
             get() = locationManager.allProviders.contains(provider)
 
-        /* val enabled: Boolean */
-        /*     get() = exists && locationManager.isProviderEnabled(provider) */
+        private val enabled: Boolean
+            get() = locationManager.isProviderEnabled(provider)
+
+        val searching: Boolean
+            get() = mRequested && enabled
 
         val lastKnownLocation: Location?
             get() = locationManager.getLastKnownLocation(provider)
 
-        fun requestUpdates(listener: LocationListener): Boolean {
-            if (!mSearching && exists) {
-                Log.i("Requesting location updates from $provider")
-                mSearching = true
+        fun requestUpdates(listener: LocationListener) = when {
+            !exists -> {
+                Log.i("$provider doesn't exist; can't request updates")
+                postStatus(searching = false)
+            } mRequested -> {
+                Log.i("Already searching for updates using $provider")
+                postStatus(searching = enabled)
+            } else -> {
+                Log.i("Requesting location updates using $provider")
+                mRequested = true
+                if (enabled) { postStatus(searching = true) }
+                // If disabled, onProviderDisabled is called immediately
                 locationManager.requestLocationUpdates(provider, 0, 0f, listener)
-                return true // success
-            } else {
-                return false // failure
             }
         }
     }
 
-    private var mIsForeground = false
+    // Starts null so we don't send duplicate status messages on init
+    private var mIsForeground: Boolean? = null
+
+    // Convenience to avoid null checks
+    private val isForeground
+        get() = mIsForeground ?: false
 
     private var mNetworkProvider = Provider(LocationManager.NETWORK_PROVIDER)
     private var mGpsProvider     = Provider(LocationManager.GPS_PROVIDER)
+
+    private var mIsSearching: Boolean? = null
 
     private val locationManager: LocationManager
         get() = appContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -104,19 +119,16 @@ class LocationUpdateService: Service(), LocationListener {
         get() = mGpsProvider.lastKnownLocation ?: mNetworkProvider.lastKnownLocation
 
     private val locationUpToDate: Boolean
-        get() = lastKnownLocation?.isRecent ?: false
+        get() = lastKnownLocation?.time?.isRecent ?: Config.location.third?.isRecent ?: false
 
-    private val Location.isRecent: Boolean
-        get() = 1 > TimeUnit.MILLISECONDS.toHours(System.currentTimeMillis() - time)
+    private val Long.isRecent: Boolean
+        get() = 1 > TimeUnit.MILLISECONDS.toHours(System.currentTimeMillis() - this)
 
     override fun onCreate() {
         super.onCreate()
         Log.i("onCreate")
         when {
-            !hasLocationPermission -> {
-                EventBus.getDefault().post(locationAccessDenied())
-                stopSelf()
-            } locationUpToDate -> {
+            locationUpToDate -> {
                 Log.i("Last known location is recent enough.")
                 stopSelf()
             } mNetworkProvider.exists -> {
@@ -132,8 +144,13 @@ class LocationUpdateService: Service(), LocationListener {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         Log.i("onStartCommand($intent, $flags, $startId)")
+        if (mIsForeground != null) {
+            val searching = mNetworkProvider.searching || mGpsProvider.searching
+            EventBus.getDefault().post(locationService(searching))
+        }
         val fg = intent.getBooleanExtra(BUNDLE_KEY_FOREGROUND, false)
-        mIsForeground = mIsForeground && fg
+        mIsForeground = fg || isForeground
+
         // Do not attempt to restart if the hosting process is killed by Android
         return Service.START_NOT_STICKY
     }
@@ -153,21 +170,19 @@ class LocationUpdateService: Service(), LocationListener {
     }
 
     override fun onProviderEnabled(provider: String) {
-        EventBus.getDefault().post(locationUpdating())
+        Log.i("onProviderEnabled: $provider")
+        postStatus(searching = true)
     }
 
-    // Called immediately if we register for updates on a disabled provider
     override fun onProviderDisabled(provider: String) {
-        Log.i("$provider disabled")
-        if (!mIsForeground) {
-            Log.d("Avoiding gps for background updates")
+        Log.i("onProviderDisabled: $provider")
+        if (!isForeground) {
+            Log.i("Avoiding gps for background updates")
             stopSelf()
         } else when (provider) {
-            mNetworkProvider.provider, mGpsProvider.provider -> {
-                if (!mGpsProvider.requestUpdates(this)) {
-                    notifyLocationServicesDisabled()
-                }
-            } else -> Log.w("We shouldn't be getting $provider updates")
+            mNetworkProvider.provider -> mGpsProvider.requestUpdates(this)
+            mGpsProvider.provider -> mNetworkProvider.requestUpdates(this)
+            else -> Log.w("We shouldn't be getting $provider updates")
         }
     }
 
@@ -180,9 +195,13 @@ class LocationUpdateService: Service(), LocationListener {
         super.onDestroy()
     }
 
-    private fun notifyLocationServicesDisabled() {
-        Log.i("All available location providers are disabled.")
-        EventBus.getDefault().post(locationServicesDisabled())
+    // Filters duplicates
+    private fun postStatus(searching: Boolean) {
+        if (mIsSearching != searching) {
+            Log.i("posting: $searching")
+            mIsSearching = searching
+            EventBus.getDefault().post(locationService(searching))
+        }
     }
 
     private fun updateLocation(location: Location?) {
@@ -191,7 +210,7 @@ class LocationUpdateService: Service(), LocationListener {
             val calculator  = SunriseSunsetCalculator(sunLocation, TimeZone.getDefault())
             Config.sunsetTime  = calculator.getOfficialSunsetForDate(Calendar.getInstance())
             Config.sunriseTime = calculator.getOfficialSunriseForDate(Calendar.getInstance())
-            Config.location = latitude.toString() + "," + longitude.toString()
+            Config.location = Triple(latitude.toString(), longitude.toString(), time)
         }
     }
 
@@ -201,10 +220,16 @@ class LocationUpdateService: Service(), LocationListener {
         private val intent: Intent
             get() = Intent(appContext, LocationUpdateService::class.java)
 
-        fun start(foreground: Boolean = true) {
+        fun update(foreground: Boolean = true) {
             Log.i("Received start request")
-            val i = intent.putExtra(BUNDLE_KEY_FOREGROUND, foreground)
-            appContext.startService(i)
+            if (!hasLocationPermission) {
+                EventBus.getDefault().post(locationAccessDenied())
+            } else if (Config.timeToggle && Config.useLocation) {
+                val i = intent.putExtra(BUNDLE_KEY_FOREGROUND, foreground)
+                appContext.startService(i)
+            } else {
+                appContext.stopService(intent) 
+            }
         }
     }
 }

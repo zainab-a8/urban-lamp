@@ -92,7 +92,6 @@
     <string name="location_not_set">Not set</string>
     <string name="latitude_short">Lat</string>
     <string name="longitude_short">Long</string>
-    <string name="searching_location">Searching for location</string>
 
     <string name="secure_suspend_title">Pause in secure apps</string>
     <!-- Secure suspend subscreen -->
@@ -115,9 +114,11 @@
 
     <!-- Toasts -->
     <string name="toast_warning_install">You won\'t be able to install APKs while the Red Moon is on.</string>
-    <string name="toast_warning_no_location">Enable location services to update location</string>
 
     <!-- Snackbar -->
+    <string name="snackbar_warning_no_location">Enable location services to update location</string>
+    <string name="snackbar_searching_location">Searching for location</string>
+    <string name="snackbar_location_updated">Found location!</string>
     <string name="help_snackbar_text">Press the switch to enable Red Moon</string>
 
     <!-- Dialog -->
@@ -172,4 +173,6 @@
     <string name="add_new_profile_edit_hint">Profile name</string>
     <string name="remove_profile_dialog_title">Delete this profile?</string>
     <string name="pref_title_appearance">Profile</string>
+    <string name="searching_location">Searching for location</string>
+    <string name="toast_warning_no_location">Enable location services to update location</string>
 </resources>

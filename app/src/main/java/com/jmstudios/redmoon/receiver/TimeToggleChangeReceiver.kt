@@ -62,9 +62,7 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
         val runnable = DismissNotificationRunnable(context)
         handler.postDelayed(runnable, (ScreenFilterPresenter.FADE_DURATION_MS + 100).toLong())
 
-        if (Config.timeToggle && Config.useLocation) {
-            LocationUpdateService.start(false)
-        }
+        LocationUpdateService.update(foreground = false)
     }
 
     companion object : Logger() {

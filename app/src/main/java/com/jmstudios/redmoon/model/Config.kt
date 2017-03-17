@@ -40,7 +40,6 @@ import android.preference.PreferenceManager
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.fragment.TimeToggleFragment
 import com.jmstudios.redmoon.preference.ColorSeekBarPreference
 import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
@@ -66,6 +65,14 @@ object Config {
 
     private fun putIntPref(resId: Int, v: Int) {
         sharedPrefs.edit().putInt(appContext.getString(resId), v).apply()
+    }
+
+    private fun getLongPref(resId: Int, default: Long): Long {
+        return sharedPrefs.getLong(appContext.getString(resId), default)
+    }
+
+    private fun putLongPref(resId: Int, v: Long) {
+        sharedPrefs.edit().putLong(appContext.getString(resId), v).apply()
     }
 
     private fun getStringPref(resId: Int, default: String): String {
@@ -110,7 +117,7 @@ object Config {
     val buttonBacklightFlag: String
         get() = getStringPref(R.string.pref_key_button_backlight, "off")
     
-    private val darkThemeFlag: Boolean
+    val darkThemeFlag: Boolean
         get() = getBooleanPref(R.string.pref_key_dark_theme, false)
 
     var timeToggle: Boolean
@@ -153,9 +160,21 @@ object Config {
     val automaticTurnOffTime: String
         get() = if (useLocation) sunriseTime else customTurnOffTime
     
-    var location: String
-        get()  = getStringPref(R.string.pref_key_location, TimeToggleFragment.DEFAULT_LOCATION)
-        set(l) = putStringPref(R.string.pref_key_location, l)
+    const val DEFAULT_LOCATION = "0,0"
+    const val NOT_SET: Long = -1
+    var location: Triple<String, String, Long?>
+        get() {
+            val l = getStringPref(R.string.pref_key_location, DEFAULT_LOCATION)
+            val latitude  = l.substringBefore(',')
+            val longitude = l.substringAfter(',')
+            val t = getLongPref(R.string.pref_key_location_timestamp, NOT_SET)
+            val timestamp = if (t == NOT_SET) null else t
+            return Triple(latitude, longitude, timestamp)
+        }
+        set(l) {
+            putLongPref(R.string.pref_key_location_timestamp, l.third ?: NOT_SET)
+            putStringPref(R.string.pref_key_location, l.first + "," + l.second)
+        }
 
     var introShown: Boolean
         get()  = getBooleanPref(R.string.pref_key_intro_shown, false)

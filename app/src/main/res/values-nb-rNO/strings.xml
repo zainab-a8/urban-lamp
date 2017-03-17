@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">Rød Måne</string>
+<resources>
+    <string name="app_name">Rød Måne</string>
     <string name="settings">Rød Måne</string>
     <string name="shortcut_activity">Veksle Rød Måne</string>
 
@@ -24,7 +25,7 @@
     <string name="custom_end_time_title">Pause om</string>
     <string name="location_title">Plassering</string>
     <string name="location_not_set">Ikke satt</string>
-    <string name="searching_location">Søker etter plassering</string>
+    <string name="snackbar_searching_location">Søker etter plassering</string>
 
     <string name="dark_theme">Mørkt tema</string>
 
@@ -33,7 +34,7 @@
     <string name="project_page_title">Besøk prosjektsiden</string>
     <string name="project_page_summary">Finn mer informasjon, gi tilbakemelding og bidra</string>
     <string name="toast_warning_install">Du vil ikke kunne installere APK-er mens filteret er aktivert.</string>
-    <string name="toast_warning_no_location">Skru på lokasjonstjenester for å bestemme plassering</string>
+    <string name="snackbar_warning_no_location">Skru på lokasjonstjenester for å bestemme plassering</string>
 
     <string name="help_snackbar_text">Trykk på bryteren for å skru på Rød Måne</string>
 
@@ -79,4 +80,6 @@
     <string name="add_new_profile_edit_hint">Profilnavn</string>
     <string name="remove_profile_dialog_title">Slett denne profilen?</string>
     <string name="pref_title_appearance">Filter</string>
+    <string name="searching_location">Søker etter plassering</string>
+    <string name="toast_warning_no_location">Skru på lokasjonstjenester for å bestemme plassering</string>
     </resources>

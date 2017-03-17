@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="intro_label">Εισαγωγή</string>
+<resources>
+    <string name="intro_label">Εισαγωγή</string>
     <string name="show_intro_text">Δείξε την εισαγωγή</string>
     <string name="secure_suspend_activity">Αυτόματη αναστολή</string>
 
@@ -29,7 +30,7 @@
     <string name="location_not_set">Δεν ορίστηκε</string>
     <string name="latitude_short">Γεωγρ. πλάτος</string>
     <string name="longitude_short">Γεωγρ. μήκος</string>
-    <string name="searching_location">Αναζήτηση της τοποθεσίας σας</string>
+    <string name="snackbar_searching_location">Αναζήτηση της τοποθεσίας σας</string>
 
     <string name="secure_suspend_title">Αυτόματη αναστολή φίλτρου σε προστατευμένα apps</string>
     <string name="secure_suspend_summary">Μερικά χαρακτηριστικά του Android προστατεύονται από επικαλύψεις οθόνης και δεν μπορούν να λειτουργήσουν όταν είναι ενεργοποιημένο το Κόκκινο Φεγγάρι. Για παράδειγμα, η εγκατάσταση αρχείων APK ή η χορήγηση δικαιωμάτων στο Android 6.0+.
@@ -51,7 +52,7 @@
     <string name="project_page_title">Επισκεφθείτε τη σελίδα του πρότζεκτ</string>
     <string name="project_page_summary">Βρείτε επιπλέον πληροφορίες, πείτε μας την γνώμη σας και συμβάλετε</string>
     <string name="toast_warning_install">Δεν θα μπορείτε να εγκαταστήσετε APKs όσο το φίλτρο είναι σε λειτουργία.</string>
-    <string name="toast_warning_no_location">Ενεργοποιήστε τις υπηρεσίες τοποθεσίας για ενημέρωση τοποθεσίας</string>
+    <string name="snackbar_warning_no_location">Ενεργοποιήστε τις υπηρεσίες τοποθεσίας για ενημέρωση τοποθεσίας</string>
 
     <string name="help_snackbar_text">Πιέστε τον διακόπτη για ενεργοποίησετε το Κόκκινο Φεγγάρι</string>
 
@@ -97,4 +98,6 @@
     <string name="add_new_profile_edit_hint">Όνομα προφίλ</string>
     <string name="remove_profile_dialog_title">Διαγραφή του προφίλ;</string>
     <string name="pref_title_appearance">Φίλτρο</string>
+    <string name="searching_location">Αναζήτηση της τοποθεσίας σας</string>
+    <string name="toast_warning_no_location">Ενεργοποιήστε τις υπηρεσίες τοποθεσίας για ενημέρωση τοποθεσίας</string>
     </resources>

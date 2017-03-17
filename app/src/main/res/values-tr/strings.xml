@@ -31,7 +31,7 @@
     <string name="custom_end_time_title">Kapat</string>
     <string name="dark_theme">Siyah tema</string>
 
-    <string name="toast_warning_no_location">Konumu güncellemek için konum hizmetlerini aç</string>
+    <string name="snackbar_warning_no_location">Konumu güncellemek için konum hizmetlerini aç</string>
 
     <string name="toast_warning_install">Red Moon çalışırken APK yükleyemezsin.</string>
     <string name="intro_label">Tanıtım</string>
@@ -41,7 +41,7 @@
     <string name="location_title">Konum</string>
     <string name="email_me_title">Bana marienraat@riseup.net adresinden e-posta gönder</string>
     <string name="longitude_short">Boylam</string>
-    <string name="searching_location">Konum aranıyor</string>
+    <string name="snackbar_searching_location">Konum aranıyor</string>
 
     <string name="project_page_summary">Daha fazla bilgi bul, geri bildirim gönder ve katkı yap</string>
     <string name="set_dialog">Ayarla</string>
@@ -108,4 +108,6 @@ Red Moon güvenli uygulamalarda süzgeci askıya almak ve hangi uygulamanın iç
     <string name="pref_title_startup">Başlangıç</string>
     <string name="pref_title_integration">Diğer uygulamalarla tümleşme</string>
     <string name="action_next_profile">Sonraki profil</string>
+    <string name="searching_location">Konum aranıyor</string>
+    <string name="toast_warning_no_location">Konumu güncellemek için konum hizmetlerini aç</string>
     </resources>
