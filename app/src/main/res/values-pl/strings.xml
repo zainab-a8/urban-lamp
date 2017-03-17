@@ -72,26 +72,26 @@ Red Moon potrzebuje dostępu do użytkowania, żeby zobaczyć czy używasz aplik
     <string name="usage_stats_dialog_title">Dostęp do użytkowania</string>
     <string name="text_switch_on">Włączone</string>
     <string name="text_switch_off">Wyłączone</string>
-    <string name="secure_suspend_summary">Niektóre funkcje nie będą działać gdy Red Moon jest włączony*. Na przykład: instalowanie plików APK, udzielanie uprawnień lub ųzywanie aplikacji SuperUser (na zrootowanych urządzeniach).
+    <string name="secure_suspend_summary">Niektóre funkcje nie będą działać gdy Red Moon jest włączony*. Na przykład: instalowanie plików APK, udzielanie uprawnień lub używanie aplikacji SuperUser (na zrootowanych urządzeniach).
 
-Kiedy to ustawienie jest aktywne, Red Moon zostanie automatycznie wstrzymywany w przypadku, gdy któraś z tych funkcji jest otwarta.
+Kiedy to ustawienie jest aktywne, Red Moon zostanie automatycznie wstrzymywany w przypadku, gdy któraś z tych funkcji zostanie wywołana.
 
 Ta funkcja może w niewielkim stopniu zmniejszyć żywotność baterii twojego telefonu. Dodatkowo może nie działać na wszystkich urządzeniach.
 
-*Red Moon działa rysując przezroczystą czerwoną warstwę nad całym ekranem, te aplikacje nie będą działać, kiedy jakaś inna aplikacja po nich rysuje. W ten sposób, inne aplikacje nie mogą podstępem skłonić Cię do wybrania opcji, której nie chcesz, lub podglądać co wystukujesz na ekranie.</string>
+*Red Moon działa rysując przezroczystą czerwoną warstwę nad całym ekranem; te aplikacje nie będą działać kiedy jakaś inna aplikacja po nich rysuje. W ten sposób, inne aplikacje nie mogą podstępem skłonić Cię do wybrania opcji, której nie chcesz lub podglądać co wystukujesz na ekranie.</string>
     <string name="intro_slide_1_title">Witaj!</string>
     <string name="intro_slide_1_text">Witaj w Red Moon!</string>
 
     <string name="intro_slide_2_title">Ochrona Twoich oczu</string>
     <string name="intro_slide_2_text">W nocy, gdy używasz telefonu,
 ekran niszczy Twój wzrok.
-Możesz użyć Red Moon, żeby przyciemnić Twój ekran.</string>
+Możesz użyć Red Moon, żeby przyciemnić swój ekran.</string>
 
     <string name="intro_slide_3_title">Polepszanie Twojego snu</string>
     <string name="intro_slide_3_text">Niebieskie światło blokuje
 produkcję melaniny, hormonu pomagającego Ci zasnąć w nocy.
 Red Moon usuwa niebieskie światło z Twojego ekranu,
-zapewniając Ci lepszy łatwiejsze zaśnięcie.</string>
+zapewniając Ci łatwiejsze zaśnięcie.</string>
 
     <string name="intro_slide_4_title">Rozpocznij!</string>
     <string name="intro_slide_4_text">Możesz włączyć lub wyłączyć Red Moona przełącznikiem
