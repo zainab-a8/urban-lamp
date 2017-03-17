@@ -87,8 +87,7 @@ if it requires increasing Red Moon's complexity (ie, adding options).
 
 - Try very hard to stay under 100 characters per line. Try less hard to stay under 80.
 - Indent 4 spaces, (exception: 8 spaces for the second line of variable assignments that have to wrap)
-- vars start with `m`, vals and functions are `camelCase`, constants are
-    `CAPS_WITH_UNDERSCORES`
+- constants are `ALL_CAPS`, functions, vals, and short-lived vars are `camelCase`, persistent vars are `mCamelCase`.
 - Align similar actions (`when` cases, function arguments with line wrap, `=` when you're doing a lot of assignment)
 - Good code is (mostly) self-documenting. If you're commenting frequently, consider:
     - Refactoring into smaller functions with descriptive names
