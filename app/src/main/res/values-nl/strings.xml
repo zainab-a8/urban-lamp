@@ -88,7 +88,7 @@
     <string name="action_on">Zet aan</string>
     <string name="action_off">Zet uit</string>
 
-    <string name="use_location_title">Tijden gebaseerd op locatie</string>
+    <string name="pref_summaryoff_use_location">Tijden gebaseerd op locatie</string>
     <string name="secure_suspend_title">Pauzeer in beveiligde apps</string>
     <string name="secure_suspend_summary">Sommige functies van Android zijn beschermt tegen filters over het scherm en zullen daarom niet werken als Red Moon aanstaat, bijvoorbeeld het installeren van APK\'s of het toekennen van permissies op Android 6.0+.
 

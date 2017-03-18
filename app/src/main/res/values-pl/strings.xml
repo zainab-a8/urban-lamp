@@ -109,7 +109,7 @@ zapewniając Ci łatwiejsze zaśnięcie.</string>
     <string name="action_off">Wyłącz</string>
     <string name="action_next_filter">Następny profil</string>
 
-    <string name="use_location_title">Czas z lokalizacji</string>
+    <string name="pref_summaryoff_use_location">Czas z lokalizacji</string>
     <string name="menu_about">O programie</string>
     <string name="activity_about">O Red Moon</string>
     <string name="pref_title_integration">Integracja z innymi aplikacjami</string>

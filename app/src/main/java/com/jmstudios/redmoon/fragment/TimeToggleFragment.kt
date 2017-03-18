@@ -87,7 +87,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
 
     private fun updateLocationPref() {
         val (latitude, longitude, time) = Config.location
-        useLocationPref.summary = if (time == null) {
+        useLocationPref.summaryOn = if (time == null) {
             getString(R.string.location_not_set)
         } else {
             val lat  = getString(R.string.latitude_short)

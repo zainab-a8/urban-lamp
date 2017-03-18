@@ -113,7 +113,7 @@ Red Moon benötigt den Zugriff auf die Daten, um festzustellen, welche App du ge
     <string name="action_next_filter">Nächster Filter</string>
 
     <string name="pref_title_button_backlight_disclaimer">Kein Effekt auf manchen Geräten</string>
-    <string name="use_location_title">Zeiten vom Ort</string>
+    <string name="pref_summaryoff_use_location">Zeiten vom Ort</string>
     <string name="pref_title_integration">Integration mit anderen Apps</string>
     <string name="pref_title_version">Version</string>
 
