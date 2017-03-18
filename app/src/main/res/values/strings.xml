@@ -87,7 +87,7 @@
     <string name="custom_start_time_title">Turn on at</string>
     <string name="custom_end_time_title">Turn off at</string>
     <string name="pref_title_use_location">Times from sun</string>
-    <string name="pref_summaryoff_use_location">Times from location</string>
+    <string name="pref_summaryoff_use_location">Based on your location</string>
     <string name="location_title">Location</string>
     <string name="location_not_set">Location not set</string>
     <string name="latitude_short">Lat</string>
