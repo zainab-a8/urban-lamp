@@ -107,7 +107,7 @@ Red Moon がオンのときに作動しないと思われるアプリを使用�
     <string name="action_on">オンにする</string>
     <string name="action_off">オフにする</string>
 
-    <string name="pref_summaryoff_use_location">場所からの回数</string>
+    <string name="pref_summaryoff_use_location">場所に基づいて</string>
     <string name="action_next_filter">次のプロファイル</string>
 
     <string name="menu_about">アプリについて</string>
