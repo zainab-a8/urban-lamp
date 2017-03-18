@@ -75,7 +75,6 @@
   <string name="pref_button_backlight_values_array_2" translatable="false">off</string>
 
   <!-- Other -->
-  <string name="version_name" translatable="false">2.10.0</string>
   <string name="project_page_url" translatable="false">https://github.com/raatmarien/red-moon</string>
   <string name="contact_email_adress" translatable="false">mailto:marienraat@riseup.net</string>
 

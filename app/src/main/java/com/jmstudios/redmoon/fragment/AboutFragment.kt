@@ -19,6 +19,7 @@ package com.jmstudios.redmoon.fragment
 
 import android.os.Bundle
 import android.preference.PreferenceFragment
+import com.jmstudios.redmoon.BuildConfig
 
 import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.util.Logger
@@ -28,6 +29,7 @@ class AboutFragment : PreferenceFragment() {
         Log.i("onCreate()")
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.about)
+        preferenceScreen.getPreference(0).summary = BuildConfig.VERSION_NAME
     }
     companion object : Logger()
 }
