@@ -67,6 +67,7 @@ class MainActivity : ThemedAppCompatActivity() {
     lateinit private var mSwitch : Switch
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        handleUpgrades()
         val intent = intent
         Log.i("Got intent")
         val fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false)
@@ -77,8 +78,6 @@ class MainActivity : ThemedAppCompatActivity() {
 
         // The preview will appear faster if we don't have to start the service
         ScreenFilterService.start()
-
-        handleUpgrades() // From utils
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

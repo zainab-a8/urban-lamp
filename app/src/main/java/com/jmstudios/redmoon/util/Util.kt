@@ -48,6 +48,7 @@ import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
+import android.util.Log
 
 import com.jmstudios.redmoon.BuildConfig
 import com.jmstudios.redmoon.R
@@ -123,10 +124,20 @@ fun onRequestPermissionsResult(requestCode: Int) {
 }
 
 fun handleUpgrades() {
-    if (Config.fromVersionCode < 26) {
-        upgradeToggleModePreferences()
+    tailrec fun upgradeFrom(version: Int): Unit = when (version) {
+        BuildConfig.VERSION_CODE -> {
+            Config.fromVersionCode = version
+        } in 0..25 -> {
+            upgradeToggleModePreferences()
+            upgradeFrom(26)
+        } 26 -> {
+            upgradeFrom(27)
+        } else -> {
+            Log.e("handleUpgrades", "Didn't catch upgrades from version $version")
+            upgradeFrom(version+1)
+        }
     }
-    Config.fromVersionCode = BuildConfig.VERSION_CODE
+    upgradeFrom(Config.fromVersionCode)
 }
 
 private fun upgradeToggleModePreferences() {
