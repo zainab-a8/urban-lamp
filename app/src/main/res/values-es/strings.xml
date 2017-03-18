@@ -65,8 +65,8 @@
     <string name="intro_slide_2_text">De noche, cuando mirar al teléfono
 daña la vista, puedes utilizar Red Moon para limitar el brillo de tu pantalla.</string>
 
-    <string name="intro_slide_4_text">Para activar Red Moon utiliza el control
- de la esquina superior derecha.</string>
+    <string name="intro_slide_4_text">Utiliza el control de la esquina superior
+derecha para des/activar Red Moon.</string>
 
     <string name="shades_intensity_level">Intensidad</string>
     <string name="shades_dim_level">Atenuar</string>
@@ -77,14 +77,14 @@ por la noche. Red Moon elimina la luz azul de la pantalla para que puedas dormir
     <string name="latitude_short">Latitud</string>
     <string name="longitude_short">Longitud</string>
     <string name="time_toggle_options_array_0">Manual</string>
-    <string name="secure_suspend_activity">Pausar automáticamente</string>
+    <string name="secure_suspend_activity">Pausar en aplicaciones seguras</string>
 
-    <string name="secure_suspend_title">No filtrar aplicaciones seguras</string>
-    <string name="secure_suspend_summary">Algunas características de Android están protegidas contra superposiciones de pantalla y no funcionan con filtros como Red Moon. Te las encontrarás al instalar APKs o conceder permisos en Android 6.0+.
+    <string name="secure_suspend_title">Pausar filtro en aplicaciones seguras</string>
+    <string name="secure_suspend_summary">Algunas características de Android están protegidas contra superposiciones de pantalla y no funcionan debajo de filtros como Red Moon. No podrás confirmar al instalar APKs o conceder permisos en Android 6.0+.
 
-Al activar esta opción Red Moon se pausa momentáneamente si detecta este tipo de actividad y reanuda el filtro al terminar. Así puedes despreocuparte de tener que quitar el filtro de forma manual.
+Al utilizar esta opción Red Moon se pausa momentáneamente si detecta este tipo de actividad y reanuda el filtro al terminar. Así puedes despreocuparte de tener que quitar el filtro de forma manual para tocar botones.
 
-Esta característica puede gastar un poco más de batería y no funcionar del todo bien en algunos dispositivos.</string>
+Puede que esta función gaste un poco más de batería y que no funcione del todo bien en algunos dispositivos.</string>
     <string name="text_switch_on">Activado</string>
     <string name="text_switch_off">Desactivado</string>
     <string name="usage_stats_dialog_title">Permitir recopilar aplicaciones en ejecución</string>
@@ -119,7 +119,7 @@ Red Moon emite un «intent» público con la acción `com.jmstudios.redmoon.RED_
     <string name="add_new_profile_edit_hint">Nombre del perfil</string>
     <string name="remove_profile_dialog_title">¿Seguro que quieres borrarlo?</string>
     <string name="action_next_profile">Siguiente perfil</string>
-    <string name="pref_title_appearance">Filtro</string>
+    <string name="pref_title_appearance">Perfil</string>
     <string name="searching_location">Buscando ubicación</string>
     <string name="toast_warning_no_location">Activa los servicios de ubicación para actualizar tu posición</string>
 <string name="pref_title_button_backlight_disclaimer">Inútil en ciertos dispositivos</string>
@@ -130,4 +130,5 @@ Red Moon emite un «intent» público con la acción `com.jmstudios.redmoon.RED_
     <string name="pref_button_backlight_entries_array_1">Filtrar igual que la pantalla</string>
     <string name="pref_title_button_backlight">Botones retroiluminados</string>
 
+    <string name="pref_title_use_location">Reanudar con la puesta de sol</string>
     </resources>
