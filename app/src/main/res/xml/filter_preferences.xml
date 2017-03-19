@@ -60,7 +60,7 @@
     <SwitchPreference
         android:key="@string/pref_key_lower_brightness"
         android:title="@string/control_brightness_title"
-        android:defaultValue="true" />
+        android:defaultValue="false" />
   </PreferenceCategory>
 
   <PreferenceCategory android:title="@string/pref_title_other">
