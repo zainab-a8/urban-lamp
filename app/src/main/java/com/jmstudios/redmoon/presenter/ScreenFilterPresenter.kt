@@ -92,16 +92,18 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
     private val mPreviewState = PreviewState()
     private val mSuspendState = SuspendState()
 
-    private var mCurrentState: State = InitState()
+    private var mCurrentState: State = mOffState
 
     // Screen brightness state
     private var oldBrightness: Int = -1
     private var oldAutomaticBrightness: Boolean = false
 
     init {
-        // Always initialize to off
-        onScreenFilterCommand(ScreenFilterService.Command.OFF)
+        Log.i("Initializing")
+        Config.filterIsOn = mCurrentState.filterIsOn
+        EventBus.getDefault().register(mCurrentState)
     }
+
 
     fun updateWidgets() {
         //Broadcast to keep appwidgets in sync
@@ -195,7 +197,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
     }
 
-    private fun saveBrightness() {
+    private fun lowerBrightness() {
         if (Config.lowerBrightness) {
             try {
                 val resolver = mContext.contentResolver
@@ -210,6 +212,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         }
         Config.automaticBrightness = oldAutomaticBrightness
         Config.brightness = oldBrightness
+        setBrightness(0, false, mContext)
     }
 
     private fun restoreBrightness() {
@@ -324,10 +327,6 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
             return javaClass.simpleName
         }
     }
-    
-    private inner class InitState : State() {
-        override val filterIsOn = false
-    }
 
     private inner class OnState : State() {
         override val filterIsOn = true
@@ -343,8 +342,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
             mView.animateIntensityLevel(Config.intensity, null)
 
             if (Config.lowerBrightness) {
-                saveBrightness()
-                setBrightness(0, false, mContext)
+                lowerBrightness()
             }
             if (Config.secureSuspend) startAppMonitoring()
         }
@@ -387,8 +385,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
                 val lowerBrightness = Config.lowerBrightness
                 Log.i("Lower brightness flag changed to: $lowerBrightness")
                 if (lowerBrightness) {
-                    saveBrightness()
-                    setBrightness(0, false, mContext)
+                    lowerBrightness()
                 } else {
                     restoreBrightness()
                 }
