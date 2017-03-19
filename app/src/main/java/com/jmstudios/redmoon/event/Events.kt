@@ -42,6 +42,6 @@ class overlayPermissionDenied  : Event()
 class locationAccessDenied     : Event()
 class changeBrightnessDenied   : Event()
 class locationPermissionDialogClosed : Event()
-class uiClosed : Event()
 
+data class mainUI(val isOpen: Boolean) : Event()
 data class locationService(val isSearching: Boolean, val isRunning: Boolean = true) : Event()

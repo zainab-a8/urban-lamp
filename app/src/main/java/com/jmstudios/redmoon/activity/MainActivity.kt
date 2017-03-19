@@ -76,6 +76,7 @@ class MainActivity : ThemedAppCompatActivity() {
         super.onCreate(savedInstanceState)
         if (!Config.introShown) { startIntro() }
 
+        EventBus.getDefault().postSticky(mainUI(isOpen = true))
         // The preview will appear faster if we don't have to start the service
         ScreenFilterService.start()
     }
@@ -108,7 +109,7 @@ class MainActivity : ThemedAppCompatActivity() {
     }
 
     override fun onDestroy() {
-        EventBus.getDefault().post(uiClosed())
+        EventBus.getDefault().postSticky(mainUI(isOpen = false))
         super.onDestroy()
     }
 

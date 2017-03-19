@@ -429,6 +429,8 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
             if (Config.lowerBrightness) restoreBrightness()
             if (Config.secureSuspend) stopAppMonitoring()
+            val ui = EventBus.getDefault().getStickyEvent(mainUI::class.java)
+            if (ui == null) { mServiceController.stopSelf() } // ui is closed
         }
 
         override val nextState: (ScreenFilterService.Command) -> State = {
@@ -443,9 +445,12 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
             nm.notify(NOTIFICATION_ID, notification.build())
         }
 
-        @Subscribe
-        fun onUiClosed(event: uiClosed) {
-            mServiceController.stopForeground(true)
+        @Subscribe(sticky = true)
+        fun stopServiceWhenUICloses(ui: mainUI) {
+            if (!ui.isOpen) {
+                EventBus.getDefault().removeStickyEvent(ui)
+                mServiceController.stopSelf()
+            }
         }
     }
 
