@@ -188,6 +188,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
 
     private fun stopAppMonitoring() {
         Log.i("Stopping app monitoring")
+        stopCamThread()
         try {
             mContext.unregisterReceiver(mScreenStateReceiver)
         } catch (e: IllegalArgumentException) {
@@ -428,7 +429,9 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
             }
 
             if (Config.lowerBrightness) restoreBrightness()
-            if (Config.secureSuspend) stopAppMonitoring()
+            if (Config.secureSuspend) 
+          
+          n()
             val ui = EventBus.getDefault().getStickyEvent(mainUI::class.java)
             if (ui == null) { mServiceController.stopSelf() } // ui is closed
         }
