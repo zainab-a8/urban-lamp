@@ -89,6 +89,7 @@ class MainActivity : ThemedAppCompatActivity() {
             setOnClickListener {
                 val state = if (mSwitch.isChecked) { ScreenFilterService.Command.ON }
                             else { ScreenFilterService.Command.OFF }
+                Log.i("Toggling $state via switch")
                 ScreenFilterService.moveToState(state)
             }
         }
