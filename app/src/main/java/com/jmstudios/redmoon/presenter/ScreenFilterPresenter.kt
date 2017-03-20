@@ -429,9 +429,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
             }
 
             if (Config.lowerBrightness) restoreBrightness()
-            if (Config.secureSuspend) 
-          
-          n()
+            if (Config.secureSuspend) stopAppMonitoring()
             val ui = EventBus.getDefault().getStickyEvent(mainUI::class.java)
             if (ui == null) { mServiceController.stopSelf() } // ui is closed
         }
