@@ -84,6 +84,8 @@ class MainActivity : ThemedAppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_activity_menu, menu)
 
+        menu.findItem(R.id.menu_dark_theme).isChecked = Config.darkThemeFlag
+
         mSwitch = (menu.findItem(R.id.screen_filter_switch).actionView as Switch).apply {
             isChecked = Config.filterIsOn
             setOnClickListener {
@@ -125,14 +127,18 @@ class MainActivity : ThemedAppCompatActivity() {
         when (item.itemId) {
             R.id.show_intro_button -> {
                 startIntro()
-                return true
             }
             R.id.about_button -> {
                 val aboutIntent = Intent(this, AboutActivity::class.java)
                 startActivity(aboutIntent)
             }
+            R.id.menu_dark_theme -> {
+                Config.darkThemeFlag = !Config.darkThemeFlag
+                recreate()
+            }
+            else -> return super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
+        return true
     }
 
     private fun startIntro() {

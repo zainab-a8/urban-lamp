@@ -117,8 +117,9 @@ object Config {
     val buttonBacklightFlag: String
         get() = getStringPref(R.string.pref_key_button_backlight, "off")
     
-    val darkThemeFlag: Boolean
-        get() = getBooleanPref(R.string.pref_key_dark_theme, false)
+    var darkThemeFlag: Boolean
+        get()     = getBooleanPref(R.string.pref_key_dark_theme, false)
+        set(flag) = putBooleanPref(R.string.pref_key_dark_theme, flag)
 
     var timeToggle: Boolean
         get() = getBooleanPref(R.string.pref_key_time_toggle, false)

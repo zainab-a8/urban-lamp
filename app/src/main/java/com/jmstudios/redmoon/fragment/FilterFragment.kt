@@ -109,16 +109,6 @@ class FilterFragment : EventPreferenceFragment() {
                     val checked = newValue as Boolean
                     if (checked) { requestWriteSettingsPermission(activity) } else { true }
                 }
-
-        /* Normally we'd change theme via an event after the setting gets
-         * changed, but for some reason doing it that way makes the activity
-         * scroll to the top when it gets recreated, which is rather jarring.
-         * Doing it this way keeps the same scroll position, which is nice. */
-        darkThemePref.onPreferenceChangeListener =
-                Preference.OnPreferenceChangeListener { _, _ ->
-                    activity.recreate()
-                    true
-                }
     }
 
     override fun onResume() {

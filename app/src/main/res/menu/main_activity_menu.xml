@@ -31,6 +31,12 @@
         android:icon="@drawable/ic_help_white_24dp"/>
 
     <item
+        android:id="@+id/menu_dark_theme"
+        android:title="@string/dark_theme"
+        android:checkable="true"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/about_button"
         android:title="@string/menu_about"
         app:showAsAction="never"/>
