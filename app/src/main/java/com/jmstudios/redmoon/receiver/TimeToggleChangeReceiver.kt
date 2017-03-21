@@ -100,13 +100,12 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
                 }
 
                 val calendar = GregorianCalendar().apply {
-                    set(Calendar.HOUR_OF_DAY, Integer.parseInt(time.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[0]))
-                    set(Calendar.MINUTE, Integer.parseInt(time.split(":".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()[1]))
-                }
+                    val now = GregorianCalendar().add(Calendar.SECOND, 1)
 
-                val now = GregorianCalendar()
-                now.add(Calendar.SECOND, 1)
-                if (calendar.before(now)) { calendar.add(Calendar.DATE, 1) }
+                    set(Calendar.HOUR_OF_DAY, time.substringBefore(':').toInt())
+                    set(Calendar.MINUTE, time.substringAfter(':').toInt())
+                    if (before(now)) { add(Calendar.DATE, 1) }
+                }
 
                 Log.i("Scheduling alarm for " + calendar.toString())
 
