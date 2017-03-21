@@ -67,21 +67,17 @@
     <Preference
         android:title="@string/pref_title_time_toggle"
         android:key="@string/pref_key_time_toggle_header">
-      <!-- Specifying a specific action for this activity seems like
-           an effective way to ensure that the right Activity is
-           opened. -->
         <intent
-            android:action="com.jmstudios.redmoon.activity.TimeToggleActivity" />
+            android:targetPackage="@string/applicationId"
+            android:targetClass="com.jmstudios.redmoon.activity.TimeToggleActivity" />
   </Preference>
 
   <Preference
         android:title="@string/secure_suspend_title"
         android:key="@string/pref_key_secure_suspend_header">
-      <!-- Specifying a specific action for this activity seems like
-           an effective way to ensure that the right Activity is
-           opened. -->
         <intent
-            android:action="com.jmstudios.redmoon.activity.SecureSuspendActivity" />
+            android:targetPackage="@string/applicationId"
+            android:targetClass="com.jmstudios.redmoon.activity.SecureSuspendActivity"/>
   </Preference>
 
     <SwitchPreference

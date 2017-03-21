@@ -1,5 +1,6 @@
 ext {
     android_support_version = '25.2.0'
+    appId = "com.jmstudios.redmoon"
 }
 
 apply plugin: 'com.android.application'
@@ -35,7 +36,7 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "com.jmstudios.redmoon"
+        applicationId appId
         minSdkVersion 17
         targetSdkVersion 25
         versionCode 27
@@ -45,6 +46,7 @@ android {
                 arguments = [ eventBusIndex : 'com.jmstudios.redmoon.event.EventBusIndex' ]
             }
         }
+        resValue "string", "applicationId", appId
     }
     buildTypes {
         release {
@@ -55,6 +57,7 @@ android {
         debug {
             applicationIdSuffix '.debug'
             versionNameSuffix '-DEBUG'
+            resValue "string", "applicationId", "$appId$applicationIdSuffix"
         }
     }
     sourceSets {
