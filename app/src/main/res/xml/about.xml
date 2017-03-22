@@ -22,11 +22,6 @@
         android:layout="@layout/preference_summary"/>
 
     <Preference
-        android:title="@string/pref_title_integration"
-        android:summary="@string/pref_summary_integration"
-        android:layout="@layout/preference_summary"/>
-
-    <Preference
         android:key="@string/pref_key_github"
         android:title="@string/project_page_title"
         android:summary="@string/project_page_summary" >
@@ -43,4 +38,9 @@
             android:action="android.intent.action.VIEW"
             android:data="@string/contact_email_adress" />
     </Preference>
+
+    <Preference
+        android:title="@string/pref_title_integration"
+        android:summary="@string/pref_summary_integration"
+        android:layout="@layout/preference_summary"/>
 </PreferenceScreen>
