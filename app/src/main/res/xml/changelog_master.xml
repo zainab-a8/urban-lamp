@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<changelog>
+    <release version="2.10.2" versioncode="28" >
+        <change>[New] Changelog</change>
+        <change>[Removed] Location preference</change>
+        <change>[New] Automatic location updates</change>
+        <change>[Updated] Transparency: Location update messages are more accurate and prominent</change>
+        <change>Fixed a bug where setting location services to "gps only" would not enable location updates</change>
+        <change>[Updated] Dark theme preference: moved to three dot menu</change>
+        <change>Fixed a bug where disabling app monitoring (Pause in secure apps) would not apply until Red Moon was killed and restarted.</change>
+        <change>Small performance improvements</change>
+    </release>
+    <release version="2.10.1" versioncode="27" >
+        <change>[New] Choose how hardware buttons are dimmed</change>
+        <change>[Updated] Notification icon</change>
+        <change>[New] Notification shows when Red Moon is paused in a secure app</change>
+        <change>Fixed a bug where the filter wouldn't automatically turn on/off (#126)</change>
+        <change>Target Android 7.1</change>
+        <change>Small performance improvements</change>
+        <change>[Backend] Improved logging</change>
+        <change>Updated translations</change>
+    </release>
+    <release version="2.10.0" versioncode="26" >
+        <change>[Updated] Phrasing: "The filter" -> "Red Moon"</change>
+        <change>[Updated] Toggle Red Moon: floating button -> top switch</change>
+        <change>[New] Timer subscreen</change>
+        <change>[Removed] Global disable: no longer needed</change>
+        <change>[New] About page</change>
+        <change>[New] Use GPS on devices without a network location provider</change>
+        <change>Fixed a bug where closing the app would cancel searching for location</change>
+        <change>[Updated] Notification and widget phrasing/icons</change>
+        <change>[Updated] Secure apps: added new version of package installer</change>
+        <change>[New] Notify other apps when Red Moon toggles (details on the about page).</change>
+        <change>[New] Italian translation</change>
+        <change>Updated translations</change>
+        <change>[Backend] Code converted from Java to Kotlin</change>
+        <change>[Backend] Lots of code cleanup and small bugfixes</change>
+    </release>
+</changelog>

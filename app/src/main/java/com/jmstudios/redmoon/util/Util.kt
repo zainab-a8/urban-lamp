@@ -137,7 +137,12 @@ fun handleUpgrades() {
             upgradeFrom(version+1)
         }
     }
-    upgradeFrom(Config.fromVersionCode)
+
+    if (Config.introShown) {
+        upgradeFrom(Config.fromVersionCode)
+    } else { // First run
+        Config.fromVersionCode = BuildConfig.VERSION_CODE
+    }
 }
 
 private fun upgradeToggleModePreferences() {

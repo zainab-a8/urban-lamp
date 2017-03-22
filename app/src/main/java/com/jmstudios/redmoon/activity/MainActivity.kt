@@ -52,6 +52,7 @@ import com.jmstudios.redmoon.util.Logger
 import com.jmstudios.redmoon.util.handleUpgrades
 import com.jmstudios.redmoon.util.requestOverlayPermission
 
+import de.cketti.library.changelog.ChangeLog
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
@@ -75,6 +76,7 @@ class MainActivity : ThemedAppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         if (!Config.introShown) { startIntro() }
+        with (ChangeLog(this)) { if (isFirstRun) logDialog.show() }
 
         EventBus.getDefault().postSticky(mainUI(isOpen = true))
         // The preview will appear faster if we don't have to start the service
