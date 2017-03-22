@@ -76,7 +76,7 @@ class MainActivity : ThemedAppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         if (!Config.introShown) { startIntro() }
-        with (ChangeLog(this)) { if (isFirstRun) logDialog.show() }
+        ChangeLog(this).run { if (isFirstRun) logDialog.show() }
 
         EventBus.getDefault().postSticky(mainUI(isOpen = true))
         // The preview will appear faster if we don't have to start the service
