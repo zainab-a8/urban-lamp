@@ -590,8 +590,8 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
             if (atLeastAPI(23) && !hasWriteSettingsPermission) return
             if (brightness >= 0) {
                 val resolver = context.contentResolver
-                Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, brightness)
                 Settings.System.putInt(resolver, "screen_brightness_mode", if (automatic) 1 else 0)
+                Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, brightness)
             }
         }
     }
