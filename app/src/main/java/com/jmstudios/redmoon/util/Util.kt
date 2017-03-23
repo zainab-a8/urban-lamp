@@ -130,19 +130,15 @@ fun handleUpgrades() {
         } in 0..25 -> {
             upgradeToggleModePreferences()
             upgradeFrom(26)
-        } 26 -> {
-            upgradeFrom(27)
+        } in 26..27 -> {
+            upgradeFrom(28)
         } else -> {
             Log.e("handleUpgrades", "Didn't catch upgrades from version $version")
             upgradeFrom(version+1)
         }
     }
 
-    if (Config.introShown) {
-        upgradeFrom(Config.fromVersionCode)
-    } else { // First run
-        Config.fromVersionCode = BuildConfig.VERSION_CODE
-    }
+    upgradeFrom(if (Config.introShown) Config.fromVersionCode else BuildConfig.VERSION_CODE)
 }
 
 private fun upgradeToggleModePreferences() {
