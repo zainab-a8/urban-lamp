@@ -92,7 +92,7 @@ if it requires increasing Red Moon's complexity (ie, adding options).
 - Good code is (mostly) self-documenting. If you're commenting frequently, consider:
     - Refactoring into smaller functions with descriptive names
     - Converting comments to logs. Code confusing enough to require comments will probably require good logs to debug, and debug output that includes variable contents forces you to keep it up to date.
-- Use brackets with `if`, even for one-liners, unless that line includes `else` (`x = if (p) q else r` is okay)
+- Always use brackets with `if`, with one exception: one-liners with an `else` branch (`x = if (p) q else r`)
     - note: I (@smichel17) used to prefer omitting parenthesis from one-liners; some code still uses that style.
 
 Again, **prioritize legibility over dogmatism.**
