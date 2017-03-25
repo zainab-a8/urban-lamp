@@ -21,7 +21,7 @@
     <string name="custom_start_time_title">Zet aan om</string>
     <string name="custom_end_time_title">Zet uit om</string>
     <string name="location_title">Locatie</string>
-    <string name="location_not_set">Niet ingesteld</string>
+    <string name="location_not_set">Locatie niet ingesteld</string>
     <string name="latitude_short">Breedte</string>
     <string name="longitude_short">Lengte</string>
     <string name="snackbar_searching_location">Locatie aan het zoeken</string>
@@ -127,4 +127,6 @@ Red Moon verstuurd een publieke Intent met the actie `com.jmstudios.redmoon.RED_
 
     <string name="searching_location">Locatie aan het zoeken</string>
     <string name="toast_warning_no_location">Zet locatiediensten aan om de locatie te hernieuwen</string>
+    <string name="pref_title_use_location">Tijden gebaseerd op de zon</string>
+    <string name="snackbar_location_updated">Locatie gevonden!</string>
     </resources>
