@@ -9,6 +9,7 @@
         <change>Move dark theme preference to three dot menu</change>
         <change>Fix a bug where changes to 'Pause in secure apps' did not apply until Red Moon was killed</change>
         <change>Small performance improvements</change>
+        <change>Update the intro to fix overflow on small screens</change>
     </release>
     <release version="2.10.1" versioncode="27" >
         <change>Allow choosing how hardware buttons are dimmed</change>
