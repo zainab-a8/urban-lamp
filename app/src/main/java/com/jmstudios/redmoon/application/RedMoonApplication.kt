@@ -107,13 +107,9 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
     }
 
     @Subscribe
-    fun onSunsetTimeChanged(event: sunsetTimeChanged) {
-        TimeToggleChangeReceiver.rescheduleOnCommand()
-    }
-
-    @Subscribe
-    fun onSunriseTimeChanged(event: sunriseTimeChanged) {
+    fun onLocationChanged(event: locationChanged) {
         TimeToggleChangeReceiver.rescheduleOffCommand()
+        TimeToggleChangeReceiver.rescheduleOnCommand()
     }
 
     companion object : Logger() {

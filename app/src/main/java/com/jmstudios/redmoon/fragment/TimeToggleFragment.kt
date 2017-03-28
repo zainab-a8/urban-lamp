@@ -155,10 +155,9 @@ class TimeToggleFragment : EventPreferenceFragment() {
         }
     }
 
-    @Subscribe
-    fun onLocationChanged(event: locationChanged) {
+    @Subscribe fun onLocationChanged(event: locationChanged) {
         showSnackbar(R.string.snackbar_location_updated, Snackbar.LENGTH_SHORT)
-        updateLocationPref()
+        updatePrefs()
     }
 
     @Subscribe

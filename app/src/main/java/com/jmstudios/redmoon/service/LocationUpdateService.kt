@@ -53,12 +53,8 @@ import com.jmstudios.redmoon.util.appContext
 import com.jmstudios.redmoon.util.hasLocationPermission
 import com.jmstudios.redmoon.util.Logger
 
-import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
 import org.greenrobot.eventbus.EventBus
-
-import java.util.Calendar
 import java.util.concurrent.TimeUnit
-import java.util.TimeZone
 
 /**
  * When the service starts, we request location updates. When we get a new
@@ -191,7 +187,9 @@ class LocationUpdateService: Service(), LocationListener {
         Log.i("onDestroy")
         if (hasLocationPermission) {
             locationManager.removeUpdates(this)
-            updateLocation(lastKnownLocation)
+            lastKnownLocation?.apply {
+                Config.location = Triple(latitude.toString(), longitude.toString(), time)
+            }
         }
         super.onDestroy()
         EventBus.getDefault().post(locationService(false, isRunning = false))
@@ -203,16 +201,6 @@ class LocationUpdateService: Service(), LocationListener {
             Log.i("posting: $searching")
             mIsSearching = searching
             EventBus.getDefault().post(locationService(searching))
-        }
-    }
-
-    private fun updateLocation(location: Location?) {
-        location?.apply {
-            val sunLocation = com.luckycatlabs.sunrisesunset.dto.Location(latitude, longitude)
-            val calculator  = SunriseSunsetCalculator(sunLocation, TimeZone.getDefault())
-            Config.sunsetTime  = calculator.getOfficialSunsetForDate(Calendar.getInstance())
-            Config.sunriseTime = calculator.getOfficialSunriseForDate(Calendar.getInstance())
-            Config.location = Triple(latitude.toString(), longitude.toString(), time)
         }
     }
 
