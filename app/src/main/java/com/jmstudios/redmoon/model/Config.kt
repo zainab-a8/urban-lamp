@@ -43,7 +43,11 @@ import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.preference.ColorSeekBarPreference
 import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
-import com.jmstudios.redmoon.util.appContext
+import com.jmstudios.redmoon.util.*
+
+import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
+import java.util.Calendar
+import java.util.TimeZone
 
 /**
  * This singleton provides allows easy access to the shared preferences
@@ -52,35 +56,35 @@ object Config {
     private val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(appContext)
 
     private fun getBooleanPref(resId: Int, default: Boolean): Boolean {
-        return sharedPrefs.getBoolean(appContext.getString(resId), default)
+        return sharedPrefs.getBoolean(getString(resId), default)
     }
 
     private fun putBooleanPref(resId: Int, v: Boolean) {
-        sharedPrefs.edit().putBoolean(appContext.getString(resId), v).apply()
+        sharedPrefs.edit().putBoolean(getString(resId), v).apply()
     }
 
     private fun getIntPref(resId: Int, default: Int): Int {
-        return sharedPrefs.getInt(appContext.getString(resId), default)
+        return sharedPrefs.getInt(getString(resId), default)
     }
 
     private fun putIntPref(resId: Int, v: Int) {
-        sharedPrefs.edit().putInt(appContext.getString(resId), v).apply()
+        sharedPrefs.edit().putInt(getString(resId), v).apply()
     }
 
     private fun getLongPref(resId: Int, default: Long): Long {
-        return sharedPrefs.getLong(appContext.getString(resId), default)
+        return sharedPrefs.getLong(getString(resId), default)
     }
 
     private fun putLongPref(resId: Int, v: Long) {
-        sharedPrefs.edit().putLong(appContext.getString(resId), v).apply()
+        sharedPrefs.edit().putLong(getString(resId), v).apply()
     }
 
     private fun getStringPref(resId: Int, default: String): String {
-        return sharedPrefs.getString(appContext.getString(resId), default)
+        return sharedPrefs.getString(getString(resId), default)
     }
 
     private fun putStringPref(resId: Int, v: String) {
-        sharedPrefs.edit().putString(appContext.getString(resId), v).apply()
+        sharedPrefs.edit().putString(getString(resId), v).apply()
     }
 
     //region preferences
@@ -134,14 +138,6 @@ object Config {
     var useLocation: Boolean
         get() = getBooleanPref(R.string.pref_key_use_location, false)
         set(t) = putBooleanPref(R.string.pref_key_use_location, t)
-
-    var sunsetTime: String
-        get()  = getStringPref(R.string.pref_key_sunset_time, "19:30")
-        set(t) = putStringPref(R.string.pref_key_sunset_time, t)
-
-    var sunriseTime: String
-        get()  = getStringPref(R.string.pref_key_sunrise_time, "06:30")
-        set(t) = putStringPref(R.string.pref_key_sunrise_time, t)
     //endregion
 
     //region state
@@ -175,6 +171,32 @@ object Config {
         set(l) {
             putLongPref(R.string.pref_key_location_timestamp, l.third ?: NOT_SET)
             putStringPref(R.string.pref_key_location, l.first + "," + l.second)
+        }
+
+    const val DEFAULT_SUNSET = "19:30"
+    val sunsetTime: String
+        get() {
+            val (latitude, longitude, time) = location
+            return if (time == null) {
+                DEFAULT_SUNSET
+            } else {
+                val sunLocation = com.luckycatlabs.sunrisesunset.dto.Location(latitude, longitude)
+                val calculator  = SunriseSunsetCalculator(sunLocation, TimeZone.getDefault())
+                calculator.getOfficialSunsetForDate(Calendar.getInstance())
+            }
+        }
+
+    const val DEFAULT_SUNRISE = "06:30"
+    val sunriseTime: String
+        get() {
+            val (latitude, longitude, time) = location
+            return if (time == null) {
+                DEFAULT_SUNRISE
+            } else {
+                val sunLocation = com.luckycatlabs.sunrisesunset.dto.Location(latitude, longitude)
+                val calculator  = SunriseSunsetCalculator(sunLocation, TimeZone.getDefault())
+                calculator.getOfficialSunriseForDate(Calendar.getInstance())
+            }
         }
 
     var introShown: Boolean
