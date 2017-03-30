@@ -23,7 +23,7 @@
     <string name="custom_start_time_title">Reprendre à</string>
     <string name="custom_end_time_title">Suspendre à</string>
     <string name="location_title">Localisation</string>
-    <string name="location_not_set">Non définie</string>
+    <string name="location_not_set">Localisation non définie</string>
     <string name="latitude_short">Lat</string>
     <string name="longitude_short">Long</string>
     <string name="snackbar_searching_location">Recherche de localisation</string>
@@ -61,7 +61,7 @@
     <string name="pause_action">Mettre en pause</string>
 
     <string name="intro_label">Intro</string>
-    <string name="show_intro_text">Afficher l\'intro</string>
+    <string name="show_intro_text">Rejouer l\'intro</string>
 
     <string name="intro_slide_1_title">Bienvenue !</string>
     <string name="intro_slide_1_text">Bienvenue dans Red Moon !</string>
@@ -97,7 +97,9 @@ Red Moon nécessite cette autorisation pour voir dans quelle application vous vo
     <string name="add_new_profile_dialog_title">Entrez un nom de profil</string>
     <string name="add_new_profile_edit_hint">Nom de profil</string>
     <string name="remove_profile_dialog_title">Supprimer ce profil ?</string>
-    <string name="pref_title_appearance">Filtre</string>
+    <string name="pref_title_appearance">Profil</string>
     <string name="searching_location">Recherche de localisation</string>
     <string name="toast_warning_no_location">Activer les services de localisation pour actualiser la position</string>
+    <string name="menu_about">A propos</string>
+    <string name="activity_about">A propos de Red Moon</string>
     </resources>
