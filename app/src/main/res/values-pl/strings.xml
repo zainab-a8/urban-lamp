@@ -34,7 +34,7 @@
     <string name="email_me_title">Wyślij e-mail do programisty (marienraat@riseup.net)</string>
     <string name="email_me_summary">Gdy znajdziesz błąd lub z sugestią</string>
     <string name="project_page_title">Odwiedź stronę projektu</string>
-    <string name="project_page_summary">Znajdź więcej informacji, zostaw opinię i wesprzyj przy tworzeniu</string>
+    <string name="project_page_summary">Znajdź więcej informacji, zostaw opinię i wspomóż rozwój</string>
     <string name="toast_warning_install">Nie będziesz mógł instalować plików APK podczas działania programu Red Moon.</string>
     <string name="snackbar_warning_no_location">Włącz usługi lokalizacyjne by znaleźć lokalizację</string>
 
@@ -44,7 +44,7 @@
     <string name="add_new_filter_edit_hint">Nazwa profilu</string>
     <string name="remove_filter_dialog_title">Usunąć profil?</string>
     <string name="set_dialog">Ustaw</string>
-    <string name="ok_dialog">Dobrze</string>
+    <string name="ok_dialog">Potwierdź</string>
     <string name="cancel_dialog">Anuluj</string>
 
     <string name="toggle_shortcut_title">Włącznik Red Moon</string>
@@ -76,7 +76,7 @@ Red Moon potrzebuje dostępu do użytkowania, żeby zobaczyć czy używasz aplik
 
 Kiedy to ustawienie jest aktywne, Red Moon zostanie automatycznie wstrzymywany w przypadku, gdy któraś z tych funkcji zostanie wywołana.
 
-Ta funkcja może w niewielkim stopniu zmniejszyć żywotność baterii twojego telefonu. Dodatkowo może nie działać na wszystkich urządzeniach.
+Ta funkcja może w niewielkim stopniu zmniejszyć żywotność baterii Twojego telefonu. Dodatkowo może nie działać na wszystkich urządzeniach.
 
 *Red Moon działa rysując przezroczystą czerwoną warstwę nad całym ekranem; te aplikacje nie będą działać kiedy jakaś inna aplikacja po nich rysuje. W ten sposób, inne aplikacje nie mogą podstępem skłonić Cię do wybrania opcji, której nie chcesz lub podglądać co wystukujesz na ekranie.</string>
     <string name="intro_slide_1_title">Witaj!</string>
@@ -113,7 +113,7 @@ zapewniając Ci łatwiejsze zaśnięcie.</string>
     <string name="menu_about">O programie</string>
     <string name="activity_about">O Red Moon</string>
     <string name="pref_title_integration">Integracja z innymi aplikacjami</string>
-    <string name="pref_summary_integration">Niektóre aplikacje, takie jak LibreTasks lub Tasker pozwalają na wywoływanie zadań pod wpływem określonych zdarzeń. Red Moon wysyła publiczne powiadomienie podczas włączania i wyłączania, więc te aplikacje mogą odpowiedzieć. Jeżeli nie używasz lub programujesz tych aplikacji, możesz pominąć następny akapit.
+    <string name="pref_summary_integration">Niektóre aplikacje, takie jak LibreTasks lub Tasker pozwalają na wywoływanie zadań pod wpływem określonych zdarzeń. Red Moon wysyła publiczne powiadomienie podczas włączania i wyłączania, więc te aplikacje mogą odpowiedzieć. Jeżeli nie używasz lub nie programujesz tych aplikacji, możesz pominąć następny akapit.
 
 Red Moon rozsyła publiczny zamiar (intent) \'com.jmstudios.redmoon.RED_MOON_TOGGLED\'. Ten zamiar zawiera dodatkową wartość logiczną z kluczem \'jmstudios.bundle.key.FILTER_IS_ON\', która wskazuje czy Red Moon jest włączany, czy wyłączany.</string>
     <string name="pref_title_version">Wersja</string>
