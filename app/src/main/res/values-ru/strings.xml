@@ -69,7 +69,7 @@
     <string name="time_toggle_options_array_1">Автоматически (по солнцу)</string>
     <string name="time_toggle_options_array_2">Автоматически (по времени)</string>
 
-<string name="intro_label">Интро</string>
+<string name="intro_label">Введение</string>
     <string name="show_intro_text">Повторить введение</string>
 
     <string name="pause_action">Пауза</string>
@@ -117,13 +117,13 @@ Red Moon будет использовать эти данные только ч
     <string name="remove_profile_dialog_title">Удалить этот профиль?</string>
     <string name="pref_title_appearance">Профиль</string>
     <string name="searching_location">Поиск местоположения</string>
-    <string name="toast_warning_no_location">Включите службу определения местоположения для обновления местоположения</string>
+    <string name="toast_warning_no_location">Включите службу автоматического определения местоположения</string>
     <string name="menu_about">О приложении</string>
     <string name="activity_about">О Red Moon</string>
     <string name="overlay_dialog_title">Поверх других приложений</string>
     <string name="overlay_dialog_message">Разрешите наложение поверх других приложений в следующем окне чтобы позволить Red Moon функционировать корректно.</string>
 
-    <string name="write_settings_dialog_title">Изменение настроек системы</string>
+    <string name="write_settings_dialog_title">Меняю настройки системы</string>
     <string name="write_settings_dialog_message">Разрешите изменение настроек системы в следующем окне чтобы позволить Red Moon изменять уровень яркости.</string>
 
     <string name="off">Выкл</string>
