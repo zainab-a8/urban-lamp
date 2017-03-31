@@ -6,7 +6,7 @@
     <string name="shortcut_activity">Переключатель Red Moon</string>
 
     <!-- Notification -->
-    <string name="running">Запущено.Для установки APK приостановите</string>
+    <string name="running">Работаю. Остановите перед установкой новых приложений</string>
     <string name="paused">Приостановлено</string>
 
     <!-- Preference -->
@@ -113,4 +113,15 @@ Red Moon необходим доступ к статистике использ�
     <string name="menu_about">О приложении</string>
     <string name="activity_about">О Red Moon</string>
     <string name="overlay_dialog_title">Поверх других приложений</string>
+    <string name="overlay_dialog_message">Разрешите наложение поверх других приложений в следующем окне чтобы позволить Red Moon функционировать корректно.</string>
+
+    <string name="write_settings_dialog_title">Изменение настроек системы</string>
+    <string name="write_settings_dialog_message">Разрешите изменение настроек системы в следующем окне чтобы позволить Red Moon изменять уровень яркости.</string>
+
+    <string name="off">Выкл</string>
+    <string name="action_on">Включить</string>
+    <string name="action_off">Выключить</string>
+    <string name="action_next_filter">Следующий фильтр</string>
+
+    <string name="pref_title_button_backlight_disclaimer">Не работает на некоторых устройствах</string>
     </resources>
