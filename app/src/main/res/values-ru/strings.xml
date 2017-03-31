@@ -70,12 +70,12 @@
     <string name="time_toggle_options_array_2">Автоматически (по времени)</string>
 
 <string name="intro_label">Интро</string>
-    <string name="show_intro_text">Показать интро</string>
+    <string name="show_intro_text">Повторить введение</string>
 
     <string name="pause_action">Пауза</string>
 
     <string name="resume_action">Продолжить</string>
-    <string name="secure_suspend_activity">Автоматическая приостановка</string>
+    <string name="secure_suspend_activity">Приостанавливать в привилегированных приложениях</string>
 
     <string name="running_no_warning">Запущено</string>
     <string name="secure_suspend_title">Автоматически приостанавливать фильтр в безопасных приложениях</string>
@@ -110,4 +110,6 @@ Red Moon необходим доступ к статистике использ�
     <string name="pref_title_appearance">Фильтр</string>
     <string name="searching_location">Поиск местоположения</string>
     <string name="toast_warning_no_location">Включите службу определения местоположения для обновления местоположения</string>
+    <string name="menu_about">О приложении</string>
+    <string name="activity_about">О Red Moon</string>
     </resources>
