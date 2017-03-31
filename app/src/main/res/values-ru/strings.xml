@@ -105,7 +105,7 @@ Red Moon необходим доступ к статистике использ�
     <string name="intro_slide_4_title">Начать!</string>
     <string name="intro_slide_4_text">Чтобы включить Red Moon, нажмите на переключатель в правом верхнем углу.</string>
 
-    <string name="usage_stats_dialog_title">Разрешить доступ к статистике использования</string>
+    <string name="usage_stats_dialog_title">Разрешить доступ к запущенным приложениям</string>
     <!-- Currently unused -->
     <string name="add_new_profile_dialog_title">Введите названия профиля</string>
     <string name="add_new_profile_edit_hint">Названия профиля</string>
