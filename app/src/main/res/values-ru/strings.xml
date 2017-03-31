@@ -27,7 +27,7 @@
     <string name="custom_start_time_title">Включить в</string>
     <string name="custom_end_time_title">Приостановить в</string>
     <string name="location_title">Местоположение</string>
-    <string name="location_not_set">Не задано</string>
+    <string name="location_not_set">Местоположение не указано</string>
     <string name="latitude_short">Широта</string>
     <string name="longitude_short">Долгота</string>
     <string name="snackbar_searching_location">Поиск местоположения</string>
@@ -126,4 +126,6 @@ Red Moon необходим доступ к статистике использ�
     <string name="pref_title_button_backlight_disclaimer">Не работает на некоторых устройствах</string>
     <string name="pref_title_button_backlight">Аппаратное управление подсветкой</string>
 
+    <string name="pref_title_use_location">Время по световому дню</string>
+    <string name="pref_summaryoff_use_location">Автоматически</string>
     </resources>
