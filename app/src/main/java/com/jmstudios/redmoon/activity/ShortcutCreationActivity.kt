@@ -40,7 +40,7 @@ class ShortcutCreationActivity : Activity() {
         val intent = Intent()
         intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent)
         intent.putExtra(Intent.EXTRA_SHORTCUT_NAME,
-                resources.getString(R.string.toggle_shortcut_title))
+                resources.getString(R.string.shortcut_title_toggle))
         intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource)
         setResult(Activity.RESULT_OK, intent)
 

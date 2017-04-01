@@ -19,24 +19,23 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference
         android:key="@string/pref_key_time_toggle"
-        android:title="@string/time_toggle_title"
         android:layout="@layout/switch_bar"
         android:defaultValue="false" />
 
     <com.jmstudios.redmoon.preference.TimePickerPreference
         android:key="@string/pref_key_custom_turn_on_time"
-        android:title="@string/custom_start_time_title"
+        android:title="@string/pref_title_start_time"
         android:defaultValue="22:00" />
 
     <com.jmstudios.redmoon.preference.TimePickerPreference
         android:key="@string/pref_key_custom_turn_off_time"
-        android:title="@string/custom_end_time_title"
+        android:title="@string/pref_title_end_time"
         android:defaultValue="06:00" />
 
     <SwitchPreference
         android:key="@string/pref_key_use_location"
-        android:title="@string/pref_title_use_location"
-        android:summaryOff="@string/pref_summaryoff_use_location"
+        android:title="@string/pref_title_location"
+        android:summaryOff="@string/pref_summary_location_off"
         android:dependency="@string/pref_key_time_toggle"
         android:defaultValue="false" />
 </PreferenceScreen>

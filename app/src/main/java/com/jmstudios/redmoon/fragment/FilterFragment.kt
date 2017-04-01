@@ -128,9 +128,9 @@ class FilterFragment : EventPreferenceFragment() {
 
     private fun updateBacklightPrefSummary() {
         buttonBacklightPref.setSummary(when(Config.buttonBacklightFlag) {
-            "system" -> R.string.pref_button_backlight_entries_array_0
-            "dim"    -> R.string.pref_button_backlight_entries_array_1
-            else     -> R.string.pref_button_backlight_entries_array_2
+            "system" -> R.string.pref_entry_button_backlight_system
+            "dim"    -> R.string.pref_entry_button_backlight_filter_dim_level
+            else     -> R.string.pref_entry_button_backlight_turn_off
         })
     }
 

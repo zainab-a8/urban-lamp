@@ -96,9 +96,9 @@ fun requestWriteSettingsPermission(context: Context): Boolean {
         val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
                             Uri.parse("package:" + context.packageName))
         val builder = AlertDialog.Builder(context)
-        builder.setMessage(R.string.write_settings_dialog_message)
-               .setTitle(R.string.write_settings_dialog_title)
-               .setPositiveButton(R.string.ok_dialog) { _, _ ->
+        builder.setMessage(R.string.dialog_message_permission_write_settings)
+               .setTitle(R.string.dialog_title_permission_write_settings)
+               .setPositiveButton(R.string.dialog_button_ok) { _, _ ->
                    context.startActivity(intent)
                }.show()
     }
@@ -110,9 +110,9 @@ fun requestOverlayPermission(context: Context): Boolean {
         val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                             Uri.parse("package:" + context.packageName))
         val builder = AlertDialog.Builder(context)
-        builder.setMessage(R.string.overlay_dialog_message)
-               .setTitle(R.string.overlay_dialog_title)
-               .setPositiveButton(R.string.ok_dialog) { _, _ ->
+        builder.setMessage(R.string.dialog_message_permission_overlay)
+               .setTitle(R.string.dialog_title_permission_overlay)
+               .setPositiveButton(R.string.dialog_button_ok) { _, _ ->
                    context.startActivity(intent)
                }.show()
     }

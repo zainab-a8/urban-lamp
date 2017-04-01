@@ -100,11 +100,11 @@ class ProfileSelectorPreference(ctx: Context, attrs: AttributeSet) : Preference(
 
     private fun updateButtonSetup() = if (Config.profile == 0) {
         Log.i("Setting add button")
-        mProfileActionButton.text = getString(R.string.button_add_profile)
+        mProfileActionButton.text = getString(R.string.button_add_filter)
         mProfileActionButton.setOnClickListener { openAddNewProfileDialog() }
     } else {
         Log.i("Setting remove button")
-        mProfileActionButton.text = getString(R.string.button_remove_profile)
+        mProfileActionButton.text = getString(R.string.button_remove_filter)
         mProfileActionButton.setOnClickListener { openRemoveProfileDialog() }
     }
 
@@ -120,8 +120,8 @@ class ProfileSelectorPreference(ctx: Context, attrs: AttributeSet) : Preference(
         val builder = AlertDialog.Builder(context).apply {
             setTitle(getString(R.string.remove_profile_dialog_title))
 
-            val okString = getString(R.string.button_remove_profile)
-            val cancelString = getString(R.string.cancel_dialog)
+            val okString = getString(R.string.button_remove_filter)
+            val cancelString = getString(R.string.dialog_button_cancel)
 
             setNegativeButton(cancelString) { dialog, _ -> dialog.cancel() }
             setPositiveButton(okString) { _, _ ->
@@ -146,8 +146,8 @@ class ProfileSelectorPreference(ctx: Context, attrs: AttributeSet) : Preference(
             }
             setView(nameInput)
 
-            val okString = getString(R.string.ok_dialog)
-            val cancelString = getString(R.string.cancel_dialog)
+            val okString = getString(R.string.dialog_button_ok)
+            val cancelString = getString(R.string.dialog_button_cancel)
 
             setNegativeButton(cancelString) { dialog, _ -> dialog.cancel() }
             setPositiveButton(okString) { dialog, _ ->

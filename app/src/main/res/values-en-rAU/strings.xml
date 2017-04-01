@@ -1,78 +1,76 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <string name="app_name">Red Moon</string>
-    <string name="settings">Red Moon</string>
-    <string name="shortcut_activity">Red Moon Toggle</string>
-    <string name="intro_label">Intro</string>
-    <string name="show_intro_text">Show intro</string>
+    <string name="activity_main">Red Moon</string>
+    <string name="activity_shortcut">Red Moon Toggle</string>
+    <string name="activity_intro">Intro</string>
+    <string name="menu_show_intro">Show intro</string>
 
-    <string name="running">Running. Pause to install apks</string>
-    <string name="paused">Paused</string>
-    <string name="resume_action">Resume</string>
-    <string name="pause_action">Pause</string>
+    <string name="notification_status_paused">Paused</string>
+    <string name="notification_action_resume">Resume</string>
+    <string name="notification_action_pause">Pause</string>
 
-    <string name="pref_title_filter">Filter</string>
-    <string name="time_toggle_activity">Filter times</string>
+    <string name="pref_category_filter">Filter</string>
+    <string name="activity_timer">Filter times</string>
     <string name="pref_title_time_toggle">Filter times</string>
     <string name="pref_title_startup">Startup</string>
-    <string name="pref_title_other">Other</string>
+    <string name="pref_category_other">Other</string>
 
-    <string name="button_add_profile">Add</string>
-    <string name="button_remove_profile">Delete</string>
-    <string name="shades_dim_level">Dim level</string>
-    <string name="shades_intensity_level">Intensity level</string>
-    <string name="shades_color_temp">Colour temperature</string>
-    <string name="control_brightness_title">Lower brightness</string>
+    <string name="button_add_filter">Add</string>
+    <string name="button_remove_filter">Delete</string>
+    <string name="pref_title_dim_level">Dim level</string>
+    <string name="pref_title_intensity">Intensity level</string>
+    <string name="pref_title_color_temp">Colour temperature</string>
+    <string name="pref_title_lower_brightness">Lower brightness</string>
 
     <string name="time_toggle_title">Toggle mode</string>
-    <string name="custom_start_time_title">Resume at</string>
-    <string name="custom_end_time_title">Pause at</string>
-    <string name="location_title">Location</string>
+    <string name="pref_title_start_time">Resume at</string>
+    <string name="pref_title_end_time">Pause at</string>
+    <string name="pref_title_location">Location</string>
     <string name="location_not_set">Not set</string>
     <string name="latitude_short">Lat</string>
     <string name="longitude_short">Long</string>
     <string name="snackbar_searching_location">Searching for location</string>
 
-    <string name="dark_theme">Dark theme</string>
+    <string name="menu_dark_theme">Dark theme</string>
 
-    <string name="email_me_title">Email me at marienraat@riseup.net</string>
-    <string name="email_me_summary">Email me with bugs or suggestions</string>
-    <string name="project_page_title">Visit the project page</string>
-    <string name="project_page_summary">Find more info, leave feedback and contribute</string>
+    <string name="pref_title_email_developer">Email me at marienraat@riseup.net</string>
+    <string name="pref_summary_email_developer">Email me with bugs or suggestions</string>
+    <string name="pref_title_project_page">Visit the project page</string>
+    <string name="pref_summary_project_page">Find more info, leave feedback and contribute</string>
     <string name="toast_warning_install">You won\'t be able to install APKs while the filter is running.</string>
     <string name="snackbar_warning_no_location">Enable location services to update location</string>
 
     <string name="help_snackbar_text">Press the switch to enable Red Moon</string>
 
-    <string name="add_new_filter_dialog_title">Enter profile name</string>
-    <string name="add_new_filter_edit_hint">Profile name</string>
-    <string name="remove_filter_dialog_title">Delete this profile?</string>
-    <string name="set_dialog">Set</string>
-    <string name="ok_dialog">OK</string>
-    <string name="cancel_dialog">Cancel</string>
+    <string name="dialog_title_add_filter">Enter profile name</string>
+    <string name="edit_hint_add_filter">Profile name</string>
+    <string name="dialog_title_remove_filter">Delete this profile?</string>
+    <string name="dialog_button_ok">OK</string>
+    <string name="dialog_button_cancel">Cancel</string>
 
-    <string name="toggle_shortcut_title">Toggle Filter</string>
+    <string name="shortcut_title_toggle">Toggle Filter</string>
 
-    <string name="intro_slide_1_title">Welcome!</string>
-    <string name="intro_slide_1_text">Welcome to Red Moon!</string>
+    <string name="slide_title_welcome">Welcome!</string>
+    <string name="slide_text_welcome">Welcome to Red Moon!</string>
 
-    <string name="intro_slide_2_title">Protecting your eyes</string>
-    <string name="intro_slide_2_text">At night, when looking at your
- phone hurts your eyes, you can use Red Moon to dim your screen.</string>
+    <string name="slide_title_protect_eyes">Protecting your eyes</string>
+    <string name="slide_text_protect_eyes">At night, when looking at your
+        phone hurts your eyes, you can use Red Moon to dim your screen.</string>
 
-    <string name="intro_slide_3_title">Improving your sleep</string>
-    <string name="intro_slide_3_text">Blue light suppresses the
- production of Melatonin, a hormone that helps you fall asleep at
- night. Red Moon removes the blue light from your screen, ensuring
- you can fall asleep easily.</string>
+    <string name="slide_title_improve_sleep">Improving your sleep</string>
+    <string name="slide_text_improve_sleep">Blue light suppresses the
+        production of Melatonin, a hormone that helps you fall asleep at
+        night. Red Moon removes the blue light from your screen, ensuring
+        you can fall asleep easily.</string>
 
-    <string name="intro_slide_4_title">Get started!</string>
-    <string name="intro_slide_4_text">To enable Red Moon, press the
- switch in the top right corner.</string>
+    <string name="slide_title_get_started">Get started!</string>
+    <string name="slide_text_get_started">To enable Red Moon, press the
+        switch in the top right corner.</string>
 
-    <string name="standard_profiles_array_0">Custom</string>
-    <string name="standard_profiles_array_1">Default</string>
-    <string name="standard_profiles_array_2">Reading</string>
+    <string name="filter_name_custom">Custom</string>
+    <string name="filter_name_default">Default</string>
+    <string name="filter_name_bed_reading">Reading</string>
 
     <string name="time_toggle_options_array_0">Manual</string>
     <string name="time_toggle_options_array_1">Automatic (sun)</string>
@@ -85,4 +83,6 @@
     <string name="pref_title_appearance">Filter</string>
     <string name="searching_location">Searching for location</string>
     <string name="toast_warning_no_location">Enable location services to update location</string>
-    </resources>
+    <string name="set_dialog">Set</string>
+    <string name="notification_status_running">Running. Pause to install apks</string>
+</resources>

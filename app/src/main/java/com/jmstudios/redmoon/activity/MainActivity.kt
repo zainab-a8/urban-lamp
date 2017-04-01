@@ -85,7 +85,7 @@ class MainActivity : ThemedAppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_activity_menu, menu)
+        menuInflater.inflate(R.menu.menu_activity_main, menu)
 
         menu.findItem(R.id.menu_dark_theme).isChecked = Config.darkThemeFlag
 
@@ -128,10 +128,10 @@ class MainActivity : ThemedAppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         when (item.itemId) {
-            R.id.show_intro_button -> {
+            R.id.menu_show_intro -> {
                 startIntro()
             }
-            R.id.about_button -> {
+            R.id.menu_about -> {
                 val aboutIntent = Intent(this, AboutActivity::class.java)
                 startActivity(aboutIntent)
             }
@@ -139,7 +139,7 @@ class MainActivity : ThemedAppCompatActivity() {
                 Config.darkThemeFlag = !Config.darkThemeFlag
                 recreate()
             }
-            R.id.menu_restore_filters -> {
+            R.id.menu_restore_default_filters -> {
                 Config.amountProfiles = ProfilesModel.reset()
                 Config.profile = 1
             }

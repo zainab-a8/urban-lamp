@@ -18,43 +18,41 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="paused">Angehalten</string>
-    <string name="running">Red Moon läuft. Red Moon anhalten, um APKs installieren zu können</string>
-    <string name="shades_color_temp">Farbtemperatur</string>
-    <string name="pref_title_filter">Filter</string>
-    <string name="shades_dim_level">Grad der Abblendung</string>
-    <string name="shades_intensity_level">Grad der Intensität</string>
+    <string name="notification_status_paused">Angehalten</string>
+    <string name="pref_title_color_temp">Farbtemperatur</string>
+    <string name="pref_category_filter">Filter</string>
+    <string name="pref_title_dim_level">Grad der Abblendung</string>
+    <string name="pref_title_intensity">Grad der Intensität</string>
     <string name="pref_title_startup">App Start</string>
     <string name="toast_warning_install">Sie können keine APKs installieren, während der Filter läuft.</string>
-    <string name="add_new_filter_dialog_title">Name für das Profil eingeben</string>
-    <string name="add_new_filter_edit_hint">Profilname</string>
+    <string name="dialog_title_add_filter">Name für das Profil eingeben</string>
+    <string name="edit_hint_add_filter">Profilname</string>
     <string name="time_toggle_title">Filter automatisch einschalten</string>
-    <string name="button_add_profile">Hinzufügen</string>
-    <string name="button_remove_profile">Löschen</string>
-    <string name="cancel_dialog">Abbrechen</string>
-    <string name="control_brightness_title">Helligkeit reduzieren</string>
-    <string name="custom_end_time_title">Ausschaltzeit</string>
-    <string name="custom_start_time_title">Einschaltzeit</string>
-    <string name="dark_theme">Dunkles Thema</string>
-    <string name="email_me_summary">Teilen Sie mir Vorschläge oder Fehlerberichte bitte per E-Mail mit</string>
-    <string name="email_me_title">Dem Entwickler eine E-Mail senden (marienraat@riseup.net)</string>
-    <string name="ok_dialog">OK</string>
-    <string name="time_toggle_activity">Automatischer Filter</string>
+    <string name="button_add_filter">Hinzufügen</string>
+    <string name="button_remove_filter">Löschen</string>
+    <string name="dialog_button_cancel">Abbrechen</string>
+    <string name="pref_title_lower_brightness">Helligkeit reduzieren</string>
+    <string name="pref_title_end_time">Ausschaltzeit</string>
+    <string name="pref_title_start_time">Einschaltzeit</string>
+    <string name="menu_dark_theme">Dunkles Thema</string>
+    <string name="pref_summary_email_developer">Teilen Sie mir Vorschläge oder Fehlerberichte bitte per E-Mail mit</string>
+    <string name="pref_title_email_developer">Dem Entwickler eine E-Mail senden (marienraat@riseup.net)</string>
+    <string name="dialog_button_ok">OK</string>
+    <string name="activity_timer">Automatischer Filter</string>
     <string name="pref_title_time_toggle">Automatischer Filter</string>
-    <string name="project_page_summary">Mehr Informationen, Feedback und eigener Beitrag</string>
-    <string name="project_page_title">Homepage des Projektes</string>
-    <string name="remove_filter_dialog_title">Dieses Profil löschen?</string>
-    <string name="set_dialog">Festlegen</string>
+    <string name="pref_summary_project_page">Mehr Informationen, Feedback und eigener Beitrag</string>
+    <string name="pref_title_project_page">Homepage des Projektes</string>
+    <string name="dialog_title_remove_filter">Dieses Profil löschen?</string>
     <string name="snackbar_warning_no_location">Standortdienst ist nicht eingeschaltet. Es werden benutzerdefinierte Zeiten verwendet. Bitte den Standortdienst einschalten um Sonnenauf- und untergangszeiten verwenden zu können</string>
-    <string name="toggle_shortcut_title">Red Moon
-ein-/ausschalten</string>
-    <string name="shortcut_activity">Umschalter für Red Moon</string>
+    <string name="shortcut_title_toggle">Red Moon
+        ein-/ausschalten</string>
+    <string name="activity_shortcut">Umschalter für Red Moon</string>
 
     <!-- Profiles -->
     <!-- standard_profiles_array -->
-    <string name="standard_profiles_array_0">Benutzerdefiniert</string>
-    <string name="standard_profiles_array_1">Standard</string>
-    <string name="standard_profiles_array_2">Lesen</string>
+    <string name="filter_name_custom">Benutzerdefiniert</string>
+    <string name="filter_name_default">Standard</string>
+    <string name="filter_name_bed_reading">Lesen</string>
 
     <!-- Automatic filter -->
     <!-- time_toggle_options_array -->
@@ -62,65 +60,68 @@ ein-/ausschalten</string>
     <string name="time_toggle_options_array_1">Sonnenstand</string>
     <string name="time_toggle_options_array_2">Benutzerdefinierte Zeiten</string>
     <string name="location_not_set">Standort nicht festgelegt</string>
-    <string name="location_title">Standort</string>
+    <string name="pref_title_location">Standort</string>
     <string name="latitude_short">geograph. Breite</string>
     <string name="longitude_short">geograph. Länge</string>
-    <string name="pref_title_other">Andere</string>
+    <string name="pref_category_other">Andere</string>
     <string name="app_name">Red Moon</string>
-    <string name="settings">Red Moon</string>
+    <string name="activity_main">Red Moon</string>
     <string name="help_snackbar_text">Den Schalter antippen, um Red Moon zu aktivieren</string>
     <string name="snackbar_searching_location">Standortsuche</string>
-    <string name="intro_label">Einführung</string>
-    <string name="show_intro_text">Einführung erneut anzeigen</string>
+    <string name="activity_intro">Einführung</string>
+    <string name="menu_show_intro">Einführung erneut anzeigen</string>
 
-    <string name="resume_action">Fortsetzen</string>
-    <string name="pause_action">Anhalten</string>
+    <string name="notification_action_resume">Fortsetzen</string>
+    <string name="notification_action_pause">Anhalten</string>
 
-    <string name="intro_slide_1_title">Willkommen!</string>
-    <string name="intro_slide_1_text">Willkommen bei Red Moon!</string>
+    <string name="slide_title_welcome">Willkommen!</string>
+    <string name="slide_text_welcome">Willkommen bei Red Moon!</string>
 
-    <string name="intro_slide_2_title">Schützt deine Augen</string>
-    <string name="intro_slide_2_text">Wenn du nachts auf dein Handy schaust und deine Augen weh tun, kannst du Red Moon verwenden, um das Display abzudunkeln.</string>
+    <string name="slide_title_protect_eyes">Schützt deine Augen</string>
+    <string name="slide_text_protect_eyes">Wenn du nachts auf dein Handy schaust und deine Augen weh tun, kannst du Red Moon verwenden, um das Display abzudunkeln.</string>
 
-    <string name="intro_slide_3_title">Verbessert deinen Schlaf</string>
-    <string name="intro_slide_3_text">Blaues Licht unterdrückt die Produktion von Melatonin, einem Hormon, welches dir dabei hilft, nachts einzuschlafen. Red Moon entfernt das blaue Licht von deinem Bildschirm und stellt so sicher, dass du gut einschlafen kannst.</string>
+    <string name="slide_title_improve_sleep">Verbessert deinen Schlaf</string>
+    <string name="slide_text_improve_sleep">Blaues Licht unterdrückt die Produktion von Melatonin, einem Hormon, welches dir dabei hilft, nachts einzuschlafen. Red Moon entfernt das blaue Licht von deinem Bildschirm und stellt so sicher, dass du gut einschlafen kannst.</string>
 
-    <string name="intro_slide_4_title">Beginnen!</string>
-    <string name="intro_slide_4_text">Um Red Moon einzuschalten, drücke den Schalter oben rechts.</string>
+    <string name="slide_title_get_started">Beginnen!</string>
+    <string name="slide_text_get_started">Um Red Moon einzuschalten, drücke den Schalter oben rechts.</string>
 
     <string name="text_switch_on">An</string>
     <string name="text_switch_off">Aus</string>
-    <string name="secure_suspend_activity">Automatisch in sicheren Apps pausieren</string>
+    <string name="activity_secure_suspend">Automatisch in sicheren Apps pausieren</string>
 
-    <string name="running_no_warning">Wird ausgeführt</string>
-    <string name="secure_suspend_title">Filter für bestimmten Apps automatisch pausieren</string>
-    <string name="usage_stats_dialog_title">Zugriff auf Nutzungsstatistik erlauben</string>
-    <string name="secure_suspend_summary">Einige Android-Funktionen sind gegen Bildschirm-Überlagerungen geschützt. Zum Beispiel \"Installation von Apps\", oder \"Erteilen von Berechtigungen\" auf Android 6.0+. Diese funktionieren nicht, wenn Red Moon gestartet ist. Aktiviere diese Einstellung, damit Red Moon diese Funktionen erkennt, den Filter automatisch pausiert und wieder anstartet, sobald die Funktion beendet wurde. Auf diese Weise muss du nicht manuell eingreifen. Diese Einstellung kann die Akkulaufzeit des Geräts verkürzen. Außerdem funktioniert es möglicherweise nicht auf allen Geräten.</string>
-    <string name="usage_stats_dialog_message">Red Moon erlauben auf Nutzungsstatistiken zuzugreifen, indem du diese Funktion aktivierst.
+    <string name="pref_title_secure_suspend">Filter für bestimmten Apps automatisch pausieren</string>
+    <string name="dialog_title_permission_usage_stats">Zugriff auf Nutzungsstatistik erlauben</string>
+    <string name="pref_summary_secure_suspend">Einige Android-Funktionen sind gegen Bildschirm-Überlagerungen geschützt. Zum Beispiel \"Installation von Apps\", oder \"Erteilen von Berechtigungen\" auf Android 6.0+. Diese funktionieren nicht, wenn Red Moon gestartet ist. Aktiviere diese Einstellung, damit Red Moon diese Funktionen erkennt, den Filter automatisch pausiert und wieder anstartet, sobald die Funktion beendet wurde. Auf diese Weise muss du nicht manuell eingreifen. Diese Einstellung kann die Akkulaufzeit des Geräts verkürzen. Außerdem funktioniert es möglicherweise nicht auf allen Geräten.</string>
+    <string name="dialog_message_permission_usage_stats">Red Moon erlauben auf Nutzungsstatistiken zuzugreifen, indem du diese Funktion aktivierst.
 
-Red Moon benötigt den Zugriff auf die Daten, um festzustellen, welche App du gerade benutzt, um so ggf. automatisch den Filter pausieren zu können.</string>
+        Red Moon benötigt den Zugriff auf die Daten, um festzustellen, welche App du gerade benutzt, um so ggf. automatisch den Filter pausieren zu können.</string>
 
-<!-- Currently unused -->
     <string name="add_new_profile_dialog_title">Name für das Profil eingeben</string>
     <string name="add_new_profile_edit_hint">Profilname</string>
     <string name="remove_profile_dialog_title">Dieses Profil löschen?</string>
     <string name="pref_title_appearance">Filter</string>
     <string name="menu_about">Über</string>
     <string name="activity_about">Über Red Moon</string>
-    <string name="off">Aus</string>
-    <string name="action_on">Anschalten</string>
-    <string name="action_off">Ausschalten</string>
-    <string name="action_next_filter">Nächster Filter</string>
+    <string name="notification_status_off">Aus</string>
+    <string name="notification_action_turn_on">Anschalten</string>
+    <string name="notification_action_turn_off">Ausschalten</string>
+    <string name="notification_action_next_filter">Nächster Filter</string>
 
-    <string name="pref_title_button_backlight_disclaimer">Kein Effekt auf manchen Geräten</string>
-    <string name="pref_summaryoff_use_location">Zeiten vom Ort</string>
+    <string name="pref_category_button_backlight_disclaimer">Kein Effekt auf manchen Geräten</string>
+    <string name="pref_summary_location_off">Zeiten vom Ort</string>
     <string name="pref_title_integration">Integration mit anderen Apps</string>
     <string name="pref_title_version">Version</string>
 
-    <string name="pref_button_backlight_entries_array_1">Benutze Filter Dimm-Level</string>
-    <string name="pref_button_backlight_entries_array_2">Ausschalten</string>
+    <string name="pref_entry_button_backlight_filter_dim_level">Benutze Filter Dimm-Level</string>
+    <string name="pref_entry_button_backlight_turn_off">Ausschalten</string>
 
+    <!-- Currently unused -->
     <string name="action_next_profile">Nächstes Profil</string>
     <string name="searching_location">Standortsuche</string>
     <string name="toast_warning_no_location">Standortdienst ist nicht eingeschaltet. Es werden benutzerdefinierte Zeiten verwendet. Bitte den Standortdienst einschalten um Sonnenauf- und untergangszeiten verwenden zu können</string>
-    </resources>
+
+    <string name="set_dialog">Festlegen</string>
+    <string name="notification_status_running">Red Moon läuft. Red Moon anhalten, um APKs installieren zu können</string>
+    <string name="notification_status_running_no_warning">Wird ausgeführt</string>
+</resources>

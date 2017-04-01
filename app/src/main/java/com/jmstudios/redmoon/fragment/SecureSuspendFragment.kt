@@ -71,9 +71,9 @@ class SecureSuspendFragment : PreferenceFragment() {
     // TODO: Fix on API < 21
     private fun createEnableUsageStatsDialog() {
         AlertDialog.Builder(activity).apply {
-            setMessage(R.string.usage_stats_dialog_message)
-            setTitle(R.string.usage_stats_dialog_title)
-            setPositiveButton(R.string.ok_dialog) { _, _ ->
+            setMessage(R.string.dialog_message_permission_usage_stats)
+            setTitle(R.string.dialog_title_permission_usage_stats)
+            setPositiveButton(R.string.dialog_button_ok) { _, _ ->
                 val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
                 startActivityForResult(intent, RESULT_USAGE_ACCESS)
             }

@@ -1,61 +1,60 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <string name="app_name">紅月</string>
-    <string name="settings">紅月</string>
-    <string name="shortcut_activity">紅月切換鍵</string>
+    <string name="activity_main">紅月</string>
+    <string name="activity_shortcut">紅月切換鍵</string>
 
-    <string name="paused">已暫停</string>
+    <string name="notification_status_paused">已暫停</string>
 
-    <string name="pref_title_other">其他</string>
+    <string name="pref_category_other">其他</string>
 
-    <string name="button_remove_profile">刪除</string>
-    <string name="location_title">位置</string>
+    <string name="button_remove_filter">刪除</string>
+    <string name="pref_title_location">位置</string>
     <string name="latitude_short">緯度</string>
     <string name="longitude_short">經度</string>
-    <string name="ok_dialog">確定</string>
-    <string name="cancel_dialog">取消</string>
+    <string name="dialog_button_ok">確定</string>
+    <string name="dialog_button_cancel">取消</string>
 
-    <string name="running">運行中……需要暫停來安裝APK</string>
-    <string name="pref_title_filter">濾鏡</string>
-    <string name="time_toggle_activity">濾鏡時間段</string>
+    <string name="pref_category_filter">濾鏡</string>
+    <string name="activity_timer">濾鏡時間段</string>
     <string name="pref_title_time_toggle">濾鏡時間段</string>
     <string name="pref_title_startup">啟動</string>
-    <string name="button_add_profile">添加</string>
-    <string name="shades_dim_level">暗度</string>
-    <string name="shades_intensity_level">強度等級</string>
-    <string name="shades_color_temp">色溫</string>
-    <string name="control_brightness_title">降低亮度</string>
+    <string name="button_add_filter">添加</string>
+    <string name="pref_title_dim_level">暗度</string>
+    <string name="pref_title_intensity">強度等級</string>
+    <string name="pref_title_color_temp">色溫</string>
+    <string name="pref_title_lower_brightness">降低亮度</string>
     <string name="location_not_set">未設定</string>
     <string name="set_dialog">設定</string>
-    <string name="remove_filter_dialog_title">是否刪除配置？</string>
+    <string name="dialog_title_remove_filter">是否刪除配置？</string>
     <string name="snackbar_searching_location">正在搜尋位置</string>
-    <string name="project_page_title">瀏覽官方網站</string>
-    <string name="standard_profiles_array_0">自定義</string>
-    <string name="standard_profiles_array_1">預設</string>
-    <string name="standard_profiles_array_2">閱讀</string>
-    <string name="toggle_shortcut_title">切換</string>
+    <string name="pref_title_project_page">瀏覽官方網站</string>
+    <string name="filter_name_custom">自定義</string>
+    <string name="filter_name_default">預設</string>
+    <string name="filter_name_bed_reading">閱讀</string>
+    <string name="shortcut_title_toggle">切換</string>
     <string name="help_snackbar_text">點擊按鈕切換紅月模式</string>
-    <string name="dark_theme">暗黑主題</string>
-    <string name="custom_end_time_title">中止時間</string>
-    <string name="custom_start_time_title">恢復時間</string>
-    <string name="add_new_filter_edit_hint">配置檔名</string>
-    <string name="add_new_filter_dialog_title">輸入配置檔名</string>
+    <string name="menu_dark_theme">暗黑主題</string>
+    <string name="pref_title_end_time">中止時間</string>
+    <string name="pref_title_start_time">恢復時間</string>
+    <string name="edit_hint_add_filter">配置檔名</string>
+    <string name="dialog_title_add_filter">輸入配置檔名</string>
     <string name="time_toggle_title">切換模式</string>
     <string name="time_toggle_options_array_2">自動(自定義)</string>
     <string name="time_toggle_options_array_1">自動(日落時間)</string>
     <string name="time_toggle_options_array_0">手動</string>
-    <string name="email_me_title">給我發送郵件：marienraat@riseup.net</string>
-    <string name="email_me_summary">發郵件給我報告Bug或者提意見</string>
-    <string name="project_page_summary">檢視更多資訊，提交反饋和貢獻</string>
+    <string name="pref_title_email_developer">給我發送郵件：marienraat@riseup.net</string>
+    <string name="pref_summary_email_developer">發郵件給我報告Bug或者提意見</string>
+    <string name="pref_summary_project_page">檢視更多資訊，提交反饋和貢獻</string>
     <string name="snackbar_warning_no_location">啟用位置服務來更新位置</string>
     <string name="toast_warning_install">濾鏡運行時無法安裝APK。</string>
 
-    <string name="intro_label">簡介</string>
-    <string name="show_intro_text">觀看簡介</string>
+    <string name="activity_intro">簡介</string>
+    <string name="menu_show_intro">觀看簡介</string>
 
-    <string name="resume_action">恢復</string>
-    <string name="pause_action">暫停</string>
-    <string name="intro_slide_1_title">歡迎！</string>
+    <string name="notification_action_resume">恢復</string>
+    <string name="notification_action_pause">暫停</string>
+    <string name="slide_title_welcome">歡迎！</string>
 
     <!-- Currently unused -->
     <string name="add_new_profile_dialog_title">輸入配置檔名</string>
@@ -64,4 +63,5 @@
     <string name="pref_title_appearance">濾鏡</string>
     <string name="searching_location">正在搜尋位置</string>
     <string name="toast_warning_no_location">啟用位置服務來更新位置</string>
+    <string name="notification_status_running">運行中……需要暫停來安裝APK</string>
 </resources>

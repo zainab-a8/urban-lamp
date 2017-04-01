@@ -70,9 +70,9 @@
   <string name="pref_key_from_version_code" translatable="false">pref_key_from_version_code</string>
 
   <!-- button_backlight_entries -->
-  <string name="pref_button_backlight_values_array_0" translatable="false">system</string>
-  <string name="pref_button_backlight_values_array_1" translatable="false">dim</string>
-  <string name="pref_button_backlight_values_array_2" translatable="false">off</string>
+  <string name="pref_value_button_backlight_system" translatable="false">system</string>
+  <string name="pref_value_button_backlight_filter_dim_level" translatable="false">dim</string>
+  <string name="pref_value_button_backlight_turn_off" translatable="false">off</string>
 
   <!-- Other -->
   <string name="project_page_url" translatable="false">https://github.com/raatmarien/red-moon</string>

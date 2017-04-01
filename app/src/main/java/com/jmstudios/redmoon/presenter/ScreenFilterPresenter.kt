@@ -225,7 +225,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         abstract val filterIsOn: Boolean
 
         open protected val toggleIconResId  = R.drawable.ic_play
-        open protected val toggleActionText = getString(R.string.action_on)
+        open protected val toggleActionText = getString(R.string.notification_action_turn_on)
         open protected val toggleCommand    = ScreenFilterService.Command.ON
 
         open protected val notificationContentText
@@ -257,7 +257,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
                 addAction(toggleIconResId, toggleActionText, togglePI)
 
                 // Add profile switch action
-                val nextProfileText = getString(R.string.action_next_filter)
+                val nextProfileText = getString(R.string.notification_action_next_filter)
                 val nextProfileIntent = Intent(context, NextProfileCommandReceiver::class.java)
                 val nextProfilePI = PendingIntent.getBroadcast(context, REQUEST_CODE_NEXT_PROFILE,
                                                                nextProfileIntent, 0)
@@ -332,7 +332,7 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
         override val filterIsOn = true
 
         override val toggleIconResId  = R.drawable.ic_stop_circle_outline_white_36dp
-        override val toggleActionText = getString(R.string.action_off)
+        override val toggleActionText = getString(R.string.notification_action_turn_off)
         override val toggleCommand    = ScreenFilterService.Command.OFF
 
         override fun onActivation(prevState: State) {
@@ -540,10 +540,10 @@ class ScreenFilterPresenter(private val mServiceController: ServiceLifeCycleCont
             get() = stateToReturnTo.filterIsOn
 
         override val toggleIconResId  = R.drawable.ic_stop_circle_outline_white_36dp
-        override val toggleActionText = getString(R.string.action_off)
+        override val toggleActionText = getString(R.string.notification_action_turn_off)
         override val toggleCommand    = ScreenFilterService.Command.OFF
 
-        override val notificationContentText = getString(R.string.paused)
+        override val notificationContentText = getString(R.string.notification_status_paused)
 
         override fun onActivation(prevState: State) {
             stateToReturnTo = prevState

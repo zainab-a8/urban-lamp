@@ -19,42 +19,41 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App Name and Activity Labels -->
     <string name="app_name">رد مون</string>
-    <string name="settings">رد مون</string>
-    <string name="shortcut_activity">تغییر حالت رد مون</string>
+    <string name="activity_main">رد مون</string>
+    <string name="activity_shortcut">تغییر حالت رد مون</string>
 
     <!-- Notification -->
-    <string name="running">در حال اجرا. برای نصب بسته‌ها مکث کنید</string>
-    <string name="paused">مکث شده</string>
+    <string name="notification_status_paused">مکث شده</string>
 
     <!-- Preference -->
-    <string name="pref_title_filter">پالایه</string>
-    <string name="time_toggle_activity">زمان‌های پالایه</string>
+    <string name="pref_category_filter">پالایه</string>
+    <string name="activity_timer">زمان‌های پالایه</string>
     <string name="pref_title_time_toggle">زمان‌های پالایه</string>
     <string name="pref_title_startup">روشن شدن</string>
-    <string name="pref_title_other">دیگر</string>
+    <string name="pref_category_other">دیگر</string>
 
-    <string name="button_add_profile">افزودن</string>
-    <string name="button_remove_profile">حذف</string>
-    <string name="shades_dim_level">تراز تیرگی</string>
-    <string name="shades_intensity_level">تراز شدّت</string>
-    <string name="shades_color_temp">دمای رنگ</string>
-    <string name="control_brightness_title">کاهش روشنایی</string>
+    <string name="button_add_filter">افزودن</string>
+    <string name="button_remove_filter">حذف</string>
+    <string name="pref_title_dim_level">تراز تیرگی</string>
+    <string name="pref_title_intensity">تراز شدّت</string>
+    <string name="pref_title_color_temp">دمای رنگ</string>
+    <string name="pref_title_lower_brightness">کاهش روشنایی</string>
 
     <string name="time_toggle_title">روش تغییر حالت</string>
-    <string name="custom_start_time_title">از سر گیری در</string>
-    <string name="custom_end_time_title">مکث در</string>
-    <string name="location_title">موقعیّت</string>
+    <string name="pref_title_start_time">از سر گیری در</string>
+    <string name="pref_title_end_time">مکث در</string>
+    <string name="pref_title_location">موقعیّت</string>
     <string name="location_not_set">تنظیم نشده</string>
     <string name="latitude_short">عرض جغرافیایی</string>
     <string name="longitude_short">طول جغرافیایی</string>
     <string name="snackbar_searching_location">در حال جست‌وجو برای موقعیّت</string>
 
-    <string name="dark_theme">زمینهٔ تیره</string>
+    <string name="menu_dark_theme">زمینهٔ تیره</string>
 
-    <string name="email_me_title">‫رایانامه به marienraat@riseup.net‬</string>
-    <string name="email_me_summary">مشکلات یا پیشنهادهایتان را به من رایانامه کنید</string>
-    <string name="project_page_title">از صفحهٔ پروژه بازدید کنید</string>
-    <string name="project_page_summary">اطّلاعات بیش‌تری بگیرید، بازخورد دهید و مشارکت کنید</string>
+    <string name="pref_title_email_developer">‫رایانامه به marienraat@riseup.net‬</string>
+    <string name="pref_summary_email_developer">مشکلات یا پیشنهادهایتان را به من رایانامه کنید</string>
+    <string name="pref_title_project_page">از صفحهٔ پروژه بازدید کنید</string>
+    <string name="pref_summary_project_page">اطّلاعات بیش‌تری بگیرید، بازخورد دهید و مشارکت کنید</string>
 
     <!-- Toasts -->
     <string name="toast_warning_install">هنگام روشن بودن پالایه، نخواهید توانست بسته‌ای را نصب کنید.</string>
@@ -64,21 +63,20 @@
     <string name="help_snackbar_text">برای فعّال سازی رد مون، دستگیره را فشار دهید</string>
 
     <!-- Dialog -->
-    <string name="add_new_filter_dialog_title">ورود نام نمایه</string>
-    <string name="add_new_filter_edit_hint">نام نمایه</string>
-    <string name="remove_filter_dialog_title">حذف این نمایه؟</string>
-    <string name="set_dialog">تنظیم</string>
-    <string name="ok_dialog">قبول</string>
-    <string name="cancel_dialog">لغو</string>
+    <string name="dialog_title_add_filter">ورود نام نمایه</string>
+    <string name="edit_hint_add_filter">نام نمایه</string>
+    <string name="dialog_title_remove_filter">حذف این نمایه؟</string>
+    <string name="dialog_button_ok">قبول</string>
+    <string name="dialog_button_cancel">لغو</string>
 
     <!-- Shortcuts -->
-    <string name="toggle_shortcut_title">تغییر حالت</string>
+    <string name="shortcut_title_toggle">تغییر حالت</string>
 
     <!-- Profiles -->
     <!-- standard_profiles_array -->
-    <string name="standard_profiles_array_0">شخصی</string>
-    <string name="standard_profiles_array_1">پیش‌گزیده</string>
-    <string name="standard_profiles_array_2">مطالعه</string>
+    <string name="filter_name_custom">شخصی</string>
+    <string name="filter_name_default">پیش‌گزیده</string>
+    <string name="filter_name_bed_reading">مطالعه</string>
 
     <!-- Automatic filter -->
     <!-- time_toggle_options_array -->
@@ -92,4 +90,6 @@
     <string name="pref_title_appearance">پالایه</string>
     <string name="searching_location">در حال جست‌وجو برای موقعیّت</string>
     <string name="toast_warning_no_location">برای به‌روز رسانی موقعیّت، خدمات موقعیّت را فعّال کنید</string>
+    <string name="set_dialog">تنظیم</string>
+    <string name="notification_status_running">در حال اجرا. برای نصب بسته‌ها مکث کنید</string>
 </resources>

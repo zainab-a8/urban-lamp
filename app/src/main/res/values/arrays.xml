@@ -7,14 +7,14 @@
     </string-array>
 
     <string-array name="pref_button_backlight_values">
-        <item>@string/pref_button_backlight_values_array_0</item>
-        <item>@string/pref_button_backlight_values_array_1</item>
-        <item>@string/pref_button_backlight_values_array_2</item>
+        <item>@string/pref_value_button_backlight_system</item>
+        <item>@string/pref_value_button_backlight_filter_dim_level</item>
+        <item>@string/pref_value_button_backlight_turn_off</item>
     </string-array>
 
     <string-array name="pref_button_backlight_entries">
-        <item>@string/pref_button_backlight_entries_array_0</item>
-        <item>@string/pref_button_backlight_entries_array_1</item>
-        <item>@string/pref_button_backlight_entries_array_2</item>
+        <item>@string/pref_entry_button_backlight_system</item>
+        <item>@string/pref_entry_button_backlight_filter_dim_level</item>
+        <item>@string/pref_entry_button_backlight_turn_off</item>
     </string-array>
 </resources>
