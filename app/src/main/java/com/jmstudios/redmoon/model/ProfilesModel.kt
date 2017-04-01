@@ -44,7 +44,7 @@ object ProfilesModel: Logger() {
         get() = appContext.getSharedPreferences(PREFERENCE_NAME, MODE)
 
     private val defaultProfiles: List<Profile> =
-            listOf(Profile(getString(R.string.filter_name_custom     ),  0,  0,  0, false),
+            listOf(Profile(getString(R.string.filter_name_custom     ), 10, 30, 40, false),
                    Profile(getString(R.string.filter_name_default    ), 10, 30, 40, false),
                    Profile(getString(R.string.filter_name_bed_reading), 20, 60, 78, false),
                    Profile(getString(R.string.filter_name_dim_only   ),  0,  0, 60,  true))
