@@ -30,41 +30,53 @@ class CurrentAppMonitor(private val mContext: Context) : ScreenStateReceiver.Scr
     companion object : Logger()
     private val screenStateReceiver = ScreenStateReceiver(this)
     private var mCamThread: CurrentAppMonitoringThread? = null
-    private var screenOff: Boolean = false
+
+    private val powerManager
+        get() = mContext.getSystemService(Context.POWER_SERVICE) as PowerManager
+
+    private val screenOff: Boolean
+        get() = if (atLeastAPI(20)) {
+            !powerManager.isInteractive
+        } else @Suppress("DEPRECATION") {
+            !powerManager.isScreenOn
+        }
+
+    private var isMonitoring = false
 
     override fun onScreenTurnedOn() {
         Log.i("Screen turn on received")
-        screenOff = false
         startCamThread()
     }
 
     override fun onScreenTurnedOff() {
         Log.i("Screen turn off received")
-        screenOff = true
         stopCamThread()
     }
 
     fun start() {
-        Log.i("Starting app monitoring")
-        val powerManager = mContext.getSystemService(Context.POWER_SERVICE) as PowerManager
-        screenOff = if (atLeastAPI(20)) { !powerManager.isInteractive }
-        else @Suppress("DEPRECATION") { !powerManager.isScreenOn }
-
-        val filter = IntentFilter()
-        filter.addAction(Intent.ACTION_SCREEN_OFF)
-        filter.addAction(Intent.ACTION_SCREEN_ON)
-        mContext.registerReceiver(screenStateReceiver, filter)
-        startCamThread()
+        if (!isMonitoring) {
+            Log.i("Starting app monitoring")
+            val filter = IntentFilter().apply {
+                addAction(Intent.ACTION_SCREEN_OFF)
+                addAction(Intent.ACTION_SCREEN_ON )
+            }
+            mContext.registerReceiver(screenStateReceiver, filter)
+            isMonitoring = true
+            startCamThread()
+        }
     }
 
     fun stop() {
-        Log.i("Stopping app monitoring")
-        stopCamThread()
-        try {
-            mContext.unregisterReceiver(screenStateReceiver)
-        } catch (e: IllegalArgumentException) {
-            // Catch errors when receiver is unregistered more than
-            // once, it is not a problem, so we just ignore it.
+        if (isMonitoring) {
+            Log.i("Stopping app monitoring")
+            stopCamThread()
+            try {
+                mContext.unregisterReceiver(screenStateReceiver)
+            } catch (e: IllegalArgumentException) {
+                // Catch errors when receiver is unregistered more than
+                // once, it is not a problem, so we just ignore it.
+            }
+            isMonitoring = false
         }
     }
 

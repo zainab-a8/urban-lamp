@@ -57,7 +57,7 @@ import com.jmstudios.redmoon.view.ScreenFilterView
 
 class ScreenFilterService : Service(), ServiceLifeCycleController {
     enum class Command {
-        ON, OFF, SHOW_PREVIEW, HIDE_PREVIEW, START_SUSPEND, STOP_SUSPEND, TOGGLE
+        ON, OFF, TOGGLE, FADE_ON, FADE_OFF, SHOW_PREVIEW, HIDE_PREVIEW, START_SUSPEND, STOP_SUSPEND
     }
 
     private lateinit var mPresenter:           ScreenFilterPresenter
@@ -93,10 +93,7 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         return Service.START_NOT_STICKY
     }
 
-    override fun onBind(intent: Intent): IBinder? {
-        // Prevent binding.
-        return null
-    }
+    override fun onBind(intent: Intent): IBinder? = null // Prevent binding.
 
     override fun onDestroy() {
         Log.i("onDestroy")

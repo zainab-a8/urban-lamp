@@ -46,44 +46,38 @@ import com.jmstudios.redmoon.helper.Permission
 class BrightnessManager(private val mContext: Context) {
     companion object: Logger()
 
-    private var oldAuto:  Boolean = false
-    private var oldLevel: Int     = -1
-
-    fun lower() {
-        if (!Config.filterIsOn) {
-            Log.w("Rejected attempt to lower brightness while filter is off!")
-        } else {
-            if (Config.lowerBrightness) {
-                try {
-                    val resolver = mContext.contentResolver
-                    oldLevel = Settings.System.getInt(resolver, Settings.System.SCREEN_BRIGHTNESS)
-                    oldAuto = 1 == Settings.System.getInt(resolver, "screen_brightness_mode")
-                } catch (e: Settings.SettingNotFoundException) {
-                    Log.i("Error reading brightness state $e")
-                    oldAuto = false
-                }
-            } else {
-                oldLevel = -1
-            }
+    fun lower() =  when {
+        !Config.filterIsOn       -> Log.w("Can't lower brightness; filter is off!")
+        Config.brightnessLowered -> Log.w("Brightness is already lowered!")
+        !Config.lowerBrightness  -> Log.w("Lower brightness not enabled!")
+        !Permission.WriteSettings.isGranted -> Log.w("Permission not granted!")
+        else -> try {
+            val resolver = mContext.contentResolver
+            val oldLevel = Settings.System.getInt(resolver, Settings.System.SCREEN_BRIGHTNESS)
+            val oldAuto = 1 == Settings.System.getInt(resolver, "screen_brightness_mode")
             Config.automaticBrightness = oldAuto
             Config.brightness = oldLevel
-            if (Permission.WriteSettings.isGranted) {
-                Log.i("Lowering brightness")
-                val resolver = mContext.contentResolver
-                Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, 0)
-                Settings.System.putInt(resolver, "screen_brightness_mode", 0)
-            }
+
+            Log.i("Lowering brightness from: $oldLevel, auto: $oldAuto")
+            Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, 0)
+            Settings.System.putInt(resolver, "screen_brightness_mode", 0)
+            Config.brightnessLowered = true
+        } catch (e: Settings.SettingNotFoundException) {
+            Log.e("Error reading brightness state $e")
         }
     }
 
-    fun restore() {
-        val brightness = Config.brightness
-        val automatic = Config.automaticBrightness
-        Log.i("Restoring brightness to: $brightness, automatic: $automatic")
-        if (Permission.WriteSettings.isGranted && brightness >= 0) {
+    fun restore() = when {
+        !Config.brightnessLowered -> Log.w("Can't restore brightness; it's not lowered!")
+        !Permission.WriteSettings.isGranted -> Log.w("Permission not granted!")
+        else -> {
             val resolver = mContext.contentResolver
-            Settings.System.putInt(resolver, "screen_brightness_mode", if (automatic) 1 else 0)
-            Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, brightness)
+            val automatic = if (Config.automaticBrightness) 1 else 0
+
+            Log.i("Restoring brightness to: ${Config.brightness}, automatic: $automatic")
+            Settings.System.putInt(resolver, "screen_brightness_mode", automatic)
+            Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, Config.brightness)
+            Config.brightnessLowered = false
         }
     }
 }

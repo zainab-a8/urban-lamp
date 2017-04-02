@@ -79,6 +79,8 @@ class ScreenFilterPresenter(private val mContext: Context,
     private val mOffState     = OffState()
     private val mPreviewState = PreviewState()
     private val mSuspendState = SuspendState()
+    private val mFadeInState  = FadeInState()
+    private val mFadeOutState = FadeOutState()
 
     private var mCurrentState: State = mOffState
 
@@ -98,10 +100,6 @@ class ScreenFilterPresenter(private val mContext: Context,
     private abstract inner class State {
 
         abstract val filterIsOn: Boolean
-
-        open protected val toggleIconResId  = R.drawable.ic_play
-        open protected val toggleActionText = getString(R.string.notification_action_turn_on)
-        open protected val toggleCommand    = Command.ON
 
         open protected val notificationContentText
             get() = ProfilesModel.getProfileName(Config.profile)
@@ -124,10 +122,17 @@ class ScreenFilterPresenter(private val mContext: Context,
                                             mainActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT))
 
                 // Add toggle action
+                val (toggleIcon, toggleTextResId) = if (filterIsOn) {
+                    Pair(R.drawable.ic_stop_circle_outline_white_36dp,
+                         R.string.notification_action_turn_off)
+                } else {
+                    Pair(R.drawable.ic_play, R.string.notification_action_turn_on)
+                }
+
                 val togglePI = PendingIntent.getService(mContext, REQUEST_CODE_ACTION_TOGGLE,
-                                                        ScreenFilterService.intent(toggleCommand),
+                                                        ScreenFilterService.intent(Command.TOGGLE),
                                                         PendingIntent.FLAG_UPDATE_CURRENT)
-                addAction(toggleIconResId, toggleActionText, togglePI)
+                addAction(toggleIcon, getString(toggleTextResId), togglePI)
 
                 // Add profile switch action
                 val nextProfileText = getString(R.string.notification_action_next_filter)
@@ -149,6 +154,9 @@ class ScreenFilterPresenter(private val mContext: Context,
             Command.ON            -> mOnState
             Command.SHOW_PREVIEW  -> mPreviewState
             Command.START_SUSPEND -> mSuspendState
+            Command.TOGGLE        -> if (filterIsOn) mOffState else mOnState
+            Command.FADE_ON       -> mFadeInState
+            Command.FADE_OFF      -> mFadeOutState
             else                  -> this
         }
 
@@ -180,7 +188,11 @@ class ScreenFilterPresenter(private val mContext: Context,
             mContext.sendBroadcast(intent)
         }
 
-        open protected fun refreshNotification() {}
+        open protected fun refreshNotification() {
+            Log.d("Creating notification while in $this")
+            val nm = mContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            nm.notify(NOTIFICATION_ID, notification.build())
+        }
 
         internal fun updateWidgets() {
             //Broadcast to keep appwidgets in sync
@@ -194,12 +206,8 @@ class ScreenFilterPresenter(private val mContext: Context,
         override fun toString(): String = javaClass.simpleName
     }
 
-    private inner class OnState : State() {
+    private open inner class OnState : State() {
         override val filterIsOn = true
-
-        override val toggleIconResId  = R.drawable.ic_stop_circle_outline_white_36dp
-        override val toggleActionText = getString(R.string.notification_action_turn_off)
-        override val toggleCommand    = Command.OFF
 
         override fun onActivation(prevState: State) {
             super.onActivation(prevState)
@@ -209,10 +217,6 @@ class ScreenFilterPresenter(private val mContext: Context,
 
             if (Config.lowerBrightness) { mBrightnessManager.lower() }
             if (Config.secureSuspend)   { mCurrentAppMonitor.start() }
-        }
-
-        override fun nextState(command: Command): State {
-            return if (command == Command.TOGGLE) mOffState else super.nextState(command)
         }
 
         override fun refreshNotification() {
@@ -246,6 +250,25 @@ class ScreenFilterPresenter(private val mContext: Context,
         }
     }
 
+    private inner class FadeInState : OnState() {
+        override fun onActivation(prevState: State) {
+            super.onActivation(prevState)
+            mWindowViewManager.open(FADE_TRANSITION)
+            if (Config.lowerBrightness) { mBrightnessManager.lower() }
+            if (Config.secureSuspend)   { mCurrentAppMonitor.start() }
+        }
+    }
+
+    private inner class FadeOutState : OnState() {
+        override fun onActivation(prevState: State) {
+            super.onActivation(prevState)
+            mWindowViewManager.close(FADE_TRANSITION) {
+                if (Config.lowerBrightness) { mBrightnessManager.restore() }
+                if (Config.secureSuspend  ) { mCurrentAppMonitor.stop()    }
+            }
+        }
+    }
+
     private inner class OffState : State() {
         override val filterIsOn = false
 
@@ -262,15 +285,9 @@ class ScreenFilterPresenter(private val mContext: Context,
             if (!uiOpen) { mServiceController.stopSelf() }
         }
 
-        override fun nextState(command: Command): State {
-            return if (command == Command.TOGGLE) mOnState else super.nextState(command)
-        }
-
         override fun refreshNotification() {
-            Log.d("Creating notification while in $this")
             mServiceController.stopForeground(false)
-            val nm = mContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            nm.notify(NOTIFICATION_ID, notification.build())
+            super.refreshNotification()
         }
 
         @Subscribe(sticky = true)
@@ -282,27 +299,34 @@ class ScreenFilterPresenter(private val mContext: Context,
         }
     }
 
+    private abstract inner class TempState : State() {
+        lateinit var mPrevState: State
+
+        override val filterIsOn: Boolean
+            get() = mPrevState.filterIsOn
+
+        override fun onActivation(prevState: State) {
+            mPrevState = prevState
+            super.onActivation(mPrevState)
+        }
+
+        override fun nextState(command: Command): State = mPrevState.nextState(command)
+        override fun handleCommand(command: Command) { mPrevState = nextState(command) }
+    }
+
     /* This State is used to present the filter to the user when (s)he
      * is holding one of the seekbars to adjust the filter. It turns
      * on the filter and saves what state it should be when it will be
      * turned off.
      */
-    private inner class PreviewState : State() {
-        lateinit var stateToReturnTo: State
+    private inner class PreviewState : TempState() {
         var pressesActive: Int = 0
 
-        override val filterIsOn: Boolean
-            get() = stateToReturnTo.filterIsOn
-
         override fun onActivation(prevState: State) {
-            stateToReturnTo = prevState
             pressesActive = 1
             super.onActivation(prevState)
-
             mWindowViewManager.open(FADE_DURATION_INSTANT)
         }
-
-        override fun nextState(command: Command): State = stateToReturnTo.nextState(command)
 
         override fun handleCommand(command: Command) {
             Log.d("Preview, got command: " + command.name)
@@ -315,11 +339,11 @@ class ScreenFilterPresenter(private val mContext: Context,
                     pressesActive--
                     Log.d(String.format("%d presses active", pressesActive))
                     if (pressesActive <= 0) {
-                        Log.d("Moving back to state: $stateToReturnTo")
-                        moveToState(stateToReturnTo)
+                        Log.d("Moving back to state: $mPrevState")
+                        moveToState(mPrevState)
                     }
                 }
-                else -> stateToReturnTo = nextState(command)
+                else -> super.handleCommand(command)
             }
         }
 
@@ -335,40 +359,22 @@ class ScreenFilterPresenter(private val mContext: Context,
      * PreviewState. Like the PreviewState, it logs changes to the
      * state and applies them when the suspend state is deactivated.
      */
-    private inner class SuspendState : State() {
-        lateinit var stateToReturnTo: State
-        
-        override val filterIsOn: Boolean
-            get() = stateToReturnTo.filterIsOn
-
-        override val toggleIconResId  = R.drawable.ic_stop_circle_outline_white_36dp
-        override val toggleActionText = getString(R.string.notification_action_turn_off)
-        override val toggleCommand    = Command.OFF
+    private inner class SuspendState : TempState() {
 
         override val notificationContentText = getString(R.string.notification_status_paused)
 
         override fun onActivation(prevState: State) {
-            stateToReturnTo = prevState
-            mWindowViewManager.close()
+            mWindowViewManager.close(FADE_DURATION_SHORT)
             super.onActivation(prevState)
         }
-
-        override fun nextState(command: Command): State = stateToReturnTo.nextState(command)
 
         override fun handleCommand(command: Command) {
             Log.d("In Suspend, got command: " + command.name)
             when (command) {
-                Command.STOP_SUSPEND  -> moveToState(stateToReturnTo)
+                Command.STOP_SUSPEND  -> moveToState(mPrevState)
                 Command.START_SUSPEND -> {}
-                else -> stateToReturnTo = nextState(command)
+                else -> super.handleCommand(command)
             }
-        }
-
-        override fun refreshNotification() {
-            Log.d("Creating notification while in $this")
-            mServiceController.stopForeground(false)
-            val nm = mContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            nm.notify(NOTIFICATION_ID, notification.build())
         }
     }
 
@@ -378,7 +384,8 @@ class ScreenFilterPresenter(private val mContext: Context,
         private const val REQUEST_CODE_ACTION_TOGGLE   = 3000
         private const val REQUEST_CODE_NEXT_PROFILE    = 4000
 
-        const val FADE_DURATION_LONG = 1000
+        const val FADE_TRANSITION = 3600000 // One hour
+        const val FADE_DURATION_LONG = 1000 // One second
         const val FADE_DURATION_SHORT = 250
         const val FADE_DURATION_INSTANT = 0
 

@@ -84,13 +84,14 @@ class WindowViewManager(private val mView: ScreenFilterView,
     }
 
     // Closes the Window that is currently displaying `mView`.
-    fun close(time: Int = 0) {
+    fun close(time: Int = 0, onEnd: () -> Unit = {}) {
         Log.i("close()")
         mAnimator.addListener(object : AbstractAnimatorListener {
             override fun onAnimationEnd(animator: Animator) = if (mOpen) {
                 Log.i("Closing screen filter")
                 mWindowManager.removeView(mView)
                 mOpen = false
+                onEnd()
             } else {
                 Log.w("Can't close Screen filter; it's already closed")
             }

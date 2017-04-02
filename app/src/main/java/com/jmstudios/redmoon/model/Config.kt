@@ -200,7 +200,7 @@ object Config {
 
     var introShown: Boolean
         get()  = getBooleanPref(R.string.pref_key_intro_shown, false)
-        set(s) = putBooleanPref(R.string.pref_key_intro_shown, s)
+        set(s) = putBooleanPref(R.string.pref_key_intro_shown, s    )
 
     var brightness: Int
         get()  = getIntPref(R.string.pref_key_brightness, 0)
@@ -208,7 +208,12 @@ object Config {
     
     var automaticBrightness: Boolean
         get()  = getBooleanPref(R.string.pref_key_automatic_brightness, true)
-        set(a) = putBooleanPref(R.string.pref_key_automatic_brightness, a)
+        set(a) = putBooleanPref(R.string.pref_key_automatic_brightness, a   )
+
+    var brightnessLowered: Boolean
+        get()  = getBooleanPref(R.string.pref_key_brightness_lowered, false)
+        set(l) = putBooleanPref(R.string.pref_key_brightness_lowered, l    )
+
     //endregion
 
     //region application

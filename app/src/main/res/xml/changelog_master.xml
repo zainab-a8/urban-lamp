@@ -7,7 +7,9 @@
         <change>Add 'Dim only' default filter</change>
         <change>Default filters can be deleted</change>
         <change>Restore default filters from menu (does not delete anything)</change>
+        <change>Add basic fade-in support (currently hard-coded to 1 hour after sunset and sunrise)</change>
         <change>Fix a bug where sunrise and sunset times would not be updated each day</change>
+        <change>Lots of code cleanup; many minor bug fixes</change>
     </release>
     <release version="2.10.2" versioncode="28" >
         <change>Add changelog</change>

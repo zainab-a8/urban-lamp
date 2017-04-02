@@ -31,6 +31,7 @@ import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.service.LocationUpdateService
 import com.jmstudios.redmoon.service.ScreenFilterService
+import com.jmstudios.redmoon.service.ScreenFilterService.Command
 import com.jmstudios.redmoon.util.appContext
 import com.jmstudios.redmoon.util.atLeastAPI
 
@@ -45,8 +46,11 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
 
         val turnOn = intent.data.toString() == "turnOnIntent"
 
-        val command = if (turnOn) ScreenFilterService.Command.ON
-        else ScreenFilterService.Command.OFF
+        val command = if (Config.useLocation) {
+            if (turnOn) Command.FADE_ON else Command.FADE_OFF
+        } else {
+            if (turnOn) Command.ON else Command.OFF
+        }
         ScreenFilterService.moveToState(command)
         cancelAlarm(turnOn)
         scheduleNextCommand(turnOn)
