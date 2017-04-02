@@ -24,8 +24,9 @@ import android.preference.PreferenceManager
 import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.model.Config
+import com.jmstudios.redmoon.model.ProfilesModel
 import com.jmstudios.redmoon.receiver.TimeToggleChangeReceiver
-import com.jmstudios.redmoon.util.Logger
+import com.jmstudios.redmoon.helper.Logger
 
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -57,7 +58,7 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
         Log.i("onPreferenceChanged: $key")
         EventBus.getDefault().post(when (key) {
             getString(R.string.pref_key_filter_is_on)         -> filterIsOnChanged()
-            getString(R.string.pref_key_dim)                  -> dimChanged()
+            getString(R.string.pref_key_dim)                  -> dimLevelChanged()
             getString(R.string.pref_key_intensity)            -> intensityChanged()
             getString(R.string.pref_key_color)                -> colorChanged()
             // getString(R.string.pref_key_dark_theme)           -> themeChanged()
@@ -66,6 +67,7 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
             getString(R.string.pref_key_custom_turn_off_time) -> customTurnOffTimeChanged()
             getString(R.string.pref_key_lower_brightness)     -> lowerBrightnessChanged()
             getString(R.string.pref_key_profile_spinner)      -> profileChanged()
+            getString(R.string.pref_key_num_profiles)         -> amountProfilesChanged()
             getString(R.string.pref_key_use_location)         -> useLocationChanged()
             getString(R.string.pref_key_location)             -> locationChanged()
             getString(R.string.pref_key_sunset_time)          -> sunsetTimeChanged()
@@ -74,9 +76,7 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
             getString(R.string.pref_key_button_backlight)     -> buttonBacklightChanged()
             else -> return
             /* Preferences for which no Event is posted */
-            // getString(R.string.pref_key_lower_brightness)
             // getString(R.string.pref_key_brightness_level)
-            // getString(R.string.pref_key_num_profiles)
             // getString(R.string.pref_key_intro_shown)
             // getString(R.string.pref_key_dim_buttons)
         })
@@ -85,6 +85,21 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
 
     // There's probably a better place to do this to keep this class clean
     // For now it works, though
+    @Subscribe
+    fun onProfileChanged(event: profileChanged) {
+        val index = Config.profile
+        Log.i("setProfile: $index")
+        // TODO: Allow updating the profile before the related settings without causing bugs
+        // Update settings that are based on the profile
+        ProfilesModel.getProfile(index).run {
+            Log.i("color=$color, intensity=$intensity, dim=$dimLevel, lb=$lowerBrightness")
+            Config.color           = color
+            Config.intensity       = intensity
+            Config.dimLevel        = dimLevel
+            Config.lowerBrightness = lowerBrightness
+        }
+    }
+
     @Subscribe
     fun onTimeToggleChanged(event: timeToggleChanged) {
         Log.i("Timer turned ${if (Config.timeToggle) "on" else "off"}")

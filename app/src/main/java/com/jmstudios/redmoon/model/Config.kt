@@ -39,13 +39,11 @@ package com.jmstudios.redmoon.model
 import android.preference.PreferenceManager
 
 import com.jmstudios.redmoon.R
-
-import com.jmstudios.redmoon.preference.ColorSeekBarPreference
-import com.jmstudios.redmoon.preference.DimSeekBarPreference
-import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
+import com.jmstudios.redmoon.helper.Profile
 import com.jmstudios.redmoon.util.*
 
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
+
 import java.util.Calendar
 import java.util.TimeZone
 
@@ -101,19 +99,20 @@ object Config {
         set(p) = putIntPref(R.string.pref_key_profile_spinner, p)
     
     var color: Int
-        get()  = getIntPref(R.string.pref_key_color, ColorSeekBarPreference.DEFAULT_VALUE)
+        get()  = getIntPref(R.string.pref_key_color, Profile.DEFAULT_COLOR)
         set(c) = putIntPref(R.string.pref_key_color, c)
 
     var intensity: Int
-        get()  = getIntPref(R.string.pref_key_intensity, IntensitySeekBarPreference.DEFAULT_VALUE)
+        get()  = getIntPref(R.string.pref_key_intensity, Profile.DEFAULT_INTENSITY)
         set(i) = putIntPref(R.string.pref_key_intensity, i)
 
-    var dim: Int
-        get()  = getIntPref(R.string.pref_key_dim, DimSeekBarPreference.DEFAULT_VALUE)
+    var dimLevel: Int
+        get()  = getIntPref(R.string.pref_key_dim, Profile.DEFAULT_DIM_LEVEL)
         set(d) = putIntPref(R.string.pref_key_dim, d)
 
-    val lowerBrightness: Boolean
-        get() = getBooleanPref(R.string.pref_key_lower_brightness, false)
+    var lowerBrightness: Boolean
+        get()   = getBooleanPref(R.string.pref_key_lower_brightness, false)
+        set(lb) = putBooleanPref(R.string.pref_key_lower_brightness, lb)
 
     val secureSuspend: Boolean
         get() = getBooleanPref(R.string.pref_key_secure_suspend, false)
@@ -147,7 +146,7 @@ object Config {
     val buttonBacklightLevel: Float
         get() = when (buttonBacklightFlag) {
                     "system" -> -1.toFloat()
-                    "dim" -> 1 - (dim.toFloat() / 100)
+                    "dim" -> 1 - (dimLevel.toFloat() / 100)
                     else -> 0.toFloat()
                 }
 

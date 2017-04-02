@@ -34,37 +34,22 @@ import android.widget.Spinner
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.event.*
-import com.jmstudios.redmoon.helper.ProfilesHelper
+import com.jmstudios.redmoon.helper.Logger
 import com.jmstudios.redmoon.model.ProfilesModel
 import com.jmstudios.redmoon.model.Config
-import com.jmstudios.redmoon.util.Logger
+import com.jmstudios.redmoon.util.*
 
 import org.greenrobot.eventbus.Subscribe
 
-import java.util.ArrayList
-import java.util.Arrays
-
-class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeSet) : Preference(mContext, attrs), OnItemSelectedListener {
-
+class ProfileSelectorPreference(ctx: Context, attrs: AttributeSet) : Preference(ctx, attrs),
+                                                                     OnItemSelectedListener {
     lateinit private var mProfileSpinner: Spinner
     lateinit private var mProfileActionButton: Button
     lateinit private var mView: View
-
     lateinit internal var mArrayAdapter: ArrayAdapter<CharSequence>
-
-    private var mProfile: Int = 0
-    private val mProfilesModel: ProfilesModel = ProfilesModel(mContext)
-    private var mDefaultOperations: ArrayList<CharSequence>? = null
-
-    private var currentColor: Int = 0
-    private var currentIntensity: Int = 0
-    private var currentDim: Int = 0
-
-    private var mIsListenerRegistered: Boolean = false
 
     init {
         layoutResource = R.layout.preference_profile_selector
-        mIsListenerRegistered = false
     }
 
     override fun onGetDefaultValue(a: TypedArray, index: Int): Any {
@@ -72,188 +57,142 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
     }
 
     override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any?) {
-        if (restorePersistedValue) {
-            mProfile = getPersistedInt(DEFAULT_VALUE)
+        Config.profile = if (restorePersistedValue) {
+            getPersistedInt(DEFAULT_VALUE)
         } else {
-            mProfile = (defaultValue as Int?)?: 0
-            persistInt(mProfile)
+            (defaultValue as Int?) ?: DEFAULT_VALUE
         }
     }
 
     override fun onBindView(view: View) {
+        Log.i("onBindView")
         super.onBindView(view)
 
         mView = view
-
         mProfileSpinner = view.findViewById(R.id.profile_spinner) as Spinner
         mProfileActionButton = view.findViewById(R.id.profile_action_button) as Button
 
         initLayout()
-
         updateButtonSetup()
     }
 
     private fun initLayout() {
         Log.i("Starting initLayout")
-        // The default operations first need to be converted to an ArrayList,
-        // because the ArrayAdapter will turn it into an AbstractList otherwise,
-        // which doesn't support certain actions, like adding elements.
-        // See: http://stackoverflow.com/a/3200631
-        mDefaultOperations = ArrayList<CharSequence>(Arrays.asList(*context.resources.getStringArray(R.array.standard_profiles_array)))
-        mArrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, mDefaultOperations)
+        mArrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item)
         mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        readProfiles()
+        for (i in 0..Config.amountProfiles-1) {
+            mArrayAdapter.add(ProfilesModel.getProfileName(i))
+        }
 
         mProfileSpinner.adapter = mArrayAdapter
-        mProfileSpinner.setSelection(mProfile)
+        mProfileSpinner.setSelection(Config.profile)
         mProfileSpinner.onItemSelectedListener = this
     }
 
-    private fun updateButtonSetup() {
-        if (mProfile > DEFAULT_OPERATIONS_AM - 1) {
-            Log.i("Setting remove button")
-            mProfileActionButton.text = context.resources.getString(R.string.button_remove_profile)
-            mProfileActionButton.setOnClickListener { openRemoveProfileDialog() }
-
-        } else {
-            Log.i("Setting add button")
-            mProfileActionButton.text = context.resources.getString(R.string.button_add_profile)
-            mProfileActionButton.setOnClickListener { openAddNewProfileDialog() }
-        }
+    private fun updateButtonSetup() = if (Config.profile == 0) {
+        Log.i("Setting add button")
+        mProfileActionButton.text = getString(R.string.button_add_filter)
+        mProfileActionButton.setOnClickListener { openAddNewProfileDialog() }
+    } else {
+        Log.i("Setting remove button")
+        mProfileActionButton.text = getString(R.string.button_remove_filter)
+        mProfileActionButton.setOnClickListener { openRemoveProfileDialog() }
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View,
                                 pos: Int, id: Long) {
         Log.i("Item $pos selected")
-        mProfile = pos
-        persistInt(mProfile)
-        updateButtonSetup()
-
-        // Update the dependent settings
-        if (mProfile != 0) {
-            // We need a ProfilesModel to get the properties of the
-            // profile from the index
-            val profilesModel = ProfilesModel(mContext)
-            val profileObject = ProfilesHelper.getProfile(profilesModel, mProfile, mContext)
-
-            Config.dim = profileObject.mDimProgress
-            Config.intensity = profileObject.mIntensityProgress
-            Config.color = profileObject.mColorProgress
-        }
+        persistInt(pos)
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) { }
 
     private fun openRemoveProfileDialog() {
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle(context.resources.getString(R.string.remove_filter_dialog_title))
+        val builder = AlertDialog.Builder(context).apply {
+            setTitle(getString(R.string.remove_profile_dialog_title))
 
-        val okString = context.resources.getString(R.string.button_remove_profile)
-        val cancelString = context.resources.getString(R.string.cancel_dialog)
+            val okString = getString(R.string.button_remove_filter)
+            val cancelString = getString(R.string.dialog_button_cancel)
 
-        builder.setPositiveButton(okString) { _, _ ->
-            mProfilesModel.removeProfile(mProfile - DEFAULT_OPERATIONS_AM)
-            mProfile = 0
-            initLayout()
-
-            updateAmountProfiles()
+            setNegativeButton(cancelString) { dialog, _ -> dialog.cancel() }
+            setPositiveButton(okString) { _, _ ->
+                try {
+                    Config.amountProfiles = ProfilesModel.removeProfile(Config.profile)
+                    persistInt(0)
+                } catch (e: IndexOutOfBoundsException) {
+                    Log.e("Tried to remove a profile that didn't exist!")
+                }
+            }
         }
-
-        builder.setNegativeButton(cancelString) { dialog, _ -> dialog.cancel() }
-
         builder.show()
     }
 
     private fun openAddNewProfileDialog() {
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle(context.resources.getString(R.string.add_new_filter_dialog_title))
+        val builder = AlertDialog.Builder(context).apply {
+            setTitle(getString(R.string.add_new_profile_dialog_title))
 
-        val nameInput = EditText(context)
-        nameInput.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
-        nameInput.hint = context.resources.getString(R.string.add_new_filter_edit_hint)
+            val nameInput = EditText(context).apply {
+                inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+                hint = getString(R.string.add_new_profile_edit_hint)
+            }
+            setView(nameInput)
 
-        builder.setView(nameInput)
+            val okString = getString(R.string.dialog_button_ok)
+            val cancelString = getString(R.string.dialog_button_cancel)
 
-        val okString = context.resources.getString(R.string.ok_dialog)
-        val cancelString = context.resources.getString(R.string.cancel_dialog)
-
-        builder.setPositiveButton(okString) { dialog, _ ->
-            if (nameInput.text.toString().trim { it <= ' ' } != "") {
-                val profile = ProfilesModel.Profile(nameInput.text.toString(),
-                                                    Config.color,
-                                                    Config.intensity,
-                                                    Config.dim)
-
-                mProfilesModel.addProfile(profile)
-                mArrayAdapter.add(profile.mProfileName as CharSequence)
-
-                mProfileSpinner.setSelection(mProfilesModel.profiles.size - 1 + DEFAULT_OPERATIONS_AM)
-
-                updateAmountProfiles()
-            } else {
-                dialog.cancel()
+            setNegativeButton(cancelString) { dialog, _ -> dialog.cancel() }
+            setPositiveButton(okString) { dialog, _ ->
+                nameInput.text.toString().run {
+                    if (trim { it <= ' ' } != "") {
+                        val (size, index) = ProfilesModel.addProfile(this)
+                        Config.amountProfiles = size
+                        persistInt(index)
+                    } else {
+                        dialog.cancel()
+                    }
+                }
             }
         }
-
-        builder.setNegativeButton(cancelString) { dialog, _ -> dialog.cancel() }
-
         builder.show()
     }
 
-    //Section: Reading and writing profiles
-
-    /**
-     * Reads the profiles saved in the SharedPreference in the spinner
-     */
-    fun readProfiles() {
-        val profiles = mProfilesModel.profiles
-
-        for (profile in profiles) {
-            mArrayAdapter.add(profile.mProfileName as CharSequence)
-        }
+    private fun setCustom() {
+        ProfilesModel.setCustom()
+        persistInt(0)
     }
 
-    /**
-     * Updates the amount of profiles in the shared preferences
-     */
-    private fun updateAmountProfiles() {
-        val amountProfiles = mProfilesModel.profiles.size + DEFAULT_OPERATIONS_AM
-        Log.i("There are now $amountProfiles profiles.")
-        Config.amountProfiles = amountProfiles
+    //region presenter
+    @Subscribe fun onProfileChanged(event: profileChanged) {
+        Log.i("onProfileChanged")
+        mProfileSpinner.setSelection(Config.profile)
+        updateButtonSetup()
     }
 
-    @Subscribe
-    fun onDimLevelChanged(event: dimChanged) {
-        if (Config.dim != currentDim) mProfileSpinner.setSelection(0)
+    @Subscribe fun onAmountProfilesChanged(event: amountProfilesChanged) = initLayout()
+
+    @Subscribe fun onDimLevelChanged(event: dimLevelChanged) {
+        Log.i("onDimChanged")
+        if (Config.dimLevel != activeProfile.dimLevel) { setCustom() }
     }
 
-    @Subscribe
-    fun onIntensityLevelChanged(event: intensityChanged) {
-        if (Config.intensity != currentIntensity) mProfileSpinner.setSelection(0)
+    @Subscribe fun onIntensityChanged(event: intensityChanged) {
+        Log.i("onIntensityChanged")
+        if (Config.intensity != activeProfile.intensity) { setCustom() }
     }
 
-    @Subscribe
-    fun onColorChanged(event: colorChanged) {
-        if (Config.color != currentColor) mProfileSpinner.setSelection(0)
+    @Subscribe fun onColorChanged(event: colorChanged) {
+        Log.i("onColorChanged")
+        if (Config.color != activeProfile.color) { setCustom() }
     }
 
-    @Subscribe
-    fun onProfileChanged(event: profileChanged) {
-        mProfile = Config.profile
-        mProfileSpinner.setSelection(mProfile)
-
-        if (mProfile != 0) {
-            val newProfile = ProfilesHelper.getProfile(mProfilesModel, mProfile, mContext)
-
-            currentDim = newProfile.mDimProgress
-            currentIntensity = newProfile.mIntensityProgress
-            currentColor = newProfile.mColorProgress
-        }
+    @Subscribe fun onLowerBrightnessChanged(event: lowerBrightnessChanged) {
+        Log.i("onLowerBrightnessChanged")
+        if (Config.lowerBrightness != activeProfile.lowerBrightness) { setCustom() }
     }
+    //endregion
 
     companion object : Logger() {
-        const val DEFAULT_VALUE = 1
-        const val DEFAULT_OPERATIONS_AM = 3
+        private const val DEFAULT_VALUE = 1
     }
 }

@@ -58,7 +58,7 @@
         android:supportsRtl="true" >
         <activity
             android:name="com.jmstudios.redmoon.activity.MainActivity"
-            android:label="@string/settings" >
+            android:label="@string/activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -71,7 +71,7 @@
 
         <activity
             android:name="com.jmstudios.redmoon.activity.Intro"
-            android:label="@string/intro_label"
+            android:label="@string/activity_intro"
             android:theme="@style/AppThemeNoActionBar" />
 
         <receiver android:name="com.jmstudios.redmoon.receiver.BootReceiver">
@@ -96,7 +96,7 @@
 
         <activity
             android:name="com.jmstudios.redmoon.activity.ShortcutCreationActivity"
-            android:label="@string/shortcut_activity"
+            android:label="@string/activity_shortcut"
             android:theme="@style/TransparentTheme" >
           <intent-filter>
             <action android:name="android.intent.action.CREATE_SHORTCUT"/>
@@ -106,7 +106,7 @@
 
         <activity
             android:name=".activity.TimeToggleActivity"
-            android:label="@string/time_toggle_activity"
+            android:label="@string/activity_timer"
             android:parentActivityName="com.jmstudios.redmoon.activity.MainActivity"
             android:theme="@style/AppTheme" >
 
@@ -118,7 +118,7 @@
 
         <activity
             android:name=".activity.SecureSuspendActivity"
-            android:label="@string/secure_suspend_activity"
+            android:label="@string/activity_secure_suspend"
             android:parentActivityName="com.jmstudios.redmoon.activity.MainActivity"
             android:theme="@style/AppTheme" >
 

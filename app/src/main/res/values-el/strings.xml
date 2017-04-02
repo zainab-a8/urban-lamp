@@ -1,98 +1,95 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-    <string name="intro_label">Εισαγωγή</string>
-    <string name="show_intro_text">Δείξε την εισαγωγή</string>
-    <string name="secure_suspend_activity">Αυτόματη αναστολή</string>
+    <string name="activity_intro">Εισαγωγή</string>
+    <string name="menu_show_intro">Δείξε την εισαγωγή</string>
+    <string name="activity_secure_suspend">Αυτόματη αναστολή</string>
 
-    <string name="running">Σε λειτουργία. Σε παύση για την εγκατάσταση των apks</string>
-    <string name="running_no_warning">Σε λειτουργία</string>
-    <string name="paused">Σε παύση</string>
-    <string name="resume_action">Συνέχισε</string>
-    <string name="pause_action">Παύση</string>
+    <string name="notification_status_paused">Σε παύση</string>
+    <string name="notification_action_resume">Συνέχισε</string>
+    <string name="notification_action_pause">Παύση</string>
 
-    <string name="pref_title_filter">Φίλτρο</string>
-    <string name="time_toggle_activity">Ώρες φίλτρου</string>
+    <string name="pref_category_filter">Φίλτρο</string>
+    <string name="activity_timer">Ώρες φίλτρου</string>
     <string name="pref_title_time_toggle">Ώρες φίλτρου</string>
     <string name="pref_title_startup">Εκκίνηση</string>
-    <string name="pref_title_other">Άλλα</string>
+    <string name="pref_category_other">Άλλα</string>
 
-    <string name="button_add_profile">Προσθήκη</string>
-    <string name="button_remove_profile">Διαγραφή</string>
-    <string name="shades_dim_level">Φωτεινότητα</string>
-    <string name="shades_intensity_level">Ένταση</string>
-    <string name="shades_color_temp">Θερμοκρασία χρώματος</string>
-    <string name="control_brightness_title">Χαμήλωμα φωτεινότητας</string>
+    <string name="button_add_filter">Προσθήκη</string>
+    <string name="button_remove_filter">Διαγραφή</string>
+    <string name="pref_title_dim_level">Φωτεινότητα</string>
+    <string name="pref_title_intensity">Ένταση</string>
+    <string name="pref_title_color_temp">Θερμοκρασία χρώματος</string>
+    <string name="pref_title_lower_brightness">Χαμήλωμα φωτεινότητας</string>
 
     <string name="time_toggle_title">Εναλλαγή λειτουργίας</string>
-    <string name="custom_start_time_title">Συνέχεια στις</string>
-    <string name="custom_end_time_title">Παύση στις</string>
-    <string name="location_title">Τοποθεσία</string>
+    <string name="pref_title_start_time">Συνέχεια στις</string>
+    <string name="pref_title_end_time">Παύση στις</string>
+    <string name="pref_title_location">Τοποθεσία</string>
     <string name="location_not_set">Δεν ορίστηκε</string>
     <string name="latitude_short">Γεωγρ. πλάτος</string>
     <string name="longitude_short">Γεωγρ. μήκος</string>
     <string name="snackbar_searching_location">Αναζήτηση της τοποθεσίας σας</string>
 
-    <string name="secure_suspend_title">Αυτόματη αναστολή φίλτρου σε προστατευμένα apps</string>
-    <string name="secure_suspend_summary">Μερικά χαρακτηριστικά του Android προστατεύονται από επικαλύψεις οθόνης και δεν μπορούν να λειτουργήσουν όταν είναι ενεργοποιημένο το Κόκκινο Φεγγάρι. Για παράδειγμα, η εγκατάσταση αρχείων APK ή η χορήγηση δικαιωμάτων στο Android 6.0+.
+    <string name="pref_title_secure_suspend">Αυτόματη αναστολή φίλτρου σε προστατευμένα apps</string>
+    <string name="pref_summary_secure_suspend">Μερικά χαρακτηριστικά του Android προστατεύονται από επικαλύψεις οθόνης και δεν μπορούν να λειτουργήσουν όταν είναι ενεργοποιημένο το Κόκκινο Φεγγάρι. Για παράδειγμα, η εγκατάσταση αρχείων APK ή η χορήγηση δικαιωμάτων στο Android 6.0+.
 
-Όταν ενεργοποιείται αυτή η λειτουργία το Κόκκινο Φεγγάρι θα ανασταλεί αυτόματα όταν ένα από αυτά τα χαρακτηριστικά ανοίγει και το φίλτρο επαναφέρετε όταν τελειώσει. Με αυτό τον τρόπο δεν έχετε να ανησυχείτε για το χειροκίνητο άνοιγμα και κλείσιμο του Κόκκινου Φεγγαριού.
+        Όταν ενεργοποιείται αυτή η λειτουργία το Κόκκινο Φεγγάρι θα ανασταλεί αυτόματα όταν ένα από αυτά τα χαρακτηριστικά ανοίγει και το φίλτρο επαναφέρετε όταν τελειώσει. Με αυτό τον τρόπο δεν έχετε να ανησυχείτε για το χειροκίνητο άνοιγμα και κλείσιμο του Κόκκινου Φεγγαριού.
 
-Αυτό το χαρακτηριστικό μπορεί ελαφρώς να μειώσει τη διάρκεια ζωής της μπαταρίας της συσκευής σας. Επιπλέον, αυτό το χαρακτηριστικό μπορεί να μην λειτουργεί σε όλες τις συσκευές.</string>
+        Αυτό το χαρακτηριστικό μπορεί ελαφρώς να μειώσει τη διάρκεια ζωής της μπαταρίας της συσκευής σας. Επιπλέον, αυτό το χαρακτηριστικό μπορεί να μην λειτουργεί σε όλες τις συσκευές.</string>
     <string name="text_switch_on">Ενεργοποίηση</string>
     <string name="text_switch_off">Απενεργοποίηση</string>
-    <string name="usage_stats_dialog_title">Να επιτρέπεται η πρόσβαση της χρήσης</string>
-    <string name="usage_stats_dialog_message">Επιτρέψτε στο Κόκκινο Φεγγάρι να έχει πρόσβαση σε στατιστικά στοιχεία χρήσης της εφαρμογής, στην επόμενη οθόνη, μπορείτε να ενεργοποιήσετε αυτή τη λειτουργία.
+    <string name="dialog_title_permission_usage_stats">Να επιτρέπεται η πρόσβαση της χρήσης</string>
+    <string name="dialog_message_permission_usage_stats">Επιτρέψτε στο Κόκκινο Φεγγάρι να έχει πρόσβαση σε στατιστικά στοιχεία χρήσης της εφαρμογής, στην επόμενη οθόνη, μπορείτε να ενεργοποιήσετε αυτή τη λειτουργία.
 
-Το Κόκκινο Φεγγάρι χρειάζεται εξουσιοδότηση πρόσβασης για να δει τις εφαρμογές που έχετε έτσι ώστε να αναστείλει το φίλτρο στις προστατευμένες εφαρμογές. Το Κόκκινο Φεγγάρι θα χρησιμοποιήσει αυτά τα στοιχεία μόνο για να αναστείλει το φίλτρο όταν χρειάζεται.</string>
+        Το Κόκκινο Φεγγάρι χρειάζεται εξουσιοδότηση πρόσβασης για να δει τις εφαρμογές που έχετε έτσι ώστε να αναστείλει το φίλτρο στις προστατευμένες εφαρμογές. Το Κόκκινο Φεγγάρι θα χρησιμοποιήσει αυτά τα στοιχεία μόνο για να αναστείλει το φίλτρο όταν χρειάζεται.</string>
 
-    <string name="dark_theme">Σκοτεινό θέμα</string>
+    <string name="menu_dark_theme">Σκοτεινό θέμα</string>
 
-    <string name="email_me_title">Στείλτε μου email στο marienraat@riseup.net</string>
-    <string name="email_me_summary">Στείλτε μου email για σφάλματα και προτάσεις</string>
-    <string name="project_page_title">Επισκεφθείτε τη σελίδα του πρότζεκτ</string>
-    <string name="project_page_summary">Βρείτε επιπλέον πληροφορίες, πείτε μας την γνώμη σας και συμβάλετε</string>
+    <string name="pref_title_email_developer">Στείλτε μου email στο marienraat@riseup.net</string>
+    <string name="pref_summary_email_developer">Στείλτε μου email για σφάλματα και προτάσεις</string>
+    <string name="pref_title_project_page">Επισκεφθείτε τη σελίδα του πρότζεκτ</string>
+    <string name="pref_summary_project_page">Βρείτε επιπλέον πληροφορίες, πείτε μας την γνώμη σας και συμβάλετε</string>
     <string name="toast_warning_install">Δεν θα μπορείτε να εγκαταστήσετε APKs όσο το φίλτρο είναι σε λειτουργία.</string>
     <string name="snackbar_warning_no_location">Ενεργοποιήστε τις υπηρεσίες τοποθεσίας για ενημέρωση τοποθεσίας</string>
 
     <string name="help_snackbar_text">Πιέστε τον διακόπτη για ενεργοποίησετε το Κόκκινο Φεγγάρι</string>
 
-    <string name="add_new_filter_dialog_title">Δώστε όνομα προφίλ</string>
-    <string name="add_new_filter_edit_hint">Όνομα προφίλ</string>
-    <string name="remove_filter_dialog_title">Διαγραφή του προφίλ;</string>
-    <string name="set_dialog">Όρισε</string>
-    <string name="ok_dialog">ΟΚ</string>
-    <string name="cancel_dialog">Άκυρο</string>
+    <string name="dialog_title_add_filter">Δώστε όνομα προφίλ</string>
+    <string name="edit_hint_add_filter">Όνομα προφίλ</string>
+    <string name="dialog_title_remove_filter">Διαγραφή του προφίλ;</string>
+    <string name="dialog_button_ok">ΟΚ</string>
+    <string name="dialog_button_cancel">Άκυρο</string>
 
-    <string name="toggle_shortcut_title">Εναλλαγή φίλτρου</string>
+    <string name="shortcut_title_toggle">Εναλλαγή φίλτρου</string>
 
-    <string name="intro_slide_1_title">Καλωσόρισες!</string>
-    <string name="intro_slide_1_text">Καλωσόρισες στο Κόκκινο Φεγγάρι!</string>
+    <string name="slide_title_welcome">Καλωσόρισες!</string>
+    <string name="slide_text_welcome">Καλωσόρισες στο Κόκκινο Φεγγάρι!</string>
 
-    <string name="intro_slide_2_title">Προστατεύστε τα μάτια σας</string>
-    <string name="intro_slide_2_text">Το βράδυ, όταν κοιτάτε στο
-κινητό σας και τα πονάνε τα μάτια σας, μειώσετε την φωτεινότητα στην οθόνη με το Κόκκινο Φεγγάρι.</string>
+    <string name="slide_title_protect_eyes">Προστατεύστε τα μάτια σας</string>
+    <string name="slide_text_protect_eyes">Το βράδυ, όταν κοιτάτε στο
+        κινητό σας και τα πονάνε τα μάτια σας, μειώσετε την φωτεινότητα στην οθόνη με το Κόκκινο Φεγγάρι.</string>
 
-    <string name="intro_slide_3_title">Βελτιώστε τον ύπνο σας</string>
-    <string name="intro_slide_3_text">"Το μπλε φως καταστέλλει την
-  παραγωγή μελατονίνης, μια ορμόνη που σας βοηθά να κοιμηθείτε το
-  βράδυ. Το κόκκινο φεγγάρι αφαιρεί το μπλε φως από την οθόνη σας, εξασφαλίζοντας
-  ότι μπορείτε να κοιμηθείτε εύκολα."</string>
+    <string name="slide_title_improve_sleep">Βελτιώστε τον ύπνο σας</string>
+    <string name="slide_text_improve_sleep">"Το μπλε φως καταστέλλει την
+        παραγωγή μελατονίνης, μια ορμόνη που σας βοηθά να κοιμηθείτε το
+        βράδυ. Το κόκκινο φεγγάρι αφαιρεί το μπλε φως από την οθόνη σας, εξασφαλίζοντας
+        ότι μπορείτε να κοιμηθείτε εύκολα."</string>
 
-    <string name="intro_slide_4_title">Ξεκινήστε!</string>
-    <string name="intro_slide_4_text">Για να ενεργοποιήσετε το Κόκκινο Φεγγάρι, πατήστε
-τον διακόπτη πάνω δεξιά στη γωνία.</string>
+    <string name="slide_title_get_started">Ξεκινήστε!</string>
+    <string name="slide_text_get_started">Για να ενεργοποιήσετε το Κόκκινο Φεγγάρι, πατήστε
+        τον διακόπτη πάνω δεξιά στη γωνία.</string>
 
-    <string name="standard_profiles_array_0">Εξατομίκευση</string>
-    <string name="standard_profiles_array_1">Προεπιλογή</string>
-    <string name="standard_profiles_array_2">Ανάγνωση</string>
+    <string name="filter_name_custom">Εξατομίκευση</string>
+    <string name="filter_name_default">Προεπιλογή</string>
+    <string name="filter_name_bed_reading">Ανάγνωση</string>
 
     <string name="time_toggle_options_array_0">Χειροκίνητο</string>
     <string name="time_toggle_options_array_1">Αυτόματο (ήλιος)</string>
     <string name="time_toggle_options_array_2">Αυτόματο (εξατομικευμένο)</string>
 
     <string name="app_name">Κόκκινο Φεγγάρι</string>
-    <string name="settings">Κόκκινο Φεγγάρι</string>
-    <string name="shortcut_activity">Κόκκινο Φεγγάρι εναλλαγή</string>
+    <string name="activity_main">Κόκκινο Φεγγάρι</string>
+    <string name="activity_shortcut">Κόκκινο Φεγγάρι εναλλαγή</string>
     <!-- Currently unused -->
     <string name="add_new_profile_dialog_title">Δώστε όνομα προφίλ</string>
     <string name="add_new_profile_edit_hint">Όνομα προφίλ</string>
@@ -100,4 +97,7 @@
     <string name="pref_title_appearance">Φίλτρο</string>
     <string name="searching_location">Αναζήτηση της τοποθεσίας σας</string>
     <string name="toast_warning_no_location">Ενεργοποιήστε τις υπηρεσίες τοποθεσίας για ενημέρωση τοποθεσίας</string>
-    </resources>
+    <string name="set_dialog">Όρισε</string>
+    <string name="notification_status_running">Σε λειτουργία. Σε παύση για την εγκατάσταση των apks</string>
+    <string name="notification_status_running_no_warning">Σε λειτουργία</string>
+</resources>

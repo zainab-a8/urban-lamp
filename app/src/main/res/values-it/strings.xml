@@ -1,73 +1,71 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <string name="app_name">Red Moon</string>
-    <string name="settings">Red Moon</string>
-    <string name="shortcut_activity">Pulsante di Red Moon</string>
-    <string name="intro_label">Introduzione</string>
-    <string name="show_intro_text">Mostra Introduzione</string>
+    <string name="activity_main">Red Moon</string>
+    <string name="activity_shortcut">Pulsante di Red Moon</string>
+    <string name="activity_intro">Introduzione</string>
+    <string name="menu_show_intro">Mostra Introduzione</string>
 
-    <string name="running">In esecuzione. Mettere in pausa per installare apk</string>
-    <string name="paused">In pausa</string>
-    <string name="resume_action">Riprendi</string>
-    <string name="pause_action">Ferma</string>
+    <string name="notification_status_paused">In pausa</string>
+    <string name="notification_action_resume">Riprendi</string>
+    <string name="notification_action_pause">Ferma</string>
 
-    <string name="pref_title_filter">Filtro</string>
-    <string name="time_toggle_activity">Tempo di funzionamento</string>
+    <string name="pref_category_filter">Filtro</string>
+    <string name="activity_timer">Tempo di funzionamento</string>
     <string name="pref_title_time_toggle">Tempo di funzionamento</string>
     <string name="pref_title_startup">Avvio</string>
-    <string name="pref_title_other">Altro</string>
+    <string name="pref_category_other">Altro</string>
 
-    <string name="button_add_profile">Aggiungi</string>
-    <string name="button_remove_profile">Elimina</string>
-    <string name="shades_dim_level">Livello di oscuramento</string>
-    <string name="shades_intensity_level">Livello di intensità</string>
-    <string name="shades_color_temp">Temperatura del colore</string>
-    <string name="control_brightness_title">Riduci luminosià</string>
+    <string name="button_add_filter">Aggiungi</string>
+    <string name="button_remove_filter">Elimina</string>
+    <string name="pref_title_dim_level">Livello di oscuramento</string>
+    <string name="pref_title_intensity">Livello di intensità</string>
+    <string name="pref_title_color_temp">Temperatura del colore</string>
+    <string name="pref_title_lower_brightness">Riduci luminosià</string>
 
     <string name="time_toggle_title">Modalità di attivazione</string>
-    <string name="custom_start_time_title">Riprendi alle</string>
-    <string name="custom_end_time_title">Ferma alle</string>
-    <string name="location_title">Posizione</string>
+    <string name="pref_title_start_time">Riprendi alle</string>
+    <string name="pref_title_end_time">Ferma alle</string>
+    <string name="pref_title_location">Posizione</string>
     <string name="location_not_set">Non impostata</string>
     <string name="latitude_short">Lat</string>
     <string name="longitude_short">Long</string>
     <string name="snackbar_searching_location">Cercando la posizione</string>
 
-    <string name="dark_theme">Tema scuro</string>
+    <string name="menu_dark_theme">Tema scuro</string>
 
-    <string name="email_me_title">Inviami mail all\'indirizzo marienraat@riseup.net</string>
-    <string name="email_me_summary">Inviami mail con bug e proposte</string>
-    <string name="project_page_title">Visita la pagina del progetto </string>
-    <string name="project_page_summary">Trova più informazioni, lascia feedback e contribuisci</string>
+    <string name="pref_title_email_developer">Inviami mail all\'indirizzo marienraat@riseup.net</string>
+    <string name="pref_summary_email_developer">Inviami mail con bug e proposte</string>
+    <string name="pref_title_project_page">Visita la pagina del progetto </string>
+    <string name="pref_summary_project_page">Trova più informazioni, lascia feedback e contribuisci</string>
     <string name="toast_warning_install">Non sarai in grado di installare APK quando il filtro é in esecuzione.</string>
     <string name="snackbar_warning_no_location">Attiva is servizi di geolocalizzazione per aggiornare la posizione</string>
 
     <string name="help_snackbar_text">Premi il pulsante per attivare Red Moon</string>
 
-    <string name="add_new_filter_dialog_title">Inserisci il nome del profilo</string>
-    <string name="add_new_filter_edit_hint">Nome del profilo</string>
-    <string name="remove_filter_dialog_title">Cancella questo profilo?</string>
-    <string name="set_dialog">Imposta</string>
-    <string name="ok_dialog">OK</string>
-    <string name="cancel_dialog">Annulla</string>
+    <string name="dialog_title_add_filter">Inserisci il nome del profilo</string>
+    <string name="edit_hint_add_filter">Nome del profilo</string>
+    <string name="dialog_title_remove_filter">Cancella questo profilo?</string>
+    <string name="dialog_button_ok">OK</string>
+    <string name="dialog_button_cancel">Annulla</string>
 
-    <string name="toggle_shortcut_title">Attiva Filtro</string>
+    <string name="shortcut_title_toggle">Attiva Filtro</string>
 
-    <string name="intro_slide_1_title">Benvenuto!</string>
-    <string name="intro_slide_1_text">Benvenuto in Red Moon!</string>
+    <string name="slide_title_welcome">Benvenuto!</string>
+    <string name="slide_text_welcome">Benvenuto in Red Moon!</string>
 
-    <string name="intro_slide_2_title">Protegge i tuoi occhi</string>
-    <string name="intro_slide_2_text">Di notte, quando guardare il tuo smartphone fa male agli occhi, puoi usare Red Moon per oscurare il tuo schermo.</string>
+    <string name="slide_title_protect_eyes">Protegge i tuoi occhi</string>
+    <string name="slide_text_protect_eyes">Di notte, quando guardare il tuo smartphone fa male agli occhi, puoi usare Red Moon per oscurare il tuo schermo.</string>
 
-    <string name="intro_slide_3_title">Migliora il sonno</string>
-    <string name="intro_slide_3_text">La luce blu sopprime la produzione di Melatonina, un ormone che ti aiuta ad addormentarti la notte. Red Moon rimuove la luce blu dal tuo schermo, facendo sì che tu possa addormentarti facilmente.</string>
+    <string name="slide_title_improve_sleep">Migliora il sonno</string>
+    <string name="slide_text_improve_sleep">La luce blu sopprime la produzione di Melatonina, un ormone che ti aiuta ad addormentarti la notte. Red Moon rimuove la luce blu dal tuo schermo, facendo sì che tu possa addormentarti facilmente.</string>
 
-    <string name="intro_slide_4_title">Inizia!</string>
-    <string name="intro_slide_4_text">Per abilitare Red Moon, premi il pulsante in alto a destra.</string>
+    <string name="slide_title_get_started">Inizia!</string>
+    <string name="slide_text_get_started">Per abilitare Red Moon, premi il pulsante in alto a destra.</string>
 
-    <string name="standard_profiles_array_0">Personalizzato</string>
-    <string name="standard_profiles_array_1">Default</string>
-    <string name="standard_profiles_array_2">Lettura</string>
+    <string name="filter_name_custom">Personalizzato</string>
+    <string name="filter_name_default">Default</string>
+    <string name="filter_name_bed_reading">Lettura</string>
 
     <string name="time_toggle_options_array_0">Manualo</string>
     <string name="time_toggle_options_array_1">Automatico (sole)</string>
@@ -80,4 +78,6 @@
     <string name="pref_title_appearance">Filtro</string>
     <string name="searching_location">Cercando la posizione</string>
     <string name="toast_warning_no_location">Attiva is servizi di geolocalizzazione per aggiornare la posizione</string>
-    </resources>
+    <string name="set_dialog">Imposta</string>
+    <string name="notification_status_running">In esecuzione. Mettere in pausa per installare apk</string>
+</resources>

@@ -66,8 +66,6 @@ open class TimePickerPreference(context: Context, attrs: AttributeSet) : DialogP
     }
 
     override fun onCreateDialogView(): View {
-        positiveButtonText = context.resources.getString(R.string.set_dialog)
-        negativeButtonText = context.resources.getString(R.string.cancel_dialog)
         mTimePicker = TimePicker(context)
         mTimePicker.setIs24HourView(DateFormat.is24HourFormat(context))
         return mTimePicker

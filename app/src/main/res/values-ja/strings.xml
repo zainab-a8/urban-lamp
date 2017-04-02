@@ -1,114 +1,111 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <string name="app_name">レッドムーン</string>
-    <string name="shortcut_activity">レッドムーンの切り替え</string>
+    <string name="activity_shortcut">レッドムーンの切り替え</string>
 
-    <string name="running">実行中です。オフにして apk をインストールしてください</string>
-    <string name="paused">一時停止しました</string>
+    <string name="notification_status_paused">一時停止しました</string>
 
-    <string name="pref_title_filter">プロファイル</string>
-    <string name="time_toggle_activity">時間のフィルター</string>
+    <string name="pref_category_filter">プロファイル</string>
+    <string name="activity_timer">時間のフィルター</string>
     <string name="pref_title_time_toggle">時間のフィルター</string>
     <string name="pref_title_startup">スタートアップ</string>
-    <string name="pref_title_other">その他</string>
+    <string name="pref_category_other">その他</string>
 
-    <string name="button_add_profile">追加</string>
-    <string name="button_remove_profile">削除</string>
-    <string name="shades_dim_level">明るさレベル</string>
-    <string name="shades_intensity_level">強度レベル</string>
-    <string name="shades_color_temp">色温度</string>
-    <string name="control_brightness_title">低輝度</string>
+    <string name="button_add_filter">追加</string>
+    <string name="button_remove_filter">削除</string>
+    <string name="pref_title_dim_level">明るさレベル</string>
+    <string name="pref_title_intensity">強度レベル</string>
+    <string name="pref_title_color_temp">色温度</string>
+    <string name="pref_title_lower_brightness">低輝度</string>
 
     <string name="time_toggle_title">モードの切り替え</string>
-    <string name="custom_start_time_title">オンにする時刻</string>
-    <string name="custom_end_time_title">オフにする時刻</string>
-    <string name="location_title">場所</string>
+    <string name="pref_title_start_time">オンにする時刻</string>
+    <string name="pref_title_end_time">オフにする時刻</string>
+    <string name="pref_title_location">太陽からの回数</string>
     <string name="location_not_set">場所が設定されていません</string>
     <string name="latitude_short">緯度</string>
     <string name="longitude_short">経度</string>
     <string name="snackbar_searching_location">場所の検索中</string>
 
-    <string name="dark_theme">ダークテーマ</string>
+    <string name="menu_dark_theme">ダークテーマ</string>
 
-    <string name="email_me_title">marienraat@riseup.net までメールください</string>
-    <string name="email_me_summary">私にバグや提案をメールしてください</string>
-    <string name="project_page_title">プロジェクトページをご覧ください</string>
-    <string name="project_page_summary">さらに詳しい情報を探す、フィードバックを残す、貢献する</string>
+    <string name="pref_title_email_developer">marienraat@riseup.net までメールください</string>
+    <string name="pref_summary_email_developer">私にバグや提案をメールしてください</string>
+    <string name="pref_title_project_page">プロジェクトページをご覧ください</string>
+    <string name="pref_summary_project_page">さらに詳しい情報を探す、フィードバックを残す、貢献する</string>
     <string name="toast_warning_install">Red Moon がオンのときは APK をインストールできません。</string>
     <string name="snackbar_warning_no_location">位置情報サービスを有効にして、場所を更新してください</string>
 
     <string name="help_snackbar_text">スイッチを押すと、レッドムーンを有効にします</string>
 
-    <string name="add_new_filter_dialog_title">プロファイル名を入力してください</string>
-    <string name="add_new_filter_edit_hint">プロファイル名</string>
-    <string name="remove_filter_dialog_title">このプロファイルを削除しますか?</string>
-    <string name="set_dialog">設定</string>
-    <string name="ok_dialog">OK</string>
-    <string name="cancel_dialog">キャンセル</string>
+    <string name="dialog_title_add_filter">プロファイル名を入力してください</string>
+    <string name="edit_hint_add_filter">プロファイル名</string>
+    <string name="dialog_title_remove_filter">このプロファイルを削除しますか?</string>
+    <string name="dialog_button_ok">OK</string>
+    <string name="dialog_button_cancel">キャンセル</string>
 
-    <string name="toggle_shortcut_title">Red Moon の切り替え</string>
+    <string name="shortcut_title_toggle">Red Moon の切り替え</string>
 
-    <string name="settings">レッドムーン</string>
-    <string name="standard_profiles_array_0">カスタム</string>
-    <string name="standard_profiles_array_1">デフォルト</string>
-    <string name="standard_profiles_array_2">読書</string>
+    <string name="activity_main">レッドムーン</string>
+    <string name="filter_name_custom">カスタム</string>
+    <string name="filter_name_default">デフォルト</string>
+    <string name="filter_name_bed_reading">読書</string>
 
     <string name="time_toggle_options_array_0">手動</string>
     <string name="time_toggle_options_array_1">自動 (太陽)</string>
     <string name="time_toggle_options_array_2">自動 (カスタム)</string>
 
-    <string name="resume_action">再開</string>
-    <string name="pause_action">一時停止</string>
+    <string name="notification_action_resume">再開</string>
+    <string name="notification_action_pause">一時停止</string>
 
-    <string name="intro_slide_1_title">ようこそ!</string>
-    <string name="intro_slide_1_text">Red Moon へようこそ!</string>
+    <string name="slide_title_welcome">ようこそ!</string>
+    <string name="slide_text_welcome">Red Moon へようこそ!</string>
 
-    <string name="intro_slide_2_title">あなたの目を保護します</string>
-    <string name="intro_slide_2_text">夜間、携帯電話を見ていて目が痛いとき、
-Red Moon を使用して画面を暗くすることができます。</string>
+    <string name="slide_title_protect_eyes">あなたの目を保護します</string>
+    <string name="slide_text_protect_eyes">夜間、携帯電話を見ていて目が痛いとき、
+        Red Moon を使用して画面を暗くすることができます。</string>
 
-    <string name="intro_slide_3_title">あなたの睡眠を改善します</string>
-    <string name="intro_slide_3_text">ブルーライトは、夜眠りに落ちるために役立つホルモン、
-メラトニンの生産を抑制します。 Red Moon は、画面から青い光を除去して、
-容易に眠りに落ちることができるようにします。</string>
+    <string name="slide_title_improve_sleep">あなたの睡眠を改善します</string>
+    <string name="slide_text_improve_sleep">ブルーライトは、夜眠りに落ちるために役立つホルモン、
+        メラトニンの生産を抑制します。 Red Moon は、画面から青い光を除去して、
+        容易に眠りに落ちることができるようにします。</string>
 
-    <string name="intro_slide_4_title">はじめましょう!</string>
-    <string name="intro_slide_4_text">右上のスイッチで Red Moon 
-をオン、オフにします。</string>
+    <string name="slide_title_get_started">はじめましょう!</string>
+    <string name="slide_text_get_started">右上のスイッチで Red Moon 
+        をオン、オフにします。</string>
 
-    <string name="intro_label">イントロ</string>
-    <string name="show_intro_text">イントロをリプレイ</string>
+    <string name="activity_intro">イントロ</string>
+    <string name="menu_show_intro">イントロをリプレイ</string>
 
     <string name="text_switch_on">オン</string>
     <string name="text_switch_off">オフ</string>
-    <string name="secure_suspend_summary">Red Moon がオン*のときには、いくつかの機能が動作しません。たとえば、APK のインストール、アクセス許可の付与、(root 化したデバイスで) SuperUser アプリの使用。
+    <string name="pref_summary_secure_suspend">Red Moon がオン*のときには、いくつかの機能が動作しません。たとえば、APK のインストール、アクセス許可の付与、(root 化したデバイスで) SuperUser アプリの使用。
 
-この設定を有効にすると、これらの機能のいずれかが開かれている間 Red Moon が一時停止します。
+        この設定を有効にすると、これらの機能のいずれかが開かれている間 Red Moon が一時停止します。
 
-この機能は、お使いのデバイスのバッテリ寿命を少し減らすことがあります。さらにこの機能はすべてのデバイスでは動作しない可能性があります。
+        この機能は、お使いのデバイスのバッテリ寿命を少し減らすことがあります。さらにこの機能はすべてのデバイスでは動作しない可能性があります。
 
-* Red Moon は、画面全体にわたって透明な赤のレイヤーを描画することによって動作します。別のアプリがアプリの上に描画する場合、これらのアプリは動作しません。そうすれば、他のアプリが、望まないオプションを選ばせて騙したり、タッチを見て何をやっているか把握することができません。</string>
-    <string name="usage_stats_dialog_message">次の画面で使用状況へのアクセスを許可して、Red Moon がセキュリティで保護されたアプリを一時停止できるようにします。
+        * Red Moon は、画面全体にわたって透明な赤のレイヤーを描画することによって動作します。別のアプリがアプリの上に描画する場合、これらのアプリは動作しません。そうすれば、他のアプリが、望まないオプションを選ばせて騙したり、タッチを見て何をやっているか把握することができません。</string>
+    <string name="dialog_message_permission_usage_stats">次の画面で使用状況へのアクセスを許可して、Red Moon がセキュリティで保護されたアプリを一時停止できるようにします。
 
-Red Moon がオンのときに作動しないと思われるアプリを使用しているかどうかを確認するためだけに、このデータを使用します。</string>
+        Red Moon がオンのときに作動しないと思われるアプリを使用しているかどうかを確認するためだけに、このデータを使用します。</string>
 
-    <string name="secure_suspend_activity">セキュリティで保護されたアプリで一時停止</string>
+    <string name="activity_secure_suspend">セキュリティで保護されたアプリで一時停止</string>
 
-    <string name="secure_suspend_title">セキュリティで保護されたアプリで一時停止</string>
-    <string name="usage_stats_dialog_title">使用状況のアクセス</string>
-    <string name="running_no_warning">実行中</string>
-    <string name="overlay_dialog_title">他のアプリ上に描画</string>
-    <string name="overlay_dialog_message">次の画面で他のアプリ上に描画を許可して、Red Moon をオンにできるようにします。</string>
+    <string name="pref_title_secure_suspend">セキュリティで保護されたアプリで一時停止</string>
+    <string name="dialog_title_permission_usage_stats">使用状況のアクセス</string>
+    <string name="dialog_title_permission_overlay">他のアプリ上に描画</string>
+    <string name="dialog_message_permission_overlay">次の画面で他のアプリ上に描画を許可して、Red Moon をオンにできるようにします。</string>
 
-    <string name="write_settings_dialog_title">システム設定の変更</string>
-    <string name="write_settings_dialog_message">次の画面でシステム設定の変更を許可して、Red Moon が明るさレベルを変更できるようにします。</string>
+    <string name="dialog_title_permission_write_settings">システム設定の変更</string>
+    <string name="dialog_message_permission_write_settings">次の画面でシステム設定の変更を許可して、Red Moon が明るさレベルを変更できるようにします。</string>
 
-    <string name="off">オフ</string>
-    <string name="action_on">オンにする</string>
-    <string name="action_off">オフにする</string>
+    <string name="notification_status_off">オフ</string>
+    <string name="notification_action_turn_on">オンにする</string>
+    <string name="notification_action_turn_off">オフにする</string>
 
-    <string name="pref_summaryoff_use_location">場所に基づいて</string>
-    <string name="action_next_filter">次のプロファイル</string>
+    <string name="pref_summary_location_off">場所に基づいて</string>
+    <string name="notification_action_next_filter">次のプロファイル</string>
 
     <string name="menu_about">アプリについて</string>
     <string name="activity_about">Red Moon について</string>
@@ -117,22 +114,25 @@ Red Moon がオンのときに作動しないと思われるアプリを使用�
 
     <string name="pref_summary_integration">LibreTasks や Tasker のような一部のアプリでは、特定のイベントが発生したときに、タスクを自動化することができます。Red Moon はオンまたはオフになったときに、それらのアプリが応答できるように公開の通知を送信します。使用しない、またはこれらのアプリを開発する場合、次のパラグラフを無視することができます。
 
-Red Moon は、アクション \'com.jmstudios.redmoon.RED_MOON_TOGGLED\' で公開インテントをブロードキャストします。インテントには、Red Moon がオンまたはオフに切り替えられているかどうかを示すブール値の拡張がキー \'jmstudios.bundle.key.FILTER_IS_ON\' で含まれます。</string>
-<!-- Currently unused -->
+        Red Moon は、アクション \'com.jmstudios.redmoon.RED_MOON_TOGGLED\' で公開インテントをブロードキャストします。インテントには、Red Moon がオンまたはオフに切り替えられているかどうかを示すブール値の拡張がキー \'jmstudios.bundle.key.FILTER_IS_ON\' で含まれます。</string>
+    <!-- Currently unused -->
     <string name="add_new_profile_dialog_title">プロファイル名を入力してください</string>
     <string name="add_new_profile_edit_hint">プロファイル名</string>
     <string name="remove_profile_dialog_title">このプロファイルを削除しますか?</string>
     <string name="action_next_profile">次のプロファイル</string>
     <string name="pref_title_appearance">プロファイル</string>
-    <string name="pref_title_button_backlight_disclaimer">一部のデバイスでは効果がありません</string>
+    <string name="pref_category_button_backlight_disclaimer">一部のデバイスでは効果がありません</string>
     <string name="pref_title_button_backlight">ハードウェアボタンのバックライト</string>
 
-    <string name="pref_button_backlight_entries_array_0">システム管理</string>
-    <string name="pref_button_backlight_entries_array_1">薄暗いレベルのフィルターを使用</string>
-    <string name="pref_button_backlight_entries_array_2">オフにする</string>
+    <string name="pref_entry_button_backlight_system">システム管理</string>
+    <string name="pref_entry_button_backlight_filter_dim_level">薄暗いレベルのフィルターを使用</string>
+    <string name="pref_entry_button_backlight_turn_off">オフにする</string>
 
     <string name="searching_location">場所の検索中</string>
     <string name="toast_warning_no_location">位置情報サービスを有効にして、場所を更新してください</string>
-    <string name="pref_title_use_location">太陽からの回数</string>
     <string name="snackbar_location_updated">場所が見つかりました!</string>
-    </resources>
+    <string name="location">場所</string>
+    <string name="set_dialog">設定</string>
+    <string name="notification_status_running">実行中です。オフにして apk をインストールしてください</string>
+    <string name="notification_status_running_no_warning">実行中</string>
+</resources>

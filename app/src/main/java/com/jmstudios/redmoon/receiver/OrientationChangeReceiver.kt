@@ -41,7 +41,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import com.jmstudios.redmoon.util.appContext
 
-class OrientationChangeReceiver(private val mListener: OrientationChangeReceiver.OnOrientationChangeListener) : BroadcastReceiver() {
+class OrientationChangeReceiver(private val mListener: OnOrientationChangeListener) : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_CONFIGURATION_CHANGED) {

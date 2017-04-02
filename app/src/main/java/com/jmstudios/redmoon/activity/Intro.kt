@@ -25,23 +25,23 @@ import com.jmstudios.redmoon.R
 
 class Intro : AppIntro() {
     override fun init(savedInstanceState: Bundle?) {
-        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_slide_1_title),
-                getString(R.string.intro_slide_1_text),
+        addSlide(AppIntroFragment.newInstance(getString(R.string.slide_title_welcome),
+                getString(R.string.slide_text_welcome),
                 R.drawable.intro_slide_1,
                 0xFFD32F2F.toInt()))
 
-        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_slide_2_title),
-                getString(R.string.intro_slide_2_text),
+        addSlide(AppIntroFragment.newInstance(getString(R.string.slide_title_protect_eyes),
+                getString(R.string.slide_text_protect_eyes),
                 R.drawable.intro_slide_2,
                 0xFF2196F3.toInt()))
 
-        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_slide_3_title),
-                getString(R.string.intro_slide_3_text),
+        addSlide(AppIntroFragment.newInstance(getString(R.string.slide_title_improve_sleep),
+                getString(R.string.slide_text_improve_sleep),
                 R.drawable.intro_slide_3,
                 0xFF388E3C.toInt()))
 
-        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_slide_4_title),
-                getString(R.string.intro_slide_4_text),
+        addSlide(AppIntroFragment.newInstance(getString(R.string.slide_title_get_started),
+                getString(R.string.slide_text_get_started),
                 R.drawable.intro_slide_4,
                 0xFFFFB300.toInt()))
     }

@@ -26,18 +26,23 @@
 
     <item
         android:id="@+id/menu_dark_theme"
-        android:title="@string/dark_theme"
+        android:title="@string/menu_dark_theme"
         android:checkable="true"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/show_intro_button"
-        android:title="@string/show_intro_text"
+        android:id="@+id/menu_restore_default_filters"
+        android:title="@string/menu_restore_default_filters"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_show_intro"
+        android:title="@string/menu_show_intro"
         app:showAsAction="never"
         android:icon="@drawable/ic_help_white_24dp"/>
 
     <item
-        android:id="@+id/about_button"
+        android:id="@+id/menu_about"
         android:title="@string/menu_about"
         app:showAsAction="never"/>
 </menu>

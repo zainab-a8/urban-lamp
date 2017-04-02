@@ -47,16 +47,19 @@ import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.fragment.FilterFragment
 import com.jmstudios.redmoon.model.Config
+import com.jmstudios.redmoon.model.ProfilesModel
 import com.jmstudios.redmoon.service.ScreenFilterService
-import com.jmstudios.redmoon.util.Logger
-import com.jmstudios.redmoon.util.handleUpgrades
-import com.jmstudios.redmoon.util.requestOverlayPermission
+import com.jmstudios.redmoon.helper.EventBus
+import com.jmstudios.redmoon.helper.Logger
+import com.jmstudios.redmoon.helper.Permission
+import com.jmstudios.redmoon.helper.upgrade
 
 import de.cketti.library.changelog.ChangeLog
-import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 class MainActivity : ThemedAppCompatActivity() {
+
+    data class UI(val isOpen: Boolean) : EventBus.Event
 
     companion object : Logger() {
         const val EXTRA_FROM_SHORTCUT_BOOL = "com.jmstudios.redmoon.activity.MainActivity.EXTRA_FROM_SHORTCUT_BOOL"
@@ -68,7 +71,7 @@ class MainActivity : ThemedAppCompatActivity() {
     lateinit private var mSwitch : Switch
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        handleUpgrades()
+        upgrade()
         val intent = intent
         Log.i("Got intent")
         val fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false)
@@ -78,13 +81,13 @@ class MainActivity : ThemedAppCompatActivity() {
         if (!Config.introShown) { startIntro() }
         ChangeLog(this).run { if (isFirstRun) logDialog.show() }
 
-        EventBus.getDefault().postSticky(mainUI(isOpen = true))
+        EventBus.postSticky(UI(isOpen = true))
         // The preview will appear faster if we don't have to start the service
         ScreenFilterService.start()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_activity_menu, menu)
+        menuInflater.inflate(R.menu.menu_activity_main, menu)
 
         menu.findItem(R.id.menu_dark_theme).isChecked = Config.darkThemeFlag
 
@@ -105,16 +108,16 @@ class MainActivity : ThemedAppCompatActivity() {
         super.onResume()
         // The switch is null here, so we can't set its position directly.
         invalidateOptionsMenu()
-        EventBus.getDefault().register(this)
+        EventBus.register(this)
     }
 
     override fun onPause() {
-        EventBus.getDefault().unregister(this)
+        EventBus.unregister(this)
         super.onPause()
     }
 
     override fun onDestroy() {
-        EventBus.getDefault().postSticky(mainUI(isOpen = false))
+        EventBus.postSticky(UI(isOpen = false))
         super.onDestroy()
     }
 
@@ -127,16 +130,20 @@ class MainActivity : ThemedAppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         when (item.itemId) {
-            R.id.show_intro_button -> {
+            R.id.menu_show_intro -> {
                 startIntro()
             }
-            R.id.about_button -> {
+            R.id.menu_about -> {
                 val aboutIntent = Intent(this, AboutActivity::class.java)
                 startActivity(aboutIntent)
             }
             R.id.menu_dark_theme -> {
                 Config.darkThemeFlag = !Config.darkThemeFlag
                 recreate()
+            }
+            R.id.menu_restore_default_filters -> {
+                Config.amountProfiles = ProfilesModel.reset()
+                Config.profile = 1
             }
             else -> return super.onOptionsItemSelected(item)
         }
@@ -162,6 +169,6 @@ class MainActivity : ThemedAppCompatActivity() {
     @Subscribe
     fun onOverlayPermissionDenied(event: overlayPermissionDenied) {
         mSwitch.isChecked = false
-        requestOverlayPermission(this)
+        Permission.Overlay.request(this)
     }
 }

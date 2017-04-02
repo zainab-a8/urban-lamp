@@ -37,33 +37,33 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <PreferenceCategory android:title="@string/pref_title_filter">
+  <PreferenceCategory android:title="@string/pref_category_filter">
     <com.jmstudios.redmoon.preference.ProfileSelectorPreference
         android:key="@string/pref_key_profile_spinner"
         android:defaultValue="1"/>
 
     <com.jmstudios.redmoon.preference.ColorSeekBarPreference
-        android:title="@string/shades_color_temp"
+        android:title="@string/pref_title_color_temp"
         android:key="@string/pref_key_color"
         android:defaultValue="10" />
 
     <com.jmstudios.redmoon.preference.IntensitySeekBarPreference
-        android:title="@string/shades_intensity_level"
+        android:title="@string/pref_title_intensity"
         android:key="@string/pref_key_intensity"
         android:defaultValue="50" />
 
     <com.jmstudios.redmoon.preference.DimSeekBarPreference
-        android:title="@string/shades_dim_level"
+        android:title="@string/pref_title_dim_level"
         android:key="@string/pref_key_dim"
         android:defaultValue="50" />
 
-    <SwitchPreference
+    <CheckBoxPreference
         android:key="@string/pref_key_lower_brightness"
-        android:title="@string/control_brightness_title"
+        android:title="@string/pref_title_lower_brightness"
         android:defaultValue="false" />
   </PreferenceCategory>
 
-  <PreferenceCategory android:title="@string/pref_title_other">
+  <PreferenceCategory android:title="@string/pref_category_other">
     <Preference
         android:title="@string/pref_title_time_toggle"
         android:key="@string/pref_key_time_toggle_header">
@@ -73,7 +73,7 @@
     </Preference>
 
     <Preference
-        android:title="@string/secure_suspend_title"
+        android:title="@string/pref_title_secure_suspend"
         android:key="@string/pref_key_secure_suspend_header">
         <intent
             android:targetPackage="@string/applicationId"
@@ -82,13 +82,13 @@
 
   </PreferenceCategory>
 
-  <PreferenceCategory android:title="@string/pref_title_button_backlight_disclaimer" >
+  <PreferenceCategory android:title="@string/pref_category_button_backlight_disclaimer" >
     <ListPreference
         android:key="@string/pref_key_button_backlight"
         android:title="@string/pref_title_button_backlight"
         android:entries="@array/pref_button_backlight_entries"
         android:entryValues="@array/pref_button_backlight_values"
-        android:defaultValue="@string/pref_button_backlight_values_array_2">
+        android:defaultValue="@string/pref_value_button_backlight_turn_off">
     </ListPreference>
   </PreferenceCategory>
 </PreferenceScreen>

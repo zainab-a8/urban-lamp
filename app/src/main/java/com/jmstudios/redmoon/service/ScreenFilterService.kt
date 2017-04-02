@@ -45,52 +45,49 @@ import android.content.IntentFilter
 import android.os.IBinder
 import android.view.WindowManager
 
+import com.jmstudios.redmoon.helper.Logger
+import com.jmstudios.redmoon.manager.BrightnessManager
+import com.jmstudios.redmoon.manager.CurrentAppMonitor
 import com.jmstudios.redmoon.manager.ScreenManager
 import com.jmstudios.redmoon.manager.WindowViewManager
 import com.jmstudios.redmoon.presenter.ScreenFilterPresenter
 import com.jmstudios.redmoon.receiver.OrientationChangeReceiver
+import com.jmstudios.redmoon.util.*
 import com.jmstudios.redmoon.view.ScreenFilterView
-import com.jmstudios.redmoon.util.appContext
-import com.jmstudios.redmoon.util.Logger
 
 class ScreenFilterService : Service(), ServiceLifeCycleController {
     enum class Command {
         ON, OFF, SHOW_PREVIEW, HIDE_PREVIEW, START_SUSPEND, STOP_SUSPEND, TOGGLE
     }
 
-    lateinit private var mPresenter: ScreenFilterPresenter
-    private var mOrientationReceiver: OrientationChangeReceiver? = null
+    private lateinit var mPresenter:           ScreenFilterPresenter
+    private lateinit var mOrientationReceiver: OrientationChangeReceiver
 
     override fun onCreate() {
         super.onCreate()
 
         Log.i("onCreate")
 
-        // Initialize helpers and managers
-        val context = this
-        val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val view = ScreenFilterView(context)
-        val wvm = WindowViewManager(windowManager, view)
-        val sm = ScreenManager(this, windowManager)
+        // If we ever support a root mode, pass a different view here
+        val view = ScreenFilterView(this)
+        val wMan = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val sMan = ScreenManager(this, wMan)
+        val ctx  = this
 
-        // Wire MVP classes
-        mPresenter = ScreenFilterPresenter(this, context, wvm, sm)
+        mPresenter = ScreenFilterPresenter(ctx, this, WindowViewManager(view, sMan, wMan),
+                                           CurrentAppMonitor(this), BrightnessManager(this))
 
-        // Make Presenter listen to settings changes and orientation changes
-        if (mOrientationReceiver == null) {
-            val orientationIntentFilter = IntentFilter()
-            orientationIntentFilter.addAction(Intent.ACTION_CONFIGURATION_CHANGED)
-
-            mOrientationReceiver = OrientationChangeReceiver(mPresenter)
-            registerReceiver(mOrientationReceiver, orientationIntentFilter)
-        }
+        mOrientationReceiver = OrientationChangeReceiver(mPresenter)
+        registerReceiver(mOrientationReceiver, IntentFilter().apply {
+            addAction(Intent.ACTION_CONFIGURATION_CHANGED)
+        })
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         Log.i(String.format("onStartCommand(%s, %d, %d", intent, flags, startId))
         val flag = intent.getIntExtra(BUNDLE_KEY_COMMAND, COMMAND_MISSING)
         Log.i("Recieved flag: $flag")
-        if (flag != COMMAND_MISSING) mPresenter.onScreenFilterCommand(Command.values()[flag])
+        if (flag != COMMAND_MISSING) mPresenter.handleCommand(Command.values()[flag])
 
         // Do not attempt to restart if the hosting process is killed by Android
         return Service.START_NOT_STICKY
@@ -103,13 +100,8 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
 
     override fun onDestroy() {
         Log.i("onDestroy")
-
-        // TODO: make sure the filterView gets closed. Not a problem right now
-        // but without it this is brittle and bug-prone
         unregisterReceiver(mOrientationReceiver)
-        mOrientationReceiver = null
         mPresenter.updateWidgets()
-
         super.onDestroy()
     }
 

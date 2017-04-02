@@ -21,10 +21,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 
-import com.jmstudios.redmoon.helper.ProfilesHelper
-import com.jmstudios.redmoon.model.ProfilesModel
+import com.jmstudios.redmoon.helper.Logger
 import com.jmstudios.redmoon.model.Config
-import com.jmstudios.redmoon.util.Logger
 
 class NextProfileCommandReceiver : BroadcastReceiver() {
 
@@ -33,25 +31,8 @@ class NextProfileCommandReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         Log.i("Next profile requested")
 
-        // Here we just change the profile (cycles back to default
-        // when it reaches the max).
-        val profile = Config.profile
-        val amProfiles = Config.amountProfiles
-        val newProfile = if (profile + 1 >= amProfiles) 1
-                         else profile + 1
-        Config.profile = newProfile
-
-        // Next update the other settings that are based on the
-        // profile
-        if (newProfile != 0) {
-            // We need a ProfilesModel to get the properties of the
-            // profile from the index
-            val profilesModel = ProfilesModel(context)
-            val profileObject = ProfilesHelper.getProfile(profilesModel, newProfile, context)
-
-            Config.dim = profileObject.mDimProgress
-            Config.intensity = profileObject.mIntensityProgress
-            Config.color = profileObject.mColorProgress
-        }
+        // Cycles back to default when it reaches the max
+        val profile = Config.profile + 1
+        Config.profile = if (profile < Config.amountProfiles) profile else 0
     }
 }

@@ -18,153 +18,97 @@
 package com.jmstudios.redmoon.model
 
 import android.content.Context
-import android.content.SharedPreferences
 
-import java.util.ArrayList
+import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.util.Logger
+import com.jmstudios.redmoon.helper.Logger
+import com.jmstudios.redmoon.helper.Profile
+import com.jmstudios.redmoon.util.*
 
 /**
- * This class manages the SharedPreference that store all custom
+ * This singleton manages the SharedPreference that store all custom
  * filter profiles added by the user.
-
- * The profiles are stored in a separate SharedPreference, with per
- * profile a key given by "$PROFILE_NAME_$ID", where $PROFILE_NAME is
- * the name given to the profile by the user and $ID is the position
- * of the list of profiles, starting with 0 for the first custom
- * profile created by the user. A string is associated with every key
- * with the format "$PROGRESS_COLOR,$PROGRESS_INTENSITY,$PROGRESS_DIM"
+ *
+ * The profiles are stored in a separate SharedPreference, with one key-value
+ * pair per profile. The key is their position in the list of profiles
+ * (an integer as a string). The value is a JSON string.
  */
-class ProfilesModel(context: Context) {
 
-    private val mSharedPrefs: SharedPreferences
-    private val mPrefsContentsMap: Map<String, *>
-    var profiles: ArrayList<Profile>
-        private set
+object ProfilesModel: Logger() {
 
-    init {
-        Log.i("Creating ProfilesModel")
+    private const val PREFERENCE_NAME = "com.jmstudios.redmoon.PROFILES_PREFERENCE"
+    private const val MODE = Context.MODE_PRIVATE
 
-        mSharedPrefs = context.getSharedPreferences(preferenceName, mode)
-        mPrefsContentsMap = mSharedPrefs.all as Map<String, String>
-        profiles = ArrayList<Profile>()
+    private val prefs
+        get() = appContext.getSharedPreferences(PREFERENCE_NAME, MODE)
 
-        parsePrefsContents()
-    }
+    private val defaultProfiles: List<Profile> =
+            listOf(Profile(getString(R.string.filter_name_custom     ), 10, 30, 40, false),
+                   Profile(getString(R.string.filter_name_default    ), 10, 30, 40, false),
+                   Profile(getString(R.string.filter_name_bed_reading), 20, 60, 78, false),
+                   Profile(getString(R.string.filter_name_dim_only   ),  0,  0, 60,  true))
 
-    fun addProfile(profile: Profile) {
-        Log.i("Adding new profile")
-        profiles.add(profile)
-
-        updateSharedPreferences()
-    }
-
-    fun getProfile(index: Int): Profile {
-        return profiles[index]
-    }
-
-    fun removeProfile(index: Int) {
-        profiles.removeAt(index)
-
-        updateSharedPreferences()
-    }
-
-    private fun parsePrefsContents() {
-        Log.i("Parsing preference contents")
-
-        profiles = ArrayList<Profile>()
-
-        val amProfiles = mPrefsContentsMap.entries.size
-        Log.d("Allocating " + amProfiles)
-        profiles.ensureCapacity(amProfiles)
-
-        Log.d("Allocated " + amProfiles)
-
-        for (i in 0..amProfiles - 1) {
-            Log.d("Parsing " + i)
-            val profileEntry = findProfileEntry(i)
-            profiles.add(parseProfile(profileEntry))
+    private val mProfiles: ArrayList<Profile> = ArrayList(prefs.all.run {
+        if (isEmpty()) {
+            Log.i("Creating default ProfilesModel")
+            defaultProfiles
+        } else {
+            Log.i("Restoring ProfilesModel")
+            mapKeys{ (k, _) -> k.toInt() }.toSortedMap().map{ (_, v) -> Profile.parse(v as String) }
         }
-
-        Log.d("Done parsing preference contents. Parsed $amProfiles profiles.")
-    }
-
-    private fun findProfileEntry(index: Int): String {
-        Log.i("Finding entry at " + index)
-        for ((key, value) in mPrefsContentsMap) {
-            if (getIndexFromString(key) == index)
-                return key + "@" + value as String
-        }
-        return "Profile not found_0,0,0"
-    }
-
-    private fun getIndexFromString(keyString: String): Int {
-        Log.i("Parsing index from string: " + keyString)
-        val length = keyString.length
-        val idIndex = keyString.lastIndexOf('_') + 1
-        val idString = keyString.substring(idIndex, length)
-
-        Log.i("Found idString: " + idString)
-
-        return Integer.parseInt(idString)
-    }
-
-    private fun parseProfile(entry: String): Profile {
-        Log.i("Parsing entry: " + entry)
-        val key = entry.substring(0, entry.lastIndexOf("@"))
-        val values = entry.substring(entry.lastIndexOf("@") + 1, entry.length)
-
-        val profileName = getProfileNameFromString(key)
-
-        val progressValues = values
-        val firstComma = progressValues.indexOf(',')
-        val colorProgress = Integer.parseInt(progressValues.substring(0, firstComma))
-
-        val secondComma = progressValues.indexOf(',', firstComma + 1)
-        val intensityProgress = Integer.parseInt(progressValues.substring(firstComma + 1, secondComma))
-
-        val dimProgress = Integer.parseInt(progressValues.substring(secondComma + 1, progressValues.length))
-
-        val profile = Profile(profileName, colorProgress, intensityProgress, dimProgress)
-        return profile
-    }
-
-    private fun getProfileNameFromString(keyString: String): String {
-        val nameEndIndex = keyString.lastIndexOf('_')
-        val profileNameString = keyString.substring(0, nameEndIndex)
-
-        return profileNameString
-    }
+    })
 
     private fun updateSharedPreferences() {
         Log.i("Updating SharedPreferences")
-        val editor = mSharedPrefs.edit()
-        editor.clear()
-
-        for ((i, profile) in profiles.withIndex()) {
-            editor.putString(profile.getKey(i), profile.values)
+        val editor = prefs.edit()
+        editor.run {
+            clear()
+            mProfiles.forEachIndexed { index, profile ->
+                Log.i("Storing profile $index, ${profile.name}")
+                putString(index.toString(), profile.toString())
+            }
         }
-
         editor.apply()
         Log.d("Done updating SharedPreferences")
     }
 
-    class Profile(var mProfileName: String, var mColorProgress: Int,
-                  var mIntensityProgress: Int, var mDimProgress: Int) {
+    fun getProfileName(index: Int): String  = mProfiles[index].name
+    fun getProfile    (index: Int): Profile = mProfiles[index]
 
-        fun getKey(index: Int): String {
-            val id = Integer.toString(index)
-            return mProfileName + "_" + id
-        }
-
-        val values: String
-            get() = Integer.toString(mColorProgress) + "," +
-                    Integer.toString(mIntensityProgress) + "," +
-                    Integer.toString(mDimProgress)
+    fun setCustom() {
+        mProfiles[0] = Profile(color           = Config.color,
+                               intensity       = Config.intensity,
+                               dimLevel        = Config.dimLevel,
+                               lowerBrightness = Config.lowerBrightness)
     }
 
-    companion object : Logger() {
-        private const val preferenceName = "com.jmstudios.redmoon.PROFILES_PREFERENCE"
-        private const val mode = Context.MODE_PRIVATE
+    private val custom: Profile
+        get() = mProfiles[0]
+
+    fun addProfile(newName: String, fail: Int = 0): Pair<Int, Int> {
+        Log.i("addProfile $newName; Current Size: ${mProfiles.size}")
+        val profile = custom.copy(name = newName)
+        val success = mProfiles.add(profile)
+
+        if (success) { updateSharedPreferences() }
+
+        return Pair(mProfiles.size, if (success) mProfiles.indexOf(profile) else fail)
+    }
+
+    fun removeProfile(index: Int): Int {
+        val profile = mProfiles.removeAt(index)
+        Log.i("removed profile $index: ${profile.name}")
+        setCustom()
+        updateSharedPreferences()
+        return mProfiles.size
+    }
+
+    // de-dupe, then append defaults
+    fun reset(): Int = mProfiles.run {
+        remove(custom)
+        removeAll(defaultProfiles)
+        addAll(0, defaultProfiles)
+        updateSharedPreferences()
+        size
     }
 }

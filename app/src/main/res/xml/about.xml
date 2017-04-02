@@ -23,8 +23,8 @@
 
     <Preference
         android:key="@string/pref_key_github"
-        android:title="@string/project_page_title"
-        android:summary="@string/project_page_summary" >
+        android:title="@string/pref_title_project_page"
+        android:summary="@string/pref_summary_project_page" >
         <intent
             android:action="android.intent.action.VIEW"
             android:data="@string/project_page_url" />
@@ -32,8 +32,8 @@
 
     <Preference
         android:key="@string/pref_key_email"
-        android:title="@string/email_me_title"
-        android:summary="@string/email_me_summary">
+        android:title="@string/pref_title_email_developer"
+        android:summary="@string/pref_title_email_developer">
         <intent
             android:action="android.intent.action.VIEW"
             android:data="@string/contact_email_adress" />
