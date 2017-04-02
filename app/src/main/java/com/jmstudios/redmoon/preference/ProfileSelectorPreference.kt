@@ -34,29 +34,22 @@ import android.widget.Spinner
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.event.*
-import com.jmstudios.redmoon.helper.Profile
+import com.jmstudios.redmoon.helper.Logger
 import com.jmstudios.redmoon.model.ProfilesModel
 import com.jmstudios.redmoon.model.Config
-import com.jmstudios.redmoon.util.Logger
-import com.jmstudios.redmoon.util.getString
+import com.jmstudios.redmoon.util.*
 
 import org.greenrobot.eventbus.Subscribe
 
-class ProfileSelectorPreference(ctx: Context, attrs: AttributeSet) : Preference(ctx, attrs), OnItemSelectedListener {
-
+class ProfileSelectorPreference(ctx: Context, attrs: AttributeSet) : Preference(ctx, attrs),
+                                                                     OnItemSelectedListener {
     lateinit private var mProfileSpinner: Spinner
     lateinit private var mProfileActionButton: Button
     lateinit private var mView: View
-
     lateinit internal var mArrayAdapter: ArrayAdapter<CharSequence>
-
-    private var mCurrentProfile: Profile = ProfilesModel.custom
-
-    private var mIsListenerRegistered: Boolean = false
 
     init {
         layoutResource = R.layout.preference_profile_selector
-        mIsListenerRegistered = false
     }
 
     override fun onGetDefaultValue(a: TypedArray, index: Int): Any {
@@ -64,10 +57,10 @@ class ProfileSelectorPreference(ctx: Context, attrs: AttributeSet) : Preference(
     }
 
     override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any?) {
-        if (restorePersistedValue) {
-            Config.profile = getPersistedInt(DEFAULT_VALUE)
+        Config.profile = if (restorePersistedValue) {
+            getPersistedInt(DEFAULT_VALUE)
         } else {
-            Config.profile = (defaultValue as Int?)?: 0
+            (defaultValue as Int?) ?: DEFAULT_VALUE
         }
     }
 
@@ -76,7 +69,6 @@ class ProfileSelectorPreference(ctx: Context, attrs: AttributeSet) : Preference(
         super.onBindView(view)
 
         mView = view
-
         mProfileSpinner = view.findViewById(R.id.profile_spinner) as Spinner
         mProfileActionButton = view.findViewById(R.id.profile_action_button) as Button
 
@@ -90,7 +82,7 @@ class ProfileSelectorPreference(ctx: Context, attrs: AttributeSet) : Preference(
         mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         for (i in 0..Config.amountProfiles-1) {
-            mArrayAdapter.add(ProfilesModel.getProfileName(i) as CharSequence)
+            mArrayAdapter.add(ProfilesModel.getProfileName(i))
         }
 
         mProfileSpinner.adapter = mArrayAdapter
@@ -165,65 +157,42 @@ class ProfileSelectorPreference(ctx: Context, attrs: AttributeSet) : Preference(
         builder.show()
     }
 
-    private fun setCustom(profile: Profile) {
-        ProfilesModel.custom = profile
+    private fun setCustom() {
+        ProfilesModel.setCustom()
         persistInt(0)
     }
 
     //region presenter
-    @Subscribe
-    fun onProfileChanged(event: profileChanged) {
+    @Subscribe fun onProfileChanged(event: profileChanged) {
         Log.i("onProfileChanged")
-        val pos = Config.profile
-        mProfileSpinner.setSelection(pos)
+        mProfileSpinner.setSelection(Config.profile)
         updateButtonSetup()
-        mCurrentProfile = ProfilesModel.getProfile(pos)
     }
 
-    @Subscribe
-    fun onAmountProfilesChanged(event: amountProfilesChanged) {
-        initLayout()
-    }
+    @Subscribe fun onAmountProfilesChanged(event: amountProfilesChanged) = initLayout()
 
-    @Subscribe
-    fun onDimChanged(event: dimChanged) {
+    @Subscribe fun onDimLevelChanged(event: dimLevelChanged) {
         Log.i("onDimChanged")
-        val newDim = Config.dim
-        if (newDim != mCurrentProfile.dim) {
-            setCustom(mCurrentProfile.copy(dim = newDim))
-
-        }
+        if (Config.dimLevel != activeProfile.dimLevel) { setCustom() }
     }
 
-    @Subscribe
-    fun onIntensityChanged(event: intensityChanged) {
+    @Subscribe fun onIntensityChanged(event: intensityChanged) {
         Log.i("onIntensityChanged")
-        val newIntensity = Config.intensity
-        if (newIntensity != mCurrentProfile.intensity) {
-            setCustom(mCurrentProfile.copy(intensity = newIntensity))
-        }
+        if (Config.intensity != activeProfile.intensity) { setCustom() }
     }
 
-    @Subscribe
-    fun onColorChanged(event: colorChanged) {
+    @Subscribe fun onColorChanged(event: colorChanged) {
         Log.i("onColorChanged")
-        val newColor = Config.color
-        if (newColor != mCurrentProfile.color) {
-            setCustom(mCurrentProfile.copy(color = newColor))
-        }
+        if (Config.color != activeProfile.color) { setCustom() }
     }
 
-    @Subscribe
-    fun onLowerBrightnessChanged(event: lowerBrightnessChanged) {
+    @Subscribe fun onLowerBrightnessChanged(event: lowerBrightnessChanged) {
         Log.i("onLowerBrightnessChanged")
-        val newLB = Config.lowerBrightness
-        if (newLB != mCurrentProfile.lowerBrightness) {
-            setCustom(mCurrentProfile.copy(lowerBrightness = newLB))
-        }
+        if (Config.lowerBrightness != activeProfile.lowerBrightness) { setCustom() }
     }
     //endregion
 
     companion object : Logger() {
-        const val DEFAULT_VALUE = 1
+        private const val DEFAULT_VALUE = 1
     }
 }

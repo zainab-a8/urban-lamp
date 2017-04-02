@@ -21,10 +21,9 @@ import android.content.Context
 
 import com.jmstudios.redmoon.R
 
+import com.jmstudios.redmoon.helper.Logger
 import com.jmstudios.redmoon.helper.Profile
-import com.jmstudios.redmoon.util.appContext
-import com.jmstudios.redmoon.util.getString
-import com.jmstudios.redmoon.util.Logger
+import com.jmstudios.redmoon.util.*
 
 /**
  * This singleton manages the SharedPreference that store all custom
@@ -73,14 +72,18 @@ object ProfilesModel: Logger() {
         Log.d("Done updating SharedPreferences")
     }
 
-    fun getProfileName(index: Int): String = mProfiles[index].name
-    fun getProfile(index: Int):    Profile = mProfiles[index]
+    fun getProfileName(index: Int): String  = mProfiles[index].name
+    fun getProfile    (index: Int): Profile = mProfiles[index]
 
-    var custom: Profile
+    fun setCustom() {
+        mProfiles[0] = Profile(color           = Config.color,
+                               intensity       = Config.intensity,
+                               dimLevel        = Config.dimLevel,
+                               lowerBrightness = Config.lowerBrightness)
+    }
+
+    private val custom: Profile
         get() = mProfiles[0]
-        set(profile) {
-            mProfiles[0] = profile.copy(name = mProfiles[0].name)
-        }
 
     fun addProfile(newName: String, fail: Int = 0): Pair<Int, Int> {
         Log.i("addProfile $newName; Current Size: ${mProfiles.size}")
@@ -95,7 +98,7 @@ object ProfilesModel: Logger() {
     fun removeProfile(index: Int): Int {
         val profile = mProfiles.removeAt(index)
         Log.i("removed profile $index: ${profile.name}")
-        custom = profile
+        setCustom()
         updateSharedPreferences()
         return mProfiles.size
     }

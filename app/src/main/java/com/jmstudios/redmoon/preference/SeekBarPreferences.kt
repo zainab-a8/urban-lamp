@@ -31,10 +31,10 @@ import android.widget.TextView
 
 import com.jmstudios.redmoon.R
 
+import com.jmstudios.redmoon.helper.Logger
+import com.jmstudios.redmoon.helper.Profile
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
-import com.jmstudios.redmoon.util.Logger
-import com.jmstudios.redmoon.view.ScreenFilterView
 
 abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Preference(context, attrs), SeekBar.OnSeekBarChangeListener {
 
@@ -66,7 +66,7 @@ abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
         if (restorePersistedValue) {
             mProgress = getPersistedInt(DEFAULT_VALUE)
         } else {
-            mProgress = (defaultValue as Int?) ?: 0
+            mProgress = (defaultValue as Int?) ?: DEFAULT_VALUE
             persistInt(mProgress)
         }
     }
@@ -118,55 +118,59 @@ abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
 class ColorSeekBarPreference(context: Context, attrs: AttributeSet) : SeekBarPreference(context, attrs) {
 
     // TODO: Get the default value from the XML and handle it in the parent class
-    companion object : Logger() {
-        const val DEFAULT_VALUE = 10
-    }
+    companion object : Logger()
 
     // Changes to DEFAULT_VALUE should be reflected in preferences.xml
-    override val DEFAULT_VALUE = 10
+    override val DEFAULT_VALUE = Profile.DEFAULT_COLOR
     override val suffix = "K"
         
     override val colorFilter: PorterDuffColorFilter
         get() {
-            val color = ScreenFilterView.rgbFromColorProgress(mProgress)
+            val color = Profile.rgbFromColor(mProgress)
             return PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY)
         }
 
     override val progress: Int
-        get() = ScreenFilterView.getColorTempFromProgress(mProgress)
+        get() = Profile.getColorTemperature(mProgress)
 }
 
 class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : SeekBarPreference(context, attrs) {
 
     // TODO: Get the default value from the XML and handle it in the parent class
-    companion object : Logger() {
-        const val DEFAULT_VALUE = 50
-    }
+    companion object : Logger()
 
     // Changes to DEFAULT_VALUE should be reflected in preferences.xml
-    override val DEFAULT_VALUE = 50
+    override val DEFAULT_VALUE = Profile.DEFAULT_INTENSITY
     override val suffix = "%"
 
     override val colorFilter: PorterDuffColorFilter
         get() {
-            val color = ScreenFilterView.getIntensityColor(mProgress, Config.color)
+            val color = getIntensityColor(mProgress, Config.color)
             return PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY)
         }
 
     override val progress: Int
         get() = mProgress
+
+    private fun getIntensityColor(intensityLevel: Int, color: Int): Int {
+        val argb = Profile.rgbFromColor(color)
+        val red   = Color.red  (argb).toFloat()
+        val green = Color.green(argb).toFloat()
+        val blue  = Color.blue (argb).toFloat()
+        val intensity = 1.0f - intensityLevel.toFloat() / 100.0f
+
+        return Color.argb(255,
+                          (red +   (255.0f - red  ) * intensity).toInt(),
+                          (green + (255.0f - green) * intensity).toInt(),
+                          (blue +  (255.0f - blue ) * intensity).toInt())
+    }
 }
 
-
 class DimSeekBarPreference(context: Context, attrs: AttributeSet) : SeekBarPreference(context, attrs) {
-
-    // TODO: Get the default value from the XML and handle it in the parent class
-    companion object : Logger() {
-        const val DEFAULT_VALUE = 50
-    }
+    companion object : Logger()
 
     // Changes to DEFAULT_VALUE should be reflected in preferences.xml
-    override val DEFAULT_VALUE = 50
+    override val DEFAULT_VALUE = Profile.DEFAULT_DIM_LEVEL
     override val suffix = "%"
 
     override val colorFilter: PorterDuffColorFilter
@@ -177,5 +181,5 @@ class DimSeekBarPreference(context: Context, attrs: AttributeSet) : SeekBarPrefe
         }
 
     override val progress: Int
-        get() = (mProgress.toFloat() * ScreenFilterView.DIM_MAX_ALPHA).toInt()
+        get() = (mProgress.toFloat() * Profile.DIM_MAX_ALPHA).toInt()
 }

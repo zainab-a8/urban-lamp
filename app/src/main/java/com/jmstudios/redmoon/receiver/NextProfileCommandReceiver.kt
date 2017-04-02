@@ -21,8 +21,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 
+import com.jmstudios.redmoon.helper.Logger
 import com.jmstudios.redmoon.model.Config
-import com.jmstudios.redmoon.util.Logger
 
 class NextProfileCommandReceiver : BroadcastReceiver() {
 

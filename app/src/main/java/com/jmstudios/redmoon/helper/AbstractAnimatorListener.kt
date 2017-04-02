@@ -38,7 +38,7 @@ package com.jmstudios.redmoon.helper
 
 import android.animation.Animator
 
-abstract class AbstractAnimatorListener : Animator.AnimatorListener {
+interface AbstractAnimatorListener : Animator.AnimatorListener {
     override fun onAnimationStart (animator: Animator) {}
     override fun onAnimationEnd   (animator: Animator) {}
     override fun onAnimationCancel(animator: Animator) {}

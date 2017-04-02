@@ -35,53 +35,91 @@
  */
 package com.jmstudios.redmoon.manager
 
-import com.jmstudios.redmoon.util.Logger
+import android.animation.Animator
+import android.animation.ArgbEvaluator
+import android.animation.IntEvaluator
+import android.animation.TypeEvaluator
+import android.animation.ValueAnimator
 import android.view.WindowManager
 
+import com.jmstudios.redmoon.helper.AbstractAnimatorListener
+import com.jmstudios.redmoon.helper.Logger
+import com.jmstudios.redmoon.helper.Profile
+import com.jmstudios.redmoon.model.Config
+import com.jmstudios.redmoon.util.*
 import com.jmstudios.redmoon.view.ScreenFilterView
 
-/**
- * Convenience class that wraps [WindowManager] for dependency injection.
- */
-class WindowViewManager(private val mWindowManager: WindowManager,
-                        val mView: ScreenFilterView) {
-
+class WindowViewManager(private val mView: ScreenFilterView,
+                        private val mScreenManager: ScreenManager,
+                        private val mWindowManager: WindowManager) {
     companion object : Logger()
 
-    private var mScreenFilterOpen = false
+    private var mOpen = false
+    private val mAnimator = ValueAnimator.ofObject(ProfileEvaluator, mView.profile)
+
+    private var mLayoutParams = mScreenManager.layoutParams
+        get() = field.apply { buttonBrightness = Config.buttonBacklightLevel }
 
     /**
-     * Creates and opens a new Window to display `view`.
+     * Creates and opens a new Window to display `mView`.
      * *
-     * @param wlp the [android.view.WindowManager.LayoutParams] to use when laying out the window.
+     * @param time duration over which to fade in `mView`, in milliseconds.
      */
-    fun openWindow(wlp: WindowManager.LayoutParams) {
-        if (mScreenFilterOpen) {
-            Log.i("Screen filter is already open!")
+    fun open(time: Int = 0) {
+        Log.i("open()")
+        mAnimator.removeAllListeners()
+        setProfile(time, activeProfile)
+        if (mOpen) {
+            Log.d("Screen filter is already open")
         } else {
-            Log.i("Opening screen filter")
-            // Display the transparent filter
-            mWindowManager.addView(mView, wlp)
-            mScreenFilterOpen = true
+            mWindowManager.addView(mView, mLayoutParams)
+            mOpen = true
         }
     }
 
-    // Triggers a Window undergo a screen measurement and layout pass
-    fun reLayoutWindow(wlp: WindowManager.LayoutParams) {
-        if (mScreenFilterOpen) {
-            mWindowManager.updateViewLayout(mView, wlp)
-        }
+    // Triggers a screen measurement and layout pass
+    fun reLayout() {
+        mLayoutParams = mScreenManager.layoutParams
+        update()
     }
 
     // Closes the Window that is currently displaying `mView`.
-    fun closeWindow() {
-        if (mScreenFilterOpen) {
-            Log.i("Closing screen filter")
-            // Close the window once the fade-out animation is complete
-            mWindowManager.removeView(mView)
-            mScreenFilterOpen = false
-        } else {
-            Log.i("Can't close Screen filter; it's already closed")
+    fun close(time: Int = 0) {
+        Log.i("close()")
+        mAnimator.addListener(object : AbstractAnimatorListener {
+            override fun onAnimationEnd(animator: Animator) = if (mOpen) {
+                Log.i("Closing screen filter")
+                mWindowManager.removeView(mView)
+                mOpen = false
+            } else {
+                Log.w("Can't close Screen filter; it's already closed")
+            }
+        })
+        setProfile(time, activeProfile.copy(intensity = 0, dimLevel = 0))
+    }
+
+    private fun update() { if (mOpen) mWindowManager.updateViewLayout(mView, mLayoutParams) }
+
+    private fun setProfile(time: Int, profile: Profile) = mAnimator.run {
+        if (isRunning) cancel()
+        setObjectValues(mView.profile, profile)
+        duration = time.toLong()
+        addUpdateListener { valueAnimator ->
+            mView.profile = valueAnimator.animatedValue as Profile
+            if (Config.buttonBacklightFlag == "dim") { update() }
+        }
+        Log.i("Setting screen filter to $profile. Duration: $time")
+        start()
+    }
+
+    private object ProfileEvaluator : TypeEvaluator<Profile> {
+        private val intEval  = IntEvaluator()
+        private val argbEval = ArgbEvaluator()
+
+        override fun evaluate(fraction: Float, start: Profile, end: Profile): Profile {
+            return end.copy(color    = argbEval.evaluate(fraction, start.color, end.color) as Int,
+                            intensity = intEval.evaluate(fraction, start.intensity, end.intensity),
+                            dimLevel  = intEval.evaluate(fraction, start.dimLevel,  end.dimLevel ))
         }
     }
 }

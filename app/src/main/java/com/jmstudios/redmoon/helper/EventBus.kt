@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2016  Marien Raat <marienraat@riseup.net>
  * Copyright (c) 2017  Stephen Michel <s@smichel.me>
  *
  *  This file is free software: you may copy, redistribute and/or modify it
@@ -15,23 +14,26 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.jmstudios.redmoon.view
 
-import android.content.Context
-import android.graphics.Canvas
-import android.view.View
-import com.jmstudios.redmoon.helper.Logger
+package com.jmstudios.redmoon.helper
 
-import com.jmstudios.redmoon.helper.Profile
+import org.greenrobot.eventbus.EventBus
+import kotlin.reflect.KClass
 
-class ScreenFilterView(context: Context) : View(context) {
-    companion object: Logger()
+/* EventBus uses classes as events. These are the available events to send */
 
-    var profile: Profile = Profile()
-        set(value) {
-            field = value
-            invalidate()
-        }
+object EventBus {
+    interface Event
 
-    override fun onDraw(canvas: Canvas) = canvas.drawColor(profile.filterColor)
+    private val bus: EventBus
+        get() = EventBus.getDefault()
+
+    fun register  (subscriber: Any) = bus.register  (subscriber)
+    fun unregister(subscriber: Any) = bus.unregister(subscriber)
+
+    fun post        (event: Event) = bus.post             (event)
+    fun postSticky  (event: Event) = bus.postSticky       (event)
+    fun removeSticky(event: Event) = bus.removeStickyEvent(event)
+
+    fun <T: Event>getSticky(eventClass: KClass<T>) = bus.getStickyEvent(eventClass.java)
 }
