@@ -44,17 +44,7 @@ import com.jmstudios.redmoon.helper.Logger
 import com.jmstudios.redmoon.helper.Permission
 
 class BrightnessManager(private val mContext: Context) {
-    companion object: Logger() {
-        // Used statically by BootReceiver
-        fun setBrightness(brightness: Int, automatic: Boolean, context: Context) {
-            Log.i("Setting brightness to: $brightness, automatic: $automatic")
-            if (Permission.WriteSettings.isGranted && brightness >= 0) {
-                val resolver = context.contentResolver
-                Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, brightness)
-                Settings.System.putInt(resolver, "screen_brightness_mode", if (automatic) 1 else 0)
-            }
-        }
-    }
+    companion object: Logger()
 
     private var oldAuto:  Boolean = false
     private var oldLevel: Int     = -1
@@ -77,11 +67,23 @@ class BrightnessManager(private val mContext: Context) {
             }
             Config.automaticBrightness = oldAuto
             Config.brightness = oldLevel
-            setBrightness(0, false, mContext)
+            if (Permission.WriteSettings.isGranted) {
+                Log.i("Lowering brightness")
+                val resolver = mContext.contentResolver
+                Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, 0)
+                Settings.System.putInt(resolver, "screen_brightness_mode", 0)
+            }
         }
     }
 
     fun restore() {
-        setBrightness(Config.brightness, Config.automaticBrightness, mContext)
+        val brightness = Config.brightness
+        val automatic = Config.automaticBrightness
+        Log.i("Restoring brightness to: $brightness, automatic: $automatic")
+        if (Permission.WriteSettings.isGranted && brightness >= 0) {
+            val resolver = mContext.contentResolver
+            Settings.System.putInt(resolver, "screen_brightness_mode", if (automatic) 1 else 0)
+            Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, brightness)
+        }
     }
 }
