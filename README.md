@@ -36,10 +36,6 @@ Red Moon protects your eyes by making your screen even darker.
 <img src="https://lut.im/0YrVNYZbj2/lr0SDpIqy7jlpg13.png" width="180" height="320" />
 <img src="https://lut.im/LPf77AuSRG/MsJbEeHXHxyQ7XSf.png" width="180" height="320" />
 <img src="https://lut.im/7eRSVHlsoS/2OJNIqCG3NQTExZI.png" width="180" height="320" />
-<img src="https://lut.im/CU0bQLa8RN/3o90N3QNCuNrOKnu.png" width="180" height="320" />
-<img src="https://lut.im/7QAYwUXjqi/pWiBEF8fP8D3fpAp.png" width="180" height="320" />
-<img src="https://lut.im/d9a4QT8Nek/9jgcvxedO1pnAfXl.png" width="180" height="320" />
-<img src="https://lut.im/BQODkgLLGg/VGFnSMufAVBQoOSt.png" width="180" height="320" />
 
 ---
 ---
