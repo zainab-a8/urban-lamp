@@ -134,4 +134,8 @@
     <string name="location">Lokalizacja</string>
     <string name="notification_status_running">Uruchomiono. Zatrzymaj aby instalować aplikacje</string>
     <string name="notification_status_running_no_warning">Uruchomiono</string>
-</resources>
+<string name="menu_restore_default_filters">Przywróć domyślne filtry</string>
+    <string name="dialog_title_add_filter">Wprowadź nazwę filtra</string>
+    <string name="filter_name_dim_only">Tylko przyciemniaj</string>
+
+    </resources>
