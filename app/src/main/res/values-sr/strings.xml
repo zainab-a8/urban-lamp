@@ -23,7 +23,7 @@
     <string name="pref_title_start_time">Укључи у</string>
     <string name="pref_title_end_time">Искључи у</string>
     <string name="pref_title_location">Локација</string>
-    <string name="location_not_set">Није постављена</string>
+    <string name="location_not_set">Локација није постављена</string>
     <string name="latitude_short">Ширина</string>
     <string name="longitude_short">Дужина</string>
     <string name="snackbar_searching_location">Тражим локацију</string>
@@ -131,4 +131,9 @@
     <string name="set_dialog">Постави</string>
     <string name="notification_status_running">Покренут. Искључи за инсталацију апликација</string>
     <string name="notification_status_running_no_warning">Покренут</string>
-</resources>
+<string name="menu_restore_default_filters">Врати подразумеване филтере</string>
+    <string name="snackbar_location_updated">Локација нађена!</string>
+    <string name="filter_name_dim_only">Само затамни</string>
+
+    <string name="location">Локација</string>
+    </resources>
