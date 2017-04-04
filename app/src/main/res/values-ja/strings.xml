@@ -135,4 +135,7 @@
     <string name="set_dialog">設定</string>
     <string name="notification_status_running">実行中です。オフにして apk をインストールしてください</string>
     <string name="notification_status_running_no_warning">実行中</string>
-</resources>
+<string name="menu_restore_default_filters">デフォルトのフィルターを復元</string>
+    <string name="filter_name_dim_only">減光のみ</string>
+
+    </resources>
