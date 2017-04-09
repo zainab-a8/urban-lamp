@@ -85,4 +85,5 @@
     <string name="toast_warning_no_location">Enable location services to update location</string>
     <string name="set_dialog">Set</string>
     <string name="notification_status_running">Running. Pause to install apks</string>
-</resources>
+<string name="activity_about">About Red Moon</string>
+    </resources>
