@@ -131,4 +131,7 @@
     <string name="location">Ubicación</string>
     <string name="notification_status_running">Activo, pausa para instalar apks</string>
     <string name="notification_status_running_no_warning">En funcionamiento</string>
-</resources>
+<string name="menu_restore_default_filters">Restaurar filtros por defecto</string>
+    <string name="filter_name_dim_only">Tenue solamente</string>
+
+    </resources>
