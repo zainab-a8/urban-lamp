@@ -26,6 +26,7 @@ import android.content.ContextWrapper
 
 import com.jmstudios.redmoon.helper.Logger
 import com.jmstudios.redmoon.service.ScreenFilterService
+import com.jmstudios.redmoon.service.ScreenFilterService.Command
 import com.jmstudios.redmoon.util.atLeastAPI
 import com.jmstudios.redmoon.util.belowAPI
 
@@ -44,12 +45,13 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
         try {
             while (!Thread.interrupted()) {
                 val currentApp = getCurrentApp(mContext)
+                Log.d("Current app is: $currentApp")
 
-                Log.d(String.format("Current app is: %s", currentApp))
+                isAppSecured(currentApp)?.let {
+                    val state = if (it) Command.START_SUSPEND else Command.STOP_SUSPEND
+                    ScreenFilterService.moveToState(state)
+                }
 
-                val state = if (isAppSecured(currentApp)) ScreenFilterService.Command.START_SUSPEND
-                            else ScreenFilterService.Command.STOP_SUSPEND
-                ScreenFilterService.moveToState(state)
                 Thread.sleep(1000)
             }
         } catch (e: InterruptedException) {
@@ -58,13 +60,18 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
         Log.i("Shutting down CurrentAppMonitoringThread")
     }
 
-    private fun isAppSecured(app: String): Boolean {
-        return app == "com.android.packageinstaller" ||
-                app == "eu.chainfire.supersu" ||
-                app == "com.koushikdutta.superuser" ||
-                app == "me.phh.superuser" ||
-                app == "com.owncloud.android" ||
-                app == "com.google.android.packageinstaller"
+    private fun isAppSecured(app: String): Boolean? = when(app) {
+        "com.android.packageinstaller",
+        "eu.chainfire.supersu",
+        "com.koushikdutta.superuser",
+        "me.phh.superuser",
+        "com.owncloud.android",
+        "com.google.android.packageinstaller" -> true
+        // Opening the notification causes red moon to appear as the active package -> we unpause.
+        // Closing the notification does not properly restore the previous package, so we don't
+        // re-pause when returning to a secured app. So, we need to avoid pausing to begin with.
+        "com.jmstudios.redmoon", "com.jmstudios.redmoon.debug" -> null
+        else -> false
     }
 
     companion object : Logger(false) {
