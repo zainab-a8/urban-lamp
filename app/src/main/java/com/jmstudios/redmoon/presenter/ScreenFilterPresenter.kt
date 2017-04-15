@@ -77,6 +77,7 @@ class ScreenFilterPresenter(private val mContext: Context,
 
     private val mOnState      = OnState()
     private val mOffState     = OffState()
+    private val mPauseState   = PauseState()
     private val mPreviewState = PreviewState()
     private val mSuspendState = SuspendState()
     private val mFadeInState  = FadeInState()
@@ -96,7 +97,7 @@ class ScreenFilterPresenter(private val mContext: Context,
     override fun onPortraitOrientation()  = mWindowViewManager.reLayout()
     override fun onLandscapeOrientation() = mWindowViewManager.reLayout()
 
-    // TODO: Clean up notification refresh code
+    // TODO: Clean up everything
     private abstract inner class State {
 
         abstract val filterIsOn: Boolean
@@ -122,17 +123,25 @@ class ScreenFilterPresenter(private val mContext: Context,
                                             mainActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT))
 
                 // Add toggle action
-                val (toggleIcon, toggleTextResId) = if (filterIsOn) {
-                    Pair(R.drawable.ic_stop_circle_outline_white_36dp,
-                         R.string.notification_action_turn_off)
+                val (toggleIcon, toggleTextResId, toggleIntent) = if (filterIsOn) {
+                    Triple(R.drawable.ic_stop_circle_outline_white_36dp,
+                           R.string.notification_action_turn_off,
+                           ScreenFilterService.intent(Command.PAUSE))
                 } else {
-                    Pair(R.drawable.ic_play, R.string.notification_action_turn_on)
+                    Triple(R.drawable.ic_play,
+                           R.string.notification_action_turn_on,
+                           ScreenFilterService.intent(Command.ON))
                 }
 
                 val togglePI = PendingIntent.getService(mContext, REQUEST_CODE_ACTION_TOGGLE,
-                                                        ScreenFilterService.intent(Command.TOGGLE),
+                                                        toggleIntent,
                                                         PendingIntent.FLAG_UPDATE_CURRENT)
                 addAction(toggleIcon, getString(toggleTextResId), togglePI)
+
+                val deletePI = PendingIntent.getService(mContext, REQUEST_CODE_ACTION_STOP,
+                                                        ScreenFilterService.intent(Command.OFF),
+                                                        PendingIntent.FLAG_UPDATE_CURRENT)
+                setDeleteIntent(deletePI)
 
                 // Add profile switch action
                 val nextProfileText = getString(R.string.notification_action_next_filter)
@@ -152,6 +161,7 @@ class ScreenFilterPresenter(private val mContext: Context,
         open internal fun nextState(command: Command): State = when (command) {
             Command.OFF           -> mOffState
             Command.ON            -> mOnState
+            Command.PAUSE         -> mPauseState
             Command.SHOW_PREVIEW  -> mPreviewState
             Command.START_SUSPEND -> mSuspendState
             Command.TOGGLE        -> if (filterIsOn) mOffState else mOnState
@@ -263,8 +273,7 @@ class ScreenFilterPresenter(private val mContext: Context,
         override fun onActivation(prevState: State) {
             super.onActivation(prevState)
             mWindowViewManager.close(FADE_TRANSITION) {
-                if (Config.lowerBrightness) { mBrightnessManager.restore() }
-                if (Config.secureSuspend  ) { mCurrentAppMonitor.stop()    }
+                moveToState(mOffState)
             }
         }
     }
@@ -296,6 +305,26 @@ class ScreenFilterPresenter(private val mContext: Context,
                 EventBus.removeSticky(ui)
                 mServiceController.stopSelf()
             }
+        }
+    }
+
+    private inner class PauseState : State() {
+        override val filterIsOn = false
+
+        override val notificationContentText = getString(R.string.notification_status_paused)
+
+        override fun onActivation(prevState: State) {
+            super.onActivation(prevState)
+
+            mWindowViewManager.close(FADE_DURATION_LONG)
+            
+            if (Config.lowerBrightness) { mBrightnessManager.restore() }
+            if (Config.secureSuspend  ) { mCurrentAppMonitor.stop()    }
+        }
+
+        override fun refreshNotification() {
+            mServiceController.stopForeground(false)
+            super.refreshNotification()
         }
     }
 
@@ -383,6 +412,7 @@ class ScreenFilterPresenter(private val mContext: Context,
         private const val REQUEST_CODE_ACTION_SETTINGS = 1000
         private const val REQUEST_CODE_ACTION_TOGGLE   = 3000
         private const val REQUEST_CODE_NEXT_PROFILE    = 4000
+        private const val REQUEST_CODE_ACTION_STOP     = 5000
 
         const val FADE_TRANSITION = 3600000 // One hour
         const val FADE_DURATION_LONG = 1000 // One second

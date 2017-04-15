@@ -81,7 +81,6 @@ class MainActivity : ThemedAppCompatActivity() {
         if (!Config.introShown) { startIntro() }
         ChangeLog(this).run { if (isFirstRun) logDialog.show() }
 
-        EventBus.postSticky(UI(isOpen = true))
         // The preview will appear faster if we don't have to start the service
         ScreenFilterService.start()
     }
@@ -104,6 +103,11 @@ class MainActivity : ThemedAppCompatActivity() {
         return true
     }
 
+    override fun onStart() {
+        super.onStart()
+        EventBus.postSticky(UI(isOpen = true))
+    }
+
     override fun onResume() {
         super.onResume()
         // The switch is null here, so we can't set its position directly.
@@ -116,9 +120,9 @@ class MainActivity : ThemedAppCompatActivity() {
         super.onPause()
     }
 
-    override fun onDestroy() {
+    override fun onStop() {
         EventBus.postSticky(UI(isOpen = false))
-        super.onDestroy()
+        super.onStop()
     }
 
     override fun onNewIntent(intent: Intent) {

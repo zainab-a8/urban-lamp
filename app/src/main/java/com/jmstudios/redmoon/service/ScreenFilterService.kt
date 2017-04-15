@@ -57,7 +57,10 @@ import com.jmstudios.redmoon.view.ScreenFilterView
 
 class ScreenFilterService : Service(), ServiceLifeCycleController {
     enum class Command {
-        ON, OFF, TOGGLE, FADE_ON, FADE_OFF, SHOW_PREVIEW, HIDE_PREVIEW, START_SUSPEND, STOP_SUSPEND
+        ON, OFF, TOGGLE, PAUSE,
+        FADE_ON, FADE_OFF,
+        SHOW_PREVIEW, HIDE_PREVIEW,
+        START_SUSPEND, STOP_SUSPEND
     }
 
     private lateinit var mPresenter:           ScreenFilterPresenter
@@ -112,7 +115,6 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         fun intent(c: Command): Intent = emptyIntent.putExtra(BUNDLE_KEY_COMMAND, c.ordinal)
 
         fun start()  { appContext.startService(emptyIntent) }
-        //fun stop()   { appContext.stopService(intent)  }
 
         fun toggle() { moveToState(Command.TOGGLE)  }
         fun moveToState(c: Command) { appContext.startService(intent(c)) }
