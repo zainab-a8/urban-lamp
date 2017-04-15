@@ -110,4 +110,17 @@
 
     <string name="pref_category_button_backlight_disclaimer">Pas d\'effet sur certains appareils</string>
 
+    <string name="pref_summary_location_off">Basé sur votre emplacement</string>
+
+    <string name="pref_title_version">Version</string>
+
+    <string name="pref_title_integration">Integration avec d\'autres apps</string>
+    <string name="snackbar_location_updated">Localisation trouvée!</string>
+    <string name="dialog_title_permission_write_settings">En train de modifier les réglages du système</string>
+    <string name="filter_name_dim_only">Faible uniquement</string>
+
+    <string name="pref_entry_button_backlight_turn_off">Éteindre</string>
+
+    <string name="action_next_profile">Profil suivant</string>
+    <string name="pref_title_location">Horaires du soleil</string>
     </resources>
