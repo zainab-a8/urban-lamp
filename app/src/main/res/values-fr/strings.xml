@@ -102,4 +102,5 @@
     <string name="set_dialog">OK</string>
     <string name="notification_status_running">En exécution. Suspendre pour installer des apks</string>
     <string name="notification_status_running_no_warning">Actif</string>
-</resources>
+<string name="menu_restore_default_filters">Restaurer les filtres par défaut</string>
+    </resources>
