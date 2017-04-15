@@ -46,7 +46,7 @@ object ProfilesModel: Logger() {
             listOf(Profile(getString(R.string.filter_name_custom     ), 10, 30, 40, false),
                    Profile(getString(R.string.filter_name_default    ), 10, 30, 40, false),
                    Profile(getString(R.string.filter_name_bed_reading), 20, 60, 78, false),
-                   Profile(getString(R.string.filter_name_dim_only   ),  0,  0, 60,  true))
+                   Profile(getString(R.string.filter_name_dim_only   ),  0,  0, 60, false))
 
     private val mProfiles: ArrayList<Profile> = ArrayList(prefs.all.run {
         if (isEmpty()) {
