@@ -37,7 +37,7 @@
     <string name="dialog_title_add_filter">Escribe un nombre de perfil</string>
     <string name="edit_hint_add_filter">Nombre del perfil</string>
     <string name="dialog_title_remove_filter">¿Seguro que quieres borrarlo?</string>
-    <string name="slide_text_welcome">Te damos la bienvenida a «Red Moon».</string>
+    <string name="slide_text_welcome">¡Bienvenido a Red Moon!</string>
 
     <string name="slide_title_protect_eyes">Protege tus ojos</string>
     <string name="slide_title_improve_sleep">Te ayuda a dormir</string>
@@ -120,7 +120,7 @@
     <string name="searching_location">Buscando ubicación</string>
     <string name="toast_warning_no_location">Activa los servicios de ubicación para actualizar tu posición</string>
     <string name="pref_category_button_backlight_disclaimer">Inútil en ciertos dispositivos</string>
-    <string name="snackbar_location_updated">Se ha encontrado la ubicación.</string>
+    <string name="snackbar_location_updated">¡Ubicación encontrada!</string>
     <string name="pref_entry_button_backlight_system">Gestionado por el sistema</string>
     <string name="pref_entry_button_backlight_turn_off">Apagar</string>
 
