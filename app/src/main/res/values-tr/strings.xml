@@ -37,7 +37,7 @@
     <string name="activity_intro">Tanıtım</string>
     <string name="menu_show_intro">Tanıtımı yeniden oynat</string>
 
-    <string name="location_not_set">Ayarlanmamış</string>
+    <string name="location_not_set">Konum ayarlanmamış</string>
     <string name="pref_title_location">Konum</string>
     <string name="pref_title_email_developer">Bana marienraat@riseup.net adresinden e-posta gönder</string>
     <string name="longitude_short">Boylam</string>
@@ -111,4 +111,28 @@
     <string name="set_dialog">Ayarla</string>
     <string name="notification_status_running">Çalışıyor. Apk kurmak için kapat</string>
     <string name="notification_status_running_no_warning">Çalışıyor</string>
-</resources>
+<string name="activity_shortcut">Red Moon Aç/Kapa</string>
+    <string name="menu_restore_default_filters">Varsayılan filtreleri geri yükle</string>
+    <string name="pref_category_button_backlight_disclaimer">Bazı aygıtlarda etkisiz</string>
+
+    <string name="pref_title_button_backlight">Donanım düğmesi arka ışık</string>
+
+    <string name="pref_summary_location_off">Konumunuza göre</string>
+
+    <string name="pref_summary_integration">LibreTasks veya Tasker, gibi bazı uygulamalar belirli olaylar görevleri otomatikleştirmenize olanak sağlar. Açma ve kapatma, döndüğünde o apps yanıt verebilir böylece kırmızı ay genel bir bildirim gönderir. Yoksa bir bu uygulamalar geliştirmek eğer, sonraki paragrafa göz ardı edebilirsiniz.
+
+Red Moon eylem \'com.jmstudios.redmoon.RED_MOON_TOGGLED\' ile ortak bir niyet yayınlar. Niyet ile anahtar \'jmstudios.bundle.key.FILTER_IS_ON\', kırmızı ay açık veya kapalı geçiş gösterir bir Boole değeri ilave içerir.</string>
+
+    <string name="snackbar_location_updated">Konum bulundu!</string>
+    <string name="dialog_message_permission_write_settings">Sonraki ekranda Red Moon\'a parlaklık düzeyinizi değiştirme izni vermek için sistem ayarlarını değiştirme izni verin.</string>
+
+    <string name="shortcut_title_toggle">Aç/Kapa Red Moon</string>
+
+    <string name="filter_name_dim_only">Sadece kıs</string>
+
+    <string name="pref_entry_button_backlight_system">Sistem yönetimli</string>
+    <string name="pref_entry_button_backlight_filter_dim_level">Filtre kısma düzeyini kullan</string>
+    <string name="pref_entry_button_backlight_turn_off">Kapat</string>
+
+    <string name="location">Konum</string>
+    </resources>
