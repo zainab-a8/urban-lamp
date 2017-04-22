@@ -1,42 +1,42 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-    <string name="notification_action_pause">Durdur</string>
+    <string name="notification_action_pause">Duraklat</string>
 
     <string name="button_add_filter">Ekle</string>
     <string name="button_remove_filter">Sil</string>
     <string name="pref_title_color_temp">Renk sıcaklığı</string>
-    <string name="pref_title_project_page">Proje sayfasını ziyaret et</string>
-    <string name="edit_hint_add_filter">Filtre ismi</string>
+    <string name="pref_title_project_page">Tasarı sayfasını ziyaret et</string>
+    <string name="edit_hint_add_filter">Süzgeç adı</string>
     <string name="slide_title_welcome">Hoş geldiniz!</string>
     <string name="slide_text_improve_sleep">Mavi ışık geceleri uyumanızı
  sağlayan Melatonin hormonu üretimini baskılar.
- Kırmızı Ay daha kolay uyumanız için ekranınızdaki
+ Red Moon daha kolay uyumanız için ekranınızdaki
  mavi ışığı kaldırır.</string>
 
-    <string name="pref_category_filter">Filtre</string>
+    <string name="pref_category_filter">Süzgeç</string>
     <string name="notification_action_resume">Devam et</string>
     <string name="pref_category_other">Diğer</string>
 
-    <string name="notification_status_paused">Durduruldu</string>
+    <string name="notification_status_paused">Duraklatıldı</string>
     <string name="pref_title_dim_level">Karartma düzeyi</string>
     <string name="pref_title_intensity">Yoğunluk düzeyi</string>
-    <string name="dialog_title_add_filter">Filtre ismini gir</string>
+    <string name="dialog_title_add_filter">Süzgeç adı gir</string>
     <string name="dialog_button_cancel">İptal</string>
 
     <string name="dialog_button_ok">Tamam</string>
     <string name="time_toggle_options_array_0">Elle</string>
 
-    <string name="app_name">Kırmızı Ay</string>
-    <string name="activity_main">Kırmızı Ay</string>
+    <string name="app_name">Red Moon</string>
+    <string name="activity_main">Red Moon</string>
     <string name="activity_timer">Zamanlayıcı</string>
     <string name="pref_title_time_toggle">Zamanlayıcı</string>
-    <string name="pref_title_start_time">Açma</string>
-    <string name="pref_title_end_time">Kapama</string>
-    <string name="menu_dark_theme">Siyah tema</string>
+    <string name="pref_title_start_time">Aç</string>
+    <string name="pref_title_end_time">Kapat</string>
+    <string name="menu_dark_theme">Koyu gövde</string>
 
     <string name="snackbar_warning_no_location">Konumu güncellemek için konum hizmetlerini aç</string>
 
-    <string name="toast_warning_install">Kırmızı Ay çalışırken APK yükleyemezsiniz.</string>
+    <string name="toast_warning_install">Red Moon çalışırken APK yükleyemezsiniz.</string>
     <string name="activity_intro">Tanıtım</string>
     <string name="menu_show_intro">Tanıtımı yeniden oynat</string>
 
@@ -46,28 +46,28 @@
     <string name="longitude_short">Boylam</string>
     <string name="snackbar_searching_location">Konum aranıyor</string>
 
-    <string name="pref_summary_project_page">Daha fazla bilgi bul, geri bildirim gönder ve katkıda bulun</string>
-    <string name="slide_text_welcome">Kırmızı Ay\'a hoş geldiniz!</string>
+    <string name="pref_summary_project_page">Daha çok bilgi bul, geri bildirim gönder ve katkıda bulun</string>
+    <string name="slide_text_welcome">Red Moon\'a hoş geldiniz!</string>
 
     <string name="slide_title_protect_eyes">Gözlerinizi korur</string>
-    <string name="slide_title_improve_sleep">Uyku kalitenizi arttırın</string>
-    <string name="time_toggle_options_array_1">Otomatik (güneş)</string>
-    <string name="time_toggle_options_array_2">Otomatik (özel)</string>
+    <string name="slide_title_improve_sleep">Uyku niteliğinizi artırır</string>
+    <string name="time_toggle_options_array_1">Kendiliğinden (güneş)</string>
+    <string name="time_toggle_options_array_2">Kendiliğinden (özel)</string>
 
     <string name="pref_title_lower_brightness">Parlaklığı azalt</string>
 
-    <string name="time_toggle_title">Otomatik aç/kapa</string>
-    <string name="slide_text_get_started">Kırmızı Ay\'ı açmak için sağ üst
+    <string name="time_toggle_title">Kendiliğinden aç/kapa</string>
+    <string name="slide_text_get_started">Red Moon\'u açmak için sağ üst
  köşedeki düğmeyi aç.</string>
 
-    <string name="help_snackbar_text">Kırmızı Ay\'ı etkinleştirmek için düğmeye bas</string>
+    <string name="help_snackbar_text">Red Moon\'u etkinleştirmek için düğmeye bas</string>
 
-    <string name="dialog_title_remove_filter">Bu filtre silinsin mi?</string>
+    <string name="dialog_title_remove_filter">Bu süzgeci sil?</string>
     <string name="slide_text_protect_eyes">Geceleri, telefonunuza bakmak gözlerinizi acıttığında,
- ekranınızı karartmak için Kırmızı Ay\'ı kullanabilirsiniz.</string>
+ ekranınızı karartmak için Red Moon\'u kullanabilirsiniz.</string>
 
     <string name="filter_name_custom">Özel</string>
-    <string name="filter_name_default">Varsayılan</string>
+    <string name="filter_name_default">Öntanımlı</string>
     <string name="filter_name_bed_reading">Okuma</string>
     <string name="activity_secure_suspend">Güvenli uygulamalarda duraklat</string>
 
@@ -78,34 +78,34 @@
     <string name="dialog_title_permission_usage_stats">Kullanım erişimi</string>
     <string name="pref_summary_email_developer">Bana hataları ya da önerileri e-postayla gönder</string>
     <string name="slide_title_get_started">Başlayın!</string>
-    <string name="pref_summary_secure_suspend">Bazı özellikler Kırmızı Ay açıkken* çalışmayacaktır. Örneğin APK\'ler yüklenirken, Android 6.0+ üzerinde izin verirken ya da (kök erişimi olan aygıtlarda) SuperUser uygulaması kullanırken.
+    <string name="pref_summary_secure_suspend">Bazı özellikler Red Moon açıkken* çalışmayacaktır. Örneğin APK\'ler yüklenirken, Android 6.0+ üzerinde izin verirken ya da (kök erişimi olan aygıtlarda) SuperUser uygulaması kullanırken.
 
  Bu ayar etkinken, bu özelliklerden biri açıldığında Kırmızı Ay duraklayacak.
 
  Bu özellik aygıtınızın pil ömrünü azıcık düşürebilir. Üstelik bu özellik tüm aygıtlarda çalışmayabilir.
 
- *Kırmızı Ay tüm ekran üzerinde saydam kırmızı katman çizerek çalışır; bu uygulamalar eğer başka uygulama onların üzerine çizim yaparsa çalışmayacaktır. Bu yolla, başka uygulamanın istemediğiniz bir seçeneği seçmesi ya da ne yaptığınızı anlamak için dokunuşlarınızı izlemesi engellenir.</string>
-    <string name="dialog_message_permission_usage_stats">Bu özelliği etkinleştirmek için sonraki ekranda Kırmızı Ay\'ın uygulama kullanım bilgilerine erişmesine izin verin.
+ *Red Moon tüm ekran üzerinde saydam kırmızı katman çizerek çalışır; bu uygulamalar eğer başka uygulama onların üzerine çizim yaparsa çalışmayacaktır. Bu yolla, başka uygulamanın istemediğiniz bir seçeneği seçmesi ya da ne yaptığınızı anlamak için dokunuşlarınızı izlemesi engellenir.</string>
+    <string name="dialog_message_permission_usage_stats">Bu özelliği etkinleştirmek için sonraki ekranda Red Moon\'un uygulama kullanım bilgilerine erişmesine izin verin.
 
-Kırmızı Ay güvenli uygulamalarda süzgeci askıya almak ve hangi uygulamanın içinde olduğunuzu görmek için kullanım iznine gereksinir. Kırmızı Ay bu veriyi gerektiğinde sadece süzgeci askıya almak için kullanacak.</string>
+Red Moon güvenli uygulamalarda süzgeci askıya almak ve hangi uygulamanın içinde olduğunuzu görmek için kullanım iznine gereksinir. Red Moon bu veriyi gerektiğinde yalnızca süzgeci askıya almak için kullanacak.</string>
 
     <!-- Currently unused -->
-    <string name="add_new_profile_edit_hint">Profil ismi</string>
-    <string name="add_new_profile_dialog_title">Profil ismini gir</string>
-    <string name="remove_profile_dialog_title">Bu profil silinsin mi?</string>
+    <string name="add_new_profile_edit_hint">Profil adı</string>
+    <string name="add_new_profile_dialog_title">Profil adı gir</string>
+    <string name="remove_profile_dialog_title">Bu profili sil?</string>
     <string name="pref_title_appearance">Profil</string>
     <string name="menu_about">Hakkında</string>
-    <string name="activity_about">Kırmızı Ay Hakkında</string>
+    <string name="activity_about">Red Moon Hakkında</string>
     <string name="pref_title_version">Sürüm</string>
 
     <string name="dialog_title_permission_overlay">Diğer uygulamalar üzerine çizim</string>
-    <string name="dialog_message_permission_overlay">Kırmızı Ay\'ın açılması için sonraki ekranda diğer uygulamar üzerine çizime izin ver.</string>
+    <string name="dialog_message_permission_overlay">Red Moon\'un açılması için sonraki ekranda diğer uygulamar üzerine çizime izin ver.</string>
 
     <string name="dialog_title_permission_write_settings">Sistem ayarları değiştiriliyor</string>
     <string name="notification_status_off">Kapalı</string>
     <string name="notification_action_turn_on">Aç</string>
     <string name="notification_action_turn_off">Kapat</string>
-    <string name="notification_action_next_filter">Sonraki filtre</string>
+    <string name="notification_action_next_filter">Sonraki süzgeç</string>
 
     <string name="pref_title_startup">Başlangıç</string>
     <string name="pref_title_integration">Diğer uygulamalarla tümleşme</string>
@@ -115,27 +115,27 @@ Kırmızı Ay güvenli uygulamalarda süzgeci askıya almak ve hangi uygulamanı
     <string name="set_dialog">Ayarla</string>
     <string name="notification_status_running">Çalışıyor. Apk kurmak için kapatın</string>
     <string name="notification_status_running_no_warning">Çalışıyor</string>
-<string name="activity_shortcut">Kırmızı Ay\'ı Aç/Kapa</string>
-    <string name="menu_restore_default_filters">Varsayılan filtreleri geri yükle</string>
+<string name="activity_shortcut">Red Moon\'u Aç/Kapa</string>
+    <string name="menu_restore_default_filters">Öntanımlı süzgeçleri geri yükle</string>
     <string name="pref_category_button_backlight_disclaimer">Bazı aygıtlarda etkisiz</string>
 
-    <string name="pref_title_button_backlight">Donanım tuşlu arka ışık</string>
+    <string name="pref_title_button_backlight">Donanımsal düğme arka ışığı</string>
 
     <string name="pref_summary_location_off">Konumunuza göre</string>
 
-    <string name="pref_summary_integration">LibreTasks veya Tasker, gibi bazı uygulamalar belirli olaylar görevleri otomatikleştirmenize olanak sağlar. Açma ve kapatma, döndüğünde o apps yanıt verebilir böylece Kırmızı Ay genel bir bildirim gönderir. Yoksa bir bu uygulamalar geliştirmek eğer, sonraki paragrafa göz ardı edebilirsiniz.
+    <string name="pref_summary_integration">LibreTasks veya Tasker gibi bazı uygulamalar, belirli etkinlikler gerçekleştiğinde görevleri kendiliğindenleştirmenize olanak sağlar. Red Moon, açıp kapandığıda genel bir bildirim gönderir, böylelike bu uygulamalar karşılık verebilir. Bu uygulamaları geliştirmiyor veya kullanmıyorsanız, sonraki paragrafi görmezden gelebilirsiniz.
 
-Kırmızı Ay eylem \'com.jmstudios.redmoon.RED_MOON_TOGGLED\' ile ortak bir niyet yayınlar. Niyet ile anahtar \'jmstudios.bundle.key.FILTER_IS_ON\', Kırmızı Ay açık veya kapalı geçiş gösterir bir Boole değeri ilave içerir.</string>
+Red Moon, `com.jmstudios.redmoon.RED_MOON_TOGGLED` eylemiyle bir \"açık karar\" yayımlar. Bu \"açık karar\", Red Moon\'un açılıp kapatıldığını belirten `jmstudios.bundle.key.FILTER_IS_ON` anahtarıyla boole değerini içerir.</string>
 
     <string name="snackbar_location_updated">Konum bulundu!</string>
-    <string name="dialog_message_permission_write_settings">Sonraki ekranda Kırmızı Ay\'a parlaklık düzeyinizi değiştirme izni vermek için sistem ayarlarını değiştirmeye izin verin.</string>
+    <string name="dialog_message_permission_write_settings">Sonraki ekranda Red Moon\'a parlaklık düzeyinizi değiştirme izni vermek için sistem ayarlarını değiştirmeye izin verin.</string>
 
-    <string name="shortcut_title_toggle">Kırmızı Ay\'ı Aç/Kapa</string>
+    <string name="shortcut_title_toggle">Red Moon\'u Aç/Kapa</string>
 
-    <string name="filter_name_dim_only">Sadece karart</string>
+    <string name="filter_name_dim_only">Yalnızca karart</string>
 
     <string name="pref_entry_button_backlight_system">Sistem yönetimli</string>
-    <string name="pref_entry_button_backlight_filter_dim_level">Filtre karartma düzeyini kullan</string>
+    <string name="pref_entry_button_backlight_filter_dim_level">Süzgeç karartma düzeyini kullan</string>
     <string name="pref_entry_button_backlight_turn_off">Kapat</string>
 
     <string name="location">Konum</string>
