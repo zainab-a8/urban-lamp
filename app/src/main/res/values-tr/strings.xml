@@ -20,7 +20,7 @@
     <string name="notification_status_paused">Duraklatıldı</string>
     <string name="pref_title_dim_level">Karartma düzeyi</string>
     <string name="pref_title_intensity">Yoğunluk düzeyi</string>
-    <string name="dialog_title_add_filter">Süzgeç adı gir</string>
+    <string name="dialog_title_add_filter">Süzgeç adı girin</string>
     <string name="dialog_button_cancel">İptal</string>
 
     <string name="dialog_button_ok">Tamam</string>
@@ -50,7 +50,7 @@
     <string name="slide_text_welcome">Red Moon\'a hoş geldiniz!</string>
 
     <string name="slide_title_protect_eyes">Gözlerinizi korur</string>
-    <string name="slide_title_improve_sleep">Uyku niteliğinizi artırır</string>
+    <string name="slide_title_improve_sleep">Uykunuzu iyileştirir</string>
     <string name="time_toggle_options_array_1">Kendiliğinden (güneş)</string>
     <string name="time_toggle_options_array_2">Kendiliğinden (özel)</string>
 
@@ -62,7 +62,7 @@
 
     <string name="help_snackbar_text">Red Moon\'u etkinleştirmek için düğmeye bas</string>
 
-    <string name="dialog_title_remove_filter">Bu süzgeci sil?</string>
+    <string name="dialog_title_remove_filter">Bu süzgeç silinsin mi?</string>
     <string name="slide_text_protect_eyes">Geceleri, telefonunuza bakmak gözlerinizi acıttığında,
  ekranınızı karartmak için Red Moon\'u kullanabilirsiniz.</string>
 
@@ -78,21 +78,21 @@
     <string name="dialog_title_permission_usage_stats">Kullanım erişimi</string>
     <string name="pref_summary_email_developer">Bana hataları ya da önerileri e-postayla gönder</string>
     <string name="slide_title_get_started">Başlayın!</string>
-    <string name="pref_summary_secure_suspend">Bazı özellikler Red Moon açıkken* çalışmayacaktır. Örneğin APK\'ler yüklenirken, Android 6.0+ üzerinde izin verirken ya da (kök erişimi olan aygıtlarda) SuperUser uygulaması kullanırken.
+    <string name="pref_summary_secure_suspend">Bazı özellikler Red Moon açıkken* çalışmayacaktır. Örneğin APK\'leri yükleme, izinler verme veya (kök erişimi olan aygıtlarda) SuperUser uygulamasını kullanma.
 
- Bu ayar etkinken, bu özelliklerden biri açıldığında Kırmızı Ay duraklayacak.
+ Bu ayar etkinken, bu özelliklerden biri açıkken Red Moon duraklayacaktır.
 
- Bu özellik aygıtınızın pil ömrünü azıcık düşürebilir. Üstelik bu özellik tüm aygıtlarda çalışmayabilir.
+ Bu özellik aygıtınızın pil seviyesini biraz düşürebilir. Üstelik, bu özellik tüm aygıtlarda çalışmayabilir.
 
- *Red Moon tüm ekran üzerinde saydam kırmızı katman çizerek çalışır; bu uygulamalar eğer başka uygulama onların üzerine çizim yaparsa çalışmayacaktır. Bu yolla, başka uygulamanın istemediğiniz bir seçeneği seçmesi ya da ne yaptığınızı anlamak için dokunuşlarınızı izlemesi engellenir.</string>
+ *Red Moon tüm ekran üzerine saydam kırmızı bir katman çizerek çalışır; bu uygulamalar başka uygulama onların üzerine çizim yapıyorsa çalışmayacaktır. Bu yolla, başka hiçbir uygulama sizi istemediğiniz bir seçeneği seçmek için kandıramaz veya ne yaptığınızı anlamak için dokunuşlarınızı izleyemez.</string>
     <string name="dialog_message_permission_usage_stats">Bu özelliği etkinleştirmek için sonraki ekranda Red Moon\'un uygulama kullanım bilgilerine erişmesine izin verin.
 
 Red Moon güvenli uygulamalarda süzgeci askıya almak ve hangi uygulamanın içinde olduğunuzu görmek için kullanım iznine gereksinir. Red Moon bu veriyi gerektiğinde yalnızca süzgeci askıya almak için kullanacak.</string>
 
     <!-- Currently unused -->
     <string name="add_new_profile_edit_hint">Profil adı</string>
-    <string name="add_new_profile_dialog_title">Profil adı gir</string>
-    <string name="remove_profile_dialog_title">Bu profili sil?</string>
+    <string name="add_new_profile_dialog_title">Profil adı girin</string>
+    <string name="remove_profile_dialog_title">Bu profil silinsin mi?</string>
     <string name="pref_title_appearance">Profil</string>
     <string name="menu_about">Hakkında</string>
     <string name="activity_about">Red Moon Hakkında</string>
@@ -123,9 +123,9 @@ Red Moon güvenli uygulamalarda süzgeci askıya almak ve hangi uygulamanın iç
 
     <string name="pref_summary_location_off">Konumunuza göre</string>
 
-    <string name="pref_summary_integration">LibreTasks veya Tasker gibi bazı uygulamalar, belirli etkinlikler gerçekleştiğinde görevleri kendiliğindenleştirmenize olanak sağlar. Red Moon, açıp kapandığıda genel bir bildirim gönderir, böylelike bu uygulamalar karşılık verebilir. Bu uygulamaları geliştirmiyor veya kullanmıyorsanız, sonraki paragrafi görmezden gelebilirsiniz.
+    <string name="pref_summary_integration">LibreTasks veya Tasker gibi bazı uygulamalar, belirli etkinlikler gerçekleştiğinde görevleri kendiliğindenleştirmenize izin verir. Red Moon, açılıp kapandığıda açık bir bildirim gönderir, böylece bu uygulamalar karşılık verebilir. Bu uygulamalardan birini geliştirmiyor veya kullanmıyorsanız, sonraki paragrafi yok sayabilirsiniz.
 
-Red Moon, `com.jmstudios.redmoon.RED_MOON_TOGGLED` eylemiyle bir \"açık karar\" yayımlar. Bu \"açık karar\", Red Moon\'un açılıp kapatıldığını belirten `jmstudios.bundle.key.FILTER_IS_ON` anahtarıyla boole değerini içerir.</string>
+Red Moon, `com.jmstudios.redmoon.RED_MOON_TOGGLED` eylemiyle açık bir \"intent\" yayımlar. Bu \"intent\", Red Moon\'un açılıp kapatıldığını belirten `jmstudios.bundle.key.FILTER_IS_ON` anahtarıyla bir \"boolean extra\" içerir.</string>
 
     <string name="snackbar_location_updated">Konum bulundu!</string>
     <string name="dialog_message_permission_write_settings">Sonraki ekranda Red Moon\'a parlaklık düzeyinizi değiştirme izni vermek için sistem ayarlarını değiştirmeye izin verin.</string>
