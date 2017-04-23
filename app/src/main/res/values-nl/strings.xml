@@ -129,4 +129,5 @@
     <string name="set_dialog">Stel in</string>
     <string name="notification_status_running">Loopt. Zet uit om apks te installeren</string>
     <string name="notification_status_running_no_warning">Loopt</string>
-</resources>
+<string name="menu_restore_default_filters">Herstel standaard filters</string>
+    </resources>
