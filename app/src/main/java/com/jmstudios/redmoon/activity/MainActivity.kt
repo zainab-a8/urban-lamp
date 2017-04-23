@@ -112,6 +112,24 @@ class MainActivity : ThemedAppCompatActivity() {
         super.onResume()
         // The switch is null here, so we can't set its position directly.
         invalidateOptionsMenu()
+
+        // Attempt to set the Switch correctly, because at least on my device, it doesn't have the
+        // correct state when:
+        // 1 Open Red Moon
+        // 2 Start the filter
+        // 3 Use the home button to exit Red Moon
+        // 4 Stop the filter through the notification
+        // 5 Reopen Red Moon through the launcher
+        // After these steps the switch in the activity is still on for me, although the filter is
+        // off.
+        try {
+            // Try to update the position of the switch, if it has already been created
+            mSwitch?.isChecked = Config.filterIsOn;
+        } catch (e: Exception) {
+            // Apparently the switch wasn't initialized yet, so it will be set correctly when it is
+            // initialized.
+        }
+
         EventBus.register(this)
     }
 
