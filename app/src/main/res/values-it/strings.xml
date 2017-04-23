@@ -28,8 +28,8 @@
     <string name="pref_title_end_time">Ferma alle</string>
     <string name="pref_title_location">Posizione</string>
     <string name="location_not_set">Posizione non impostata</string>
-    <string name="latitude_short">Lat</string>
-    <string name="longitude_short">Long</string>
+    <string name="latitude_short">Latitudine</string>
+    <string name="longitude_short">Longitudine</string>
     <string name="snackbar_searching_location">Cercando la posizione</string>
 
     <string name="menu_dark_theme">Tema scuro</string>
@@ -49,7 +49,7 @@
     <string name="dialog_button_ok">OK</string>
     <string name="dialog_button_cancel">Annulla</string>
 
-    <string name="shortcut_title_toggle">Attiva Filtro</string>
+    <string name="shortcut_title_toggle">Attiva Red Moon</string>
 
     <string name="slide_title_welcome">Benvenuto!</string>
     <string name="slide_text_welcome">Benvenuto in Red Moon!</string>
