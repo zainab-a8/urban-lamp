@@ -1,11 +1,10 @@
 <img align="right" height="256" src="https://lut.im/3IqLwsAZWH/piFLRMOgNLWmiqB8.png">
 
-# Red Moon [![Translation status](https://hosted.weblate.org/widgets/red-moon/-/svg-badge.svg)](https://hosted.weblate.org/engage/red-moon/?utm_source=widget)
 
-Red Moon is a simple screen filter app for night time phone use. It helps you sleep
-healthier by filtering out blue light, which can disrupt your sleep cycle
-(circadian rhythm). And when your phone's lowest brightness isn't low enough,
-Red Moon protects your eyes by making your screen even darker. 
+# Red Moon [![Translation status](https://hosted.weblate.org/widgets/red-moon/-/svg-badge.svg)](https://hosted.weblate.org/engage/red-moon/?utm_source=widget)
+Blue light can suppress the production of melatonin, the sleep hormone. Red Moon
+filters out blue light and dims your screen below the normal minimum, so you can
+use your phone comfortably at night. It is simple and flexible:
 
 [<img src="https://f-droid.org/badge/get-it-on.png"
       alt="Get it on F-Droid"
@@ -17,15 +16,36 @@ Red Moon protects your eyes by making your screen even darker.
       alt="Direct download" 
       height="80">](https://github.com/raatmarien/red-moon/releases)
 
-## Features
 
-* Use the default filters or create your own, with separate color, intensity and dim settings.
-* Automatically turn Red Moon on while the sun is down, or set custom times.
-* Switch between filters right in the notification, without leaving the app you're using.
-* Turn Red Moon on and off without opening the app using:
-  * A widget or a shortcut on your home screen.
-  * A quick settings tile, like WiFi or Airplane mode (Android 7.0+). 
-  * The notification (if Red Moon is on, or was recently on).
+* Set the timer to automatically turn on at night, or at custom times.
+* Use the default filters, or fine-tune your own with separate color, intensity and dim levels.
+* The notification, tile (Android 7.0+), and widget let you start, stop, and switch filters without opening the app.
+      
+## Get involved
+
+<a href="https://hosted.weblate.org/engage/red-moon/?utm_source=widget">
+<img align="right" src="https://hosted.weblate.org/widgets/red-moon/-/multi-auto.svg" alt="Translation status" />
+</a>
+
+The easiest way to help is by reporting bugs and giving feedback over in the
+[issues] section. You could also chat in real time on matrix, at [#red-moon:matrix.org].
+
+[Weblate] is the easiest way for most people to translate, since your changes
+will be automatically merged. If you'd prefer to make a pull request, please
+keep code and translations in separate PRs.
+
+> **Trust your judgement!**  
+> If there is a loose translation that you think is better than the literal
+> translation, go for it. We'll try not to reuse strings, even if the English
+> could be, so you don't need to worry about re-use out of context.
+
+If you'd like to contribute code but you're not sure what to do, check out
+issues tagged with [`bug`s] or [`patches welcome`]. If you have something else
+in mind, please talk about it (eg, [open a new issue]) first, especially if
+it requires increasing Red Moon's complexity (ie, adding options). And don't
+forget to read our coding style guidelines [below](#coding-style). 
+
+**All help is equally welcome!** 
 
 ## Screenshots
 
@@ -37,45 +57,19 @@ Red Moon protects your eyes by making your screen even darker.
 <img src="https://lut.im/LPf77AuSRG/MsJbEeHXHxyQ7XSf.png" width="180" height="320" />
 <img src="https://lut.im/7eRSVHlsoS/2OJNIqCG3NQTExZI.png" width="180" height="320" />
 
----
----
+## Building
 
-**All help is welcome!** Code is great and saves us work, but sometimes a
-comment that clarifies a design issue or a link to the relevant part of some
-documentation is just as helpful (and often more efficient, since you don't need
-to familiarize yourself with Red Moon's code base).
+To build the app on GNU+Linux, clone the repository and run
 
-## Bugs, feedback, and ideas
+`./gradlew build`
 
-Issues are tagged with [`feedback wanted`], [`needs design`],
-[`can't replicate`], or [`needs information`] (this one's usually technical)
-based on what needs to be done next. There are also tags about priorities:  
-<a href="https://hosted.weblate.org/engage/red-moon/?utm_source=widget">
-<img align="right" src="https://hosted.weblate.org/widgets/red-moon/-/multi-auto.svg" alt="Translation status" />
-</a>
-- [`planned`]: The most important issues.
-- [`help wanted`]: These would be `planned`, but there's a question or problem that we're stuck on. We'd love help getting un-stuck!
-- [`someday/maybe`]: Worth adding, but not that important.
+in the root directory.
 
-## Translations
+Use
 
-**[Weblate] is the easiest way for most people.** You can work in your browser
-instead of crawling through text files, and your translations will be
-automatically be merged into this repository. If you'd prefer to make a pull
-request, that's fine too, but if you're also changing code, please keep that
-in a separate PR.
+`./gradlew installDebug`
 
-**Trust your judgement!** If there is a loose translation that you think is
-simpler and clearer than the literal translation, go for it. We'll try not to
-use strings in multiple places, even if the English word could be reused.
-
-## Pull requests
-
-[Bugfixes] are very safe PRs (likely to be merged), and a good way to learn the
-code base, but often not as exciting as adding something new. Issues tagged
-[`patches welcome`] are also safe, since they have the design worked out. If
-you have something else in mind, [open a new issue] about it first, especially
-if it requires increasing Red Moon's complexity (ie, adding options).
+to install the app on a connected device or running emulator.
 
 ### Coding Style
 
@@ -93,24 +87,11 @@ if it requires increasing Red Moon's complexity (ie, adding options).
 
 Again, **prioritize legibility over dogmatism.**
 
----
----
-
-## Building
-
-To build the app on GNU+Linux, clone the repository and run
-
-`./gradlew build`
-
-in the root directory.
-
-Use
-
-`./gradlew installDebug`
-
-to install the app on a connected device or running emulator.
-
 ## License
+
+[<img src="https://www.gnu.org/graphics/gplv3-127x51.png"
+      align="right"
+      alt="GNU GPLv3 Image">](http://www.gnu.org/licenses/gpl-3.0.en.html)
 
 "Red Moon" is a derivative of
 "[Shades](https://github.com/cngu/shades)" by
@@ -119,8 +100,6 @@ to install the app on a connected device or running emulator.
 Moon" is licensed under the
 [GNU General Public License version 3](https://www.gnu.org/licenses/gpl-3.0.html),
 or (at your option) any later version by [the contributors](https://github.com/raatmarien/red-moon/graphs/contributors).
-
-[![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)
 
 All used artwork is released into the public domain. Some of the icons
 use cliparts from [openclipart.org](https://openclipart.org/), which
@@ -132,18 +111,13 @@ are all released in the public domain, namely:
 * https://openclipart.org/detail/213998/nexus-5-flat
 * https://openclipart.org/detail/192689/press-button
 
-## Footnotes
+---
 
 \* Google Play and the Google Play logo are trademarks of Google Inc.
 
-[`can't replicate`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3A%22can%27t+replicate%22
-[`needs design`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3A%22needs+design%22
-[`needs information`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3A%22needs+information%22
-[`feedback wanted`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3A%22feedback+wanted%22
-[`planned`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3Aplanned
-[`help wanted`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22
-[`someday/maybe`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3Asomeday%2Fmaybe
 [`patches welcome`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3A%22patches+welcome%22
+[#red-moon:matrix.org]: https://matrix.to/#/#red-moon:matrix.org
+[issues]: https://github.com/raatmarien/red-moon/issues
 [open a new issue]: https://github.com/raatmarien/red-moon/issues/new
-[Bugfixes]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3Abug
+[`bug`s]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3Abug
 [Weblate]: https://hosted.weblate.org/projects/red-moon/strings/
