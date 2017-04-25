@@ -85,7 +85,7 @@ class WindowViewManager(private val mView: ScreenFilterView,
 
     // Closes the Window that is currently displaying `mView`.
     fun close(time: Int = 0, onEnd: () -> Unit = {}) {
-        Log.i("close()")
+        Log.i("close(time = $time)")
         mAnimator.addListener(object : AbstractAnimatorListener {
             override fun onAnimationEnd(animator: Animator) = if (mOpen) {
                 Log.i("Closing screen filter")
@@ -102,7 +102,6 @@ class WindowViewManager(private val mView: ScreenFilterView,
     private fun update() { if (mOpen) mWindowManager.updateViewLayout(mView, mLayoutParams) }
 
     private fun setProfile(time: Int, profile: Profile) = mAnimator.run {
-        if (isRunning) cancel()
         setObjectValues(mView.profile, profile)
         duration = time.toLong()
         addUpdateListener { valueAnimator ->

@@ -115,8 +115,12 @@ class ScreenFilterService : Service(), ServiceLifeCycleController {
         fun intent(c: Command): Intent = emptyIntent.putExtra(BUNDLE_KEY_COMMAND, c.ordinal)
 
         fun start()  { appContext.startService(emptyIntent) }
-
-        fun toggle() { moveToState(Command.TOGGLE)  }
         fun moveToState(c: Command) { appContext.startService(intent(c)) }
+
+        fun toggle(on: Boolean? = null) = moveToState(when (on) {
+            true  -> Command.ON
+            false -> Command.OFF
+            null  -> Command.TOGGLE
+        })
     }
 }

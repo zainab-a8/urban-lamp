@@ -40,7 +40,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Switch
+import android.support.v7.widget.SwitchCompat
 
 import com.jmstudios.redmoon.R
 
@@ -68,7 +68,7 @@ class MainActivity : ThemedAppCompatActivity() {
     override val fragment = FilterFragment()
     override val tag = "jmstudios.fragment.tag.FILTER"
 
-    lateinit private var mSwitch : Switch
+    private var mSwitch : SwitchCompat? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         upgrade()
@@ -90,17 +90,22 @@ class MainActivity : ThemedAppCompatActivity() {
 
         menu.findItem(R.id.menu_dark_theme).isChecked = Config.darkThemeFlag
 
-        mSwitch = (menu.findItem(R.id.screen_filter_switch).actionView as Switch).apply {
+        mSwitch = (menu.findItem(R.id.screen_filter_switch).actionView as SwitchCompat).apply {
             isChecked = Config.filterIsOn
-            setOnClickListener {
-                val state = if (mSwitch.isChecked) { ScreenFilterService.Command.ON }
-                            else { ScreenFilterService.Command.OFF }
-                Log.i("Toggling $state via switch")
-                ScreenFilterService.moveToState(state)
+            setOnCheckedChangeListener { _, checked ->
+                ScreenFilterService.toggle(checked)
             }
         }
 
         return true
+    }
+
+    fun SwitchCompat.safeSetChecked(checked: Boolean) {
+        setOnCheckedChangeListener { _, _ ->  }
+        isChecked = checked
+        setOnCheckedChangeListener { _, checked ->
+            ScreenFilterService.toggle(checked)
+        }
     }
 
     override fun onStart() {
@@ -110,26 +115,7 @@ class MainActivity : ThemedAppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        // The switch is null here, so we can't set its position directly.
-        invalidateOptionsMenu()
-
-        // Attempt to set the Switch correctly, because at least on my device, it doesn't have the
-        // correct state when:
-        // 1 Open Red Moon
-        // 2 Start the filter
-        // 3 Use the home button to exit Red Moon
-        // 4 Stop the filter through the notification
-        // 5 Reopen Red Moon through the launcher
-        // After these steps the switch in the activity is still on for me, although the filter is
-        // off.
-        try {
-            // Try to update the position of the switch, if it has already been created
-            mSwitch?.isChecked = Config.filterIsOn;
-        } catch (e: Exception) {
-            // Apparently the switch wasn't initialized yet, so it will be set correctly when it is
-            // initialized.
-        }
-
+        mSwitch?.safeSetChecked(Config.filterIsOn)
         EventBus.register(this)
     }
 
@@ -185,12 +171,12 @@ class MainActivity : ThemedAppCompatActivity() {
 
     @Subscribe
     fun onFilterIsOnChanged(event: filterIsOnChanged) {
-        mSwitch.isChecked = Config.filterIsOn
+        mSwitch?.safeSetChecked(Config.filterIsOn)
     }
 
     @Subscribe
     fun onOverlayPermissionDenied(event: overlayPermissionDenied) {
-        mSwitch.isChecked = false
+        mSwitch?.safeSetChecked(false)
         Permission.Overlay.request(this)
     }
 }
