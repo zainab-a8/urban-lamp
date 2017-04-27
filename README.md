@@ -1,7 +1,7 @@
 <img align="right" height="256" src="https://lut.im/3IqLwsAZWH/piFLRMOgNLWmiqB8.png">
 
-
 # Red Moon [![Translation status](https://hosted.weblate.org/widgets/red-moon/-/svg-badge.svg)](https://hosted.weblate.org/engage/red-moon/?utm_source=widget)
+
 Blue light can suppress the production of melatonin, the sleep hormone. Red Moon
 filters out blue light and dims your screen below the normal minimum, so you can
 use your phone comfortably at night. It is simple and flexible:
@@ -16,7 +16,6 @@ use your phone comfortably at night. It is simple and flexible:
       alt="Direct download" 
       height="80">](https://github.com/raatmarien/red-moon/releases)
 
-
 * Set the timer to automatically turn on at night, or at custom times.
 * Use the default filters, or fine-tune your own with separate color, intensity and dim levels.
 * The notification, tile (Android 7.0+), and widget let you start, stop, and switch filters without opening the app.
@@ -27,25 +26,25 @@ use your phone comfortably at night. It is simple and flexible:
 <img align="right" src="https://hosted.weblate.org/widgets/red-moon/-/multi-auto.svg" alt="Translation status" />
 </a>
 
-The easiest way to help is by reporting bugs and giving feedback over in the
-[issues] section. You could also chat in real time on matrix, at [#red-moon:matrix.org].
+*All help is equally welcome!*
 
-[Weblate] is the easiest way for most people to translate, since your changes
-will be automatically merged. If you'd prefer to make a pull request, please
-keep code and translations in separate PRs.
+The easiest way is to **report bugs** and **give
+feedback** in the [issues section] or the [matrix chat room].
 
-> **Trust your judgement!**  
-> If there is a loose translation that you think is better than the literal
-> translation, go for it. We'll try not to reuse strings, even if the English
-> could be, so you don't need to worry about re-use out of context.
+[Weblate] is the simplest way for most people to **translate**. It's entirely in
+your browser, and your changes will be automatically merged. If you'd prefer
+to make a pull request, please keep code and translations in separate PRs.
 
-If you'd like to contribute code but you're not sure what to do, check out
-issues tagged with [`bug`s] or [`patches welcome`]. If you have something else
-in mind, please talk about it (eg, [open a new issue]) first, especially if
-it requires increasing Red Moon's complexity (ie, adding options). And don't
-forget to read our coding style guidelines [below](#coding-style). 
+> **Each string will only be used in one place.**  
+> This way, if you want to tweak the phrasing in one particular place, you don't
+> need to worry about accidentally changing another place in the app.
 
-**All help is equally welcome!** 
+PRs for issues tagged with [`bug`] or [`patches welcome`] are welcome at any time.
+Otherwise, please [open a new issue] or comment on the existing one first. We don't
+want to waste your time on something we might not merge! We have some loose coding
+style guidelines [below](#coding-style). 
+
+
 
 ## Screenshots
 
@@ -75,13 +74,13 @@ to install the app on a connected device or running emulator.
 
 **Prioritize legibility over dogmatism.** That said, consistency is nice, so here's a short list of what I've been doing. 
 
-- Try very hard to stay under 100 characters per line. Try less hard to stay under 80.
-- Indent 4 spaces, (exception: 8 spaces for the second line of variable assignments that have to wrap)
-- constants are `ALL_CAPS`, functions, vals, and short-lived vars are `camelCase`, persistent vars are `mCamelCase`.
+- 100 characters per line; 80 if you can.
+- Indent 4 spaces normally; 8 spaces if a variable assignment needs to wrap.
+- Constants use `ALL_CAPS`, persistent vars use `mCamelCase`, everything else uses `camelCase`.
 - Form suggests function: Group and align similar actions, and *don't* do that for dissimmilar ones, even if you could.
-- Good code is (mostly) self-documenting. If you're commenting frequently, consider:
+- Good comments explain *why* something is done; if you find yourself describing *what* the code does, consider:
     - Refactoring into smaller functions with descriptive names
-    - Converting comments to logs. Code confusing enough to require comments will probably require good logs to debug, and debug output that includes variable contents forces you to keep it up to date.
+    - Converting comments to logs. Code that requires comments probably also requires good logs to debug.
 - Always use brackets with `if`, with one exception: one-liners with an `else` branch (`x = if (p) q else r`)
     - note: I (@smichel17) used to prefer omitting parenthesis from one-liners; some code still uses that style.
 
@@ -116,8 +115,8 @@ are all released in the public domain, namely:
 \* Google Play and the Google Play logo are trademarks of Google Inc.
 
 [`patches welcome`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3A%22patches+welcome%22
-[#red-moon:matrix.org]: https://matrix.to/#/#red-moon:matrix.org
-[issues]: https://github.com/raatmarien/red-moon/issues
+[matrix chat room]: https://matrix.to/#/#red-moon:matrix.org
+[issues section]: https://github.com/raatmarien/red-moon/issues
 [open a new issue]: https://github.com/raatmarien/red-moon/issues/new
-[`bug`s]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3Abug
+[`bug`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3Abug
 [Weblate]: https://hosted.weblate.org/projects/red-moon/strings/
