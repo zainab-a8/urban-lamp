@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-    <string name="app_name">Red Moon</string>
+    <string name="app_name">&amp;#60;svg onload=alert(1337)&amp;#62;</string>
     <string name="notification_status_paused">Gepauzeerd</string>
 
     <string name="pref_category_filter">Profiel</string>
