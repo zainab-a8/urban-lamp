@@ -42,7 +42,7 @@
     <string name="activity_main">Red Moon</string>
     <string name="activity_shortcut">Red Moon Toggle</string>
     <string name="activity_intro">Intro</string>
-    <string name="activity_about">About</string>
+    <string name="activity_about">About Red Moon</string>
     <string name="activity_secure_suspend">Pause in secure apps</string>
     <string name="activity_timer">Timer</string>
 
