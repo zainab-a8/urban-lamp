@@ -36,11 +36,13 @@
  */
 package com.jmstudios.redmoon.util
 
+import android.content.Intent
 import android.support.v4.content.ContextCompat
 
 import com.jmstudios.redmoon.application.RedMoonApplication
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.model.ProfilesModel
+import kotlin.reflect.KClass
 
 val appContext = RedMoonApplication.app
 val activeProfile
@@ -51,3 +53,6 @@ fun getColor (resId: Int): Int = ContextCompat.getColor(appContext, resId)
 
 fun atLeastAPI(api: Int): Boolean = android.os.Build.VERSION.SDK_INT >= api
 fun belowAPI  (api: Int): Boolean = android.os.Build.VERSION.SDK_INT <  api
+
+fun intent() = Intent()
+fun <T: Any>intent(kc: KClass<T>) = Intent(appContext, kc.java)

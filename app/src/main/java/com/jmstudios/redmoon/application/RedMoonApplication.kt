@@ -24,12 +24,16 @@ import android.preference.PreferenceManager
 import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.model.Config
-import com.jmstudios.redmoon.model.ProfilesModel
 import com.jmstudios.redmoon.receiver.TimeToggleChangeReceiver
 import com.jmstudios.redmoon.helper.Logger
+import com.jmstudios.redmoon.receiver.SwitchAppWidgetProvider
+import com.jmstudios.redmoon.util.*
 
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+
+private const val BROADCAST_ACTION = "com.jmstudios.redmoon.RED_MOON_TOGGLED"
+private const val BROADCAST_FIELD  = "jmstudios.bundle.key.FILTER_IS_ON"
 
 class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -83,49 +87,54 @@ class RedMoonApplication: Application(), SharedPreferences.OnSharedPreferenceCha
     }
     //endregion
 
-    // There's probably a better place to do this to keep this class clean
-    // For now it works, though
-    @Subscribe
-    fun onProfileChanged(event: profileChanged) {
-        val index = Config.profile
-        Log.i("setProfile: $index")
-        // TODO: Allow updating the profile before the related settings without causing bugs
-        // Update settings that are based on the profile
-        ProfilesModel.getProfile(index).run {
-            Log.i("color=$color, intensity=$intensity, dim=$dimLevel, lb=$lowerBrightness")
-            Config.color           = color
-            Config.intensity       = intensity
-            Config.dimLevel        = dimLevel
-            Config.lowerBrightness = lowerBrightness
-        }
+    //region State updaters; Probably should refactor this.
+    @Subscribe fun sync(event: filterIsOnChanged) {
+        Log.i("Sending update broadcasts")
+        //Broadcast to keep appwidgets in sync
+        sendBroadcast(intent(SwitchAppWidgetProvider::class).apply {
+            action = SwitchAppWidgetProvider.ACTION_UPDATE
+            putExtra(SwitchAppWidgetProvider.EXTRA_POWER, Config.filterIsOn)
+        })
+
+        // If an app like Tasker wants to do something each time
+        // Red Moon is toggled, it can listen for this event
+        sendBroadcast(intent().apply {
+            action = BROADCAST_ACTION
+            putExtra(BROADCAST_FIELD, Config.filterIsOn)
+        })
     }
 
-    @Subscribe
-    fun onTimeToggleChanged(event: timeToggleChanged) {
-        Log.i("Timer turned ${if (Config.timeToggle) "on" else "off"}")
-        if (Config.timeToggle) {
-            TimeToggleChangeReceiver.rescheduleOnCommand()
-            TimeToggleChangeReceiver.rescheduleOffCommand()
-        } else {
-            TimeToggleChangeReceiver.cancelAlarms()
-        }
+    @Subscribe fun onProfileChanged(event: profileChanged) = activeProfile.run {
+        Log.i("setProfile: ${Config.profile}")
+        Log.i("color=$color, intensity=$intensity, dim=$dimLevel, lb=$lowerBrightness")
+        Config.color           = color
+        Config.intensity       = intensity
+        Config.dimLevel        = dimLevel
+        Config.lowerBrightness = lowerBrightness
     }
 
-    @Subscribe
-    fun onCustomTurnOnTimeChanged(event: customTurnOnTimeChanged) {
+    @Subscribe fun onTimeToggleChanged(event: timeToggleChanged) = if (Config.timeToggle) {
+        Log.i("Timer turned on")
+        TimeToggleChangeReceiver.rescheduleOnCommand()
+        TimeToggleChangeReceiver.rescheduleOffCommand()
+    } else {
+        Log.i("Timer turned on")
+        TimeToggleChangeReceiver.cancelAlarms()
+    }
+
+    @Subscribe fun onCustomTurnOnTimeChanged(event: customTurnOnTimeChanged) {
         TimeToggleChangeReceiver.rescheduleOnCommand()
     }
 
-    @Subscribe
-    fun onCustomTurnOffTimeChanged(event: customTurnOffTimeChanged) {
+    @Subscribe fun onCustomTurnOffTimeChanged(event: customTurnOffTimeChanged) {
         TimeToggleChangeReceiver.rescheduleOffCommand()
     }
 
-    @Subscribe
-    fun onLocationChanged(event: locationChanged) {
+    @Subscribe fun onLocationChanged(event: locationChanged) {
         TimeToggleChangeReceiver.rescheduleOffCommand()
         TimeToggleChangeReceiver.rescheduleOnCommand()
     }
+    //endregion
 
     companion object : Logger() {
         lateinit var app: RedMoonApplication

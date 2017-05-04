@@ -72,29 +72,21 @@ class MainActivity : ThemedAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         upgrade()
-        val intent = intent
-        Log.i("Got intent")
         val fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false)
+        Log.i("Got intent")
         if (fromShortcut) { toggleAndFinish() }
 
         super.onCreate(savedInstanceState)
         if (!Config.introShown) { startIntro() }
         ChangeLog(this).run { if (isFirstRun) logDialog.show() }
-
-        // The preview will appear faster if we don't have to start the service
-        ScreenFilterService.start()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_activity_main, menu)
 
         menu.findItem(R.id.menu_dark_theme).isChecked = Config.darkThemeFlag
-
         mSwitch = (menu.findItem(R.id.screen_filter_switch).actionView as SwitchCompat).apply {
-            isChecked = Config.filterIsOn
-            setOnCheckedChangeListener { _, checked ->
-                ScreenFilterService.toggle(checked)
-            }
+            safeSetChecked(Config.filterIsOn) // Side effect: sets listener
         }
 
         return true
@@ -114,6 +106,7 @@ class MainActivity : ThemedAppCompatActivity() {
     }
 
     override fun onResume() {
+        Log.i("onResume")
         super.onResume()
         mSwitch?.safeSetChecked(Config.filterIsOn)
         EventBus.register(this)
@@ -169,13 +162,12 @@ class MainActivity : ThemedAppCompatActivity() {
         finish()
     }
 
-    @Subscribe
-    fun onFilterIsOnChanged(event: filterIsOnChanged) {
+    @Subscribe fun onFilterIsOnChanged(event: filterIsOnChanged) {
+        Log.i("FilterIsOnChanged")
         mSwitch?.safeSetChecked(Config.filterIsOn)
     }
 
-    @Subscribe
-    fun onOverlayPermissionDenied(event: overlayPermissionDenied) {
+    @Subscribe fun onOverlayPermissionDenied(event: overlayPermissionDenied) {
         mSwitch?.safeSetChecked(false)
         Permission.Overlay.request(this)
     }

@@ -46,17 +46,18 @@ abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
 
     // Changes to DEFAULT_VALUE should be reflected in preferences.xml
     abstract val DEFAULT_VALUE: Int
-    abstract val colorFilter: PorterDuffColorFilter
+    abstract val color: Int
     abstract val progress: Int
     abstract val suffix: String
+
+    val colorFilter: PorterDuffColorFilter
+        get() = PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY)
 
     init {
         layoutResource = R.layout.preference_seekbar
     }
 
-    fun setProgress(progress: Int) {
-        mSeekBar.progress = progress
-    }
+    fun setProgress(progress: Int) { mSeekBar.progress = progress }
 
     override fun onGetDefaultValue(a: TypedArray, index: Int): Any {
         return a.getInteger(index, DEFAULT_VALUE)
@@ -93,12 +94,12 @@ abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
 
     override fun onStartTrackingTouch(seekBar: SeekBar) {
         Log.d("Touch down on a seek bar")
-        ScreenFilterService.moveToState(ScreenFilterService.Command.SHOW_PREVIEW)
+        ScreenFilterService.preview(true)
     }
 
     override fun onStopTrackingTouch(seekBar: SeekBar) {
         Log.d("Released a seek bar")
-        ScreenFilterService.moveToState(ScreenFilterService.Command.HIDE_PREVIEW)
+        ScreenFilterService.preview(false)
     }
     //end region
 
@@ -111,43 +112,33 @@ abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
 
     fun updateProgressText() {
         val progressView = mView.findViewById(R.id.seekbar_value) as TextView
-        progressView.text = String.format("%d%s", progress, suffix)
+        progressView.text = "$progress$suffix"
     }
 }
 
 class ColorSeekBarPreference(context: Context, attrs: AttributeSet) : SeekBarPreference(context, attrs) {
-
-    // TODO: Get the default value from the XML and handle it in the parent class
     companion object : Logger()
 
     // Changes to DEFAULT_VALUE should be reflected in preferences.xml
     override val DEFAULT_VALUE = Profile.DEFAULT_COLOR
     override val suffix = "K"
         
-    override val colorFilter: PorterDuffColorFilter
-        get() {
-            val color = Profile.rgbFromColor(mProgress)
-            return PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY)
-        }
+    override val color: Int
+        get() = Profile.rgbFromColor(mProgress)
 
     override val progress: Int
         get() = Profile.getColorTemperature(mProgress)
 }
 
 class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : SeekBarPreference(context, attrs) {
-
-    // TODO: Get the default value from the XML and handle it in the parent class
     companion object : Logger()
 
     // Changes to DEFAULT_VALUE should be reflected in preferences.xml
     override val DEFAULT_VALUE = Profile.DEFAULT_INTENSITY
     override val suffix = "%"
 
-    override val colorFilter: PorterDuffColorFilter
-        get() {
-            val color = getIntensityColor(mProgress, Config.color)
-            return PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY)
-        }
+    override val color: Int
+        get() = getIntensityColor(mProgress, Config.color)
 
     override val progress: Int
         get() = mProgress
@@ -173,11 +164,10 @@ class DimSeekBarPreference(context: Context, attrs: AttributeSet) : SeekBarPrefe
     override val DEFAULT_VALUE = Profile.DEFAULT_DIM_LEVEL
     override val suffix = "%"
 
-    override val colorFilter: PorterDuffColorFilter
+    override val color: Int
         get() {
             val lightness = 102 + ((100 - mProgress).toFloat() * (2.55f * 0.6f)).toInt()
-            val color = Color.rgb(lightness, lightness, lightness)
-            return PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY)
+            return Color.rgb(lightness, lightness, lightness)
         }
 
     override val progress: Int
