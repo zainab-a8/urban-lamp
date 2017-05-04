@@ -28,8 +28,9 @@ use your phone comfortably at night. It is simple and flexible:
 
 *All help is equally welcome!*
 
-The easiest way is to **report bugs** and **give
-feedback** in the [issues section] or the [matrix chat room].
+The easiest way is to **report bugs** and **give feedback** in the [issues section]
+or the [matrix chat room]. If you're feeling adventurous, you can [help find bugs]
+before they're released!
 
 [Weblate] is the simplest way for most people to **translate**. It's entirely in
 your browser, and your changes will be automatically merged. If you'd prefer
@@ -118,5 +119,6 @@ are all released in the public domain, namely:
 [matrix chat room]: https://matrix.to/#/#red-moon:matrix.org
 [issues section]: https://github.com/raatmarien/red-moon/issues
 [open a new issue]: https://github.com/raatmarien/red-moon/issues/new
+[help find bugs]: https://github.com/raatmarien/red-moon/issues/146
 [`bug`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3Abug
 [Weblate]: https://hosted.weblate.org/projects/red-moon/strings/
