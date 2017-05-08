@@ -41,6 +41,8 @@ import com.jmstudios.redmoon.util.*
 
 import org.greenrobot.eventbus.Subscribe
 
+private const val DEFAULT_VALUE = 1
+
 class ProfileSelectorPreference(ctx: Context, attrs: AttributeSet) : Preference(ctx, attrs),
                                                                      OnItemSelectedListener {
     lateinit private var mProfileSpinner: Spinner
@@ -192,7 +194,5 @@ class ProfileSelectorPreference(ctx: Context, attrs: AttributeSet) : Preference(
     }
     //endregion
 
-    companion object : Logger() {
-        private const val DEFAULT_VALUE = 1
-    }
+    companion object : Logger()
 }

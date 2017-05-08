@@ -24,6 +24,12 @@ import com.jmstudios.redmoon.util.getString
 
 import org.json.JSONObject
 
+private const val KEY_NAME      = "name"
+private const val KEY_COLOR     = "color"
+private const val KEY_INTENSITY = "intensity"
+private const val KEY_DIM_LEVEL = "dim"
+private const val KEY_LOWER_BRIGHTNESS = "lower-brightness"
+
 /**
  * Color, intensity, and dimLevel range from 0 to 100 inclusive. Regardless of
  *                     value, the filter is guaranteed to never be fully opaque.
@@ -39,7 +45,7 @@ data class Profile(
         val color:           Int     = DEFAULT_COLOR,
         val intensity:       Int     = DEFAULT_INTENSITY,
         val dimLevel:        Int     = DEFAULT_DIM_LEVEL,
-        val lowerBrightness: Boolean = false) {
+        val lowerBrightness: Boolean = false) : EventBus.Event {
 
     override fun toString() = JSONObject().run {
         put(KEY_NAME,      name     )
@@ -87,12 +93,6 @@ data class Profile(
     }
 
     companion object {
-        private const val KEY_NAME      = "name"
-        private const val KEY_COLOR     = "color"
-        private const val KEY_INTENSITY = "intensity"
-        private const val KEY_DIM_LEVEL = "dim"
-        private const val KEY_LOWER_BRIGHTNESS = "lower-brightness"
-
         private const val MIN_DIM_LEVEL = 0
         private const val MIN_INTENSITY = 0
 

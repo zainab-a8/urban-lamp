@@ -37,6 +37,7 @@
 package com.jmstudios.redmoon.model
 
 import android.preference.PreferenceManager
+import com.jmstudios.redmoon.BuildConfig
 
 import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.helper.Profile
@@ -218,7 +219,7 @@ object Config {
 
     //region application
     var fromVersionCode: Int
-        get() = getIntPref(R.string.pref_key_from_version_code, 0)
+        get() = getIntPref(R.string.pref_key_from_version_code, BuildConfig.VERSION_CODE)
         set(c) = putIntPref(R.string.pref_key_from_version_code, c)
     //endregion
 }

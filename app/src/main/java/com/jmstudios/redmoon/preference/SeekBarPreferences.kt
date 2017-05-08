@@ -44,7 +44,6 @@ abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
     protected var mProgress: Int = 0
     lateinit protected var mView: View
 
-    // Changes to DEFAULT_VALUE should be reflected in preferences.xml
     abstract val DEFAULT_VALUE: Int
     abstract val color: Int
     abstract val progress: Int
@@ -77,7 +76,7 @@ abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
         super.onBindView(view)
         mView = view
         mSeekBar = view.findViewById(R.id.seekbar) as SeekBar
-        mSeekBar.progress = mProgress
+        setProgress(mProgress)
         mSeekBar.setOnSeekBarChangeListener(this)
         updateMoonIcon()
         updateProgressText()
@@ -103,14 +102,14 @@ abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
     }
     //end region
 
-    fun updateMoonIcon() {
+    private fun updateMoonIcon() {
         if (isEnabled) {
             val moonIcon = mView.findViewById(R.id.moon_icon) as ImageView
             moonIcon.colorFilter = colorFilter
         }
     }
 
-    fun updateProgressText() {
+    private fun updateProgressText() {
         val progressView = mView.findViewById(R.id.seekbar_value) as TextView
         progressView.text = "$progress$suffix"
     }
@@ -119,7 +118,6 @@ abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
 class ColorSeekBarPreference(context: Context, attrs: AttributeSet) : SeekBarPreference(context, attrs) {
     companion object : Logger()
 
-    // Changes to DEFAULT_VALUE should be reflected in preferences.xml
     override val DEFAULT_VALUE = Profile.DEFAULT_COLOR
     override val suffix = "K"
         
@@ -133,7 +131,6 @@ class ColorSeekBarPreference(context: Context, attrs: AttributeSet) : SeekBarPre
 class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : SeekBarPreference(context, attrs) {
     companion object : Logger()
 
-    // Changes to DEFAULT_VALUE should be reflected in preferences.xml
     override val DEFAULT_VALUE = Profile.DEFAULT_INTENSITY
     override val suffix = "%"
 
@@ -160,7 +157,6 @@ class IntensitySeekBarPreference(context: Context, attrs: AttributeSet) : SeekBa
 class DimSeekBarPreference(context: Context, attrs: AttributeSet) : SeekBarPreference(context, attrs) {
     companion object : Logger()
 
-    // Changes to DEFAULT_VALUE should be reflected in preferences.xml
     override val DEFAULT_VALUE = Profile.DEFAULT_DIM_LEVEL
     override val suffix = "%"
 

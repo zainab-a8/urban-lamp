@@ -68,5 +68,5 @@ fun upgrade() {
         }
     }
 
-    upgradeFrom(if (Config.introShown) Config.fromVersionCode else BuildConfig.VERSION_CODE)
+    upgradeFrom(Config.fromVersionCode)
 }

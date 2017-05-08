@@ -18,6 +18,7 @@
 package com.jmstudios.redmoon.model
 
 import android.content.Context
+import android.content.SharedPreferences
 
 import com.jmstudios.redmoon.R
 
@@ -39,7 +40,7 @@ object ProfilesModel: Logger() {
     private const val PREFERENCE_NAME = "com.jmstudios.redmoon.PROFILES_PREFERENCE"
     private const val MODE = Context.MODE_PRIVATE
 
-    private val prefs
+    private val prefs: SharedPreferences
         get() = appContext.getSharedPreferences(PREFERENCE_NAME, MODE)
 
     private val defaultProfiles: List<Profile> =
@@ -80,27 +81,28 @@ object ProfilesModel: Logger() {
                                intensity       = Config.intensity,
                                dimLevel        = Config.dimLevel,
                                lowerBrightness = Config.lowerBrightness)
+        updateSharedPreferences()
     }
 
     private val custom: Profile
         get() = mProfiles[0]
 
-    fun addProfile(newName: String, fail: Int = 0): Pair<Int, Int> {
+    fun addProfile(newName: String, fail: Int = 0): Pair<Int, Int> = mProfiles.run {
         Log.i("addProfile $newName; Current Size: ${mProfiles.size}")
         val profile = custom.copy(name = newName)
-        val success = mProfiles.add(profile)
 
+        val success = add(profile)
         if (success) { updateSharedPreferences() }
 
-        return Pair(mProfiles.size, if (success) mProfiles.indexOf(profile) else fail)
+        Pair(size, if (success) indexOf(profile) else fail)
     }
 
-    fun removeProfile(index: Int): Int {
-        val profile = mProfiles.removeAt(index)
+    fun removeProfile(index: Int): Int = mProfiles.run {
+        val profile = removeAt(index)
         Log.i("removed profile $index: ${profile.name}")
         setCustom()
         updateSharedPreferences()
-        return mProfiles.size
+        size
     }
 
     // de-dupe, then append defaults
