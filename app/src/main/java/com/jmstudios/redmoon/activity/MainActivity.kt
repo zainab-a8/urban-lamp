@@ -53,6 +53,7 @@ import com.jmstudios.redmoon.helper.EventBus
 import com.jmstudios.redmoon.helper.Logger
 import com.jmstudios.redmoon.helper.Permission
 import com.jmstudios.redmoon.helper.upgrade
+import com.jmstudios.redmoon.util.*
 
 import de.cketti.library.changelog.ChangeLog
 import org.greenrobot.eventbus.Subscribe
@@ -77,7 +78,7 @@ class MainActivity : ThemedAppCompatActivity() {
         if (fromShortcut) { toggleAndFinish() }
 
         super.onCreate(savedInstanceState)
-        if (!Config.introShown) { startIntro() }
+        if (!Config.introShown) { startActivity(intent(Intro::class)) }
         ChangeLog(this).run { if (isFirstRun) logDialog.show() }
     }
 
@@ -123,20 +124,19 @@ class MainActivity : ThemedAppCompatActivity() {
     }
 
     override fun onNewIntent(intent: Intent) {
+        Log.i("onNewIntent")
         val fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false)
         if (fromShortcut) { toggleAndFinish() }
-        Log.i("onNewIntent")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         when (item.itemId) {
             R.id.menu_show_intro -> {
-                startIntro()
+                startActivity(intent(Intro::class))
             }
             R.id.menu_about -> {
-                val aboutIntent = Intent(this, AboutActivity::class.java)
-                startActivity(aboutIntent)
+                startActivity(intent(AboutActivity::class))
             }
             R.id.menu_dark_theme -> {
                 Config.darkThemeFlag = !Config.darkThemeFlag
@@ -149,12 +149,6 @@ class MainActivity : ThemedAppCompatActivity() {
             else -> return super.onOptionsItemSelected(item)
         }
         return true
-    }
-
-    private fun startIntro() {
-        val introIntent = Intent(this, Intro::class.java)
-        startActivity(introIntent)
-        Config.introShown = true
     }
 
     private fun toggleAndFinish() {
