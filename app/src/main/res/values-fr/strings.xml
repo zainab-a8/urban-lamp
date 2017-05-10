@@ -115,7 +115,7 @@
     <string name="pref_title_version">Version</string>
 
     <string name="pref_title_integration">Integration avec d\'autres apps</string>
-    <string name="snackbar_location_updated">Localisation trouvée!</string>
+    <string name="snackbar_location_updated">Position trouvée !</string>
     <string name="dialog_title_permission_write_settings">En train de modifier les réglages du système</string>
     <string name="filter_name_dim_only">Faible uniquement</string>
 
