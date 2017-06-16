@@ -61,6 +61,18 @@ data class Profile(
             return addColors(dimColor, intensityColor)
         }
 
+    // For root mode
+    val multFilterColor: Int
+        get() {
+            val rgbColor = rgbFromColor(color)
+            val intensityColor = intensity.toFloat() / 100.0f;
+            val dim = dimLevel.toFloat() / 100.0f * 0.9f
+            return Color.argb(255,
+                    Math.round((Color.red(rgbColor) * intensityColor + 255.0f * (1.0f - intensityColor)) * (1.0f - dim)),
+                    Math.round((Color.green(rgbColor) * intensityColor + 255.0f * (1.0f - intensityColor)) * (1.0f - dim)),
+                    Math.round((Color.blue(rgbColor) * intensityColor + 255.0f * (1.0f - intensityColor)) * (1.0f - dim)))
+        }
+
     private fun addColors(color1: Int, color2: Int): Int {
         var alpha1 = colorBitsToFloat(Color.alpha(color1))
         var alpha2 = colorBitsToFloat(Color.alpha(color2))

@@ -19,10 +19,15 @@ package com.jmstudios.redmoon.view
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
+import android.os.Process
 import android.view.View
 import com.jmstudios.redmoon.helper.Logger
 
 import com.jmstudios.redmoon.helper.Profile
+import java.io.DataInputStream
+import java.io.DataOutputStream
+
 
 class ScreenFilterView(context: Context) : View(context) {
     companion object: Logger()
@@ -30,8 +35,42 @@ class ScreenFilterView(context: Context) : View(context) {
     var profile: Profile = Profile()
         set(value) {
             field = value
-            invalidate()
+
+            val rootMode = true
+            if (rootMode) {
+                //Log.i("Root mode, not invalidating")
+                rootTintScreen();
+            } else {
+                invalidate()
+            }
         }
 
+    var suOut : DataOutputStream? = null
+
     override fun onDraw(canvas: Canvas) = canvas.drawColor(profile.filterColor)
+
+    var i = 0
+    fun rootTintScreen() {
+        // Loosely adapted from https://stackoverflow.com/questions/4905743/android-how-to-gain-root-access-in-an-android-application
+        if (suOut == null) {
+            val su = Runtime.getRuntime().exec("su")
+            suOut = DataOutputStream(su.outputStream)
+        }
+
+        val cmd = getSurfaceCommand()
+
+        suOut?.writeBytes(cmd + "\n")
+        suOut?.flush()
+    }
+
+    fun getSurfaceCommand() : String {
+        // See https://github.com/raatmarien/red-moon/issues/150
+        val base = "service call SurfaceFlinger 1015 i32 1 "
+        val matrix = "f %.9f f 0 f 0 f 0 f 0 f %.9f f 0 f 0 f 0 f 0 f %.9f f 0 f 0 f 0 f 0 f 1"
+
+        Log.i("%d %d %d".format(Color.red(profile.multFilterColor), Color.green(profile.multFilterColor), Color.blue(profile.multFilterColor)))
+        return base + matrix.format(Color.red(profile.multFilterColor) / 255.0f,
+                Color.green(profile.multFilterColor) / 255.0f,
+                Color.blue(profile.multFilterColor) / 255.0f)
+    }
 }
