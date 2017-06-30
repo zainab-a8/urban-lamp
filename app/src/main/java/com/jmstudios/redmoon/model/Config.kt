@@ -96,7 +96,7 @@ object Config : Preferences(appContext) {
     
     var darkThemeFlag by BooleanPreference(R.string.pref_key_dark_theme, false)
 
-    var timeToggle by BooleanPreference(R.string.pref_key_time_toggle, false) {
+    var timeToggle by BooleanPreference(R.string.pref_key_time_toggle, true) {
         EventBus.post(timeToggleChanged())
     }
 
