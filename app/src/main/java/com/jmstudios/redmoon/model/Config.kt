@@ -42,6 +42,8 @@ import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.helper.Profile
 import com.jmstudios.redmoon.helper.EventBus
 import com.jmstudios.redmoon.helper.KLogging.logger
+import com.jmstudios.redmoon.receiver.SwitchAppWidgetProvider
+import com.jmstudios.redmoon.receiver.TimeToggleChangeReceiver
 import com.jmstudios.redmoon.util.*
 
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
@@ -51,6 +53,9 @@ import java.util.TimeZone
 
 import me.smichel.android.KPreferences.Preferences
 
+private const val BROADCAST_ACTION = "com.jmstudios.redmoon.RED_MOON_TOGGLED"
+private const val BROADCAST_FIELD  = "jmstudios.bundle.key.FILTER_IS_ON"
+
 /**
  * This singleton provides allows easy access to the shared preferences
  */
@@ -59,6 +64,19 @@ object Config : Preferences(appContext) {
 
     //region preferences
     var filterIsOn by BooleanPreference(R.string.pref_key_filter_is_on, false) {
+        Log.i("Sending update broadcasts")
+        //Broadcast to keep appwidgets in sync
+        context.sendBroadcast(intent(SwitchAppWidgetProvider::class).apply {
+            action = SwitchAppWidgetProvider.ACTION_UPDATE
+            putExtra(SwitchAppWidgetProvider.EXTRA_POWER, it)
+        })
+
+        // If an app like Tasker wants to do something each time
+        // Red Moon is toggled, it can listen for this event
+        context.sendBroadcast(intent().apply {
+            action = BROADCAST_ACTION
+            putExtra(BROADCAST_FIELD, it)
+        })
         EventBus.post(filterIsOnChanged())
     }
     
@@ -66,7 +84,14 @@ object Config : Preferences(appContext) {
         EventBus.post(amountProfilesChanged())
     }
 
-    var profile by IntPreference(R.string.pref_key_profile_spinner, 1) {
+    var profile by IntPreference(R.string.pref_key_profile_spinner, 1) { new ->
+        ProfilesModel.getProfile(new).let {
+            Log.i("New Profile: $it")
+            color     = it.color
+            intensity = it.intensity
+            dimLevel  = it.dimLevel
+            lowerBrightness = it.lowerBrightness
+        }
         EventBus.post(profileChanged())
     }
     
@@ -97,14 +122,24 @@ object Config : Preferences(appContext) {
     var darkThemeFlag by BooleanPreference(R.string.pref_key_dark_theme, false)
 
     var timeToggle by BooleanPreference(R.string.pref_key_time_toggle, true) {
+        if (it) {
+            Log.i("Timer turned on")
+            TimeToggleChangeReceiver.rescheduleOnCommand()
+            TimeToggleChangeReceiver.rescheduleOffCommand()
+        } else {
+            Log.i("Timer turned on")
+            TimeToggleChangeReceiver.cancelAlarms()
+        }
         EventBus.post(timeToggleChanged())
     }
 
     val customTurnOnTime by StringPreference(R.string.pref_key_custom_turn_on_time, "22:00") {
+        TimeToggleChangeReceiver.rescheduleOnCommand()
         EventBus.post(customTurnOnTimeChanged())
     }
 
     val customTurnOffTime by StringPreference(R.string.pref_key_custom_turn_off_time, "06:00") {
+        TimeToggleChangeReceiver.rescheduleOffCommand()
         EventBus.post(customTurnOffTimeChanged())
     }
 
@@ -131,6 +166,8 @@ object Config : Preferences(appContext) {
         get() = if (useLocation) sunriseTime else customTurnOffTime
     
     private var _location by StringPreference(R.string.pref_key_location, "0,0") {
+        TimeToggleChangeReceiver.rescheduleOffCommand()
+        TimeToggleChangeReceiver.rescheduleOnCommand()
         EventBus.post(locationChanged())
     }
 
