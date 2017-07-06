@@ -19,27 +19,15 @@ package com.jmstudios.redmoon.application
 
 import android.app.Application
 
-import com.jmstudios.redmoon.helper.EventBus
-import com.jmstudios.redmoon.helper.Logger
-
 class RedMoonApplication: Application() {
 
     override fun onCreate() {
         app = this
         super.onCreate()
         //EventBus.builder().addIndex(eventBusIndex()).installDefaultEventBus()
-        EventBus.register(this)
-        Log.d("Opened Settings change listener")
     }
 
-    // Only called in emulated environments. In production, just gets killed.
-    override fun onTerminate() {
-        EventBus.unregister(this)
-        Log.d("Closed Settings change listener")
-        super.onTerminate()
-    }
-
-    companion object : Logger() {
+    companion object {
         lateinit var app: RedMoonApplication
     }
 }
