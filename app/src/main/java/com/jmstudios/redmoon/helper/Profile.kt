@@ -31,12 +31,12 @@ private const val KEY_DIM_LEVEL = "dim"
 private const val KEY_LOWER_BRIGHTNESS = "lower-brightness"
 
 /**
- * Color, intensity, and dimLevel range from 0 to 100 inclusive. Regardless of
+ * Color, intensity, and dimLevel range from 0 to 100, inclusive. Regardless of
  *                     value, the filter is guaranteed to never be fully opaque.
  *
  * color: 0 is 500k; 100 is 3500k
  *
- * dim: 0 doesn't darken; 100 is the maximum the system allows.
+ * dimLevel: 0 doesn't darken; 100 is the maximum the system allows.
  *
  * intensity: 0 doesn't color the filter; 100 is the maximum the system allows.
  */
@@ -121,50 +121,34 @@ data class Profile(
         fun getColorTemperature(color: Int): Int = 500 + color * 30
 
         fun rgbFromColor(color: Int): Int {
+            fun Double.truncate(): Int = when {
+                this < 0 -> 0
+                this > 255 -> 255
+                else -> this.toInt()
+            }
             val colorTemperature = getColorTemperature(color)
             val alpha = 255 // alpha is managed separately
 
             // After: http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
             val temp = colorTemperature.toDouble() / 100.0f
 
-            var red: Double
-            if (temp <= 66)
-                red = 255.0
-            else {
-                red = temp - 60
-                red = 329.698727446 * Math.pow(red, -0.1332047592)
-                if (red < 0) red = 0.0
-                if (red > 255) red = 255.0
+            val red: Double = if (temp <= 66) 255.0 else {
+                329.698727446 * Math.pow(temp - 60, -0.1332047592)
             }
 
-            var green: Double
-            if (temp <= 66) {
-                green = temp
-                green = 99.4708025861 * Math.log(green) - 161.1195681661
-                if (green < 0) green = 0.0
-                if (green > 255) green = 255.0
+            val green: Double = if (temp <= 66) {
+                99.4708025861 * Math.log(temp) - 161.1195681661
             } else {
-                green = temp - 60
-                green = 288.1221695283 * Math.pow(green, -0.0755148492)
-                if (green < 0) green = 0.0
-                if (green > 255) green = 255.0
+                288.1221695283 * Math.pow(temp - 60, -0.0755148492)
             }
 
-            var blue: Double
-            if (temp >= 66)
-                blue = 255.0
-            else {
-                if (temp < 19)
-                    blue = 0.0
-                else {
-                    blue = temp - 10
-                    blue = 138.5177312231 * Math.log(blue) - 305.0447927307
-                    if (blue < 0) blue = 0.0
-                    if (blue > 255) blue = 255.0
-                }
+            val blue: Double = when {
+                temp >= 66 -> 255.0
+                temp < 19 -> 0.0
+                else -> 138.5177312231 * Math.log(temp - 10) - 305.0447927307
             }
 
-            return Color.argb(alpha, red.toInt(), green.toInt(), blue.toInt())
+            return Color.argb(alpha, red.truncate(), green.truncate(), blue.truncate())
         }
     }
 }
