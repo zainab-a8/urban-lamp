@@ -45,6 +45,7 @@ import com.jmstudios.redmoon.helper.EventBus
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.helper.Logger
 import com.jmstudios.redmoon.helper.Permission
+import com.jmstudios.redmoon.util.*
 import org.greenrobot.eventbus.Subscribe
 
 class BrightnessManager(private val mContext: Context) {
@@ -58,7 +59,7 @@ class BrightnessManager(private val mContext: Context) {
     }
 
     fun lower() =  when {
-        !Config.filterIsOn       -> Log.w("Can't lower brightness; filter is off!")
+        !filterIsOn      -> Log.w("Can't lower brightness; filter is off!")
         Config.brightnessLowered -> Log.w("Brightness is already lowered!")
         !Config.lowerBrightness  -> Log.w("Lower brightness not enabled!")
         !hasPermission -> {

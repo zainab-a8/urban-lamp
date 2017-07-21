@@ -100,7 +100,7 @@ class ScreenFilterService : Service(), ServiceController {
     override fun onCreate() {
         super.onCreate()
         Log.i("onCreate")
-        Config.filterIsOn = false
+        filterIsOn = false
 
         // If we ever support a root mode, pass a different view here
         val view = ScreenFilterView(this)
@@ -162,7 +162,7 @@ class ScreenFilterService : Service(), ServiceController {
         EventBus.unregister(mWindowViewManager)
         EventBus.unregister(mCurrentAppMonitor)
         unregisterReceiver(mOrientationReceiver)
-        Config.filterIsOn = false
+        filterIsOn = false
         super.onDestroy()
     }
 

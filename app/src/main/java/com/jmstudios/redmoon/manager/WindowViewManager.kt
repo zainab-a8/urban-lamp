@@ -71,7 +71,7 @@ class WindowViewManager(private val mView: ScreenFilterView,
     private val mAnimator = ValueAnimator.ofObject(ProfileEvaluator(), mView.profile).apply {
         addUpdateListener { valueAnimator ->
             mView.profile = valueAnimator.animatedValue as Profile
-            if (Config.filterIsOn && Config.buttonBacklightFlag == "dim") { updateLayout() }
+            if (filterIsOn && Config.buttonBacklightFlag == "dim") { updateLayout() }
         }
     }
 
@@ -81,12 +81,12 @@ class WindowViewManager(private val mView: ScreenFilterView,
     fun open(time: Int?) {
         mAnimator.removeAllListeners()
         setProfile(time, activeProfile)
-        if (Config.filterIsOn) {
+        if (filterIsOn) {
             Log.d("Screen filter is already open")
             updateLayout()
         } else {
             mWindowManager.addView(mView, mLayoutParams)
-            Config.filterIsOn = true
+            filterIsOn = true
         }
     }
 
@@ -95,10 +95,10 @@ class WindowViewManager(private val mView: ScreenFilterView,
         mAnimator.removeAllListeners()
         mAnimator.addListener(object : AbstractAnimatorListener {
             override fun onAnimationEnd(animator: Animator) {
-                if (Config.filterIsOn) {
+                if (filterIsOn) {
                     Log.i("Closing screen filter")
                     mWindowManager.removeView(mView)
-                    Config.filterIsOn = false
+                    filterIsOn = false
                 } else {
                     Log.w("Can't close Screen filter; it's already closed")
                 }
@@ -121,11 +121,11 @@ class WindowViewManager(private val mView: ScreenFilterView,
     // TODO: @Subscribe fun reLayout(event: orientationChanged) {
     override fun onOrientationChanged() {
         mLayoutParams = mScreenManager.layoutParams
-        if (Config.filterIsOn) { updateLayout() }
+        if (filterIsOn) { updateLayout() }
     }
 
     @Subscribe fun onButtonBacklightChanged(event: buttonBacklightChanged) {
-        if (Config.filterIsOn) updateLayout()
+        if (filterIsOn) updateLayout()
     }
 
     companion object : Logger()

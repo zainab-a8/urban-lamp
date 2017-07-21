@@ -94,6 +94,8 @@ class BootReceiver : BroadcastReceiver() {
 
         now.after(on) && now.before(off)
     } else {
+        // Here we want the config value and not the actual state of the filter
+        // since we're interested in what it was before reboot
         Config.filterIsOn
     }
 

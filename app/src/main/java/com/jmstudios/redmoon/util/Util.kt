@@ -48,6 +48,12 @@ val appContext = RedMoonApplication.app
 val activeProfile
     get() = ProfilesModel.getProfile(Config.profile)
 
+var filterIsOn: Boolean = false
+    set(value) {
+        field = value
+        Config.filterIsOn = value
+    }
+
 fun getString(resId: Int): String = appContext.getString(resId)
 fun getColor (resId: Int): Int = ContextCompat.getColor(appContext, resId)
 

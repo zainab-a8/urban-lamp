@@ -25,6 +25,7 @@ import com.jmstudios.redmoon.event.filterIsOnChanged
 import com.jmstudios.redmoon.helper.EventBus
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
+import com.jmstudios.redmoon.util.*
 
 import org.greenrobot.eventbus.Subscribe
 
@@ -50,7 +51,7 @@ class TileReceiver : TileService() {
     }
 
     private fun updateState() = qsTile.run {
-        state = if (Config.filterIsOn) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
+        state = if (filterIsOn) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
         updateTile()
     }
 }

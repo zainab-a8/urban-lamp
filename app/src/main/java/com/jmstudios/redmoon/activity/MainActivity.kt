@@ -87,7 +87,7 @@ class MainActivity : ThemedAppCompatActivity() {
 
         menu.findItem(R.id.menu_dark_theme).isChecked = Config.darkThemeFlag
         mSwitch = (menu.findItem(R.id.screen_filter_switch).actionView as SwitchCompat).apply {
-            safeSetChecked(Config.filterIsOn) // Side effect: sets listener
+            safeSetChecked(filterIsOn) // Side effect: sets listener
         }
 
         return true
@@ -109,7 +109,7 @@ class MainActivity : ThemedAppCompatActivity() {
     override fun onResume() {
         Log.i("onResume")
         super.onResume()
-        mSwitch?.safeSetChecked(Config.filterIsOn)
+        mSwitch?.safeSetChecked(filterIsOn)
         EventBus.register(this)
     }
 
@@ -158,7 +158,7 @@ class MainActivity : ThemedAppCompatActivity() {
 
     @Subscribe fun onFilterIsOnChanged(event: filterIsOnChanged) {
         Log.i("FilterIsOnChanged")
-        mSwitch?.safeSetChecked(Config.filterIsOn)
+        mSwitch?.safeSetChecked(filterIsOn)
     }
 
     @Subscribe fun onOverlayPermissionDenied(event: overlayPermissionDenied) {
