@@ -13,7 +13,7 @@
  Red Moon daha kolay uyumanız için ekranınızdaki
  mavi ışığı kaldırır.</string>
 
-    <string name="pref_category_filter">Filtre</string>
+    <string name="pref_category_filter">Süzgeç</string>
     <string name="notification_action_resume">Devam et</string>
     <string name="pref_category_other">Diğer</string>
 
@@ -52,7 +52,7 @@
     <string name="slide_title_protect_eyes">Gözlerinizi korur</string>
     <string name="slide_title_improve_sleep">Uykunuzu iyileştirir</string>
     <string name="time_toggle_options_array_1">Kendiliğinden (güneş)</string>
-    <string name="time_toggle_options_array_2">Otomatik (Kullanıcı Tanımlı)</string>
+    <string name="time_toggle_options_array_2">Kendiliğinden (özel)</string>
 
     <string name="pref_title_lower_brightness">Parlaklığı azalt</string>
 
@@ -95,7 +95,7 @@ Red Moon güvenli uygulamalarda süzgeci askıya almak ve hangi uygulamanın iç
     <string name="remove_profile_dialog_title">Bu profil silinsin mi?</string>
     <string name="pref_title_appearance">Profil</string>
     <string name="menu_about">Hakkında</string>
-    <string name="activity_about">Red Moon hakkında</string>
+    <string name="activity_about">Red Moon Hakkında</string>
     <string name="pref_title_version">Sürüm</string>
 
     <string name="dialog_title_permission_overlay">Diğer uygulamalar üzerine çizim</string>
@@ -105,7 +105,7 @@ Red Moon güvenli uygulamalarda süzgeci askıya almak ve hangi uygulamanın iç
     <string name="notification_status_off">Kapalı</string>
     <string name="notification_action_turn_on">Aç</string>
     <string name="notification_action_turn_off">Kapat</string>
-    <string name="notification_action_next_filter">Sonraki filtre</string>
+    <string name="notification_action_next_filter">Sonraki süzgeç</string>
 
     <string name="pref_title_startup">Başlangıç</string>
     <string name="pref_title_integration">Diğer uygulamalarla tümleşme</string>
@@ -113,10 +113,10 @@ Red Moon güvenli uygulamalarda süzgeci askıya almak ve hangi uygulamanın iç
     <string name="searching_location">Konum aranıyor</string>
     <string name="toast_warning_no_location">Konumu güncellemek için konum hizmetlerini aç</string>
     <string name="set_dialog">Ayarla</string>
-    <string name="notification_status_running">Çalışıyor. Uygulama yüklemek için kapatın</string>
+    <string name="notification_status_running">Çalışıyor. Uygulamaları kurmak için kapatın</string>
     <string name="notification_status_running_no_warning">Çalışıyor</string>
 <string name="activity_shortcut">Red Moon\'u Aç/Kapa</string>
-    <string name="menu_restore_default_filters">Öntanımlı filtreleri geri yükle</string>
+    <string name="menu_restore_default_filters">Öntanımlı süzgeçleri geri yükle</string>
     <string name="pref_category_button_backlight_disclaimer">Bazı aygıtlarda etkisiz</string>
 
     <string name="pref_title_button_backlight">Donanımsal düğme arka ışığı</string>
