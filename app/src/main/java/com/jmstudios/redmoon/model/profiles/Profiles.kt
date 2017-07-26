@@ -42,7 +42,7 @@ private var modelOutdated: Boolean = true
 private val _ProfilesModel: Map<Profile, String>
     get() = prefs.all.mapKeys { (k, _) -> Profile.parse(k) }.mapValues { (_, v) -> v as String }
 
-private val ProfilesModel: Map<Profile, String> = _ProfilesModel
+private var ProfilesModel: Map<Profile, String> = _ProfilesModel
     get() {
         if (modelOutdated) {
             field = _ProfilesModel

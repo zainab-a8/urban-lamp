@@ -115,6 +115,7 @@ class ScreenFilterService : Service(), ServiceController {
         mOrientationReceiver = OrientationChangeReceiver(mWindowViewManager)
 
         EventBus.register(mWindowViewManager)
+        EventBus.register(mBrightnessManager)
         EventBus.register(mCurrentAppMonitor)
         registerReceiver(mOrientationReceiver, IntentFilter().apply {
             addAction(Intent.ACTION_CONFIGURATION_CHANGED)
@@ -143,6 +144,7 @@ class ScreenFilterService : Service(), ServiceController {
         Log.i("pause(time = $time)")
         notificationManager.notify(NOTIFICATION_ID, getNotification(false))
         stopForeground(false)
+        mBrightnessManager.restore()
         mWindowViewManager.close(time)
     }
 
@@ -161,6 +163,7 @@ class ScreenFilterService : Service(), ServiceController {
     override fun onDestroy() {
         Log.i("onDestroy")
         EventBus.unregister(mWindowViewManager)
+        EventBus.unregister(mBrightnessManager)
         EventBus.unregister(mCurrentAppMonitor)
         unregisterReceiver(mOrientationReceiver)
         filterIsOn = false
