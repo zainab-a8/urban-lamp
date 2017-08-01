@@ -65,7 +65,7 @@ in the root directory.
 
 Use
 
-`./gradlew installDebug`
+`./gradlew installFdroidDebug` or `./gradlew installPlaystoreDebug`
 
 to install the app on a connected device or running emulator.
 
