@@ -19,7 +19,7 @@ use your phone comfortably at night. It is simple and flexible:
 * Set the timer to automatically turn on at night, or at custom times.
 * Use the default filters, or fine-tune your own with separate color, intensity and dim levels.
 * The notification, tile (Android 7.0+), and widget let you start, stop, and switch filters without opening the app.
-      
+
 ## Get involved
 
 <a href="https://hosted.weblate.org/engage/red-moon/?utm_source=widget">
@@ -44,8 +44,6 @@ PRs for issues tagged with [`bug`] or [`patches welcome`] are welcome at any tim
 Otherwise, please [open a new issue] or comment on the existing one first. We don't
 want to waste your time on something we might not merge! We have some loose coding
 style guidelines [below](#coding-style). 
-
-
 
 ## Screenshots
 

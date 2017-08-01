@@ -53,6 +53,7 @@ import com.jmstudios.redmoon.helper.EventBus
 import com.jmstudios.redmoon.helper.Logger
 import com.jmstudios.redmoon.helper.Permission
 import com.jmstudios.redmoon.helper.upgrade
+import com.jmstudios.redmoon.helper.showRateDialog
 import com.jmstudios.redmoon.util.*
 
 import de.cketti.library.changelog.ChangeLog
@@ -80,6 +81,7 @@ class MainActivity : ThemedAppCompatActivity() {
         super.onCreate(savedInstanceState)
         if (!Config.introShown) { startActivity(intent(Intro::class)) }
         ChangeLog(this).run { if (isFirstRun) logDialog.show() }
+        showRateDialog(this) // See fdroid and playstore product flavors
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
