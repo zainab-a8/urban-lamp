@@ -132,4 +132,6 @@
     <string name="dialog_title_permission_overlay">Superposition sur autres applications</string>
     <string name="dialog_message_permission_overlay">Autoriser la superposition sur autres applis pour permettre à Red Moon activer le filtre.</string>
 
+    <string name="dialog_message_permission_write_settings">Autorisez la modification des paramètres systèmes sur le prochain écran pour autoriser Red Moon à changer la luminosité.</string>
+
     </resources>
