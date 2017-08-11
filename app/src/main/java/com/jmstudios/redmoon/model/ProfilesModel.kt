@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016 Marien Raat <marienraat@riseup.net>
- * Copyright (c) 2017  Stephen Michel <s@smichel.me>
+ * Copyright (c) 2017 Stephen Michel <s@smichel.me>
  * SPDX-License-Identifier: GPL-3.0+
  */
 package com.jmstudios.redmoon.model
@@ -10,95 +10,76 @@ import android.content.SharedPreferences
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.helper.Logger
-import com.jmstudios.redmoon.helper.Profile
 import com.jmstudios.redmoon.util.*
 
-/**
- * This singleton manages the SharedPreference that store all custom
- * filter profiles added by the user.
- *
- * The profiles are stored in a separate SharedPreference, with one key-value
- * pair per profile. The key is their position in the list of profiles
- * (an integer as a string). The value is a JSON string.
- */
+private const val PREFERENCE_NAME = "com.jmstudios.redmoon.PROFILES_PREFERENCE"
+private const val MODE = Context.MODE_PRIVATE
 
-object ProfilesModel: Logger() {
+private val defaultProfiles: Map<Profile, String> = mapOf(
+        Profile(10, 30, 40, false) to getString(R.string.filter_name_default),
+        Profile(20, 60, 78, false) to getString(R.string.filter_name_bed_reading),
+        Profile(0, 0, 60, false) to getString(R.string.filter_name_dim_only))
 
-    private const val PREFERENCE_NAME = "com.jmstudios.redmoon.PROFILES_PREFERENCE"
-    private const val MODE = Context.MODE_PRIVATE
+private val prefs: SharedPreferences
+    get() = appContext.getSharedPreferences(PREFERENCE_NAME, MODE)
 
-    private val prefs: SharedPreferences
-        get() = appContext.getSharedPreferences(PREFERENCE_NAME, MODE)
+private var modelOutdated: Boolean = true
 
-    private val defaultProfiles: List<Profile> =
-            listOf(Profile(getString(R.string.filter_name_custom     ), 10, 30, 40, false),
-                   Profile(getString(R.string.filter_name_default    ), 10, 30, 40, false),
-                   Profile(getString(R.string.filter_name_bed_reading), 20, 60, 78, false),
-                   Profile(getString(R.string.filter_name_dim_only   ),  0,  0, 60, false))
+private val _model: Map<Profile, String>
+    get() = prefs.all.mapKeys { (k, _) -> Profile.parse(k) }.mapValues { (_, v) -> v as String }
 
-    private val mProfiles: ArrayList<Profile> = ArrayList(prefs.all.run {
-        if (isEmpty()) {
-            Log.i("Creating default ProfilesModel")
-            defaultProfiles
-        } else {
-            Log.i("Restoring ProfilesModel")
-            mapKeys{ (k, _) -> k.toInt() }.toSortedMap().map{ (_, v) -> Profile.parse(v as String) }
+private var model: Map<Profile, String> = _model
+    get() {
+        if (modelOutdated) {
+            field = _model
+            modelOutdated = false
         }
-    })
+        return field
+    }
 
-    private fun updateSharedPreferences() {
-        Log.i("Updating SharedPreferences")
-        val editor = prefs.edit()
-        editor.run {
-            clear()
-            mProfiles.forEachIndexed { index, profile ->
-                Log.i("Storing profile $index, ${profile.name}")
-                putString(index.toString(), profile.toString())
+object ProfilesModel : Map<Profile, String> by model {
+    val profiles: List<Profile>
+        get() = ProfilesModel.keys.sorted()
+
+    fun indexOf(profile: Profile): Int {
+        return profiles.indexOf(profile)
+    }
+
+    fun profileAfter(profile: Profile): Profile = when {
+        indexOf(profile) < profiles.lastIndex -> profiles[indexOf(profile) + 1]
+        Config.custom.isSaved -> profiles[0]
+        else -> Config.custom
+    }
+
+    val Profile.isSaved: Boolean
+        get() = ProfilesModel.containsKey(this)
+
+    fun save(profile: Profile, name: String) {
+        if (!profile.isSaved || this.containsValue(name)) {
+            prefs.edit().putString(profile.toString(), name).apply()
+            modelOutdated = true
+            EventBus.post(profilesUpdated())
+        }
+    }
+
+    fun delete(profile: Profile) {
+        profile.let {
+            if (it.isSaved) {
+                Config.custom = it
+                prefs.edit().remove(it.toString()).apply()
+                modelOutdated = true
+                EventBus.post(profilesUpdated())
             }
         }
+    }
+
+    fun restoreDefaultProfiles() {
+        val editor = prefs.edit()
+        defaultProfiles.forEach { profile, name ->
+            editor.putString(profile.toString(), name)
+        }
         editor.apply()
-        Log.d("Done updating SharedPreferences")
-    }
-
-    fun getProfileName(index: Int): String  = mProfiles[index].name
-    fun getProfile    (index: Int): Profile = mProfiles[index]
-
-    fun setCustom() {
-        mProfiles[0] = Profile(color           = Config.color,
-                               intensity       = Config.intensity,
-                               dimLevel        = Config.dimLevel,
-                               lowerBrightness = Config.lowerBrightness)
-        updateSharedPreferences()
-    }
-
-    private val custom: Profile
-        get() = mProfiles[0]
-
-    fun addProfile(newName: String, fail: Int = 0): Pair<Int, Int> = mProfiles.run {
-        Log.i("addProfile $newName; Current Size: ${mProfiles.size}")
-        val profile = custom.copy(name = newName)
-
-        val success = add(profile)
-        if (success) { updateSharedPreferences() }
-
-        Pair(size, if (success) indexOf(profile) else fail)
-    }
-
-    fun removeProfile(index: Int): Int = mProfiles.run {
-        val profile = removeAt(index)
-        Log.i("removed profile $index: ${profile.name}")
-        setCustom()
-        updateSharedPreferences()
-        size
-    }
-
-    // de-dupe, then append defaults
-    fun reset(): Int = mProfiles.run {
-        remove(custom)
-        removeAll(defaultProfiles)
-        addAll(0, defaultProfiles)
-        updateSharedPreferences()
-        size
+        modelOutdated = true
+        EventBus.post(profilesUpdated())
     }
 }

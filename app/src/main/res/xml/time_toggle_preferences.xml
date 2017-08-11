@@ -10,12 +10,12 @@
         android:layout="@layout/switch_bar"
         android:defaultValue="true" />
 
-    <com.jmstudios.redmoon.preference.TimePickerPreference
+    <com.jmstudios.redmoon.ui.preference.TimePickerPreference
         android:key="@string/pref_key_custom_turn_on_time"
         android:title="@string/pref_title_start_time"
         android:defaultValue="22:00" />
 
-    <com.jmstudios.redmoon.preference.TimePickerPreference
+    <com.jmstudios.redmoon.ui.preference.TimePickerPreference
         android:key="@string/pref_key_custom_turn_off_time"
         android:title="@string/pref_title_end_time"
         android:defaultValue="06:00" />

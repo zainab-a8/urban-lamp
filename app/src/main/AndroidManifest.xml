@@ -51,13 +51,13 @@
 
     <application
         android:allowBackup="true"
-        android:name="com.jmstudios.redmoon.application.RedMoonApplication"
+        android:name="com.jmstudios.redmoon.RedMoonApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/LaunchScreenTheme"
         android:supportsRtl="true" >
         <activity
-            android:name="com.jmstudios.redmoon.activity.MainActivity"
+            android:name="com.jmstudios.redmoon.ui.MainActivity"
             android:label="@string/activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -73,18 +73,18 @@
         </activity>
 
         <activity
-            android:name="com.jmstudios.redmoon.activity.Intro"
+            android:name="com.jmstudios.redmoon.ui.Intro"
             android:label="@string/activity_intro"
             android:theme="@style/AppThemeNoActionBar" />
 
-        <receiver android:name="com.jmstudios.redmoon.receiver.BootReceiver">
+        <receiver android:name="com.jmstudios.redmoon.automation.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.jmstudios.redmoon.receiver.SwitchAppWidgetProvider">
+        <receiver android:name="com.jmstudios.redmoon.widget.SwitchAppWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
@@ -92,13 +92,13 @@
                 android:resource="@xml/switch_appwidget_info" />
         </receiver>
 
-        <receiver android:name="com.jmstudios.redmoon.receiver.TimeToggleChangeReceiver">
+        <receiver android:name="com.jmstudios.redmoon.automation.TimeToggleChangeReceiver">
         </receiver>
-        <receiver android:name="com.jmstudios.redmoon.receiver.NextProfileCommandReceiver">
+        <receiver android:name="com.jmstudios.redmoon.filter.NextProfileCommandReceiver">
         </receiver>
 
         <activity
-            android:name="com.jmstudios.redmoon.activity.ShortcutCreationActivity"
+            android:name="com.jmstudios.redmoon.widget.ShortcutCreationActivity"
             android:label="@string/activity_shortcut"
             android:theme="@style/TransparentTheme" >
           <intent-filter>
@@ -108,39 +108,39 @@
         </activity>
 
         <activity
-            android:name=".activity.TimeToggleActivity"
+            android:name=".ui.TimeToggleActivity"
             android:label="@string/activity_timer"
-            android:parentActivityName=".activity.MainActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme" >
 
             <intent-filter>
-                <action android:name=".activity.TimeToggleActivity" />
+                <action android:name=".ui.TimeToggleActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name=".activity.SecureSuspendActivity"
+            android:name=".ui.SecureSuspendActivity"
             android:label="@string/activity_secure_suspend"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme" >
 
             <intent-filter>
-                <action android:name=".activity.SecureSuspendActivity" />
+                <action android:name=".ui.SecureSuspendActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name=".activity.AboutActivity"
+            android:name=".ui.AboutActivity"
             android:label="@string/activity_about"
-            android:parentActivityName=".activity.MainActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme" />
 
-        <service android:name="com.jmstudios.redmoon.service.LocationUpdateService" />
-        <service android:name="com.jmstudios.redmoon.service.ScreenFilterService" />
+        <service android:name="com.jmstudios.redmoon.automation.LocationUpdateService" />
+        <service android:name="com.jmstudios.redmoon.filter.ScreenFilterService" />
         <service
-            android:name=".receiver.TileReceiver"
+            android:name=".widget.TileReceiver"
             android:icon="@drawable/notification_icon_half_moon"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">

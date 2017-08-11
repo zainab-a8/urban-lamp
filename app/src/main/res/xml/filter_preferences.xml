@@ -26,21 +26,21 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
   <PreferenceCategory android:title="@string/pref_category_filter">
-    <com.jmstudios.redmoon.preference.ProfileSelectorPreference
+    <com.jmstudios.redmoon.ui.preference.ProfileSelectorPreference
         android:key="@string/pref_key_profile_spinner"
         android:persistent="false"/>
 
-    <com.jmstudios.redmoon.preference.ColorSeekBarPreference
+    <com.jmstudios.redmoon.ui.preference.ColorSeekBarPreference
         android:title="@string/pref_title_color_temp"
         android:key="@string/pref_key_color"
         android:defaultValue="10" />
 
-    <com.jmstudios.redmoon.preference.IntensitySeekBarPreference
+    <com.jmstudios.redmoon.ui.preference.IntensitySeekBarPreference
         android:title="@string/pref_title_intensity"
         android:key="@string/pref_key_intensity"
         android:defaultValue="50" />
 
-    <com.jmstudios.redmoon.preference.DimSeekBarPreference
+    <com.jmstudios.redmoon.ui.preference.DimSeekBarPreference
         android:title="@string/pref_title_dim_level"
         android:key="@string/pref_key_dim"
         android:defaultValue="50" />
@@ -55,13 +55,13 @@
     <Preference
         android:title="@string/pref_title_time_toggle"
         android:key="@string/pref_key_time_toggle_header">
-        <intent android:action=".activity.TimeToggleActivity" />
+        <intent android:action=".ui.TimeToggleActivity" />
     </Preference>
 
     <Preference
         android:title="@string/pref_title_secure_suspend"
         android:key="@string/pref_key_secure_suspend_header">
-        <intent android:action=".activity.SecureSuspendActivity"/>
+        <intent android:action=".ui.SecureSuspendActivity"/>
     </Preference>
 
   </PreferenceCategory>

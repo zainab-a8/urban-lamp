@@ -24,14 +24,10 @@
  */
 package com.jmstudios.redmoon.model
 
-import com.jmstudios.redmoon.BuildConfig
 import com.jmstudios.redmoon.R
-import com.jmstudios.redmoon.event.*
-import com.jmstudios.redmoon.helper.Profile
-import com.jmstudios.redmoon.helper.EventBus
-import com.jmstudios.redmoon.helper.KLogging.logger
-import com.jmstudios.redmoon.receiver.SwitchAppWidgetProvider
-import com.jmstudios.redmoon.receiver.TimeToggleChangeReceiver
+
+import com.jmstudios.redmoon.automation.TimeToggleChangeReceiver
+import com.jmstudios.redmoon.widget.SwitchAppWidgetProvider
 import com.jmstudios.redmoon.util.*
 
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
@@ -48,7 +44,7 @@ private const val BROADCAST_FIELD  = "jmstudios.bundle.key.FILTER_IS_ON"
  * This singleton provides allows easy access to the shared preferences
  */
 object Config : Preferences(appContext) {
-    val Log = logger("Config")
+    private val Log = KLogging.logger("Config")
 
     //region preferences
     var filterIsOn by BooleanPreference(R.string.pref_key_filter_is_on, false) {

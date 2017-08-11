@@ -27,15 +27,11 @@ package com.jmstudios.redmoon.util
 import android.content.Intent
 import android.support.v4.content.ContextCompat
 
-import com.jmstudios.redmoon.application.RedMoonApplication
-import com.jmstudios.redmoon.helper.EventBus
-import com.jmstudios.redmoon.helper.Profile
-import com.jmstudios.redmoon.helper.KLogging
+import com.jmstudios.redmoon.RedMoonApplication
+import com.jmstudios.redmoon.model.Profile
 import com.jmstudios.redmoon.model.Config
 
 import kotlin.reflect.KClass
-
-private val uLog = KLogging.logger("Util", true)
 
 val appContext = RedMoonApplication.app
 
@@ -45,7 +41,8 @@ var activeProfile: Profile
             }
     set(value) = value.let {
         if (it != EventBus.getSticky(Profile::class)) with (Config) {
-            uLog.i("activeProfile set to $it")
+            val Log = KLogging.logger("Util")
+            Log.i("activeProfile set to $it")
             EventBus.postSticky(it)
             color = it.color
             intensity = it.intensity
