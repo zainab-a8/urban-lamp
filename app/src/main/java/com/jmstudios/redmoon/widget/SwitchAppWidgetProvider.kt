@@ -35,7 +35,7 @@ import android.widget.RemoteViews
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.filter.ScreenFilterService
+import com.jmstudios.redmoon.filter.Command
 import com.jmstudios.redmoon.util.*
 
 class SwitchAppWidgetProvider : AppWidgetProvider() {
@@ -60,7 +60,7 @@ class SwitchAppWidgetProvider : AppWidgetProvider() {
 
     override fun onReceive(ctx: Context, intent: Intent) {
         if (intent.action == ACTION_TOGGLE) {
-            ScreenFilterService.toggle()
+            Command.toggle(filterIsOn)
         } else if (intent.action == ACTION_UPDATE) {
             updateImage(ctx, !intent.getBooleanExtra(EXTRA_POWER, false))
         } else {

@@ -3,7 +3,7 @@
  * Copyright (c) 2017  Stephen Michel <s@smichel.me>
  * SPDX-License-Identifier: GPL-3.0+
  */
-package com.jmstudios.redmoon.filter.manager
+package com.jmstudios.redmoon.filter.overlay
 
 import android.content.Context
 import android.content.Intent
@@ -21,8 +21,8 @@ class CurrentAppMonitor(private val mContext: Context) : ScreenStateReceiver.Scr
     private val screenStateReceiver = ScreenStateReceiver(this)
     private var mCamThread: CurrentAppMonitoringThread? = null
 
-    private val powerManager
-        get() = mContext.getSystemService(Context.POWER_SERVICE) as PowerManager
+    private val powerManager: PowerManager
+        get() = appContext.getSystemService(Context.POWER_SERVICE) as PowerManager
 
     private val screenOn: Boolean
         get() = powerManager.run {

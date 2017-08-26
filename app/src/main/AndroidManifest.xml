@@ -92,13 +92,13 @@
                 android:resource="@xml/switch_appwidget_info" />
         </receiver>
 
-        <receiver android:name="com.jmstudios.redmoon.automation.TimeToggleChangeReceiver">
+        <receiver android:name=".automation.TimeToggleChangeReceiver">
         </receiver>
-        <receiver android:name="com.jmstudios.redmoon.filter.NextProfileCommandReceiver">
+        <receiver android:name=".filter.NextProfileCommandReceiver">
         </receiver>
 
         <activity
-            android:name="com.jmstudios.redmoon.widget.ShortcutCreationActivity"
+            android:name=".widget.ShortcutCreationActivity"
             android:label="@string/activity_shortcut"
             android:theme="@style/TransparentTheme" >
           <intent-filter>
@@ -122,7 +122,7 @@
         <activity
             android:name=".ui.SecureSuspendActivity"
             android:label="@string/activity_secure_suspend"
-            android:parentActivityName=".activity.MainActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme" >
 
             <intent-filter>
@@ -137,8 +137,8 @@
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme" />
 
-        <service android:name="com.jmstudios.redmoon.automation.LocationUpdateService" />
-        <service android:name="com.jmstudios.redmoon.filter.ScreenFilterService" />
+        <service android:name=".automation.LocationUpdateService" />
+        <service android:name=".filter.FilterService" />
         <service
             android:name=".widget.TileReceiver"
             android:icon="@drawable/notification_icon_half_moon"

@@ -48,7 +48,7 @@ object Config : Preferences(appContext) {
 
     //region preferences
     var filterIsOn by BooleanPreference(R.string.pref_key_filter_is_on, false) {
-        Log.i("Sending update broadcasts")
+        Log.i("Sending update broadcasts: filter is on: $it")
         //Broadcast to keep appwidgets in sync
         context.sendBroadcast(intent(SwitchAppWidgetProvider::class).apply {
             action = SwitchAppWidgetProvider.ACTION_UPDATE

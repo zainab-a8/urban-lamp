@@ -23,7 +23,7 @@
  *     NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  *     CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-package com.jmstudios.redmoon.filter.manager
+package com.jmstudios.redmoon.filter.overlay
 
 import android.content.Context
 import android.provider.Settings

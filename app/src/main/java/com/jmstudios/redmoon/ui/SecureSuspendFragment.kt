@@ -14,7 +14,7 @@ import android.preference.SwitchPreference
 import android.provider.Settings
 
 import com.jmstudios.redmoon.R
-import com.jmstudios.redmoon.filter.manager.CurrentAppMonitoringThread
+import com.jmstudios.redmoon.filter.overlay.CurrentAppMonitoringThread
 import com.jmstudios.redmoon.util.appContext
 import com.jmstudios.redmoon.util.Logger
 

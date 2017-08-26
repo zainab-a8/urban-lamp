@@ -28,9 +28,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 
+import com.jmstudios.redmoon.filter.Command
 import com.jmstudios.redmoon.model.Config
-import com.jmstudios.redmoon.filter.manager.BrightnessManager
-import com.jmstudios.redmoon.filter.ScreenFilterService
+import com.jmstudios.redmoon.filter.overlay.BrightnessManager
 import com.jmstudios.redmoon.util.Logger
 
 import java.util.Calendar
@@ -48,7 +48,7 @@ class BootReceiver : BroadcastReceiver() {
         TimeToggleChangeReceiver.scheduleNextOnCommand()
         TimeToggleChangeReceiver.scheduleNextOffCommand()
 
-        ScreenFilterService.toggle(filterIsOnPrediction)
+        Command.toggle(filterIsOnPrediction)
     }
 
     private val filterIsOnPrediction: Boolean = if (Config.timeToggle) {
@@ -77,8 +77,8 @@ class BootReceiver : BroadcastReceiver() {
         }
 
         Log.d("On: $onTime, off: $offTime")
-        Log.d("On DAY_OF_MONTH: " + Integer.toString(on.get(Calendar.DAY_OF_MONTH)))
-        Log.d("Off DAY_OF_MONTH: " + Integer.toString(off.get(Calendar.DAY_OF_MONTH)))
+        Log.d("On DAY_OF_MONTH: ${on.get(Calendar.DAY_OF_MONTH)}")
+        Log.d("Off DAY_OF_MONTH: ${off.get(Calendar.DAY_OF_MONTH)}")
 
         now.after(on) && now.before(off)
     } else {

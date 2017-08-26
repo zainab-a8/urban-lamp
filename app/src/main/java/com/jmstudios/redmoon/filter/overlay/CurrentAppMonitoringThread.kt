@@ -3,7 +3,7 @@
  * Copyright (c) 2017  Stephen Michel <s@smichel.me>
  * SPDX-License-Identifier: GPL-3.0+
  */
-package com.jmstudios.redmoon.filter.manager
+package com.jmstudios.redmoon.filter.overlay
 
 import android.annotation.TargetApi
 import android.app.ActivityManager
@@ -12,7 +12,7 @@ import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.ContextWrapper
 
-import com.jmstudios.redmoon.filter.ScreenFilterService
+import com.jmstudios.redmoon.filter.Command
 import com.jmstudios.redmoon.util.*
 
 import java.lang.Thread
@@ -32,8 +32,9 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
                 val currentApp = getCurrentApp(mContext)
                 Log.d("Current app is: $currentApp")
 
-                isAppSecured(currentApp)?.let {
-                    ScreenFilterService.pause(it)
+                when (isAppSecured(currentApp)) {
+                    true -> Command.SUSPEND.send()
+                    false -> Command.RESUME.send()
                 }
 
                 Thread.sleep(1000)

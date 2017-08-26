@@ -31,10 +31,10 @@ import android.view.MenuItem
 import android.support.v7.widget.SwitchCompat
 
 import com.jmstudios.redmoon.R
+import com.jmstudios.redmoon.filter.Command
 
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.model.ProfilesModel
-import com.jmstudios.redmoon.filter.ScreenFilterService
 import com.jmstudios.redmoon.util.*
 
 import de.cketti.library.changelog.ChangeLog
@@ -79,7 +79,7 @@ class MainActivity : ThemedAppCompatActivity() {
         setOnCheckedChangeListener { _, _ ->  }
         isChecked = checked
         setOnCheckedChangeListener { _, checked ->
-            ScreenFilterService.toggle(checked)
+            Command.toggle(checked)
         }
     }
 
@@ -133,7 +133,7 @@ class MainActivity : ThemedAppCompatActivity() {
     }
 
     private fun toggleAndFinish() {
-        ScreenFilterService.toggle()
+        Command.toggle(filterIsOn)
         finish()
     }
 

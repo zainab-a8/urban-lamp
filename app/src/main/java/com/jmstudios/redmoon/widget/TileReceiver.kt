@@ -9,7 +9,7 @@ import android.annotation.TargetApi
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 
-import com.jmstudios.redmoon.filter.ScreenFilterService
+import com.jmstudios.redmoon.filter.Command
 import com.jmstudios.redmoon.util.*
 
 import org.greenrobot.eventbus.Subscribe
@@ -24,7 +24,7 @@ class TileReceiver : TileService() {
 
     override fun onClick() {
         super.onClick()
-        ScreenFilterService.toggle()
+        Command.toggle(filterIsOn)
     }
 
     override fun onStopListening() {

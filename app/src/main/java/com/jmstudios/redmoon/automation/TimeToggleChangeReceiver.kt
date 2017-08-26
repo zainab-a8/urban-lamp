@@ -12,8 +12,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 
+import com.jmstudios.redmoon.filter.Command
 import com.jmstudios.redmoon.model.Config
-import com.jmstudios.redmoon.filter.ScreenFilterService
 import com.jmstudios.redmoon.util.*
 
 import java.util.Calendar
@@ -26,11 +26,7 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
 
         val turnOn = intent.data.toString() == "turnOnIntent"
 
-        if (Config.useLocation) {
-            ScreenFilterService.fade(turnOn)
-        } else {
-            ScreenFilterService.toggle(turnOn)
-        }
+        Command.toggle(turnOn)
         cancelAlarm(turnOn)
         scheduleNextCommand(turnOn)
 

@@ -21,11 +21,12 @@
  *     NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  *     CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-package com.jmstudios.redmoon.filter
+package com.jmstudios.redmoon.filter.overlay
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 
 class OrientationChangeReceiver(private val mListener: OnOrientationChangeListener) : BroadcastReceiver() {
 
@@ -33,6 +34,16 @@ class OrientationChangeReceiver(private val mListener: OnOrientationChangeListen
         if (intent.action == Intent.ACTION_CONFIGURATION_CHANGED) {
             mListener.onOrientationChanged()
         }
+    }
+
+    fun register(context: Context) {
+        context.registerReceiver(this, IntentFilter().apply {
+            addAction(Intent.ACTION_CONFIGURATION_CHANGED)
+        })
+    }
+
+    fun unregister(context: Context) {
+        context.unregisterReceiver(this)
     }
 
     interface OnOrientationChangeListener {
