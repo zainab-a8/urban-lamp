@@ -111,7 +111,7 @@
     <string name="slide_title_get_started">Почати!</string>
     <string name="slide_text_get_started">Вмикайте і вимкайте Red Moon за допомогою перемикача у верхньому правому куті.</string>
 
-    <string name="filter_name_custom">Власний</string>
+    <string name="filter_name_custom">Користувацький</string>
     <string name="filter_name_default">За замовчуванням</string>
     <string name="filter_name_bed_reading">Читання</string>
     <string name="filter_name_dim_only">Тільки затемнення</string>
