@@ -32,7 +32,6 @@ import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.model.Profile
 import com.jmstudios.redmoon.model.Config
-import com.jmstudios.redmoon.ui.preference.ProfileSelectorPreference
 import com.jmstudios.redmoon.ui.preference.SeekBarPreference
 import com.jmstudios.redmoon.util.*
 
@@ -43,43 +42,45 @@ class FilterFragment : EventPreferenceFragment() {
     companion object : Logger()
 
     // Preferences
-    private val profileSelectorPref: ProfileSelectorPreference
-             get() = (preferenceScreen.findPreference
-                     (getString(R.string.pref_key_profile_spinner)) as ProfileSelectorPreference)
+    private fun pref(resId: Int): Preference {
+        return preferenceScreen.findPreference(getString(resId))
+    }
+
+    private val profileSelectorPref: Preference
+        get() = pref(R.string.pref_key_profile_spinner)
 
     private val colorPref: SeekBarPreference
-        get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_color)) as SeekBarPreference)
+        get() = pref(R.string.pref_key_color) as SeekBarPreference
 
     private val intensityPref: SeekBarPreference
-        get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_intensity)) as SeekBarPreference)
+        get() = pref(R.string.pref_key_intensity) as SeekBarPreference
 
     private val dimLevelPref: SeekBarPreference
-        get()= (preferenceScreen.findPreference
-               (getString(R.string.pref_key_dim)) as SeekBarPreference)
+        get()= pref(R.string.pref_key_dim) as SeekBarPreference
 
     private val lowerBrightnessPref: TwoStatePreference
-        get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_lower_brightness)) as TwoStatePreference)
+        get() = pref(R.string.pref_key_lower_brightness) as TwoStatePreference
 
     private val timeTogglePref: Preference
-        get() = (preferenceScreen.findPreference(getString(R.string.pref_key_time_toggle_header)))
+        get() = pref(R.string.pref_key_time_toggle_header)
 
     private val secureSuspendPref: Preference
-        get() = preferenceScreen.findPreference(getString(R.string.pref_key_secure_suspend_header))
+        get() = pref(R.string.pref_key_secure_suspend_header)
 
     private val buttonBacklightPref: Preference
-        get() = preferenceScreen.findPreference(getString(R.string.pref_key_button_backlight))
+        get() = pref(R.string.pref_key_button_backlight)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.filter_preferences)
 
-        if (!Permission.WriteSettings.isGranted) { lowerBrightnessPref.isChecked = false }
         updateSecureSuspendSummary()
         updateTimeToggleSummary()
         updateBacklightPrefSummary()
+
+        if (!Permission.WriteSettings.isGranted) {
+            lowerBrightnessPref.isChecked = false
+        }
 
         lowerBrightnessPref.onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { _, newValue ->
