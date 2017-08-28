@@ -99,3 +99,6 @@ hs_err_pid*
 
 captures/
 *.DS_Store
+
+# NDK build files
+app/.externalNativeBuild/
