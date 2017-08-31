@@ -23,18 +23,16 @@ import com.jmstudios.redmoon.util.Logger
 
 abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Preference(context, attrs), SeekBar.OnSeekBarChangeListener {
 
-    companion object : Logger()
-
-    lateinit var mSeekBar: SeekBar
+    private lateinit var mSeekBar: SeekBar
     protected var mProgress: Int = 0
-    lateinit protected var mView: View
+    private lateinit var mView: View
 
     open val DEFAULT_VALUE: Int = 20
     abstract val color: Int
     abstract val progress: Int
     abstract val suffix: String
 
-    val colorFilter: PorterDuffColorFilter
+    private val colorFilter: PorterDuffColorFilter
         get() = PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY)
 
     init {
@@ -75,13 +73,13 @@ abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar) {
-        Log.d("Touch down on a seek bar")
-        Command.preview(true)
+        pressesActive++
+        Log.i("Touch down on a seek bar, $pressesActive presses active")
     }
 
     override fun onStopTrackingTouch(seekBar: SeekBar) {
-        Log.d("Released a seek bar")
-        Command.preview(false)
+        pressesActive--
+        Log.i("Released a seek bar, $pressesActive presses active")
     }
     //end region
 
@@ -93,5 +91,13 @@ abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
 
         val progressView = mView.findViewById(R.id.seekbar_value) as TextView
         progressView.text = "$progress$suffix"
+    }
+
+    companion object : Logger() {
+        private var pressesActive: Int = 0
+            set(value) {
+                Command.preview(value != 0)
+                field = value
+            }
     }
 }

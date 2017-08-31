@@ -62,6 +62,11 @@ data class Profile(
             return addColors(dimColor, intensityColor)
         }
 
+    // lazy initialization prevents an infinite loop on init -> stack overflow
+    val off: Profile by lazy { this.copy(intensity = 0, dimLevel = 0) }
+
+    val isOff: Boolean = intensity == 0 && dimLevel == 0
+
     private fun addColors(color1: Int, color2: Int): Int {
         var alpha1 = colorBitsToFloat(Color.alpha(color1))
         var alpha2 = colorBitsToFloat(Color.alpha(color2))

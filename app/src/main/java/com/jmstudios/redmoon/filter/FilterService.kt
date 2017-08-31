@@ -26,43 +26,48 @@
 
 package com.jmstudios.redmoon.filter
 
-import android.app.NotificationManager
+import android.animation.Animator
+import android.animation.ValueAnimator
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.os.IBinder
-import com.jmstudios.redmoon.filter.overlay.OverlayFilter
 
+import com.jmstudios.redmoon.filter.manager.AbstractAnimatorListener
+import com.jmstudios.redmoon.filter.overlay.OverlayFilter
+import com.jmstudios.redmoon.model.Profile
 import com.jmstudios.redmoon.util.*
 
-private const val COMMAND_MISSING = -1
-
-private const val NOTIFICATION_ID = 1
-
-private const val DURATION_LONG    = 1000 // One second
-private const val DURATION_SHORT   = 250
-private const val DURATION_INSTANT = 0
+import org.greenrobot.eventbus.Subscribe
 
 class FilterService : Service() {
-    val notificationManager: NotificationManager
-        get() = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    private lateinit var mFilter : FilterManager
+    private lateinit var mFilter: Filter
+    private val mAnimator: ValueAnimator
+
+    private var mProfile = activeProfile.off
+        set(value) {
+            field = value
+            mFilter.setColor(value)
+        }
+
+    init {
+        mAnimator = ValueAnimator.ofObject(ProfileEvaluator(), mProfile).apply {
+            addUpdateListener { valueAnimator ->
+                mProfile = valueAnimator.animatedValue as Profile
+            }
+        }
+    }
 
     override fun onCreate() {
         super.onCreate()
         Log.i("onCreate")
-        mFilter = FilterManager(OverlayFilter(this))
+        mFilter = OverlayFilter(this)
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         Log.i("onStartCommand($intent, $flags, $startId)")
         if (Permission.Overlay.isGranted) {
-            val flag = intent.getIntExtra(Command.BUNDLE_KEY_COMMAND, COMMAND_MISSING)
-            Log.i("Recieved flag: $flag")
-            if (flag != COMMAND_MISSING) {
-                Command.values()[flag].activate(this)
-            }
+            Command.handle(intent, this)
         } else {
             Log.i("Overlay permission denied.")
             EventBus.post(overlayPermissionDenied())
@@ -77,35 +82,62 @@ class FilterService : Service() {
 
     override fun onDestroy() {
         Log.i("onDestroy")
-        filterIsOn = false
+        if (filterIsOn) {
+            Log.w("Service killed while filter was on!")
+            filterIsOn = false
+            mFilter.stop()
+        }
         super.onDestroy()
     }
 
-    fun start() {
-        Log.i("start()")
-        startForeground(NOTIFICATION_ID, getNotification(true))
-        mFilter.turnOn(DURATION_LONG)
-    }
-
-    fun preview() {
-        Log.i("preview()")
-        startForeground(NOTIFICATION_ID, getNotification(true))
-        mFilter.turnOn(DURATION_INSTANT)
-    }
-
-    fun stop() {
-        Log.i("pause()")
-        stopForeground(true)
-        mFilter.turnOff(DURATION_LONG) {
-            stopSelf()
+    fun start(time: Int) {
+        Log.i("turnOn($time)")
+        if (!filterIsOn) {
+            animateTo(activeProfile, time, object : AbstractAnimatorListener {
+                override fun onAnimationStart(animator: Animator) {
+                    EventBus.register(this@FilterService)
+                    filterIsOn = true
+                    mFilter.start()
+                }
+            })
         }
     }
 
-    fun pause() {
-        Log.i("stop()")
-        stopForeground(false)
-        notificationManager.notify(NOTIFICATION_ID, getNotification(false))
-        mFilter.turnOff(DURATION_SHORT)
+    fun suspend(time: Int, after: () -> Unit = {}) {
+        if (filterIsOn) {
+            animateTo(mProfile.off, time, object : AbstractAnimatorListener {
+                override fun onAnimationEnd(animator: Animator) {
+                    EventBus.unregister(this@FilterService)
+                    filterIsOn = false
+                    after()
+                }
+            })
+        } else {
+            after()
+        }
+    }
+
+    fun pause(time: Int, after: () -> Unit = {}) {
+        suspend(time) {
+            mFilter.stop()
+            after()
+        }
+    }
+
+    private fun animateTo(profile: Profile, time: Int, listener: Animator.AnimatorListener) {
+        mAnimator.run {
+            setObjectValues(mProfile, profile)
+            Log.i("animating. Fraction is: $animatedFraction")
+            duration = (if (isRunning) time * animatedFraction else time.toFloat()).toLong()
+            removeAllListeners()
+            addListener(listener)
+            Log.i("Animating from $mProfile to $profile in $duration")
+            start()
+        }
+    }
+
+    @Subscribe fun onProfileUpdated(profile: Profile) {
+        mProfile = profile
     }
 
     companion object : Logger()
