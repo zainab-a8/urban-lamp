@@ -46,37 +46,29 @@ class Overlay(ctx: Context) : View(ctx),
         set(value) {
             field = value
             invalidate() // Forces call to onDraw
-            if (filterIsOn && Config.buttonBacklightFlag == "dim") {
-                updateLayout()
-            }
         }
 
     override fun onDraw(canvas: Canvas) = canvas.drawColor(color)
-
-    private fun updateLayout() = mWindowManager.updateViewLayout(this, mLayoutParams)
 
     private var mLayoutParams = mScreenManager.layoutParams
         get() = field.apply { buttonBrightness = Config.buttonBacklightLevel }
 
     fun show() {
+        updateLayoutParams()
         mWindowManager.addView(this, mLayoutParams)
     }
 
-    fun hide() {
-        mWindowManager.removeView(this)
+    fun hide() = mWindowManager.removeView(this)
+
+    fun updateLayout() = mWindowManager.updateViewLayout(this, mLayoutParams)
+
+    private fun updateLayoutParams() {
+        mLayoutParams = mScreenManager.layoutParams
     }
 
     override fun onOrientationChanged() {
-        mLayoutParams = mScreenManager.layoutParams
-        if (filterIsOn) {
-            updateLayout()
-        }
-    }
-
-    @Subscribe fun onButtonBacklightChanged(event: buttonBacklightChanged) {
-        if (filterIsOn) {
-            updateLayout()
-        }
+        updateLayoutParams()
+        updateLayout()
     }
 
     companion object : Logger()

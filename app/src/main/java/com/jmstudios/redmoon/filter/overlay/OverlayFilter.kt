@@ -27,8 +27,11 @@
 
 import android.content.Context
 import com.jmstudios.redmoon.filter.Filter
+import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.model.Profile
 import com.jmstudios.redmoon.util.*
+
+import org.greenrobot.eventbus.Subscribe
 
 class OverlayFilter (private val mContext: Context) : Filter {
     private val mOverlay = Overlay(mContext)
@@ -36,31 +39,56 @@ class OverlayFilter (private val mContext: Context) : Filter {
     private val mBrightnessManager = BrightnessManager(mContext)
     private val mCurrentAppMonitor = CurrentAppMonitor(mContext)
 
+    private var mShown: Boolean = false
+
     override fun start() {
         Log.i("start()")
-        mOverlay.show()
-        mOrientationReceiver.register(mContext)
-        mBrightnessManager.lower()
+        showFilter()
         mCurrentAppMonitor.start()
-        EventBus.register(mOverlay)
-        EventBus.register(mBrightnessManager)
         EventBus.register(mCurrentAppMonitor)
     }
 
     override fun setColor(profile: Profile) {
         Log.i("setColor($profile)")
         mOverlay.color = profile.filterColor
+        if (profile.isOff) hideFilter() else showFilter()
+        mBrightnessManager.run {
+            if (profile.lowerBrightness) lower() else restore()
+        }
     }
 
     override fun stop() {
         Log.i("stop()")
-        mOverlay.hide()
-        mOrientationReceiver.unregister(mContext)
+        hideFilter()
         mCurrentAppMonitor.stop()
-        EventBus.unregister(mOverlay)
-        EventBus.unregister(mBrightnessManager)
         EventBus.unregister(mCurrentAppMonitor)
-        mBrightnessManager.restore()
+    }
+
+    private fun showFilter() {
+        if (mShown) {
+            if (Config.buttonBacklightFlag == "dim") {
+                mOverlay.updateLayout()
+            }
+        } else {
+            mOverlay.show()
+            mOrientationReceiver.register(mContext)
+            EventBus.register(this)
+            mShown = true
+        }
+    }
+
+    private fun hideFilter() {
+        if (mShown) {
+            mOverlay.hide()
+            EventBus.unregister(this)
+            mOrientationReceiver.unregister(mContext)
+            mBrightnessManager.restore()
+            mShown = false
+        }
+    }
+
+    @Subscribe fun onButtonBacklightChanged(event: buttonBacklightChanged) {
+        mOverlay.updateLayout()
     }
 
     companion object : Logger()

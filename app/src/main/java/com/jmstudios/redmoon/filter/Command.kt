@@ -1,101 +1,85 @@
 /*
- * Copyright (c) 2016  Marien Raat <marienraat@riseup.net>
- * Copyright (c) 2017  Stephen Michel <s@smichel.me>
+ * Copyright (c) 2016 Marien Raat <marienraat@riseup.net>
+ * Copyright (c) 2017 Stephen Michel <s@smichel.me>
  * SPDX-License-Identifier: GPL-3.0+
  */
 
 package com.jmstudios.redmoon.filter
 
+import android.app.Notification
+import android.app.NotificationManager
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 
 import com.jmstudios.redmoon.util.*
 
+
 enum class Command {
     ON {
         override fun activate(service: FilterService) {
-            service.start()
-            state = this
+            Log.i("ON")
+            service.startForeground(NOTIFICATION_ID, getNotification(true))
+            service.start(DURATION_LONG)
         }
     },
     OFF {
         override fun activate(service: FilterService) {
-            service.stop()
-            state = this
+            Log.i("OFF")
+            service.stopForeground(true)
+            service.pause(DURATION_LONG) {
+                service.stopSelf()
+            }
         }
     },
     PAUSE {
         override fun activate(service: FilterService) {
-            service.pause()
-            state = this
+            Log.i("PAUSE")
+            service.stopForeground(false)
+            notify(service, getNotification(false))
+            service.pause(DURATION_SHORT)
         }
     },
-    /* This command is used when the service is suspended temporarily,
-     * because the user is in an excluded app (for example the package
-     * installer). It stops the service like in the OffState, but
-     * doesn't change the UI, switch or brightness state just like the
-     * PreviewState. Like the PreviewState, it logs changes to the
-     * state and applies them when the suspend state is deactivated.
-    */
     SUSPEND {
         override fun activate(service: FilterService) {
-            service.pause()
-            state = this
+            service.stopForeground(false)
+            notify(service, getNotification(false))
+            service.suspend(DURATION_SHORT)
         }
     },
     RESUME {
         override fun activate(service: FilterService) {
-            service.start()
-            state = this
+            Log.i("RESUME")
+            service.startForeground(NOTIFICATION_ID, getNotification(true))
+            service.start(DURATION_SHORT)
         }
     },
-    FADE_ON {
-        override fun activate(service: FilterService) {
-            service.start()
-            state = this
-        }
-    },
-    FADE_OFF {
-        override fun activate(service: FilterService) {
-            service.stop()
-            state = this
-        }
-    },
-    /* This State is used to present the service to the user when (s)he
-     * is holding one of the seekbars to adjust the service. It turns
-     * on the service and saves what state it should be when it will be
-     * turned off.
-     */
     SHOW_PREVIEW {
-        var presses: Int = 0
-        lateinit var returnState: Command
-
         override fun activate(service: FilterService) {
-            if (state == HIDE_PREVIEW) presses-- else presses++
-            Log.d("$presses presses active")
-
-            when (presses) {
-                0 -> {
-                    Log.i("Moving back to state: $returnState")
-                    returnState.activate(service)
-                }
-                1 -> {
-                    returnState = state
-                    state = this
-                    service.preview()
-                }
+            Log.i("SHOW_PREVIEW: filterIsOn: $filterIsOn")
+            if (filterWasOn == null) {
+                filterWasOn = filterIsOn
+                Log.i("SHOW_PREVIEW: filterWasOn set to: $filterWasOn")
             }
+            service.startForeground(NOTIFICATION_ID, getNotification(true))
+            service.start(DURATION_INSTANT)
         }
     },
     HIDE_PREVIEW {
         override fun activate(service: FilterService) {
-            state = this
-            SHOW_PREVIEW.activate(service)
+            Log.i("HIDE_PREVIEW: filterWasOn: $filterWasOn")
+            if (filterWasOn != true) {
+                service.stopForeground(true)
+                service.pause(DURATION_INSTANT) {
+                    service.stopSelf()
+                }
+            }
+            filterWasOn = null
         }
     };
 
     val intent: Intent
-        get() = intent(FilterService::class).putExtra(BUNDLE_KEY_COMMAND, this.ordinal)
+        get() = intent(FilterService::class).putExtra(EXTRA_COMMAND, ordinal)
 
     fun send(): ComponentName = appContext.startService(intent)
 
@@ -104,7 +88,26 @@ enum class Command {
     //override fun toString(): String = javaClass.simpleName
 
     companion object : Logger() {
-        const val BUNDLE_KEY_COMMAND = "jmstudios.bundle.key.command"
+        private const val EXTRA_COMMAND = "jmstudios.bundle.key.command"
+        private const val COMMAND_MISSING = -1
+
+        private const val NOTIFICATION_ID = 1
+
+        private const val DURATION_LONG = 1000 // One second
+        private const val DURATION_SHORT = 250
+        private const val DURATION_INSTANT = 0
+
+        private var filterWasOn: Boolean? = null
+        
+        fun handle(intent: Intent, svc: FilterService) {
+            val flag = intent.getIntExtra(EXTRA_COMMAND, COMMAND_MISSING)
+            Log.i("Recieved flag: $flag")
+            if (flag != COMMAND_MISSING) {
+                Command.values()[flag].activate(svc)
+            } else {
+                Log.w("Unknown intent recieved")
+            }
+        }
 
         fun toggle(on: Boolean) {
             if (on) ON.send() else OFF.send()
@@ -114,11 +117,10 @@ enum class Command {
             if (on) SHOW_PREVIEW.send() else HIDE_PREVIEW.send()
         }
 
-        private var state: Command = OFF
-            set(value) {
-                Log.i("State changed from ${field.name} to ${value.name}")
-                field = value
-            }
+        private fun notify(context: Context, notification: Notification) {
+            val nMan = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            nMan.notify(NOTIFICATION_ID, notification)
+        }
+
     }
 }
-

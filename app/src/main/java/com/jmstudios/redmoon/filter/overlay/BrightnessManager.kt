@@ -32,18 +32,11 @@ import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.model.Profile
 import com.jmstudios.redmoon.util.*
 
-import org.greenrobot.eventbus.Subscribe
-
 class BrightnessManager(private val mContext: Context) {
     companion object: Logger()
 
     val hasPermission
         get() = Permission.WriteSettings.isGranted
-
-    @Subscribe fun onProfileChanged(profile: Profile) {
-        Log.i("Recieved profile change: $profile")
-        if (profile.lowerBrightness) lower() else restore()
-    }
 
     fun lower() =  when {
         !filterIsOn -> Log.w("Can't lower brightness; filter is off!")
