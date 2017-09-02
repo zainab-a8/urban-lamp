@@ -12,4 +12,5 @@
     <string name="pref_title_appearance">필터</string>
     <string name="notification_status_running">작동 중. apk를 설치하려면 일시중지하세요.</string>
     <string name="notification_status_running_no_warning">실행 중</string>
-</resources>
+<string name="activity_main">Red Moon</string>
+    </resources>
