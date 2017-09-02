@@ -8,6 +8,7 @@
         <change>Fix bugs when Red Moon is killed throug Android</change>
         <change>Lots of code cleanup (preparation for root mode)</change>
         <change>Updated translations: Italian (@matteocoder), Japanese (@naofum), Turkish (@monolifed, @oguz-ismail), French (@gwenhael-le-moine, @swalladge, @Remy J), Russian (@antonv6), Esperanto (@Reedych) Chinese/simplified (@frankzheng43), Serbian (@pejakm), Ukrainian (Володимир Бриняк), Norwegian/Bokmål (Tale Haukbjørk)</change>
+    </release>
     <release version="3.0.0" versioncode="29" >
         <change>Lower bightness applies per-filter</change>
         <change>Custom (unsaved) filter remembers last used values</change>
