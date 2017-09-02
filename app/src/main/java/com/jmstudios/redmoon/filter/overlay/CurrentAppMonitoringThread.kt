@@ -31,12 +31,7 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
             while (!Thread.interrupted()) {
                 val currentApp = getCurrentApp(mContext)
                 Log.d("Current app is: $currentApp")
-
-                when (isAppSecured(currentApp)) {
-                    true -> Command.SUSPEND.send()
-                    false -> Command.RESUME.send()
-                }
-
+                handleApp(currentApp)
                 Thread.sleep(1000)
             }
         } catch (e: InterruptedException) {
@@ -45,18 +40,18 @@ class CurrentAppMonitoringThread(private val mContext: Context) : Thread() {
         Log.i("Shutting down CurrentAppMonitoringThread")
     }
 
-    private fun isAppSecured(app: String): Boolean? = when(app) {
+    private fun handleApp(app: String): Boolean? = when(app) {
         "com.android.packageinstaller",
         "eu.chainfire.supersu",
         "com.koushikdutta.superuser",
         "me.phh.superuser",
         "com.owncloud.android",
-        "com.google.android.packageinstaller" -> true
+        "com.google.android.packageinstaller" -> Command.SUSPEND.send()
         // Opening the notification causes red moon to appear as the active package -> we unpause.
         // Closing the notification does not properly restore the previous package, so we can't
-        // re-pause when returning to a secured app. So, we need to avoid pausing to begin with.
-        "com.jmstudios.redmoon", "com.jmstudios.redmoon.debug" -> null
-        else -> false
+        // re-pause when returning to a secured app. So, we need to avoid unpausing to begin with.
+        "com.jmstudios.redmoon", "com.jmstudios.redmoon.debug" -> {}
+        else -> Command.RESUME.send()
     }
 
     companion object : Logger(false) {
