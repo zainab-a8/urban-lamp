@@ -39,9 +39,9 @@ class RedMoonApplication: Application() {
             upgradeFrom(26)
         } in 26..27 -> {
             upgradeFrom(28)
-        } in 28..29 -> {
+        } in 28..30 -> {
             upgradeProfilesFrom(version)
-            upgradeFrom(30)
+            upgradeFrom(31)
         } else -> {
             Log.e("Didn't catch upgrades from version $version")
             upgradeFrom(version+1)

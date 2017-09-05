@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="3.1.1" versioncode="31" >
+        <change>Fix a crash on Android 6.0 and earlier</change>
+        <change>Enable finer control over behavior in secure apps</change>
+    </release>
     <release version="3.1.0" versioncode="30" >
         <change>Fix a bug where the top switch did not toggle the filter</change>
         <change>Fix a bug where the fade transition would not play if the filter was toggled mid-transition.</change>
