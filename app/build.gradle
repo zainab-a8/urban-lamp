@@ -46,7 +46,7 @@ android {
         applicationId "com.jmstudios.redmoon"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 30
+        versionCode 31
         versionName "${org.ajoberstar.grgit.Grgit.open().describe()}"
         javaCompileOptions {
             annotationProcessorOptions {
