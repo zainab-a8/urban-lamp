@@ -5,7 +5,7 @@
     <string name="activity_shortcut">Перемикач Red Moon</string>
     <string name="activity_intro">Вступ</string>
     <string name="activity_about">Про Red Moon</string>
-    <string name="activity_secure_suspend">Пауза в захищених додатках</string>
+    <string name="activity_secure_suspend">Пауза в захищених застосунках</string>
     <string name="activity_timer">Таймер</string>
 
     <string name="menu_dark_theme">Темна тема</string>
@@ -13,7 +13,7 @@
     <string name="menu_show_intro">Повторити вступ</string>
     <string name="menu_about">Про</string>
 
-    <string name="notification_status_running">Працює. Вимкніть, щоб встановити додатки</string>
+    <string name="notification_status_running">Працює. Вимкніть, щоб встановити застосунки</string>
     <string name="notification_status_running_no_warning">Працює</string>
     <string name="notification_status_paused">Призупинено</string>
     <string name="notification_status_off">Викл</string>
@@ -33,7 +33,7 @@
     <string name="pref_title_lower_brightness">Зменшення яскравості</string>
 
     <string name="pref_title_time_toggle">Таймер</string>
-    <string name="pref_title_secure_suspend">Пауза в захищених додатках</string>
+    <string name="pref_title_secure_suspend">Пауза в захищених застосунках</string>
     <string name="pref_title_button_backlight">Підсвічування кнопки апаратного забезпечення</string>
 
     <string name="pref_title_start_time">Увімкніть в</string>
@@ -41,13 +41,13 @@
     <string name="pref_title_location">Час по світловому дню</string>
     <string name="pref_summary_location_off">Виходячи з вашого місцезнаходження</string>
 
-    <string name="pref_summary_secure_suspend">Деякі функції не працюватимуть при включенні функції Red Moon*. Наприклад, встановлення додатків, надання дозволів або використання додатка SuperUser (на кореневих пристроях).
+    <string name="pref_summary_secure_suspend">Деякі функції не працюватимуть при включенні функції Red Moon*. Наприклад, встановлення застосунків, надання дозволів або використання застосунку SuperUser (на кореневих пристроях).
 \n
 \nКоли цей параметр увімкнено, Red Moon буде призупинено, поки одна з цих функцій відкрита.
 \n
 \nЦя функція може трохи знизити термін служби акумулятора Вашого пристрою. Крім того, ця функція може не працювати на всіх пристроях.
 \n
-\n*Red Moon працює за допомогою прозорого червоного шару по всьому екрану; ці додатки не працюватимуть, якщо інший додаток їх залучає. Це зроблено для того, щоб уникнути несанкціонованого вибору небажаних дій, або перехоплення дотиків з метою стеження за користувачем.</string>
+\n*Red Moon працює за допомогою прозорого червоного шару по всьому екрану; ці застосунки не працюватимуть, якщо інший застосунок їх залучає. Це зроблено для того, щоб уникнути несанкціонованого вибору небажаних дій, або перехоплення дотиків з метою стеження за користувачем.</string>
 
     <string name="button_add_filter">Додати</string>
     <string name="button_remove_filter">Видалити</string>
@@ -72,7 +72,7 @@
 \n
 \nRed Moon виконує розсилку дії `com.jmstudios.redmoon.RED_MOON_TOGGLED`. Розсилка також містить змінну типу boolean з ключем `jmstudios.bundle.key.FILTER_IS_ON`, яка вказує про включення або виключенні Red Moon.</string>
 
-    <string name="toast_warning_install">Ви не зможете встановлювати додатки, поки Red Moon увімкнений.</string>
+    <string name="toast_warning_install">Ви не зможете встановлювати застосунки, поки Red Moon увімкнений.</string>
 
     <string name="snackbar_warning_no_location">Увімкнути служби локації для оновлення місцезнаходження</string>
     <string name="snackbar_searching_location">Пошук місця розташування</string>
@@ -83,14 +83,14 @@
     <string name="edit_hint_add_filter">Назва фільтру</string>
     <string name="dialog_title_remove_filter">Видалити цей фільтр?</string>
 
-    <string name="dialog_title_permission_overlay">Поверх інших додатків</string>
-    <string name="dialog_message_permission_overlay">Дозволити накладення поверх інших додатків на наступному екрані, щоб дозволити ввімкнути Red Moon.</string>
+    <string name="dialog_title_permission_overlay">Поверх інших застосунків</string>
+    <string name="dialog_message_permission_overlay">Дозволити накладення поверх інших застосунків на наступному екрані, щоб дозволити ввімкнути Red Moon.</string>
 
     <string name="dialog_title_permission_write_settings">Змінити налаштування системи</string>
     <string name="dialog_message_permission_write_settings">Дозволити модифікацію параметрів системи на наступному екрані, щоб дозволити Red Moon змінити рівень яскравості.</string>
 
     <string name="dialog_title_permission_usage_stats">Використання доступу</string>
-    <string name="dialog_message_permission_usage_stats">Дозволити використання доступу на наступному екрані, щоб дозволити Red Moon призупинити роботу захищених додатків.
+    <string name="dialog_message_permission_usage_stats">Дозволити використання доступу на наступному екрані, щоб дозволити Red Moon призупинити роботу захищених застосунків.
 \n
 \nRed Moon буде використовувати ці дані лише для того, щоб визначити, чи використовуєте ви програму, яка не працюватиме, коли увімкнено Red Moon.</string>
 
@@ -109,7 +109,7 @@
     <string name="slide_text_improve_sleep">Синє світло пригнічує вироблення мелатоніну, гормону, який допомагає вам заснути вночі. Red Moon видаляє синє світло з екрана, що дозволяє вам легко заснути.</string>
 
     <string name="slide_title_get_started">Почати!</string>
-    <string name="slide_text_get_started">Вмикайте і вимкайте Red Moon за допомогою перемикача у верхньому правому куті.</string>
+    <string name="slide_text_get_started">Вмикайте і вимикайте Red Moon за допомогою перемикача у верхньому правому куті.</string>
 
     <string name="filter_name_custom">Користувацький</string>
     <string name="filter_name_default">За замовчуванням</string>
