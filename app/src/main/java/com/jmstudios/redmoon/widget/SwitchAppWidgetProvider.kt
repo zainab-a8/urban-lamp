@@ -73,8 +73,7 @@ class SwitchAppWidgetProvider : AppWidgetProvider() {
         val views = RemoteViews(context.packageName, R.layout.appwidget_switch)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetComponent = ComponentName(context, SwitchAppWidgetProvider::class.java.name)
-        val drawable = if (filterIsOn) R.drawable.ic_play
-                       else R.drawable.ic_stop
+        val drawable = if (filterIsOn) R.drawable.ic_stop else R.drawable.ic_play
 
         views.setInt(R.id.widget_pause_play_button, "setImageResource", drawable)
         appWidgetManager.updateAppWidget(appWidgetComponent, views)
