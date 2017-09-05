@@ -60,7 +60,7 @@ class SwitchAppWidgetProvider : AppWidgetProvider() {
 
     override fun onReceive(ctx: Context, intent: Intent) {
         if (intent.action == ACTION_TOGGLE) {
-            Command.toggle(filterIsOn)
+            Command.toggle(!filterIsOn)
         } else if (intent.action == ACTION_UPDATE) {
             updateImage(ctx, !intent.getBooleanExtra(EXTRA_POWER, false))
         } else {
