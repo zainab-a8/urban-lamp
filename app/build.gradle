@@ -46,8 +46,8 @@ android {
         applicationId "com.jmstudios.redmoon"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 31
-        versionName "${org.ajoberstar.grgit.Grgit.open().describe()}"
+        versionCode 32
+        versionName "3.1.2"
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [ eventBusIndex : 'com.jmstudios.redmoon.event.EventBusIndex' ]
@@ -62,7 +62,13 @@ android {
 
         debug {
             applicationIdSuffix '.debug'
-            versionNameSuffix '_DEBUG'
+            def repo = org.ajoberstar.grgit.Grgit.open()
+            def commitId = "${repo.log().get(0).getAbbreviatedId()}"
+            if (repo.status().isClean()) {
+                versionNameSuffix "-$commidId"
+            } else {
+                versionNameSuffix "-$commitId (dirty)"
+            }
         }
     }
     productFlavors {
