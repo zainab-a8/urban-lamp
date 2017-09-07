@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="3.1.2" versioncode="32" >
+        <change>Fix a bug where widgets and tiles did not work</change>
+    </release>
     <release version="3.1.1" versioncode="31" >
         <change>Fix a crash on Android 6.0 and earlier</change>
         <change>Enable finer control over behavior in secure apps</change>
