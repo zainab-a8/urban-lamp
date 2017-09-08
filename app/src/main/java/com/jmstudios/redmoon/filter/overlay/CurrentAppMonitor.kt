@@ -19,8 +19,6 @@ import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
 
-import org.greenrobot.eventbus.Subscribe
-
 class CurrentAppMonitor(
         private val mContext: Context,
         private val mExecutor: ScheduledExecutorService)
@@ -28,13 +26,15 @@ class CurrentAppMonitor(
 
     private val screenStateReceiver = ScreenStateReceiver(this)
     private var mAppChecker = CurrentAppChecker(mContext)
-
     private var mFuture: ScheduledFuture<*>? = null
+
+    private var lastApp: String = ""
 
     private val handleCurrentApp = Runnable {
         val currentApp = mAppChecker.currentApp
-        Log.i("Current app is: $currentApp")
+        Log.i("Current app is: $currentApp, last was: $lastApp")
         when(currentApp) {
+            lastApp -> {} // only respond when the app has changed
             "com.android.packageinstaller",
             "eu.chainfire.supersu",
             "com.koushikdutta.superuser",
@@ -43,6 +43,7 @@ class CurrentAppMonitor(
             "com.google.android.packageinstaller" -> Command.SUSPEND.send()
             else -> Command.RESUME.send()
         }
+        lastApp = currentApp
     }
 
     private val powerManager: PowerManager
@@ -75,7 +76,6 @@ class CurrentAppMonitor(
                 addAction(Intent.ACTION_SCREEN_ON )
             }
             mContext.registerReceiver(screenStateReceiver, filter)
-            EventBus.register(this)
             if (screenOn) startMonitoring()
             isMonitoring = true
         }
@@ -88,7 +88,6 @@ class CurrentAppMonitor(
         stopMonitoring()
         try {
             mContext.unregisterReceiver(screenStateReceiver)
-            EventBus.unregister(this)
         } catch (e: IllegalArgumentException) {
             // Catch errors when receiver is unregistered more than once.
             // It is not a problem, so we just ignore it.
@@ -102,10 +101,6 @@ class CurrentAppMonitor(
 
     private fun stopMonitoring() {
         mFuture?.cancel(true)
-    }
-
-    @Subscribe fun onSecureSuspendChanged(event: secureSuspendChanged) {
-        if (Config.secureSuspend) start() else stop()
     }
 
     companion object : Logger()

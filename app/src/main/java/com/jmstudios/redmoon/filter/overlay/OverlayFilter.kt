@@ -41,18 +41,17 @@ class OverlayFilter(context: Context, executor: ScheduledExecutorService) : Filt
     private val mBrightnessManager = BrightnessManager(context)
     private val mCurrentAppMonitor = CurrentAppMonitor(context, executor)
 
-    private var mShown: Boolean = false
-
     override fun start() {
         Log.i("start()")
-        showFilter()
-        mCurrentAppMonitor.start()
+        filtering = true
+        appMonitoring = true
+        listeningForEvents = true
     }
 
     override fun setColor(profile: Profile) {
         Log.i("setColor($profile)")
         mOverlay.color = profile.filterColor
-        if (profile.isOff) hideFilter() else showFilter()
+        filtering = !profile.isOff
         mBrightnessManager.run {
             if (profile.lowerBrightness) lower() else restore()
         }
@@ -60,35 +59,61 @@ class OverlayFilter(context: Context, executor: ScheduledExecutorService) : Filt
 
     override fun stop() {
         Log.i("stop()")
-        hideFilter()
-        mCurrentAppMonitor.stop()
+        filtering = false
+        appMonitoring = false
+        listeningForEvents = false
     }
 
-    private fun showFilter() {
-        if (mShown) {
-            if (Config.buttonBacklightFlag == "dim") {
-                mOverlay.reLayout()
+    private var listeningForEvents: Boolean = false
+        set(value) {
+            if (value != field) {
+                field = value
+                if (value) {
+                    EventBus.register(this)
+                } else {
+                    EventBus.unregister(this)
+                }
             }
-        } else {
-            mOverlay.show()
-            mOrientationReceiver.register()
-            EventBus.register(this)
-            mShown = true
         }
-    }
 
-    private fun hideFilter() {
-        if (mShown) {
-            mOverlay.hide()
-            EventBus.unregister(this)
-            mOrientationReceiver.unregister()
-            mBrightnessManager.restore()
-            mShown = false
+
+    private var filtering: Boolean = false
+        set(value) {
+            if (value == field) {
+                if (Config.buttonBacklightFlag == "dim") {
+                    mOverlay.reLayout()
+                }
+            } else {
+                field = value
+                if (value) {
+                    mOverlay.show()
+                    mOrientationReceiver.register()
+                } else {
+                    mOverlay.hide()
+                    mOrientationReceiver.unregister()
+                    mBrightnessManager.restore()
+                }
+            }
         }
-    }
+
+    private var appMonitoring: Boolean = false
+        set(value) {
+            if (value != field) {
+                field = value
+                if (value) {
+                    mCurrentAppMonitor.start()
+                } else {
+                    mCurrentAppMonitor.stop()
+                }
+            }
+        }
 
     @Subscribe fun onButtonBacklightChanged(event: buttonBacklightChanged) {
-        mOverlay.reLayout()
+        if (filtering) mOverlay.reLayout()
+    }
+
+    @Subscribe fun onSecureSuspendChanged(event: secureSuspendChanged) {
+        appMonitoring = Config.secureSuspend
     }
 
     companion object : Logger()
