@@ -11,15 +11,39 @@ import android.content.IntentFilter
 import android.os.PowerManager
 
 import com.jmstudios.redmoon.model.Config
+import com.jmstudios.redmoon.filter.Command
 import com.jmstudios.redmoon.filter.ScreenStateReceiver
 import com.jmstudios.redmoon.util.*
 
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.ScheduledFuture
+import java.util.concurrent.TimeUnit
+
 import org.greenrobot.eventbus.Subscribe
 
-class CurrentAppMonitor(private val mContext: Context) : ScreenStateReceiver.ScreenStateListener {
-    companion object : Logger()
+class CurrentAppMonitor(
+        private val mContext: Context,
+        private val mExecutor: ScheduledExecutorService)
+    : ScreenStateReceiver.ScreenStateListener {
+
     private val screenStateReceiver = ScreenStateReceiver(this)
-    private var mCamThread: CurrentAppMonitoringThread? = null
+    private var mAppChecker = CurrentAppChecker(mContext)
+
+    private var mFuture: ScheduledFuture<*>? = null
+
+    private val handleCurrentApp = Runnable {
+        val currentApp = mAppChecker.currentApp
+        Log.i("Current app is: $currentApp")
+        when(currentApp) {
+            "com.android.packageinstaller",
+            "eu.chainfire.supersu",
+            "com.koushikdutta.superuser",
+            "me.phh.superuser",
+            "com.owncloud.android",
+            "com.google.android.packageinstaller" -> Command.SUSPEND.send()
+            else -> Command.RESUME.send()
+        }
+    }
 
     private val powerManager: PowerManager
         get() = appContext.getSystemService(Context.POWER_SERVICE) as PowerManager
@@ -29,20 +53,16 @@ class CurrentAppMonitor(private val mContext: Context) : ScreenStateReceiver.Scr
             if (atLeastAPI(20)) isInteractive else @Suppress("DEPRECATION") isScreenOn
         }
 
-    private var isMonitoring = false
+    private var isMonitoring: Boolean = false
 
     override fun onScreenTurnedOn() {
         Log.i("Screen turn on received")
-        startCamThread()
+        startMonitoring()
     }
 
     override fun onScreenTurnedOff() {
         Log.i("Screen turn off received")
-        stopCamThread()
-    }
-
-    @Subscribe fun onSecureSuspendChanged(event: secureSuspendChanged) {
-        if (Config.secureSuspend) start() else stop()
+        stopMonitoring()
     }
 
     fun start() = when {
@@ -55,8 +75,9 @@ class CurrentAppMonitor(private val mContext: Context) : ScreenStateReceiver.Scr
                 addAction(Intent.ACTION_SCREEN_ON )
             }
             mContext.registerReceiver(screenStateReceiver, filter)
+            EventBus.register(this)
+            if (screenOn) startMonitoring()
             isMonitoring = true
-            startCamThread()
         }
     }
 
@@ -64,9 +85,10 @@ class CurrentAppMonitor(private val mContext: Context) : ScreenStateReceiver.Scr
         Log.i("Monitoring is already stopped")
     } else {
         Log.i("Stopping app monitoring")
-        stopCamThread()
+        stopMonitoring()
         try {
             mContext.unregisterReceiver(screenStateReceiver)
+            EventBus.unregister(this)
         } catch (e: IllegalArgumentException) {
             // Catch errors when receiver is unregistered more than once.
             // It is not a problem, so we just ignore it.
@@ -74,14 +96,17 @@ class CurrentAppMonitor(private val mContext: Context) : ScreenStateReceiver.Scr
         isMonitoring = false
     }
 
-    private fun startCamThread() {
-        if (mCamThread == null && screenOn) {
-            mCamThread = CurrentAppMonitoringThread(mContext).apply { start() }
-        }
+    private fun startMonitoring() {
+        mFuture = mExecutor.scheduleWithFixedDelay(handleCurrentApp, 0, 1, TimeUnit.SECONDS)
     }
 
-    private fun stopCamThread() = mCamThread?.run{
-        if (!isInterrupted) { interrupt() }
-        mCamThread = null
+    private fun stopMonitoring() {
+        mFuture?.cancel(true)
     }
+
+    @Subscribe fun onSecureSuspendChanged(event: secureSuspendChanged) {
+        if (Config.secureSuspend) start() else stop()
+    }
+
+    companion object : Logger()
 }

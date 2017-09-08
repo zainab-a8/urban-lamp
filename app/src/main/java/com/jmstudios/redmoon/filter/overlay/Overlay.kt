@@ -34,10 +34,8 @@ import com.jmstudios.redmoon.model.Profile
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.util.*
 
-import org.greenrobot.eventbus.Subscribe
-
 class Overlay(ctx: Context) : View(ctx),
-                              OrientationChangeReceiver.OnOrientationChangeListener {
+        OrientationChangeReceiver.OnOrientationChangeListener {
 
     private val mWindowManager = ctx.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     private val mScreenManager = ScreenManager(ctx, mWindowManager)
@@ -60,7 +58,7 @@ class Overlay(ctx: Context) : View(ctx),
 
     fun hide() = mWindowManager.removeView(this)
 
-    fun updateLayout() = mWindowManager.updateViewLayout(this, mLayoutParams)
+    fun reLayout() = mWindowManager.updateViewLayout(this, mLayoutParams)
 
     private fun updateLayoutParams() {
         mLayoutParams = mScreenManager.layoutParams
@@ -68,7 +66,7 @@ class Overlay(ctx: Context) : View(ctx),
 
     override fun onOrientationChanged() {
         updateLayoutParams()
-        updateLayout()
+        reLayout()
     }
 
     companion object : Logger()
