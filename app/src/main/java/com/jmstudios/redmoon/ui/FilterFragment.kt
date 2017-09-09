@@ -42,10 +42,6 @@ class FilterFragment : EventPreferenceFragment() {
     companion object : Logger()
 
     // Preferences
-    private fun pref(resId: Int): Preference {
-        return preferenceScreen.findPreference(getString(resId))
-    }
-
     private val profileSelectorPref: Preference
         get() = pref(R.string.pref_key_profile_spinner)
 

@@ -24,8 +24,7 @@ class SecureSuspendFragment : PreferenceFragment() {
         get() = CurrentAppChecker(appContext)
 
     private val mSwitchBarPreference: SwitchPreference
-        get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_secure_suspend)) as SwitchPreference)
+        get() = pref(R.string.pref_key_secure_suspend) as SwitchPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i("onCreate()")

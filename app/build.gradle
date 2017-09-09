@@ -11,7 +11,7 @@ buildscript {
 }
 
 ext {
-    android_support_version = '25.2.0'
+    android_support_version = '26.0.2'
 }
 
 if(rootProject.file("keystore.properties").exists()) {
@@ -39,8 +39,8 @@ if(rootProject.file("keystore.properties").exists()) {
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
 
     defaultConfig {
         applicationId "com.jmstudios.redmoon"
@@ -87,6 +87,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "com.android.support:support-compat:$android_support_version"
     compile "com.android.support:appcompat-v7:$android_support_version"
     compile "com.android.support:design:$android_support_version"
     compile 'com.luckycatlabs:SunriseSunsetCalculator:1.2'

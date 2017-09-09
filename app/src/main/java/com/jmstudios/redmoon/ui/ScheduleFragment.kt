@@ -24,20 +24,16 @@ class ScheduleFragment : EventPreferenceFragment() {
 
     // Preferences
     private val schedulePref: SwitchPreference
-        get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_schedule)) as SwitchPreference)
+        get() = pref(R.string.pref_key_schedule) as SwitchPreference
 
     private val automaticTurnOnPref: TimePickerPreference
-        get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_start_time)) as TimePickerPreference)
+        get() = pref(R.string.pref_key_start_time) as TimePickerPreference
 
     private val automaticTurnOffPref: TimePickerPreference
-        get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_stop_time)) as TimePickerPreference)
+        get() = pref(R.string.pref_key_stop_time) as TimePickerPreference
 
     private val useLocationPref: SwitchPreference
-        get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_use_location)) as SwitchPreference)
+        get() = pref(R.string.pref_key_use_location) as SwitchPreference
 
     private var mSnackbar: Snackbar? = null
 
@@ -101,7 +97,7 @@ class ScheduleFragment : EventPreferenceFragment() {
                 group.setBackgroundColor(getColor(R.color.snackbar_color_dark_theme))
 
                 val snackbarTextId = android.support.design.R.id.snackbar_text
-                val textView = group.findViewById(snackbarTextId) as TextView
+                val textView = group.findViewById<TextView>(snackbarTextId)
                 textView.setTextColor(getColor(R.color.text_color_dark_theme))
             }
         }
