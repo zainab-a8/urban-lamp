@@ -46,6 +46,11 @@ class CurrentAppChecker(private val context: Context) {
             tailrec fun findLastApp(app: String): String {
                 return if (eventList.hasNextEvent()) {
                     eventList.getNextEvent(event)
+//https://developer.android.com/reference/android/app/usage/UsageEvents.Event.html#getClassName()
+                    // although it's not documented in the api reference above,
+                    // one of the times the class name is null is when the
+                    // notification shade is shown and this activity is not
+                    // actually the one which will be restored.
                     if (event.className == null) {
                         findLastApp(app)
                     } else {
