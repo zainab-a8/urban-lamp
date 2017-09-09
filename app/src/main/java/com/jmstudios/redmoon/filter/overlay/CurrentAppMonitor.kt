@@ -8,7 +8,11 @@ package com.jmstudios.redmoon.filter.overlay
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Handler
 import android.os.PowerManager
+import android.widget.Toast
+
+import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.filter.Command
@@ -27,6 +31,7 @@ class CurrentAppMonitor(
     private val screenStateReceiver = ScreenStateReceiver(this)
     private var mAppChecker = CurrentAppChecker(mContext)
     private var mFuture: ScheduledFuture<*>? = null
+    private val mHandler: Handler = Handler()
 
     private var lastApp: String = ""
 
@@ -41,6 +46,9 @@ class CurrentAppMonitor(
             "me.phh.superuser",
             "com.owncloud.android",
             "com.google.android.packageinstaller" -> Command.SUSPEND.send()
+            "ch.protonmail.android" ->  mHandler.post {
+                Toast.makeText(mContext, R.string.toast_warning_secured, Toast.LENGTH_LONG).show()
+            }
             else -> Command.RESUME.send()
         }
         lastApp = currentApp

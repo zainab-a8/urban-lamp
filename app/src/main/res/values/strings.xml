@@ -97,6 +97,7 @@
 
     <!-- Toasts -->
     <string name="toast_warning_install">You won\'t be able to install APKs while the Red Moon is on.</string>
+    <string name="toast_warning_secured">Some features of this app might not work while Red Moon is running.</string>
 
     <!-- Snackbar -->
     <string name="snackbar_warning_no_location">Enable location services to update location</string>
