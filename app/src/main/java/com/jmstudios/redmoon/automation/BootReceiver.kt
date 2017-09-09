@@ -43,7 +43,7 @@ class BootReceiver : BroadcastReceiver() {
         // If the filter was on when the device was powered down and the
         // automatic brightness setting is on, then it still uses the
         // dimmed brightness and we need to restore the saved brightness.
-        BrightnessManager(context).restore()
+        BrightnessManager(context).brightnessLowered = false
 
         ScheduleReceiver.scheduleNextOnCommand()
         ScheduleReceiver.scheduleNextOffCommand()

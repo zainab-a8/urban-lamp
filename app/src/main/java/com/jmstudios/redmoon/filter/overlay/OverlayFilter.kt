@@ -52,9 +52,7 @@ class OverlayFilter(context: Context, executor: ScheduledExecutorService) : Filt
         Log.i("setColor($profile)")
         mOverlay.color = profile.filterColor
         filtering = !profile.isOff
-        mBrightnessManager.run {
-            if (profile.lowerBrightness) lower() else restore()
-        }
+        mBrightnessManager.brightnessLowered = profile.lowerBrightness
     }
 
     override fun stop() {
@@ -76,7 +74,6 @@ class OverlayFilter(context: Context, executor: ScheduledExecutorService) : Filt
             }
         }
 
-
     private var filtering: Boolean = false
         set(value) {
             if (value == field) {
@@ -91,7 +88,7 @@ class OverlayFilter(context: Context, executor: ScheduledExecutorService) : Filt
                 } else {
                     mOverlay.hide()
                     mOrientationReceiver.unregister()
-                    mBrightnessManager.restore()
+                    mBrightnessManager.brightnessLowered = false
                 }
             }
         }
