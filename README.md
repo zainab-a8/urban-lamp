@@ -35,7 +35,7 @@ The easiest way is to **report bugs** and **give feedback** in an
 your browser, and your changes will be automatically merged. If you'd prefer
 to make a pull request, please keep code and translations in separate PRs.
 
-> **Each string will only be used in one place.**  
+> **Most strings will only be used in one place.**  
 > This way, if you want to tweak the phrasing in one particular place, you don't
 > need to worry about accidentally changing another place in the app.
 
