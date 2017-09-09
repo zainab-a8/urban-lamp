@@ -20,20 +20,20 @@ import com.jmstudios.redmoon.util.*
 
 import org.greenrobot.eventbus.Subscribe
 
-class TimeToggleFragment : EventPreferenceFragment() {
+class ScheduleFragment : EventPreferenceFragment() {
 
     // Preferences
-    private val timeTogglePref: SwitchPreference
+    private val schedulePref: SwitchPreference
         get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_time_toggle)) as SwitchPreference)
+                (getString(R.string.pref_key_schedule)) as SwitchPreference)
 
     private val automaticTurnOnPref: TimePickerPreference
         get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_custom_turn_on_time)) as TimePickerPreference)
+                (getString(R.string.pref_key_start_time)) as TimePickerPreference)
 
     private val automaticTurnOffPref: TimePickerPreference
         get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_custom_turn_off_time)) as TimePickerPreference)
+                (getString(R.string.pref_key_stop_time)) as TimePickerPreference)
 
     private val useLocationPref: SwitchPreference
         get() = (preferenceScreen.findPreference
@@ -43,7 +43,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        addPreferencesFromResource(R.xml.time_toggle_preferences)
+        addPreferencesFromResource(R.xml.schedule_preferences)
     }
 
     override fun onStart() {
@@ -63,8 +63,8 @@ class TimeToggleFragment : EventPreferenceFragment() {
     }
 
     private fun updateSwitchBarTitle() {
-        timeTogglePref.setTitle(
-                if (Config.timeToggle) R.string.text_switch_on
+        schedulePref.setTitle(
+                if (Config.scheduleOn) R.string.text_switch_on
                 else R.string.text_switch_off
         )
     }
@@ -87,11 +87,11 @@ class TimeToggleFragment : EventPreferenceFragment() {
     }
 
     private fun updateTimePrefs() {
-        val enabled = Config.timeToggle && !Config.useLocation
+        val enabled = Config.scheduleOn && !Config.useLocation
         automaticTurnOnPref.isEnabled  = enabled
         automaticTurnOffPref.isEnabled = enabled
-        automaticTurnOnPref.summary  = Config.automaticTurnOnTime
-        automaticTurnOffPref.summary = Config.automaticTurnOffTime
+        automaticTurnOnPref.summary  = Config.scheduledStartTime
+        automaticTurnOffPref.summary = Config.scheduledStopTime
     }
 
     private fun showSnackbar(resId: Int, duration: Int = Snackbar.LENGTH_INDEFINITE) {
@@ -116,7 +116,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
 
     //region presenter
     @Subscribe
-    fun onTimeToggleChanged(event: timeToggleChanged) {
+    fun onScheduleChanged(event: scheduleChanged) {
         LocationUpdateService.update()
         updatePrefs()
     }
@@ -146,7 +146,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
 
     @Subscribe
     fun onLocationAccessDenied(event: locationAccessDenied) {
-        if (Config.timeToggle && Config.useLocation) {
+        if (Config.scheduleOn && Config.useLocation) {
             Permission.Location.request(activity)
         }
     }

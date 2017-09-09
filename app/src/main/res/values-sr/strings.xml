@@ -20,8 +20,8 @@
     <string name="pref_title_color_temp">Температура боје</string>
     <string name="pref_title_lower_brightness">Умањи осветљеље</string>
 
-    <string name="pref_title_start_time">Укључи у</string>
-    <string name="pref_title_end_time">Искључи у</string>
+    <string name="pref_title_turn_on">Укључи у</string>
+    <string name="pref_title_turn_off">Искључи у</string>
     <string name="pref_title_location">Локација</string>
     <string name="location_not_set">Локација није постављена</string>
     <string name="latitude_short">Ширина</string>

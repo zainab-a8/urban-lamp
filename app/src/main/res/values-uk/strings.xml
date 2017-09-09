@@ -36,8 +36,8 @@
     <string name="pref_title_secure_suspend">Пауза в захищених застосунках</string>
     <string name="pref_title_button_backlight">Підсвічування кнопки апаратного забезпечення</string>
 
-    <string name="pref_title_start_time">Увімкніть в</string>
-    <string name="pref_title_end_time">Вимкніть в</string>
+    <string name="pref_title_turn_on">Увімкніть в</string>
+    <string name="pref_title_turn_off">Вимкніть в</string>
     <string name="pref_title_location">Час по світловому дню</string>
     <string name="pref_summary_location_off">Виходячи з вашого місцезнаходження</string>
 

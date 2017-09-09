@@ -23,8 +23,8 @@
 
     <string name="time_toggle_title">Modo de alternância</string>
     <string name="pref_title_color_temp">Temperatura da cor</string>
-    <string name="pref_title_start_time">Ligar às</string>
-    <string name="pref_title_end_time">Desligar às</string>
+    <string name="pref_title_turn_on">Ligar às</string>
+    <string name="pref_title_turn_off">Desligar às</string>
     <string name="pref_title_location">Tempo solar</string>
     <string name="location_not_set">Localização não definida</string>
     <string name="latitude_short">Latititude</string>

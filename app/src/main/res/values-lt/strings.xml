@@ -45,8 +45,8 @@
      <string name="pref_title_lower_brightness">Sumažinti ryškumą</string>
 
      <string name="time_toggle_title">Automatiškai įjungti filtrą</string>
-     <string name="pref_title_start_time">Automatinio įjungimo laikas</string>
-     <string name="pref_title_end_time">Automatinio išjungimo laikas</string>
+     <string name="pref_title_turn_on">Automatinio įjungimo laikas</string>
+     <string name="pref_title_turn_off">Automatinio išjungimo laikas</string>
      <string name="pref_title_location">Vieta</string>
      <string name="location_not_set">Nenustatyta</string>
      <string name="latitude_short">Platuma</string>

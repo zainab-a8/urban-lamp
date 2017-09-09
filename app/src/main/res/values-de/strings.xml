@@ -20,8 +20,8 @@
     <string name="button_remove_filter">Löschen</string>
     <string name="dialog_button_cancel">Abbrechen</string>
     <string name="pref_title_lower_brightness">Helligkeit reduzieren</string>
-    <string name="pref_title_end_time">Ausschaltzeit</string>
-    <string name="pref_title_start_time">Einschaltzeit</string>
+    <string name="pref_title_turn_off">Ausschaltzeit</string>
+    <string name="pref_title_turn_on">Einschaltzeit</string>
     <string name="menu_dark_theme">Dunkles Thema</string>
     <string name="pref_summary_email_developer">Teilen Sie mir Vorschläge oder Fehlerberichte bitte per E-Mail mit</string>
     <string name="pref_title_email_developer">Dem Entwickler eine E-Mail senden (marienraat@riseup.net)</string>

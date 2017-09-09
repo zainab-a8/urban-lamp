@@ -36,10 +36,10 @@
   <string name="pref_key_filter_is_on" translatable="false">pref_key_shades_power_state</string>
   <string name="pref_key_shades_pause_state" translatable="false">pref_key_shades_pause_state</string>
   <string name="pref_key_dark_theme" translatable="false">pref_key_dark_theme</string>
-  <string name="pref_key_time_toggle" translatable="false">pref_key_automatic_filter</string>
-  <string name="pref_key_time_toggle_header" translatable="false">pref_key_time_toggle_filter</string>
-  <string name="pref_key_custom_turn_on_time" translatable="false">pref_key_custom_start_time</string>
-  <string name="pref_key_custom_turn_off_time" translatable="false">pref_key_custom_end_time</string>
+  <string name="pref_key_schedule" translatable="false">pref_key_automatic_filter</string>
+  <string name="pref_key_schedule_header" translatable="false">pref_key_time_toggle_filter</string>
+  <string name="pref_key_start_time" translatable="false">pref_key_custom_start_time</string>
+  <string name="pref_key_stop_time" translatable="false">pref_key_custom_end_time</string>
   <string name="pref_key_sunset_time" translatable="false">pref_key_sunset_time</string>
   <string name="pref_key_sunrise_time" translatable="false">pref_key_sunrise_time</string>
   <string name="pref_key_location" translatable="false">pref_key_location</string>

@@ -28,8 +28,8 @@
     <string name="pref_title_lower_brightness">کاهش روشنایی</string>
 
     <string name="time_toggle_title">روش تغییر حالت</string>
-    <string name="pref_title_start_time">از سر گیری در</string>
-    <string name="pref_title_end_time">مکث در</string>
+    <string name="pref_title_turn_on">از سر گیری در</string>
+    <string name="pref_title_turn_off">مکث در</string>
     <string name="pref_title_location">موقعیّت</string>
     <string name="location_not_set">تنظیم نشده</string>
     <string name="latitude_short">عرض جغرافیایی</string>

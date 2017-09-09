@@ -61,8 +61,8 @@ class FilterFragment : EventPreferenceFragment() {
     private val lowerBrightnessPref: TwoStatePreference
         get() = pref(R.string.pref_key_lower_brightness) as TwoStatePreference
 
-    private val timeTogglePref: Preference
-        get() = pref(R.string.pref_key_time_toggle_header)
+    private val schedulePref: Preference
+        get() = pref(R.string.pref_key_schedule_header)
 
     private val secureSuspendPref: Preference
         get() = pref(R.string.pref_key_secure_suspend_header)
@@ -75,7 +75,7 @@ class FilterFragment : EventPreferenceFragment() {
         addPreferencesFromResource(R.xml.filter_preferences)
 
         updateSecureSuspendSummary()
-        updateTimeToggleSummary()
+        updateScheduleSummary()
         updateBacklightPrefSummary()
 
         if (!Permission.WriteSettings.isGranted) {
@@ -94,7 +94,7 @@ class FilterFragment : EventPreferenceFragment() {
         super.onResume()
         EventBus.register(profileSelectorPref)
         updateSecureSuspendSummary()
-        updateTimeToggleSummary()
+        updateScheduleSummary()
     }
 
     override fun onPause() {
@@ -102,12 +102,18 @@ class FilterFragment : EventPreferenceFragment() {
         super.onPause()
     }
 
-    private fun updateTimeToggleSummary() {
-        timeTogglePref.setSummary(if (Config.timeToggle) {
-            R.string.text_switch_on
-        } else {
-            R.string.text_switch_off
-        })
+    private fun updateScheduleSummary() {
+        schedulePref.summary = when {
+            !Config.scheduleOn -> getString(R.string.pref_summary_schedule_none)
+            Config.useLocation -> insertTimes(R.string.pref_summary_schedule_sun)
+            else -> insertTimes(R.string.pref_summary_schedule_custom)
+        }
+    }
+
+    private fun insertTimes(resId: Int): String {
+        return getString(resId)
+                .replace("%on", Config.scheduledStartTime)
+                .replace("%off", Config.scheduledStopTime)
     }
 
     private fun updateSecureSuspendSummary() {

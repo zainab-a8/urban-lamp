@@ -22,8 +22,8 @@
     <string name="pref_title_lower_brightness"/>
 
     <string name="time_toggle_title"/>
-    <string name="pref_title_start_time"/>
-    <string name="pref_title_end_time"/>
+    <string name="pref_title_turn_on"/>
+    <string name="pref_title_turn_off"/>
     <string name="pref_title_location">شوێن</string>
     <string name="location_not_set"/>
     <string name="latitude_short"/>

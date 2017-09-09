@@ -199,7 +199,7 @@ class LocationUpdateService: Service(), LocationListener {
             Log.i("Received request")
             if (!Permission.Location.isGranted) {
                 EventBus.getDefault().post(locationAccessDenied())
-            } else if (Config.timeToggle && Config.useLocation) {
+            } else if (Config.scheduleOn && Config.useLocation) {
                 val i = intent.putExtra(BUNDLE_KEY_FOREGROUND, foreground)
                 appContext.startService(i)
             } else {

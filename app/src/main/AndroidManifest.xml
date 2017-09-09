@@ -92,7 +92,7 @@
                 android:resource="@xml/switch_appwidget_info" />
         </receiver>
 
-        <receiver android:name=".automation.TimeToggleChangeReceiver">
+        <receiver android:name=".automation.ScheduleReceiver">
         </receiver>
         <receiver android:name=".filter.NextProfileCommandReceiver">
         </receiver>
@@ -108,13 +108,13 @@
         </activity>
 
         <activity
-            android:name=".ui.TimeToggleActivity"
-            android:label="@string/activity_timer"
+            android:name=".ui.ScheduleActivity"
+            android:label="@string/activity_schedule"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme" >
 
             <intent-filter>
-                <action android:name=".ui.TimeToggleActivity" />
+                <action android:name=".ui.ScheduleActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

@@ -95,7 +95,7 @@ class FilterService : Service() {
     }
 
     fun start(time: Int) {
-        Log.i("turnOn($time)")
+        Log.i("start($time)")
         if (!filterIsOn) {
             animateTo(activeProfile, time, object : AbstractAnimatorListener {
                 override fun onAnimationStart(animator: Animator) {

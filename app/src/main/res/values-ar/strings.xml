@@ -21,8 +21,8 @@
     <string name="pref_title_lower_brightness">خفض السطوع</string>
 
     <string name="time_toggle_title">وضع التبديل</string>
-    <string name="pref_title_start_time">الإستئناف عند</string>
-    <string name="pref_title_end_time">الإيقاف عند</string>
+    <string name="pref_title_turn_on">الإستئناف عند</string>
+    <string name="pref_title_turn_off">الإيقاف عند</string>
     <string name="location">الموقع</string>
     <string name="location_not_set">الموقع غير مُحدد</string>
     <string name="latitude_short">خط العرض</string>

@@ -24,8 +24,8 @@
     <string name="pref_title_lower_brightness">Lower brightness</string>
 
     <string name="time_toggle_title">Automatic toggle</string>
-    <string name="pref_title_start_time">Turn on at</string>
-    <string name="pref_title_end_time">Turn off at</string>
+    <string name="pref_title_turn_on">Turn on at</string>
+    <string name="pref_title_turn_off">Turn off at</string>
     <string name="pref_title_location">Times from sun</string>
     <string name="location_not_set">Location not set</string>
     <string name="latitude_short">Lat</string>

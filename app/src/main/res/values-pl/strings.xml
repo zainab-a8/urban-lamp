@@ -20,8 +20,8 @@
     <string name="pref_title_lower_brightness">Zmniejsz jasność</string>
 
     <string name="time_toggle_title">Automatyczne przełączanie</string>
-    <string name="pref_title_start_time">Wznawiaj o</string>
-    <string name="pref_title_end_time">Zatrzymuj o</string>
+    <string name="pref_title_turn_on">Wznawiaj o</string>
+    <string name="pref_title_turn_off">Zatrzymuj o</string>
     <string name="pref_title_location">Czasy Słońca</string>
     <string name="location_not_set">Nie ustawiono lokalizacji</string>
     <string name="latitude_short">Szer.</string>

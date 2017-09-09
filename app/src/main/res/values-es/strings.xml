@@ -19,8 +19,8 @@
     <string name="button_remove_filter">Borrar</string>
     <string name="pref_title_color_temp">Temperatura de color</string>
     <string name="time_toggle_title">Modos de activación</string>
-    <string name="pref_title_end_time">Pausar a las</string>
-    <string name="pref_title_start_time">Reanudar a las</string>
+    <string name="pref_title_turn_off">Pausar a las</string>
+    <string name="pref_title_turn_on">Reanudar a las</string>
     <string name="pref_title_location">Reanudar con la puesta de sol</string>
     <string name="snackbar_searching_location">Buscando ubicación</string>
 

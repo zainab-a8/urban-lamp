@@ -23,8 +23,10 @@
     <string name="pref_title_lower_brightness">Снижать яркость</string>
 
     <string name="time_toggle_title">Режим переключения</string>
-    <string name="pref_title_start_time">Включить в</string>
-    <string name="pref_title_end_time">Приостановить в</string>
+    <string name="pref_title_turn_on">Включить в</string>
+    <string name="pref_title_turn_off">Приостановить в</string>
+    <string name="pref_title_start_time">Приостановить в</string>
+    <string name="pref_title_stop_time">Stop om</string>
     <string name="location">Местоположение</string>
     <string name="location_not_set">Местоположение не указано</string>
     <string name="latitude_short">Широта</string>

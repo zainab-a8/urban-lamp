@@ -22,8 +22,8 @@
     <string name="pref_title_lower_brightness">Χαμήλωμα φωτεινότητας</string>
 
     <string name="time_toggle_title">Εναλλαγή λειτουργίας</string>
-    <string name="pref_title_start_time">Συνέχεια στις</string>
-    <string name="pref_title_end_time">Παύση στις</string>
+    <string name="pref_title_turn_on">Συνέχεια στις</string>
+    <string name="pref_title_turn_off">Παύση στις</string>
     <string name="pref_title_location">Τοποθεσία</string>
     <string name="location_not_set">Δεν ορίστηκε</string>
     <string name="latitude_short">Γεωγρ. πλάτος</string>

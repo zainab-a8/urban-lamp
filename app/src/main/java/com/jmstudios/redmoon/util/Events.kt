@@ -9,14 +9,10 @@ import com.jmstudios.redmoon.util.EventBus.Event
 
 class filterIsOnChanged        : Event
 //class themeChanged             : Event
-class customTurnOnTimeChanged  : Event
-class customTurnOffTimeChanged : Event
 class profilesUpdated          : Event
-class timeToggleChanged        : Event
+class scheduleChanged          : Event
 class useLocationChanged       : Event
 class locationChanged          : Event
-class sunsetTimeChanged        : Event
-class sunriseTimeChanged       : Event
 class secureSuspendChanged     : Event
 class buttonBacklightChanged   : Event
 
