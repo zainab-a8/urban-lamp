@@ -6,7 +6,7 @@ Blue light can suppress the production of melatonin, the sleep hormone. Red Moon
 filters out blue light and dims your screen below the normal minimum, so you can
 use your phone comfortably at night. It is simple and flexible:
 
-[<img src="https://f-droid.org/badge/get-it-on.png"
+[<img src="https://gitlab.com/fdroid/artwork/raw/master/badge/get-it-on.png"
       alt="Get it on F-Droid"
       height="80">](https://f-droid.org/repository/browse/?fdid=com.jmstudios.redmoon)
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" 
