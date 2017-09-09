@@ -11,6 +11,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.support.v4.app.AlarmManagerCompat
 
 import com.jmstudios.redmoon.filter.Command
 import com.jmstudios.redmoon.model.Config
@@ -81,11 +82,8 @@ class ScheduleReceiver : BroadcastReceiver() {
 
                 val pendingIntent = PendingIntent.getBroadcast(appContext, 0, command, 0)
 
-                if (atLeastAPI(19)) {
-                    alarmManager.setExact(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
-                } else {
-                    alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
-                }
+                AlarmManagerCompat.setExactAndAllowWhileIdle(alarmManager, AlarmManager.RTC,
+                                                        calendar.timeInMillis, pendingIntent)
             } else {
                 Log.i("Tried to schedule alarm, but schedule is disabled.")
             }
