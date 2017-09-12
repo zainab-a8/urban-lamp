@@ -55,13 +55,11 @@
     <Preference
         android:title="@string/pref_title_schedule"
         android:key="@string/pref_key_schedule_header">
-        <intent android:action=".ui.ScheduleActivity" />
     </Preference>
 
     <Preference
         android:title="@string/pref_title_secure_suspend"
         android:key="@string/pref_key_secure_suspend_header">
-        <intent android:action=".ui.SecureSuspendActivity"/>
     </Preference>
 
   </PreferenceCategory>

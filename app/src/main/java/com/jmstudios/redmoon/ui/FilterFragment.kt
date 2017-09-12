@@ -83,6 +83,9 @@ class FilterFragment : EventPreferenceFragment() {
                     val checked = newValue as Boolean
                     if (checked) Permission.WriteSettings.request(activity) else true
                 }
+
+        schedulePref.intent = intent(ScheduleActivity::class)
+        secureSuspendPref.intent = intent(SecureSuspendActivity::class)
     }
 
     override fun onResume() {

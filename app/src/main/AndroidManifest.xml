@@ -112,11 +112,6 @@
             android:label="@string/activity_schedule"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme" >
-
-            <intent-filter>
-                <action android:name=".ui.ScheduleActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
         <activity
@@ -124,11 +119,6 @@
             android:label="@string/activity_secure_suspend"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme" >
-
-            <intent-filter>
-                <action android:name=".ui.SecureSuspendActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
         <activity
