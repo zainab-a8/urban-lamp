@@ -62,11 +62,9 @@ To build the app on GNU+Linux, clone the repository and run
 
 in the root directory.
 
-Use
+To install the app on a connected device or running emulator, run
 
 `./gradlew installFdroidDebug` or `./gradlew installPlaystoreDebug`
-
-to install the app on a connected device or running emulator.
 
 ### Coding Style
 
