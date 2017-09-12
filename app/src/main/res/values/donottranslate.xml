@@ -48,6 +48,7 @@
   <string name="pref_key_github" translatable="false">pref_key_github</string>
   <string name="pref_key_email" translatable="false">pref_key_email</string>
   <string name="pref_key_other" translatable="false">pref_key_other</string>
+  <string name="pref_key_translator_credit" translatable="false">pref_key_translator_credit</string>
   <!-- <string name="pref_key_dim_buttons" translatable="false">pref_key_dim_buttons</string> -->
   <string name="pref_key_button_backlight" translatable="false">pref_key_button_backlight</string>
   <string name="pref_key_automatic_brightness" translatable="false">pref_key_brightness_automatic</string>
@@ -67,7 +68,8 @@
 
   <!-- Other -->
   <string name="project_page_url" translatable="false">https://github.com/raatmarien/red-moon</string>
-  <string name="contact_email_adress" translatable="false">mailto:marienraat@riseup.net</string>
+  <string name="translation_url" translatable="false">https://hosted.weblate.org/engage/red-moon/</string>
+  <string name="contact_email_adress" translatable="false">mailto:marienraat@riseup.net,s@smichel.me</string>
 
   <string-array name="time_toggle_values_array"
                 translatable="false">

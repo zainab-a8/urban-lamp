@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="3.2.0" versioncode="33" >
+        <change>App monitoring: fix crashes and bugs, reduce battery use (note: added logging which may increase battery use this release; next release will remove the logging if no bugs are found).</change>
+        <change>Show a warning toast in apps where some features will not work when the filter is running (proton mail).</change>
+        <change>Rename timer to schedule and show the times on the main screen.</change>
+        <change>Add translation link and translator credit on the about screen. Note to translators: Add your name or handle to the new string if you'd like to be included.</change>
+        <change>Fix a bug where the filter would not start as scheduled on Android 6.0+</change>
+        <change>Don't restore the backlight brightness if has been changed.</change>
+        <change>Fix crash when upgrading between 3.1.x versions.</change>
+        <change>Fix a bug where profiles would not be saved until Red Moon was closed and re-opened.</change>
+        <change>Created irc/matrix chat room, see the project page for links.</change>
+    </release>
     <release version="3.1.2" versioncode="32" >
         <change>Fix a bug where widgets and tiles did not work</change>
     </release>

@@ -23,7 +23,7 @@ class AboutFragment : PreferenceFragment() {
         pref(R.string.pref_key_version).apply{
             summary = BuildConfig.VERSION_NAME
             onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                ChangeLog(activity).logDialog.show()
+                ChangeLog(activity).fullLogDialog.show()
                 true
             }
         }
