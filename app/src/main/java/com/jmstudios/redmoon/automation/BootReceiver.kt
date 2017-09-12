@@ -43,18 +43,18 @@ class BootReceiver : BroadcastReceiver() {
         // If the filter was on when the device was powered down and the
         // automatic brightness setting is on, then it still uses the
         // dimmed brightness and we need to restore the saved brightness.
-        BrightnessManager(context).restore()
+        BrightnessManager(context).brightnessLowered = false
 
-        TimeToggleChangeReceiver.scheduleNextOnCommand()
-        TimeToggleChangeReceiver.scheduleNextOffCommand()
+        ScheduleReceiver.scheduleNextOnCommand()
+        ScheduleReceiver.scheduleNextOffCommand()
 
         Command.toggle(filterIsOnPrediction)
     }
 
-    private val filterIsOnPrediction: Boolean = if (Config.timeToggle) {
+    private val filterIsOnPrediction: Boolean = if (Config.scheduleOn) {
         val now = Calendar.getInstance()
 
-        val onTime = Config.automaticTurnOnTime
+        val onTime = Config.scheduledStartTime
         val onHour = onTime.substringBefore(':').toInt()
         val onMinute = onTime.substringAfter(':').toInt()
         val on = Calendar.getInstance().apply {
@@ -65,7 +65,7 @@ class BootReceiver : BroadcastReceiver() {
             }
         }
 
-        val offTime = Config.automaticTurnOffTime
+        val offTime = Config.scheduledStopTime
         val offHour = offTime.substringBefore(':').toInt()
         val offMinute = offTime.substringAfter(':').toInt()
         val off = Calendar.getInstance().apply {
@@ -76,7 +76,7 @@ class BootReceiver : BroadcastReceiver() {
             }
         }
 
-        Log.d("On: $onTime, off: $offTime")
+        Log.d("Start: $onTime, stop: $offTime")
         Log.d("On DAY_OF_MONTH: ${on.get(Calendar.DAY_OF_MONTH)}")
         Log.d("Off DAY_OF_MONTH: ${off.get(Calendar.DAY_OF_MONTH)}")
 

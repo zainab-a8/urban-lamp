@@ -14,18 +14,17 @@ import android.preference.SwitchPreference
 import android.provider.Settings
 
 import com.jmstudios.redmoon.R
-import com.jmstudios.redmoon.filter.overlay.CurrentAppMonitoringThread
+import com.jmstudios.redmoon.filter.overlay.CurrentAppChecker
 import com.jmstudios.redmoon.util.appContext
 import com.jmstudios.redmoon.util.Logger
 
 class SecureSuspendFragment : PreferenceFragment() {
 
-    private val appMonitoringIsWorking: Boolean
-        get() = CurrentAppMonitoringThread.isAppMonitoringWorking(appContext)
+    private val appChecker: CurrentAppChecker
+        get() = CurrentAppChecker(appContext)
 
     private val mSwitchBarPreference: SwitchPreference
-        get() = (preferenceScreen.findPreference
-                (getString(R.string.pref_key_secure_suspend)) as SwitchPreference)
+        get() = pref(R.string.pref_key_secure_suspend) as SwitchPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i("onCreate()")
@@ -37,14 +36,15 @@ class SecureSuspendFragment : PreferenceFragment() {
         mSwitchBarPreference.onPreferenceChangeListener =
             Preference.OnPreferenceChangeListener { _, newValue ->
                 val on = newValue as Boolean
+                // TODO: Make this readable
                 if (!on) {
                     setSwitchBarTitle(on)
                     true
                 } else {
-                    if (!appMonitoringIsWorking) createEnableUsageStatsDialog()
-                    val b = appMonitoringIsWorking
-                    setSwitchBarTitle(b && on)
-                    b
+                    if (!appChecker.isWorking) createEnableUsageStatsDialog()
+                    val working = appChecker.isWorking
+                    setSwitchBarTitle(working && on)
+                    working
                 }
             }
     }

@@ -32,8 +32,8 @@
     <string name="help_snackbar_text">点击按钮切换红月模式</string>
     <string name="pref_title_email_developer">给我发送邮件：marienraat@riseup.net</string>
     <string name="menu_dark_theme">暗黑主题</string>
-    <string name="pref_title_start_time">恢复时间</string>
-    <string name="pref_title_end_time">中止时间</string>
+    <string name="pref_title_turn_on">恢复时间</string>
+    <string name="pref_title_turn_off">中止时间</string>
     <string name="edit_hint_add_filter">配置文件名</string>
     <string name="dialog_title_add_filter">输入配置文件名</string>
     <string name="time_toggle_title">切换模式</string>

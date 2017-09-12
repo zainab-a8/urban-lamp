@@ -30,8 +30,8 @@
     <string name="activity_main">Red Moon</string>
     <string name="activity_timer">Zamanlayıcı</string>
     <string name="pref_title_time_toggle">Zamanlayıcı</string>
-    <string name="pref_title_start_time">Aç</string>
-    <string name="pref_title_end_time">Kapat</string>
+    <string name="pref_title_turn_on">Aç</string>
+    <string name="pref_title_turn_off">Kapat</string>
     <string name="menu_dark_theme">Koyu tema</string>
 
     <string name="snackbar_warning_no_location">Konumu güncellemek için konum hizmetlerini aç</string>

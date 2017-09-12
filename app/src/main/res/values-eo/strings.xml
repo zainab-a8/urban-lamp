@@ -36,8 +36,8 @@
     <string name="activity_shortcut">Ŝanĝilo de Ruĝa luno</string>
     <string name="pref_title_button_backlight">Fonlumado de aparatbutonoj</string>
 
-    <string name="pref_title_start_time">Ŝalti je</string>
-    <string name="pref_title_end_time">Malŝalti je</string>
+    <string name="pref_title_turn_on">Ŝalti je</string>
+    <string name="pref_title_turn_off">Malŝalti je</string>
     <string name="pref_title_location">Tempo po suno</string>
     <string name="pref_summary_location_off">Po via lokeco</string>
 

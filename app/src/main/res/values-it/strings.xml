@@ -24,8 +24,8 @@
     <string name="pref_title_lower_brightness">Riduci luminosià</string>
 
     <string name="time_toggle_title">Modalità di attivazione</string>
-    <string name="pref_title_start_time">Riprendi alle</string>
-    <string name="pref_title_end_time">Ferma alle</string>
+    <string name="pref_title_turn_on">Riprendi alle</string>
+    <string name="pref_title_turn_off">Ferma alle</string>
     <string name="pref_title_location">Posizione</string>
     <string name="location_not_set">Posizione non impostata</string>
     <string name="latitude_short">Latitudine</string>

@@ -19,8 +19,8 @@
     <string name="pref_title_lower_brightness">Luminosité minimale</string>
 
     <string name="time_toggle_title">Mode d\'activation</string>
-    <string name="pref_title_start_time">Reprendre à</string>
-    <string name="pref_title_end_time">Suspendre à</string>
+    <string name="pref_title_turn_on">Reprendre à</string>
+    <string name="pref_title_turn_off">Suspendre à</string>
     <string name="location">Localisation</string>
     <string name="location_not_set">Localisation non définie</string>
     <string name="latitude_short">Lat</string>

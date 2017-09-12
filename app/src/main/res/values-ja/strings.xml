@@ -19,8 +19,10 @@
     <string name="pref_title_lower_brightness">低輝度</string>
 
     <string name="time_toggle_title">モードの切り替え</string>
-    <string name="pref_title_start_time">オンにする時刻</string>
-    <string name="pref_title_end_time">オフにする時刻</string>
+    <string name="pref_title_turn_on">オンにする時刻</string>
+    <string name="pref_title_turn_off">オフにする時刻</string>
+    <string name="pref_title_start_time">開始時刻</string>
+    <string name="pref_title_stop_time">停止時刻</string>
     <string name="pref_title_location">太陽からの回数</string>
     <string name="location_not_set">場所が設定されていません</string>
     <string name="latitude_short">緯度</string>

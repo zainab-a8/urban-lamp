@@ -24,7 +24,7 @@ class TileReceiver : TileService() {
 
     override fun onClick() {
         super.onClick()
-        Command.toggle(filterIsOn)
+        Command.toggle(!filterIsOn)
     }
 
     override fun onStopListening() {

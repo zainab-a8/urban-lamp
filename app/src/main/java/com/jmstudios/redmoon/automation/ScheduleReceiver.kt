@@ -11,6 +11,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.support.v4.app.AlarmManagerCompat
 
 import com.jmstudios.redmoon.filter.Command
 import com.jmstudios.redmoon.model.Config
@@ -19,7 +20,7 @@ import com.jmstudios.redmoon.util.*
 import java.util.Calendar
 import java.util.GregorianCalendar
 
-class TimeToggleChangeReceiver : BroadcastReceiver() {
+class ScheduleReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         Log.i("Alarm received")
@@ -35,7 +36,7 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
 
     companion object : Logger() {
         private val intent: Intent
-            get() = Intent(appContext, TimeToggleChangeReceiver::class.java)
+            get() = Intent(appContext, ScheduleReceiver::class.java)
 
         private val alarmManager: AlarmManager
             get() = appContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -55,10 +56,13 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
         }
 
         private fun scheduleNextCommand(turnOn: Boolean) {
-            if (Config.timeToggle) {
+            if (Config.scheduleOn) {
                 Log.d("Scheduling alarm to turn filter ${if (turnOn) "on" else "off"}")
-                val time = if (turnOn) { Config.automaticTurnOnTime }
-                           else { Config.automaticTurnOffTime }
+                val time = if (turnOn) {
+                    Config.scheduledStartTime
+                } else {
+                    Config.scheduledStopTime
+                }
 
                 val command = intent.apply {
                     data = Uri.parse(if (turnOn) "turnOnIntent" else "offIntent")
@@ -78,13 +82,10 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
 
                 val pendingIntent = PendingIntent.getBroadcast(appContext, 0, command, 0)
 
-                if (atLeastAPI(19)) {
-                    alarmManager.setExact(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
-                } else {
-                    alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
-                }
+                AlarmManagerCompat.setExactAndAllowWhileIdle(alarmManager, AlarmManager.RTC,
+                                                        calendar.timeInMillis, pendingIntent)
             } else {
-                Log.i("Tried to schedule alarm, but timer is disabled.")
+                Log.i("Tried to schedule alarm, but schedule is disabled.")
             }
         }
 

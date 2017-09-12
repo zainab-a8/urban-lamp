@@ -53,15 +53,13 @@
 
   <PreferenceCategory android:title="@string/pref_category_other">
     <Preference
-        android:title="@string/pref_title_time_toggle"
-        android:key="@string/pref_key_time_toggle_header">
-        <intent android:action=".ui.TimeToggleActivity" />
+        android:title="@string/pref_title_schedule"
+        android:key="@string/pref_key_schedule_header">
     </Preference>
 
     <Preference
         android:title="@string/pref_title_secure_suspend"
         android:key="@string/pref_key_secure_suspend_header">
-        <intent android:action=".ui.SecureSuspendActivity"/>
     </Preference>
 
   </PreferenceCategory>

@@ -28,7 +28,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 
-class OrientationChangeReceiver(private val mListener: OnOrientationChangeListener) : BroadcastReceiver() {
+class OrientationChangeReceiver(
+        private val mContext: Context,
+        private val mListener: OnOrientationChangeListener)
+        : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_CONFIGURATION_CHANGED) {
@@ -36,15 +39,15 @@ class OrientationChangeReceiver(private val mListener: OnOrientationChangeListen
         }
     }
 
-    fun register(context: Context) {
-        context.registerReceiver(this, IntentFilter().apply {
+    private val filter by lazy {
+        IntentFilter().apply {
             addAction(Intent.ACTION_CONFIGURATION_CHANGED)
-        })
+        }
     }
 
-    fun unregister(context: Context) {
-        context.unregisterReceiver(this)
-    }
+    fun register(): Intent? = mContext.registerReceiver(this, filter)
+
+    fun unregister() = mContext.unregisterReceiver(this)
 
     interface OnOrientationChangeListener {
         fun onOrientationChanged()

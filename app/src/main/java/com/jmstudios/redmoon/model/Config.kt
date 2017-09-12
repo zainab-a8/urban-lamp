@@ -26,7 +26,7 @@ package com.jmstudios.redmoon.model
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.automation.TimeToggleChangeReceiver
+import com.jmstudios.redmoon.automation.ScheduleReceiver
 import com.jmstudios.redmoon.widget.SwitchAppWidgetProvider
 import com.jmstudios.redmoon.util.*
 
@@ -104,26 +104,26 @@ object Config : Preferences(appContext) {
     
     var darkThemeFlag by BooleanPreference(R.string.pref_key_dark_theme, false)
 
-    var timeToggle by BooleanPreference(R.string.pref_key_time_toggle, true) {
+    var scheduleOn by BooleanPreference(R.string.pref_key_schedule, true) {
         if (it) {
-            Log.i("Timer turned on")
-            TimeToggleChangeReceiver.rescheduleOnCommand()
-            TimeToggleChangeReceiver.rescheduleOffCommand()
+            Log.i("Schedule enabled")
+            ScheduleReceiver.rescheduleOnCommand()
+            ScheduleReceiver.rescheduleOffCommand()
         } else {
-            Log.i("Timer turned on")
-            TimeToggleChangeReceiver.cancelAlarms()
+            Log.i("Schedule disabled")
+            ScheduleReceiver.cancelAlarms()
         }
-        EventBus.post(timeToggleChanged())
+        EventBus.post(scheduleChanged())
     }
 
-    val customTurnOnTime by StringPreference(R.string.pref_key_custom_turn_on_time, "22:00") {
-        TimeToggleChangeReceiver.rescheduleOnCommand()
-        EventBus.post(customTurnOnTimeChanged())
+    val customStartTime by StringPreference(R.string.pref_key_start_time, "22:00") {
+        ScheduleReceiver.rescheduleOnCommand()
+        EventBus.post(scheduleChanged())
     }
 
-    val customTurnOffTime by StringPreference(R.string.pref_key_custom_turn_off_time, "06:00") {
-        TimeToggleChangeReceiver.rescheduleOffCommand()
-        EventBus.post(customTurnOffTimeChanged())
+    val customStopTime by StringPreference(R.string.pref_key_stop_time, "06:00") {
+        ScheduleReceiver.rescheduleOffCommand()
+        EventBus.post(scheduleChanged())
     }
 
     var useLocation by BooleanPreference(R.string.pref_key_use_location, false) {
@@ -142,15 +142,15 @@ object Config : Preferences(appContext) {
                     else -> 0.toFloat()
                 }
 
-    val automaticTurnOnTime: String
-        get() = if (useLocation) sunsetTime else customTurnOnTime
+    val scheduledStartTime: String
+        get() = if (useLocation) sunsetTime else customStartTime
 
-    val automaticTurnOffTime: String
-        get() = if (useLocation) sunriseTime else customTurnOffTime
+    val scheduledStopTime: String
+        get() = if (useLocation) sunriseTime else customStopTime
     
     private var _location by StringPreference(R.string.pref_key_location, "0,0") {
-        TimeToggleChangeReceiver.rescheduleOffCommand()
-        TimeToggleChangeReceiver.rescheduleOnCommand()
+        ScheduleReceiver.rescheduleOffCommand()
+        ScheduleReceiver.rescheduleOnCommand()
         EventBus.post(locationChanged())
     }
 

@@ -17,8 +17,10 @@
     <string name="pref_title_lower_brightness">Verminder helderheid</string>
 
     <string name="time_toggle_title">Schakel mode</string>
-    <string name="pref_title_start_time">Zet aan om</string>
-    <string name="pref_title_end_time">Zet uit om</string>
+    <string name="pref_title_turn_on">Zet aan om</string>
+    <string name="pref_title_turn_off">Zet uit om</string>
+    <string name="pref_title_start_time">Start om</string>
+    <string name="pref_title_stop_time">Stop om</string>
     <string name="pref_title_location">Tijden gebaseerd op de zon</string>
     <string name="location_not_set">Locatie niet ingesteld</string>
     <string name="latitude_short">Breedte</string>

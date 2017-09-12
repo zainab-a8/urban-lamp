@@ -42,6 +42,8 @@ class RedMoonApplication: Application() {
         } in 28..29 -> {
             upgradeProfilesFrom(version)
             upgradeFrom(30)
+        } in 30..32 -> {
+            upgradeFrom(33)
         } else -> {
             Log.e("Didn't catch upgrades from version $version")
             upgradeFrom(version+1)
@@ -91,10 +93,10 @@ class RedMoonApplication: Application() {
 
     private fun upgradeToggleModePreferences() {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
-        val timerKey = getString(R.string.pref_key_time_toggle)
-        val currentToggleMode: String = sharedPrefs.getString(timerKey, "manual")
-        sharedPrefs.edit().remove(timerKey).apply()
-        Config.timeToggle  = currentToggleMode != "manual"
+        val scheduleKey = getString(R.string.pref_key_schedule)
+        val currentToggleMode: String = sharedPrefs.getString(scheduleKey, "manual")
+        sharedPrefs.edit().remove(scheduleKey).apply()
+        Config.scheduleOn = currentToggleMode != "manual"
         Config.useLocation = currentToggleMode == "sun"
     }
 

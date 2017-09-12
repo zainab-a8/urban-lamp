@@ -37,25 +37,27 @@ private var model: Map<Profile, String> = _model
         return field
     }
 
-object ProfilesModel : Map<Profile, String> by model {
+object ProfilesModel : Logger() {
+    // Must get from model directly to avoid cache invalidation issue
     val profiles: List<Profile>
-        get() = ProfilesModel.keys.sorted()
+        get() = model.keys.sorted()
 
-    fun indexOf(profile: Profile): Int {
-        return profiles.indexOf(profile)
-    }
+    fun nameOf(p: Profile): String? = model[p]
+
+    private fun i(profile: Profile) = profiles.indexOf(profile)
 
     fun profileAfter(profile: Profile): Profile = when {
-        indexOf(profile) < profiles.lastIndex -> profiles[indexOf(profile) + 1]
+        i(profile) < profiles.lastIndex -> profiles[i(profile) + 1]
         Config.custom.isSaved -> profiles[0]
         else -> Config.custom
     }
 
     val Profile.isSaved: Boolean
-        get() = ProfilesModel.containsKey(this)
+        get() = model.containsKey(this)
 
     fun save(profile: Profile, name: String) {
-        if (!profile.isSaved || this.containsValue(name)) {
+        Log.i("saving $name: $profile")
+        if (!profile.isSaved || model.containsValue(name)) {
             prefs.edit().putString(profile.toString(), name).apply()
             modelOutdated = true
             EventBus.post(profilesUpdated())
@@ -63,6 +65,7 @@ object ProfilesModel : Map<Profile, String> by model {
     }
 
     fun delete(profile: Profile) {
+        Log.i("deleting ${profile.name}: $profile")
         profile.let {
             if (it.isSaved) {
                 Config.custom = it
@@ -75,7 +78,7 @@ object ProfilesModel : Map<Profile, String> by model {
 
     fun restoreDefaultProfiles() {
         val editor = prefs.edit()
-        defaultProfiles.forEach { profile, name ->
+        defaultProfiles.forEach { (profile, name) ->
             editor.putString(profile.toString(), name)
         }
         editor.apply()

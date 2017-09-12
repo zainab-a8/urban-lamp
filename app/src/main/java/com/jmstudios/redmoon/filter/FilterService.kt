@@ -37,12 +37,15 @@ import com.jmstudios.redmoon.filter.overlay.OverlayFilter
 import com.jmstudios.redmoon.model.Profile
 import com.jmstudios.redmoon.util.*
 
+import java.util.concurrent.Executors
+
 import org.greenrobot.eventbus.Subscribe
 
 class FilterService : Service() {
 
     private lateinit var mFilter: Filter
     private val mAnimator: ValueAnimator
+    private val mExecutor = Executors.newSingleThreadScheduledExecutor()
 
     private var mProfile = activeProfile.off
         set(value) {
@@ -61,7 +64,7 @@ class FilterService : Service() {
     override fun onCreate() {
         super.onCreate()
         Log.i("onCreate")
-        mFilter = OverlayFilter(this)
+        mFilter = OverlayFilter(this, mExecutor)
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
@@ -71,7 +74,7 @@ class FilterService : Service() {
         } else {
             Log.i("Overlay permission denied.")
             EventBus.post(overlayPermissionDenied())
-            stopSelf()
+            stopForeground(false)
         }
 
         // Do not attempt to restart if the hosting process is killed by Android
@@ -87,11 +90,12 @@ class FilterService : Service() {
             filterIsOn = false
             mFilter.stop()
         }
+        mExecutor.shutdownNow()
         super.onDestroy()
     }
 
     fun start(time: Int) {
-        Log.i("turnOn($time)")
+        Log.i("start($time)")
         if (!filterIsOn) {
             animateTo(activeProfile, time, object : AbstractAnimatorListener {
                 override fun onAnimationStart(animator: Animator) {

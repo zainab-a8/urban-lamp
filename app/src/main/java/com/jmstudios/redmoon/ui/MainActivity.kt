@@ -133,7 +133,7 @@ class MainActivity : ThemedAppCompatActivity() {
     }
 
     private fun toggleAndFinish() {
-        Command.toggle(filterIsOn)
+        Command.toggle(!filterIsOn)
         finish()
     }
 

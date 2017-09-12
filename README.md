@@ -6,7 +6,7 @@ Blue light can suppress the production of melatonin, the sleep hormone. Red Moon
 filters out blue light and dims your screen below the normal minimum, so you can
 use your phone comfortably at night. It is simple and flexible:
 
-[<img src="https://f-droid.org/badge/get-it-on.png"
+[<img src="https://gitlab.com/fdroid/artwork/raw/master/badge/get-it-on.png"
       alt="Get it on F-Droid"
       height="80">](https://f-droid.org/repository/browse/?fdid=com.jmstudios.redmoon)
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" 
@@ -28,15 +28,14 @@ use your phone comfortably at night. It is simple and flexible:
 
 *All help is equally welcome!*
 
-The easiest way is to **report bugs** and **give feedback** in the [issues section]
-or the [matrix chat room]. If you're feeling adventurous, you can [test new features]
-before they're released!
+The easiest way is to **report bugs** and **give feedback** in an
+[issue] or the #redmoon chat room on [irc] (freenode) or [matrix].
 
 [Weblate] is the simplest way for most people to **translate**. It's entirely in
 your browser, and your changes will be automatically merged. If you'd prefer
 to make a pull request, please keep code and translations in separate PRs.
 
-> **Each string will only be used in one place.**  
+> **Most strings will only be used in one place.**  
 > This way, if you want to tweak the phrasing in one particular place, you don't
 > need to worry about accidentally changing another place in the app.
 
@@ -63,11 +62,9 @@ To build the app on GNU+Linux, clone the repository and run
 
 in the root directory.
 
-Use
+To install the app on a connected device or running emulator, run
 
 `./gradlew installFdroidDebug` or `./gradlew installPlaystoreDebug`
-
-to install the app on a connected device or running emulator.
 
 ### Coding Style
 
@@ -114,9 +111,9 @@ are all released in the public domain, namely:
 \* Google Play and the Google Play logo are trademarks of Google Inc.
 
 [`patches welcome`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3A%22patches+welcome%22
-[matrix chat room]: https://matrix.to/#/#red-moon:matrix.org
-[issues section]: https://github.com/raatmarien/red-moon/issues
+[irc]: https://kiwiirc.com/client/irc.freenode.net/#redmoon
+[matrix]: https://matrix.to/#/#redmoon:matrix.org
+[issue]: https://github.com/raatmarien/red-moon/issues
 [open a new issue]: https://github.com/raatmarien/red-moon/issues/new
-[test new features]: https://github.com/raatmarien/red-moon/issues/146
 [`bug`]: https://github.com/raatmarien/red-moon/issues?q=is%3Aissue+is%3Aopen+label%3Abug
 [Weblate]: https://hosted.weblate.org/projects/red-moon/strings/

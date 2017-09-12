@@ -60,7 +60,7 @@ class SwitchAppWidgetProvider : AppWidgetProvider() {
 
     override fun onReceive(ctx: Context, intent: Intent) {
         if (intent.action == ACTION_TOGGLE) {
-            Command.toggle(filterIsOn)
+            Command.toggle(!filterIsOn)
         } else if (intent.action == ACTION_UPDATE) {
             updateImage(ctx, !intent.getBooleanExtra(EXTRA_POWER, false))
         } else {
@@ -73,8 +73,7 @@ class SwitchAppWidgetProvider : AppWidgetProvider() {
         val views = RemoteViews(context.packageName, R.layout.appwidget_switch)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetComponent = ComponentName(context, SwitchAppWidgetProvider::class.java.name)
-        val drawable = if (filterIsOn) R.drawable.ic_play
-                       else R.drawable.ic_stop
+        val drawable = if (filterIsOn) R.drawable.ic_stop else R.drawable.ic_play
 
         views.setInt(R.id.widget_pause_play_button, "setImageResource", drawable)
         appWidgetManager.updateAppWidget(appWidgetComponent, views)

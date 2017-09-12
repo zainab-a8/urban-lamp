@@ -58,7 +58,7 @@ abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
         Log.i("onBindView")
         super.onBindView(view)
         mView = view
-        mSeekBar = view.findViewById(R.id.seekbar) as SeekBar
+        mSeekBar = view.findViewById(R.id.seekbar)
         setProgress(mProgress)
         mSeekBar.setOnSeekBarChangeListener(this)
         updateView()
@@ -85,11 +85,11 @@ abstract class SeekBarPreference(context: Context, attrs: AttributeSet) : Prefer
 
     private fun updateView() {
         if (isEnabled) {
-            val moonIcon = mView.findViewById(R.id.moon_icon) as ImageView
+            val moonIcon = mView.findViewById<ImageView>(R.id.moon_icon)
             moonIcon.colorFilter = colorFilter
         }
 
-        val progressView = mView.findViewById(R.id.seekbar_value) as TextView
+        val progressView = mView.findViewById<TextView>(R.id.seekbar_value)
         progressView.text = "$progress$suffix"
     }
 

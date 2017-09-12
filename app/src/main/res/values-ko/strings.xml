@@ -3,13 +3,37 @@
     <string name="toast_warning_install">필터가 작동 중일 때는 APK를 설치할 수 없습니다.</string>
     <string name="activity_intro">소개</string>
     <string name="menu_show_intro">소개 보기</string>
-    <string name="notification_status_paused">일시중지됨</string>
+    <string name="notification_status_paused">일시 중지됨</string>
     <string name="notification_action_pause">일시 중지</string>
 
-    <string name="pref_summary_secure_suspend">Android의 일부 기능은 화면 오버레이로부터 보호되며 Red Moon이 작동 중일 때 작동하지 않습니다. 예를 들어 APK를 설치하거나 Android 6.0 이상에서 권한 부여하기가 있습니다.</string>
+    <string name="pref_summary_secure_suspend">일부 기능은 Red Moon이 켜저 있을 때 작동하지 않습니다*. 예를 들어, APK 설치, 권한 부여, (루팅된 장치에서) 슈퍼유저 앱을 사용할 때 입니다.
+\n
+\n이 설정이 활성화되면, Red Moon은 이런 기능등을 사용할 때 일시정지됩니다.
+\n
+\n이 기능은 기기의 배터리 사용시간을 약간 낮출 수 있습니다. 또, 이 기능은 모든 기기에서 동작하지 않을 수 있습니다.
+\n
+\n*Red Moon은 화면 위에 빨간 층을 그리는 방식으로 작동합니다. 이런 앱은 다른 앱이 그리고 있을 때 작동하지 않습니다. 즉, 다른 앱이 원치 않는 옵션을 선택하도록 속일 수 없고, 무엇을 하는지 알려고 터치 입력을 확인할 수도 없습니다.</string>
     <string name="pref_category_filter">필터</string>
     <string name="button_add_filter">추가</string>
     <string name="pref_title_appearance">필터</string>
-    <string name="notification_status_running">작동 중. apk를 설치하려면 일시중지하세요.</string>
+    <string name="notification_status_running">실행 중. APK를 설치하려면 끄세요.</string>
     <string name="notification_status_running_no_warning">실행 중</string>
-</resources>
+<string name="activity_main">Red Moon</string>
+    <string name="app_name">Red Moon</string>
+
+    <string name="activity_about">Red Moon에 대하여</string>
+    <string name="pref_category_other">기타</string>
+    <string name="pref_category_button_backlight_disclaimer">몇몇 기기에는 효과가 없을 수 있음</string>
+
+    <string name="pref_title_dim_level">어두운 정도</string>
+    <string name="pref_title_color_temp">색 온도</string>
+    <string name="pref_title_lower_brightness">낮은 밝기</string>
+
+    <string name="button_remove_filter">삭제</string>
+
+    <string name="text_switch_on">사용</string>
+    <string name="text_switch_off">사용 안함</string>
+
+    <string name="pref_title_version">버전</string>
+
+    </resources>

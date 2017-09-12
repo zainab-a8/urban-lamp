@@ -32,7 +32,7 @@ class ProfileSelectorPreference(ctx: Context, attrs: AttributeSet) : Preference(
                                                                      OnItemSelectedListener {
     lateinit private var mProfileSpinner: Spinner
     lateinit private var mProfileActionButton: Button
-    lateinit internal var mArrayAdapter: ArrayAdapter<CharSequence>
+    lateinit private var mArrayAdapter: ArrayAdapter<CharSequence>
     private var customShown: Boolean = false
 
     init {
@@ -43,8 +43,8 @@ class ProfileSelectorPreference(ctx: Context, attrs: AttributeSet) : Preference(
         Log.i("onBindView")
         super.onBindView(view)
 
-        mProfileSpinner = view.findViewById(R.id.profile_spinner) as Spinner
-        mProfileActionButton = view.findViewById(R.id.profile_action_button) as Button
+        mProfileSpinner = view.findViewById(R.id.profile_spinner)
+        mProfileActionButton = view.findViewById(R.id.profile_action_button)
 
         initLayout()
     }

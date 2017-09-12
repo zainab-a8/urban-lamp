@@ -10,9 +10,9 @@ class SecureSuspendActivity : ThemedAppCompatActivity() {
     override val tag = "jmstudios.fragment.tag.SECURE_SUSPEND"
 }
 
-class TimeToggleActivity : ThemedAppCompatActivity() {
-    override val fragment = TimeToggleFragment()
-    override val tag = "jmstudios.fragment.tag.TIME_TOGGLE"
+class ScheduleActivity : ThemedAppCompatActivity() {
+    override val fragment = ScheduleFragment()
+    override val tag = "jmstudios.fragment.tag.SCHEDULE"
 }
 
 class AboutActivity : ThemedAppCompatActivity() {
