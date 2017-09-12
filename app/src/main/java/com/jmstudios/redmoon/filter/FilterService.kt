@@ -74,7 +74,7 @@ class FilterService : Service() {
         } else {
             Log.i("Overlay permission denied.")
             EventBus.post(overlayPermissionDenied())
-            stopSelf()
+            stopForeground(false)
         }
 
         // Do not attempt to restart if the hosting process is killed by Android
