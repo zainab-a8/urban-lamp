@@ -80,7 +80,7 @@
     <string name="pref_title_location">Sunrise to sunset</string>
     <string name="pref_summary_location_off">Based on your location</string>
 
-    <string name="pref_summary_secure_suspend">Some features won\'t work when Red Moon is on*. For example, installing APKs, granting permissions, or using the SuperUser app (on rooted devices).\n\nWhen this setting is enabled, Red Moon will pause while one of these features is open.\n\nThis feature may slightly lower the battery life of your device. Furthermore this feature may not work on all devices.\n\n*Red Moon works by drawing a transparent red layer over the whole screen; these apps won\'t work if another app is drawing over them. That way, so no other app can trick you into picking the option you didn\'t want, or watch your touches to figure out what you\'re doing.</string>
+    <string name="pref_summary_secure_suspend">Some features won\'t work when Red Moon is on*. For example, installing APKs, granting permissions, or using the SuperUser app (on rooted devices).\n\nWhen this setting is enabled, Red Moon will pause while one of these features is open.\n\nThis feature may slightly lower the battery life of your device. Furthermore this feature may not work on all devices.\n\n*Red Moon works by drawing a transparent red layer over the whole screen; these apps won\'t work if another app is drawing over them. That way, no other app can trick you into picking the option you didn\'t want, or watch your touches to figure out what you\'re doing.</string>
 
     <!-- Short strings; might be used in multiple places -->
     <string name="button_add_filter">Add</string>
