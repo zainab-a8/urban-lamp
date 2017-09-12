@@ -65,11 +65,11 @@
     <string name="slide_text_welcome">Velkommen til Rød Måne!</string>
 
     <string name="slide_title_protect_eyes">Beskytter øynene dine</string>
-    <string name="slide_text_protect_eyes">Om kvelden, når du får vondt i øynene av å se på mobilskjermen
+    <string name="slide_text_protect_eyes">Om kvelden, når du får vondt i øynene av å se på mobilskjermen, 
 \nkan du bruke Rød Måne for å gjøre skjermen mer behagelig å se på.</string>
 
     <string name="slide_title_improve_sleep">Forbedrer søvnen din</string>
-    <string name="slide_text_improve_sleep">Blått lys reduserer produksjonen av melatonin, et hormon som påvirker innsovningen din. Rød Måne fjerner det blå lyset fra skjermen, som gjør at du enklere sovner.</string>
+    <string name="slide_text_improve_sleep">Blått lys reduserer produksjonen av melatonin, et hormon som påvirker innsovningen din. Rød Måne fjerner det blå lyset fra skjermen, noe som gjør at du enklere sovner.</string>
 
     <string name="slide_title_get_started">Kom i gang!</string>
     <string name="slide_text_get_started">Trykk på knappen øverst i høyre hjørne for å aktivere Rød Måne.</string>
