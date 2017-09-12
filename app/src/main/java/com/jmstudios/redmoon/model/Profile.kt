@@ -49,7 +49,7 @@ data class Profile(
     }
 
     val name: String
-        get() = ProfilesModel[this] ?: getString(R.string.filter_name_custom)
+        get() = ProfilesModel.nameOf(this) ?: getString(R.string.filter_name_custom)
 
     val filterColor: Int
         get() {

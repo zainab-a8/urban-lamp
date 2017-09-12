@@ -37,10 +37,12 @@ private var model: Map<Profile, String> = _model
         return field
     }
 
-object ProfilesModel : Logger(), Map<Profile, String> by model {
+object ProfilesModel : Logger() {
     // Must get from model directly to avoid cache invalidation issue
     val profiles: List<Profile>
         get() = model.keys.sorted()
+
+    fun nameOf(p: Profile): String? = model[p]
 
     private fun i(profile: Profile) = profiles.indexOf(profile)
 
@@ -51,11 +53,11 @@ object ProfilesModel : Logger(), Map<Profile, String> by model {
     }
 
     val Profile.isSaved: Boolean
-        get() = ProfilesModel.containsKey(this)
+        get() = model.containsKey(this)
 
     fun save(profile: Profile, name: String) {
         Log.i("saving $name: $profile")
-        if (!profile.isSaved || this.containsValue(name)) {
+        if (!profile.isSaved || model.containsValue(name)) {
             prefs.edit().putString(profile.toString(), name).apply()
             modelOutdated = true
             EventBus.post(profilesUpdated())
