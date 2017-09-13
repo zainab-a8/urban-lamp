@@ -40,13 +40,6 @@ enum class Command {
             service.pause(DURATION_SHORT)
         }
     },
-    SUSPEND {
-        override fun activate(service: FilterService) {
-            service.stopForeground(false)
-            notify(service, getNotification(false))
-            service.suspend(DURATION_SHORT)
-        }
-    },
     RESUME {
         override fun activate(service: FilterService) {
             Log.i("RESUME")

@@ -107,7 +107,7 @@ class FilterService : Service() {
         }
     }
 
-    fun suspend(time: Int, after: () -> Unit = {}) {
+    fun pause(time: Int, after: () -> Unit = {}) {
         if (filterIsOn) {
             animateTo(mProfile.off, time, object : AbstractAnimatorListener {
                 override fun onAnimationEnd(animator: Animator) {
@@ -117,13 +117,6 @@ class FilterService : Service() {
                 }
             })
         } else {
-            after()
-        }
-    }
-
-    fun pause(time: Int, after: () -> Unit = {}) {
-        suspend(time) {
-            mFilter.stop()
             after()
         }
     }

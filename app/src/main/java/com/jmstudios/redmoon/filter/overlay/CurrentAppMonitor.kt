@@ -45,7 +45,7 @@ class CurrentAppMonitor(
             "com.koushikdutta.superuser",
             "me.phh.superuser",
             "com.owncloud.android",
-            "com.google.android.packageinstaller" -> Command.SUSPEND.send()
+            "com.google.android.packageinstaller" -> Command.PAUSE.send()
             "ch.protonmail.android" ->  mHandler.post {
                 Toast.makeText(mContext, R.string.toast_warning_secured, Toast.LENGTH_LONG).show()
             }
