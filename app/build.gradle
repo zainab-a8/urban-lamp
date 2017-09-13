@@ -48,11 +48,6 @@ android {
         targetSdkVersion 25
         versionCode 33
         versionName "3.2.0"
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [ eventBusIndex : 'com.jmstudios.redmoon.event.EventBusIndex' ]
-            }
-        }
     }
     buildTypes {
         release {
@@ -97,7 +92,7 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'me.smichel.android:kpreferences:0.7.0'
     playstoreCompile 'com.github.hotchemi:android-rate:1.0.1'
-    annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.0.1'
+    // annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.0.1'
 }
 
 repositories {
