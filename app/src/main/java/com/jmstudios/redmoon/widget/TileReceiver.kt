@@ -18,25 +18,32 @@ import org.greenrobot.eventbus.Subscribe
 class TileReceiver : TileService() {
 
     override fun onStartListening() {
+        Log.i("onStartListening")
         EventBus.register(this)
         updateState()
     }
 
     override fun onClick() {
+        Log.i("onClick()")
         super.onClick()
         Command.toggle(!filterIsOn)
     }
 
     override fun onStopListening() {
+        Log.i("onStopListening")
         EventBus.unregister(this)
     }
 
     @Subscribe fun onFilterIsOnChanged(event: filterIsOnChanged) {
+        Log.i("filterIsOnChanged()")
         updateState()
     }
 
     private fun updateState() = qsTile.run {
         state = if (filterIsOn) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
+        Log.i("updating state to $state")
         updateTile()
     }
+
+    companion object: Logger()
 }
