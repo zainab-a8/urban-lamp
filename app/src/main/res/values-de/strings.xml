@@ -117,7 +117,7 @@
 
     <string name="snackbar_location_updated">Standort gefunden!</string>
     <string name="dialog_title_permission_overlay">Über andere Apps zeichnen</string>
-    <string name="dialog_message_permission_overlay">Erteile auf dem nächsten Bildschirm die Erlaubnis, über andere Apps zeichnen zu dürfen, um Red Moon zu erlauben sich einzuschalten.</string>
+    <string name="dialog_message_permission_overlay">Erlaube das Einblenden über andere Apps auf dem nächsten Bildschirm, damit Red Moon eingeschaltet werden kann.</string>
 
     <string name="dialog_title_permission_write_settings">Systemeinstellungen ändern</string>
     <string name="dialog_message_permission_write_settings">Erteile auf dem nächsten Bildschirm die Erlaubnis, die Systemeinstellungen zu ändern, um Red Moon zu erlauben, deine Helligkeit anzupassen.</string>

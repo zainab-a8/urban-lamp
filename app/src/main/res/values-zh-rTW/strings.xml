@@ -64,4 +64,20 @@
     <string name="searching_location">正在搜尋位置</string>
     <string name="toast_warning_no_location">啟用位置服務來更新位置</string>
     <string name="notification_status_running">運行中……需要暫停來安裝APK</string>
-</resources>
+<string name="activity_about">關於紅月</string>
+    <string name="menu_restore_default_filters">恢復預設濾鏡</string>
+    <string name="menu_about">關於</string>
+
+    <string name="notification_action_turn_on">開啟</string>
+    <string name="notification_action_turn_off">關閉</string>
+    <string name="pref_title_version">版本</string>
+
+    <string name="dialog_title_permission_overlay">在其他應用程式上層繪製內容</string>
+    <string name="dialog_title_permission_write_settings">修改系統設定</string>
+    <string name="dialog_title_permission_usage_stats">使用紀錄存取權</string>
+    <string name="filter_name_dim_only">僅降低亮度</string>
+
+    <string name="pref_entry_button_backlight_turn_off">關閉</string>
+
+    <string name="location">位置</string>
+    </resources>
