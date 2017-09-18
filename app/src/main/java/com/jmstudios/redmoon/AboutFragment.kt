@@ -3,7 +3,7 @@
  * Copyright (c) 2017  Stephen Michel <s@smichel.me>
  * SPDX-License-Identifier: GPL-3.0+
  */
-package com.jmstudios.redmoon.ui
+package com.jmstudios.redmoon
 
 import android.os.Bundle
 import android.preference.Preference
@@ -11,7 +11,7 @@ import android.preference.PreferenceFragment
 
 import com.jmstudios.redmoon.BuildConfig
 import com.jmstudios.redmoon.R
-import com.jmstudios.redmoon.util.Logger
+import com.jmstudios.redmoon.util.*
 
 import de.cketti.library.changelog.ChangeLog
 

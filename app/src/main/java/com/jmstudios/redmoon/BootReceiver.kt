@@ -22,7 +22,7 @@
  *     NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  *     CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-package com.jmstudios.redmoon.automation
+package com.jmstudios.redmoon
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -31,6 +31,7 @@ import android.content.Intent
 import com.jmstudios.redmoon.filter.Command
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.filter.overlay.BrightnessManager
+import com.jmstudios.redmoon.schedule.ScheduleReceiver
 import com.jmstudios.redmoon.util.Logger
 
 import java.util.Calendar

@@ -3,7 +3,7 @@
  * Copyright (c) 2017  Stephen Michel <s@smichel.me>
  * SPDX-License-Identifier: GPL-3.0+
  */
-package com.jmstudios.redmoon.ui
+package com.jmstudios.redmoon
 
 class SecureSuspendActivity : ThemedAppCompatActivity() {
     override val fragment = SecureSuspendFragment()

@@ -2,7 +2,7 @@
  * Copyright (c) 2016 Marien Raat <marienraat@riseup.net>
  * SPDX-License-Identifier: GPL-3.0+
  */
-package com.jmstudios.redmoon.ui
+package com.jmstudios.redmoon
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

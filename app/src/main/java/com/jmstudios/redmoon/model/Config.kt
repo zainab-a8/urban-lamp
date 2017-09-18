@@ -26,7 +26,7 @@ package com.jmstudios.redmoon.model
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.automation.ScheduleReceiver
+import com.jmstudios.redmoon.schedule.ScheduleReceiver
 import com.jmstudios.redmoon.widget.SwitchAppWidgetProvider
 import com.jmstudios.redmoon.util.*
 

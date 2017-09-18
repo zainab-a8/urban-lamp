@@ -22,10 +22,11 @@
  *     NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  *     CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-package com.jmstudios.redmoon.ui
+package com.jmstudios.redmoon
 
 import android.os.Bundle
 import android.preference.Preference
+import android.preference.PreferenceFragment
 import android.preference.TwoStatePreference
 
 import com.jmstudios.redmoon.R
@@ -37,7 +38,7 @@ import com.jmstudios.redmoon.util.*
 
 import org.greenrobot.eventbus.Subscribe
 
-class FilterFragment : EventPreferenceFragment() {
+class FilterFragment : PreferenceFragment() {
     //private var hasShownWarningToast = false
     companion object : Logger()
 
@@ -88,17 +89,19 @@ class FilterFragment : EventPreferenceFragment() {
         secureSuspendPref.intent = intent(SecureSuspendActivity::class)
     }
 
-    override fun onResume() {
-        Log.i("onResume")
-        super.onResume()
+    override fun onStart() {
+        Log.i("onStart")
+        super.onStart()
         EventBus.register(profileSelectorPref)
+        EventBus.register(this)
         updateSecureSuspendSummary()
         updateScheduleSummary()
     }
 
-    override fun onPause() {
+    override fun onStop() {
+        EventBus.unregister(this)
         EventBus.unregister(profileSelectorPref)
-        super.onPause()
+        super.onStop()
     }
 
     private fun updateScheduleSummary() {

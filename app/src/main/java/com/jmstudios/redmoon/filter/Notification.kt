@@ -13,7 +13,7 @@ import android.support.v4.content.ContextCompat
 
 import com.jmstudios.redmoon.R
 
-import com.jmstudios.redmoon.ui.MainActivity
+import com.jmstudios.redmoon.MainActivity
 import com.jmstudios.redmoon.util.*
 
 private const val REQUEST_CODE_ACTION_SETTINGS = 1000
@@ -46,10 +46,10 @@ fun getNotification(filterIsOn: Boolean): Notification {
         }))
 
         // Open Red Moon when tapping notification body
-        val mainActivityIntent = intent(MainActivity::class).apply {
+        val mainIntent = intent(MainActivity::class).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
-        setContentIntent(activityPI(REQUEST_CODE_ACTION_SETTINGS, mainActivityIntent))
+        setContentIntent(activityPI(REQUEST_CODE_ACTION_SETTINGS, mainIntent))
 
         // Turn off Red Moon when the notification is manually dismissed
         setDeleteIntent(servicePI(REQUEST_CODE_ACTION_STOP, Command.OFF.intent))

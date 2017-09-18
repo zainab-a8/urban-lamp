@@ -57,7 +57,7 @@
         android:theme="@style/LaunchScreenTheme"
         android:supportsRtl="true" >
         <activity
-            android:name="com.jmstudios.redmoon.ui.MainActivity"
+            android:name="com.jmstudios.redmoon.MainActivity"
             android:label="@string/activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -73,11 +73,11 @@
         </activity>
 
         <activity
-            android:name="com.jmstudios.redmoon.ui.Intro"
+            android:name="com.jmstudios.redmoon.Intro"
             android:label="@string/activity_intro"
             android:theme="@style/AppThemeNoActionBar" />
 
-        <receiver android:name="com.jmstudios.redmoon.automation.BootReceiver">
+        <receiver android:name="com.jmstudios.redmoon.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
@@ -92,7 +92,7 @@
                 android:resource="@xml/switch_appwidget_info" />
         </receiver>
 
-        <receiver android:name=".automation.ScheduleReceiver">
+        <receiver android:name=".schedule.ScheduleReceiver">
         </receiver>
         <receiver android:name=".filter.NextProfileCommandReceiver">
         </receiver>
@@ -108,26 +108,26 @@
         </activity>
 
         <activity
-            android:name=".ui.ScheduleActivity"
+            android:name=".ScheduleActivity"
             android:label="@string/activity_schedule"
-            android:parentActivityName=".ui.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme" >
         </activity>
 
         <activity
-            android:name=".ui.SecureSuspendActivity"
+            android:name=".SecureSuspendActivity"
             android:label="@string/activity_secure_suspend"
-            android:parentActivityName=".ui.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme" >
         </activity>
 
         <activity
-            android:name=".ui.AboutActivity"
+            android:name=".AboutActivity"
             android:label="@string/activity_about"
-            android:parentActivityName=".ui.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme" />
 
-        <service android:name=".automation.LocationUpdateService" />
+        <service android:name=".schedule.LocationUpdateService" />
         <service android:name=".filter.FilterService" />
         <service
             android:name=".widget.TileReceiver"

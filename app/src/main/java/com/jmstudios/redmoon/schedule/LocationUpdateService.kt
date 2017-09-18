@@ -24,7 +24,7 @@
  *     CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.jmstudios.redmoon.automation
+package com.jmstudios.redmoon.schedule
 
 import android.app.Service
 import android.content.Context

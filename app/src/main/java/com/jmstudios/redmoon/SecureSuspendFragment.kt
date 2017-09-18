@@ -3,7 +3,7 @@
  * Copyright (c) 2017  Stephen Michel <s@smichel.me>
  * SPDX-License-Identifier: GPL-3.0+
  */
-package com.jmstudios.redmoon.ui
+package com.jmstudios.redmoon
 
 import android.app.AlertDialog
 import android.preference.PreferenceFragment
@@ -13,15 +13,11 @@ import android.preference.Preference
 import android.preference.SwitchPreference
 import android.provider.Settings
 
+import com.jmstudios.redmoon.securesuspend.CurrentAppChecker
 import com.jmstudios.redmoon.R
-import com.jmstudios.redmoon.filter.overlay.CurrentAppChecker
-import com.jmstudios.redmoon.util.appContext
-import com.jmstudios.redmoon.util.Logger
+import com.jmstudios.redmoon.util.*
 
 class SecureSuspendFragment : PreferenceFragment() {
-
-    private val appChecker: CurrentAppChecker
-        get() = CurrentAppChecker(appContext)
 
     private val mSwitchBarPreference: SwitchPreference
         get() = pref(R.string.pref_key_secure_suspend) as SwitchPreference
@@ -41,6 +37,7 @@ class SecureSuspendFragment : PreferenceFragment() {
                     setSwitchBarTitle(on)
                     true
                 } else {
+                    val appChecker = CurrentAppChecker(appContext)
                     if (!appChecker.isWorking) createEnableUsageStatsDialog()
                     val working = appChecker.isWorking
                     setSwitchBarTitle(working && on)

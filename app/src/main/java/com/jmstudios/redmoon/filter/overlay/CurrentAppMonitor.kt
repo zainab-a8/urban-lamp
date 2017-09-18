@@ -14,6 +14,7 @@ import android.widget.Toast
 
 import com.jmstudios.redmoon.R
 
+import com.jmstudios.redmoon.securesuspend.CurrentAppChecker
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.filter.Command
 import com.jmstudios.redmoon.filter.ScreenStateReceiver

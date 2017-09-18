@@ -3,7 +3,7 @@
  * Copyright (c) 2017  Stephen Michel <s@smichel.me>
  * SPDX-License-Identifier: GPL-3.0+
  */
-package com.jmstudios.redmoon.ui
+package com.jmstudios.redmoon
 
 import android.os.Bundle
 import android.preference.PreferenceFragment
@@ -13,8 +13,7 @@ import android.view.MenuItem
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.model.Config
-import com.jmstudios.redmoon.util.Logger
-import com.jmstudios.redmoon.util.Permission
+import com.jmstudios.redmoon.util.*
 
 abstract class ThemedAppCompatActivity : AppCompatActivity() {
 

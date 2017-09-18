@@ -3,9 +3,10 @@
  * Copyright (c) 2017  Stephen Michel <s@smichel.me>
  * SPDX-License-Identifier: GPL-3.0+
  */
-package com.jmstudios.redmoon.ui
+package com.jmstudios.redmoon
 
 import android.os.Bundle
+import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
 import android.support.design.widget.Snackbar
 import android.view.ViewGroup
@@ -14,13 +15,12 @@ import android.widget.TextView
 import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.model.Config
-import com.jmstudios.redmoon.automation.LocationUpdateService
-import com.jmstudios.redmoon.ui.preference.TimePickerPreference
+import com.jmstudios.redmoon.schedule.*
 import com.jmstudios.redmoon.util.*
 
 import org.greenrobot.eventbus.Subscribe
 
-class ScheduleFragment : EventPreferenceFragment() {
+class ScheduleFragment : PreferenceFragment() {
 
     // Preferences
     private val schedulePref: SwitchPreference
@@ -44,12 +44,14 @@ class ScheduleFragment : EventPreferenceFragment() {
 
     override fun onStart() {
         super.onStart()
+        updatePrefs()
+        EventBus.register(this)
         LocationUpdateService.update()
     }
 
-    override fun onResume() {
-        updatePrefs()
-        super.onResume()
+    override fun onStop() {
+        EventBus.unregister(this)
+        super.onStop()
     }
 
     private fun updatePrefs() {

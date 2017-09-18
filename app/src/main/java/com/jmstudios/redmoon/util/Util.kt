@@ -25,6 +25,8 @@
 package com.jmstudios.redmoon.util
 
 import android.content.Intent
+import android.preference.Preference
+import android.preference.PreferenceFragment
 import android.support.v4.content.ContextCompat
 
 import com.jmstudios.redmoon.RedMoonApplication
@@ -65,3 +67,7 @@ fun belowAPI  (api: Int): Boolean = android.os.Build.VERSION.SDK_INT <  api
 
 fun intent() = Intent()
 fun <T: Any>intent(kc: KClass<T>) = Intent(appContext, kc.java)
+
+fun PreferenceFragment.pref(resId: Int): Preference {
+    return preferenceScreen.findPreference(getString(resId))
+}

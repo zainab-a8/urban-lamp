@@ -22,7 +22,7 @@
  *     NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  *     CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-package com.jmstudios.redmoon.ui
+package com.jmstudios.redmoon
 
 import android.content.Intent
 import android.os.Bundle
@@ -35,6 +35,7 @@ import com.jmstudios.redmoon.filter.Command
 
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.model.ProfilesModel
+import com.jmstudios.redmoon.ui.showRateDialog
 import com.jmstudios.redmoon.util.*
 
 import de.cketti.library.changelog.ChangeLog
