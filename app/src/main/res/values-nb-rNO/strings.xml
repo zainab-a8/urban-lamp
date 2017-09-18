@@ -136,4 +136,13 @@ Rød Måne kringkaster en offentlig intensjon med handlingen `com.jmstudios.redm
 <string name="menu_restore_default_filters">Gjenopprett forvalgte filter</string>
     <string name="filter_name_dim_only">Bare demp</string>
 
+    <string name="activity_schedule">Tidsplan</string>
+    <string name="pref_summary_schedule_none">Ingen</string>
+    <string name="pref_title_start_time">Starttid</string>
+    <string name="pref_title_stop_time">Sluttid</string>
+    <string name="pref_title_translators">Hjelp til med oversettelsen</string>
+    <string name="pref_summary_translators">Oversetter: Allan Nordhøy</string>
+
+    <string name="toast_warning_secured">Noen funksjoner i dette programmet virker kanskje ikke mens Rød Måne kjører.</string>
+
     </resources>
