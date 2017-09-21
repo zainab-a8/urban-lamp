@@ -38,7 +38,7 @@
 
     <string name="pref_title_turn_on">Увімкніть в</string>
     <string name="pref_title_turn_off">Вимкніть в</string>
-    <string name="pref_title_location">Час по світловому дню</string>
+    <string name="pref_title_location">Від світанку до заходу</string>
     <string name="pref_summary_location_off">Виходячи з вашого місцезнаходження</string>
 
     <string name="pref_summary_secure_suspend">Деякі функції не працюватимуть при включенні функції Red Moon*. Наприклад, встановлення застосунків, надання дозволів або використання застосунку SuperUser (на кореневих пристроях).
@@ -64,8 +64,8 @@
     <string name="pref_title_project_page">Відвідайте сторінку проекту</string>
     <string name="pref_summary_project_page">Знайдіть більше інформації, залиште відгук і внесіть свій внесок</string>
 
-    <string name="pref_title_email_developer">Напишіть мені на адресу marienraat@riseup.net</string>
-    <string name="pref_summary_email_developer">Надішліть мені повідомлення з помилками або пропозиціями</string>
+    <string name="pref_title_email_developer">Написати розробникам</string>
+    <string name="pref_summary_email_developer">Другий спосіб зв\'язатися з нами</string>
 
     <string name="pref_title_integration">Інтеграція з іншими додатками</string>
     <string name="pref_summary_integration">Деякі програми, як-от LibreTasks або Tasker, дозволяють автоматизувати завдання, коли відбуваються певні події. Red Moon надсилає загальнодоступне сповіщення, коли він включається та вимикається, тому ці програми можуть відповісти. Якщо ви не використовуєте або не розробляєте одну з цих програм, ви можете ігнорувати наступний абзац.
@@ -135,4 +135,17 @@
     <string name="time_toggle_options_array_0">Вручну</string>
     <string name="time_toggle_options_array_1">Автоматично (по сонцю)</string>
     <string name="time_toggle_options_array_2">Автоматично (користувацький)</string>
-</resources>
+<string name="activity_schedule">Графік</string>
+    <string name="notification_status_paused_with_info">Призупинено Відхилити сповіщення, щоб зупинити.</string>
+    <string name="pref_title_schedule">Графік</string>
+    <string name="pref_summary_schedule_sun" formatted="false">Від заходу (%on) до сходу сонця (%off)</string>
+    <string name="pref_summary_schedule_custom" formatted="false">Користувацький (%on to %off)</string>
+    <string name="pref_summary_schedule_none">Жоден</string>
+    <string name="pref_title_start_time">Час початку</string>
+    <string name="pref_title_stop_time">Час закінчення</string>
+    <string name="pref_title_translators">Допоможіть перекласти</string>
+    <string name="pref_summary_translators">Перекладач: Володимир Бриняк</string>
+
+    <string name="toast_warning_secured">Деякі функції цього застосунку можуть не працювати під час роботи Red Moon.</string>
+
+    </resources>
