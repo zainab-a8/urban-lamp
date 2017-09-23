@@ -89,6 +89,7 @@
     <string name="notification_status_off">Spento</string>
     <string name="notification_action_turn_on">Accendi</string>
     <string name="notification_action_turn_off">Spegni</string>
+    <string name="notification_action_stop">Spegni</string>
     <string name="notification_action_next_filter">Prossimo filtro</string>
 
     <string name="pref_category_button_backlight_disclaimer">Non ha effetto su alcuni dispositivi</string>

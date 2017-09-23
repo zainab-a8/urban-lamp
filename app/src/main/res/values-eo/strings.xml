@@ -20,6 +20,7 @@
     <string name="notification_action_pause">Paŭzi</string>
     <string name="notification_action_turn_on">Ŝalti</string>
     <string name="notification_action_turn_off">Elŝalti</string>
+    <string name="notification_action_stop">Elŝalti</string>
     <string name="notification_action_next_filter">Sekva filtrilo</string>
 
     <string name="pref_category_filter">Filtrilo</string>

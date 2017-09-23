@@ -128,6 +128,7 @@
     <string name="notification_status_off">Выкл</string>
     <string name="notification_action_turn_on">Включить</string>
     <string name="notification_action_turn_off">Выключить</string>
+    <string name="notification_action_stop">Выключить</string>
     <string name="notification_action_next_filter">Следующий фильтр</string>
 
     <string name="pref_category_button_backlight_disclaimer">Не работает на некоторых устройствах</string>

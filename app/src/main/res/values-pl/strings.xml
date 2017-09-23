@@ -103,6 +103,7 @@
     <string name="notification_status_off">Wyłączony</string>
     <string name="notification_action_turn_on">Włącz</string>
     <string name="notification_action_turn_off">Wyłącz</string>
+    <string name="notification_action_stop">Wyłącz</string>
     <string name="notification_action_next_filter">Następny profil</string>
 
     <string name="pref_summary_location_off">Czas z lokalizacji</string>

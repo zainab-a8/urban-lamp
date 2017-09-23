@@ -105,6 +105,7 @@
     <string name="notification_status_off">オフ</string>
     <string name="notification_action_turn_on">オンにする</string>
     <string name="notification_action_turn_off">オフにする</string>
+    <string name="notification_action_stop">オフにする</string>
 
     <string name="pref_summary_location_off">場所に基づいて</string>
     <string name="notification_action_next_filter">次のプロファイル</string>

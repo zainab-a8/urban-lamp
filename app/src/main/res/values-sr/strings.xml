@@ -113,6 +113,7 @@
     <string name="notification_status_off">Иск</string>
     <string name="notification_action_turn_on">Укључи</string>
     <string name="notification_action_turn_off">Искључи</string>
+    <string name="notification_action_stop">Искључи</string>
     <string name="notification_action_next_filter">Следећи филтер</string>
 
     <string name="pref_category_button_backlight_disclaimer">Нема ефекта на неким уређајима</string>

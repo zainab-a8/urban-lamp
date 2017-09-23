@@ -106,6 +106,7 @@
     <string name="notification_status_off">Desligado</string>
     <string name="notification_action_turn_on">Ligar</string>
     <string name="notification_action_turn_off">Desligar</string>
+    <string name="notification_action_stop">Desligar</string>
     <string name="notification_action_next_filter">Próximo perfil</string>
 
     <string name="pref_summary_location_off">Horários a partir de localização</string>

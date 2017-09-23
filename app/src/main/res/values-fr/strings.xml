@@ -106,6 +106,7 @@
     <string name="notification_status_off">Éteint</string>
     <string name="notification_action_turn_on">Allumer</string>
     <string name="notification_action_turn_off">Éteindre</string>
+    <string name="notification_action_stop">Éteindre</string>
     <string name="notification_action_next_filter">Filtre suivant</string>
 
     <string name="pref_category_button_backlight_disclaimer">Pas d\'effet sur certains appareils</string>

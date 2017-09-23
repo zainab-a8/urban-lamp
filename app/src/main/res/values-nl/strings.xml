@@ -86,6 +86,7 @@
     <string name="notification_status_off">Uit</string>
     <string name="notification_action_turn_on">Zet aan</string>
     <string name="notification_action_turn_off">Zet uit</string>
+    <string name="notification_action_stop">Zet uit</string>
 
     <string name="pref_summary_location_off">Tijden gebaseerd op locatie</string>
     <string name="pref_title_secure_suspend">Pauzeer in beveiligde apps</string>

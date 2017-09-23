@@ -94,6 +94,7 @@
     <string name="notification_status_off">Aus</string>
     <string name="notification_action_turn_on">Anschalten</string>
     <string name="notification_action_turn_off">Ausschalten</string>
+    <string name="notification_action_stop">Ausschalten</string>
     <string name="notification_action_next_filter">Nächster Filter</string>
 
     <string name="pref_category_button_backlight_disclaimer">Kein Effekt auf manchen Geräten</string>

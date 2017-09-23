@@ -97,6 +97,7 @@ lysstyrkenivå.</string>
     <string name="notification_status_off">Avslått</string>
     <string name="notification_action_turn_on">Skru på</string>
     <string name="notification_action_turn_off">Skru av</string>
+    <string name="notification_action_stop">Skru av</string>
     <string name="notification_action_next_filter">Neste filter</string>
 
     <string name="pref_category_button_backlight_disclaimer">Har ingen effekt på noen enheter</string>

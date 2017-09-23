@@ -71,6 +71,7 @@
     <string name="notification_status_off">关闭</string>
     <string name="notification_action_turn_on">开启</string>
     <string name="notification_action_turn_off">关闭</string>
+    <string name="notification_action_stop">关闭</string>
     <string name="notification_action_next_filter">下一个滤镜</string>
 
     <string name="pref_category_button_backlight_disclaimer">对某些设备不起作用</string>

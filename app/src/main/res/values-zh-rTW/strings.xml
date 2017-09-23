@@ -70,6 +70,7 @@
 
     <string name="notification_action_turn_on">開啟</string>
     <string name="notification_action_turn_off">關閉</string>
+    <string name="notification_action_stop">關閉</string>
     <string name="pref_title_version">版本</string>
 
     <string name="dialog_title_permission_overlay">在其他應用程式上層繪製內容</string>

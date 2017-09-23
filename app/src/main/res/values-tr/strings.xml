@@ -51,6 +51,7 @@
     <string name="notification_action_pause">Duraklat</string>
     <string name="notification_action_turn_on">Aç</string>
     <string name="notification_action_turn_off">Kapat</string>
+    <string name="notification_action_stop">Kapat</string>
     <string name="notification_action_next_filter">Sonraki süzgeç</string>
 
     <!-- Preferences -->
