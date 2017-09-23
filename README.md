@@ -18,7 +18,7 @@ use your phone comfortably at night.
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" 
       alt="Download from Google Play"
       height="80">](https://play.google.com/store/apps/details?id=com.jmstudios.redmoon)
-[<img src="art/direct-download.png" 
+[<img src="art/direct-apk-download.png"
       alt="Direct download"
       height="80">](https://github.com/raatmarien/red-moon/releases)
 
