@@ -9,7 +9,7 @@ filters out blue light and dims your screen below the normal minimum, so you can
 use your phone comfortably at night.
 
 * Schedule Red Moon to run from sunset to sunrise, or at custom times.
-* Highly customizable color profiles with defaults that cover most use cases.
+* Use the default color profiles, or set custom color, intensity, and dim levels.
 * Quickly start, stop, and switch filters via notification, tile (Android 7.0+), or widget.
 
 [<img src="https://gitlab.com/fdroid/artwork/raw/master/badge/get-it-on.png"
