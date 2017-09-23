@@ -8,7 +8,7 @@ package com.jmstudios.redmoon.filter
 import com.jmstudios.redmoon.model.Profile
 
 interface Filter {
-    fun start()
-    fun setColor(profile: Profile)
-    fun stop()
+    fun onCreate()
+    fun onDestroy()
+    var profile: Profile
 }

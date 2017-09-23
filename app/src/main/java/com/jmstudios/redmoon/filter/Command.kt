@@ -6,100 +6,88 @@
 
 package com.jmstudios.redmoon.filter
 
-import android.app.Notification
-import android.app.NotificationManager
 import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
 
 import com.jmstudios.redmoon.util.*
 
+private const val DURATION_LONG = 1000f // One second
+private const val DURATION_SHORT = 250f
+private const val DURATION_INSTANT = 0f
 
-enum class Command {
-    ON {
-        override fun activate(service: FilterService) {
-            Log.i("ON")
-            service.startForeground(NOTIFICATION_ID, getNotification(true))
-            service.start(DURATION_LONG)
+enum class Command(val time: Float) {
+    ON(DURATION_LONG) {
+        override val turnOn: Boolean = true
+        override fun onAnimationStart(service: FilterService) {
+            service.start(true)
         }
     },
-    OFF {
-        override fun activate(service: FilterService) {
-            Log.i("OFF")
+    OFF(DURATION_LONG) {
+        override val turnOn: Boolean = false
+        override fun onAnimationStart(service: FilterService) {
             service.stopForeground(true)
-            service.pause(DURATION_LONG) {
-                service.stopSelf()
-            }
+        }
+        override fun onAnimationEnd(service: FilterService) {
+            service.stopSelf()
         }
     },
-    PAUSE {
-        override fun activate(service: FilterService) {
-            Log.i("PAUSE")
-            service.stopForeground(false)
-            notify(service, getNotification(false))
-            service.pause(DURATION_SHORT)
+    PAUSE(DURATION_SHORT) {
+        override val turnOn: Boolean = false
+        override fun onAnimationStart(service: FilterService) {
+            service.start(false)
         }
     },
-    RESUME {
-        override fun activate(service: FilterService) {
-            Log.i("RESUME")
-            service.startForeground(NOTIFICATION_ID, getNotification(true))
-            service.start(DURATION_SHORT)
+    RESUME(DURATION_SHORT) {
+        override val turnOn: Boolean = true
+        override fun onAnimationStart(service: FilterService) {
+            service.start(true)
         }
     },
-    SHOW_PREVIEW {
-        override fun activate(service: FilterService) {
-            Log.i("SHOW_PREVIEW: filterIsOn: $filterIsOn")
+    SHOW_PREVIEW(DURATION_INSTANT) {
+        override val turnOn: Boolean = true
+        override fun onAnimationStart(service: FilterService) {
             if (filterWasOn == null) {
                 filterWasOn = filterIsOn
-                Log.i("SHOW_PREVIEW: filterWasOn set to: $filterWasOn")
             }
-            service.startForeground(NOTIFICATION_ID, getNotification(true))
-            service.start(DURATION_INSTANT)
+            service.start(true)
         }
     },
-    HIDE_PREVIEW {
-        override fun activate(service: FilterService) {
-            Log.i("HIDE_PREVIEW: filterWasOn: $filterWasOn")
+    HIDE_PREVIEW(DURATION_INSTANT) {
+        override val turnOn: Boolean
+            get() = filterWasOn == true
+
+        override fun onAnimationEnd(service: FilterService) {
             if (filterWasOn != true) {
                 service.stopForeground(true)
-                service.pause(DURATION_INSTANT) {
-                    service.stopSelf()
-                }
+                service.stopSelf()
+                filterWasOn = null
             }
-            filterWasOn = null
         }
     };
 
     val intent: Intent
-        get() = intent(FilterService::class).putExtra(EXTRA_COMMAND, ordinal)
+        get() = intent(FilterService::class).putExtra(EXTRA_COMMAND, name)
 
     fun send(): ComponentName = appContext.startService(intent)
 
-    abstract fun activate(service: FilterService)
+    abstract val turnOn: Boolean
 
     //override fun toString(): String = javaClass.simpleName
 
+    open fun onAnimationStart(service: FilterService) {}
+    open fun onAnimationCancel(service: FilterService) {}
+    open fun onAnimationEnd(service: FilterService) {}
+    open fun onAnimationRepeat(service: FilterService) {}
+
     companion object : Logger() {
         private const val EXTRA_COMMAND = "jmstudios.bundle.key.command"
-        private const val COMMAND_MISSING = -1
-
-        private const val NOTIFICATION_ID = 1
-
-        private const val DURATION_LONG = 1000 // One second
-        private const val DURATION_SHORT = 250
-        private const val DURATION_INSTANT = 0
 
         private var filterWasOn: Boolean? = null
-        
-        fun handle(intent: Intent, svc: FilterService) {
-            val flag = intent.getIntExtra(EXTRA_COMMAND, COMMAND_MISSING)
-            Log.i("Recieved flag: $flag")
-            if (flag != COMMAND_MISSING) {
-                Command.values()[flag].activate(svc)
-            } else {
-                Log.w("Unknown intent recieved")
-            }
+
+        fun getCommand(intent: Intent): Command {
+            val commandName = intent.getStringExtra(EXTRA_COMMAND)
+            Log.i("Recieved flag: $commandName")
+            return valueOf(commandName)
         }
 
         fun toggle(on: Boolean) {
@@ -109,11 +97,5 @@ enum class Command {
         fun preview(on: Boolean) {
             if (on) SHOW_PREVIEW.send() else HIDE_PREVIEW.send()
         }
-
-        private fun notify(context: Context, notification: Notification) {
-            val nMan = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            nMan.notify(NOTIFICATION_ID, notification)
-        }
-
     }
 }

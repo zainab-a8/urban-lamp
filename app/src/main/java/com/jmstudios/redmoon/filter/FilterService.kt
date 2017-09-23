@@ -25,15 +25,15 @@
 
 package com.jmstudios.redmoon.filter
 
-import android.animation.Animator
 import android.animation.ValueAnimator
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 
-import com.jmstudios.redmoon.filter.manager.AbstractAnimatorListener
-import com.jmstudios.redmoon.filter.overlay.OverlayFilter
+import com.jmstudios.redmoon.filter.overlay.Overlay
+import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.model.Profile
+import com.jmstudios.redmoon.securesuspend.CurrentAppMonitor
 import com.jmstudios.redmoon.util.*
 
 import java.util.concurrent.Executors
@@ -43,33 +43,38 @@ import org.greenrobot.eventbus.Subscribe
 class FilterService : Service() {
 
     private lateinit var mFilter: Filter
-    private val mAnimator: ValueAnimator
-    private val mExecutor = Executors.newSingleThreadScheduledExecutor()
-
-    private var mProfile = activeProfile.off
-        set(value) {
-            field = value
-            mFilter.setColor(value)
-        }
-
-    init {
-        mAnimator = ValueAnimator.ofObject(ProfileEvaluator(), mProfile).apply {
-            addUpdateListener { valueAnimator ->
-                mProfile = valueAnimator.animatedValue as Profile
-            }
-        }
-    }
+    private lateinit var mAnimator: ValueAnimator
+    private lateinit var mCurrentAppMonitor: CurrentAppMonitor
+    private lateinit var mNotification: Notification
+    private val executor = Executors.newSingleThreadScheduledExecutor()
 
     override fun onCreate() {
         super.onCreate()
         Log.i("onCreate")
-        mFilter = OverlayFilter(this, mExecutor)
+        mFilter = Overlay(this)
+        mCurrentAppMonitor = CurrentAppMonitor(this, executor)
+        mNotification = Notification(this, mCurrentAppMonitor)
+        mAnimator = ValueAnimator.ofObject(ProfileEvaluator(), mFilter.profile).apply {
+            addUpdateListener { valueAnimator ->
+               mFilter.profile = valueAnimator.animatedValue as Profile
+            }
+        }
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         Log.i("onStartCommand($intent, $flags, $startId)")
         if (Permission.Overlay.isGranted) {
-            Command.handle(intent, this)
+            val cmd = Command.getCommand(intent)
+            val end = if (cmd.turnOn) activeProfile else mFilter.profile.off
+            mAnimator.run {
+                setObjectValues(mFilter.profile, end)
+                val fraction = if (isRunning) animatedFraction else 1f
+                duration = (cmd.time * fraction).toLong()
+                removeAllListeners()
+                addListener(CommandAnimatorListener(cmd, this@FilterService))
+                Log.i("Animating from ${mFilter.profile} to $end in $duration")
+                start()
+            }
         } else {
             Log.i("Overlay permission denied.")
             EventBus.post(overlayPermissionDenied())
@@ -80,61 +85,39 @@ class FilterService : Service() {
         return Service.START_NOT_STICKY
     }
 
-    override fun onBind(intent: Intent): IBinder? = null // Prevent binding.
+    fun start(isOn: Boolean) {
+        if (!filterIsOn) {
+            EventBus.register(this)
+            filterIsOn = true
+            mCurrentAppMonitor.monitoring = Config.secureSuspend
+        }
+        startForeground(NOTIFICATION_ID, mNotification.build(isOn))
+    }
 
     override fun onDestroy() {
         Log.i("onDestroy")
+        EventBus.unregister(this)
         if (filterIsOn) {
             Log.w("Service killed while filter was on!")
             filterIsOn = false
-            mFilter.stop()
+            mCurrentAppMonitor.monitoring = false
         }
-        mExecutor.shutdownNow()
+        mFilter.onDestroy()
+        executor.shutdownNow()
         super.onDestroy()
     }
 
-    fun start(time: Int) {
-        Log.i("start($time)")
-        if (!filterIsOn) {
-            animateTo(activeProfile, time, object : AbstractAnimatorListener {
-                override fun onAnimationStart(animator: Animator) {
-                    EventBus.register(this@FilterService)
-                    filterIsOn = true
-                    mFilter.start()
-                }
-            })
-        }
-    }
-
-    fun pause(time: Int, after: () -> Unit = {}) {
-        if (filterIsOn) {
-            animateTo(mProfile.off, time, object : AbstractAnimatorListener {
-                override fun onAnimationEnd(animator: Animator) {
-                    EventBus.unregister(this@FilterService)
-                    filterIsOn = false
-                    after()
-                }
-            })
-        } else {
-            after()
-        }
-    }
-
-    private fun animateTo(profile: Profile, time: Int, listener: Animator.AnimatorListener) {
-        mAnimator.run {
-            setObjectValues(mProfile, profile)
-            Log.i("animating. Fraction is: $animatedFraction")
-            duration = (if (isRunning) time * animatedFraction else time.toFloat()).toLong()
-            removeAllListeners()
-            addListener(listener)
-            Log.i("Animating from $mProfile to $profile in $duration")
-            start()
-        }
-    }
-
     @Subscribe fun onProfileUpdated(profile: Profile) {
-        mProfile = profile
+        mFilter.profile = profile
     }
 
-    companion object : Logger()
+    @Subscribe fun onSecureSuspendChanged(event: secureSuspendChanged) {
+        mCurrentAppMonitor.monitoring = Config.secureSuspend
+    }
+
+    override fun onBind(intent: Intent): IBinder? = null // Prevent binding.
+
+    companion object : Logger() {
+        private const val NOTIFICATION_ID = 1
+    }
 }

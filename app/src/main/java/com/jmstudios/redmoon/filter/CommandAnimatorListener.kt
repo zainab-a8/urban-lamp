@@ -22,13 +22,17 @@
  *     NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  *     CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-package com.jmstudios.redmoon.filter.manager
+package com.jmstudios.redmoon.filter
 
 import android.animation.Animator
 
-interface AbstractAnimatorListener : Animator.AnimatorListener {
-    override fun onAnimationStart (animator: Animator) {}
-    override fun onAnimationEnd   (animator: Animator) {}
-    override fun onAnimationCancel(animator: Animator) {}
-    override fun onAnimationRepeat(animator: Animator) {}
+class CommandAnimatorListener(
+        private val cmd: Command,
+        private val svc: FilterService)
+    : Animator.AnimatorListener {
+
+    override fun onAnimationStart (a: Animator?) = cmd.onAnimationStart (svc)
+    override fun onAnimationEnd   (a: Animator?) = cmd.onAnimationEnd   (svc)
+    override fun onAnimationCancel(a: Animator?) = cmd.onAnimationCancel(svc)
+    override fun onAnimationRepeat(a: Animator?) = cmd.onAnimationRepeat(svc)
 }

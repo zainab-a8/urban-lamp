@@ -96,6 +96,8 @@
         </receiver>
         <receiver android:name=".filter.NextProfileCommandReceiver">
         </receiver>
+        <receiver android:name=".securesuspend.WhitelistChangeReceiver">
+        </receiver>
 
         <activity
             android:name=".widget.ShortcutCreationActivity"
