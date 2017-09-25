@@ -73,9 +73,9 @@
     <string name="pref_summary_project_page">Află mai mute, lasă feedback și contribuie</string>
 
     <string name="pref_title_email_developer">Trimite e-mail developerilor</string>
-    <string name="pref_summary_email_developer">Cale secundară de contact</string>
+    <string name="pref_summary_email_developer">Altă modalitate de contact</string>
     <string name="pref_title_translators">Ajută la traducere</string>
-    <string name="pref_summary_translators">Traducător: ervin.bolat</string>
+    <string name="pref_summary_translators">Traducător: alpha80147</string>
 
     <string name="pref_title_integration">Integrare cu alte aplicații</string>
     <string name="pref_summary_integration">Unele aplicații, cum ar fi LibreTasks sau Tasker, vă permit să automatizați acțiuni când se product anumite evenimente. Red Moon transmite notificare publică când se activează sau dezactivează, astfel că acele aplicații pot răspunde cu o acțiune. Dacă nu folosiți sau nu dezvoltați astfel de aplicații, puteți ignora următorul paragraf.
