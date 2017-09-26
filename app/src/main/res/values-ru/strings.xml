@@ -35,8 +35,8 @@
 
     <string name="menu_dark_theme">Тёмная тема</string>
 
-    <string name="pref_title_email_developer">Пишите мне на marienraat@riseup.net</string>
-    <string name="pref_summary_email_developer">Сообщить разработчику об ошибках или предложениях</string>
+    <string name="pref_title_email_developer">Написать разработчикам</string>
+    <string name="pref_summary_email_developer">Дополнительный способ связаться с нами</string>
     <string name="pref_title_project_page">Посетить страницу проекта</string>
     <string name="pref_summary_project_page">Увидеть подробную информацию, оставить отзыв и помочь с проектом</string>
 
@@ -133,7 +133,7 @@
     <string name="pref_category_button_backlight_disclaimer">Не работает на некоторых устройствах</string>
     <string name="pref_title_button_backlight">Подсветка аппаратных кнопок</string>
 
-    <string name="pref_title_location">Время по световому дню</string>
+    <string name="pref_title_location">От рассвета до заката</string>
     <string name="pref_summary_location_off">Автоматически</string>
     <string name="pref_title_integration">Совместимость с другими приложениями</string>
     <string name="pref_summary_integration">Некоторые приложения, вроде LibreTasks или Tasker, позволяют автоматически выполнять некие задачи, когда происходят определённые события. Red Moon шлёт открытое уведомление при включении и включении, так что такие приложения могут реагировать на него. Если вы не пользуетесь и не разрабатываете подобные приложения, вы можете пропустить следующий абзац.
@@ -152,5 +152,16 @@
     <string name="notification_status_running_no_warning">Запущено</string>
 <string name="menu_restore_default_filters">Восстановить фильтры по умолчанию</string>
     <string name="filter_name_dim_only">Только затемнение</string>
+
+    <string name="activity_schedule">Расписание</string>
+    <string name="notification_status_paused_with_info">Приостановлено. Смахните уведомление, чтобы остановить.</string>
+    <string name="pref_title_schedule">Расписание</string>
+    <string name="pref_summary_schedule_sun" formatted="false">От заката (%on) до рассвета (%off)</string>
+    <string name="pref_summary_schedule_custom" formatted="false">Особое (от %on до %off)</string>
+    <string name="pref_summary_schedule_none">Нет</string>
+    <string name="pref_title_translators">Помочь перевести</string>
+    <string name="pref_summary_translators">Переводчики: Anton Shestakov</string>
+
+    <string name="toast_warning_secured">Некоторые функции этого приложения могут не работать, пока запущено Red Moon.</string>
 
     </resources>
