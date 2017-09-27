@@ -15,6 +15,7 @@ import android.preference.PreferenceManager
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.model.Profile
 import com.jmstudios.redmoon.model.ProfilesModel
+import com.jmstudios.redmoon.schedule.ScheduleReceiver
 
 import org.json.JSONObject
 
@@ -42,8 +43,10 @@ class RedMoonApplication: Application() {
         } in 28..29 -> {
             upgradeProfilesFrom(version)
             upgradeFrom(30)
-        } in 30..32 -> {
-            upgradeFrom(33)
+        } in 30..33 -> {
+            ScheduleReceiver.rescheduleOnCommand()
+            ScheduleReceiver.rescheduleOffCommand()
+            upgradeFrom(34)
         } else -> {
             Log.e("Didn't catch upgrades from version $version")
             upgradeFrom(version+1)
