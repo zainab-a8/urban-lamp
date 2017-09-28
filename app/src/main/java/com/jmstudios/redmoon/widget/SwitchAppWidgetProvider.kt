@@ -41,7 +41,7 @@ import com.jmstudios.redmoon.util.*
 class SwitchAppWidgetProvider : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        Log.i("Updating!")
+        Log.i("onUpdate()")
 
         for (i in appWidgetIds.indices) {
             val appWidgetId = appWidgetIds[i]
@@ -62,14 +62,14 @@ class SwitchAppWidgetProvider : AppWidgetProvider() {
         if (intent.action == ACTION_TOGGLE) {
             Command.toggle(!filterIsOn)
         } else if (intent.action == ACTION_UPDATE) {
-            updateImage(ctx, !intent.getBooleanExtra(EXTRA_POWER, false))
+            updateImage(ctx, intent.getBooleanExtra(EXTRA_POWER, false))
         } else {
             super.onReceive(ctx, intent)
         }
     }
 
     internal fun updateImage(context: Context, filterIsOn: Boolean) {
-        Log.i("Updating image!")
+        Log.i("Updating image! filterIsOn: $filterIsOn")
         val views = RemoteViews(context.packageName, R.layout.appwidget_switch)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetComponent = ComponentName(context, SwitchAppWidgetProvider::class.java.name)
