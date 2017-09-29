@@ -7,9 +7,11 @@ android:
     - tools
     - android-26
     - build-tools-26.0.1
+    - extra-android-m2repository
 
 notifications:
-  email: false
+  email:
+      on_failure: change
 
 jdk:
   - oraclejdk8
