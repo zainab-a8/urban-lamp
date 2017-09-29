@@ -7,6 +7,8 @@ package com.jmstudios.redmoon.util
 import android.Manifest
 import android.annotation.TargetApi
 import android.app.Activity
+import android.app.AppOpsManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -21,6 +23,7 @@ import com.jmstudios.redmoon.util.Logger
 private const val REQ_CODE_OVERLAY  = 1111
 private const val REQ_CODE_LOCATION = 2222
 private const val REQ_CODE_SETTINGS = 3333
+private const val REQ_CODE_USAGE    = 4444
 
 abstract class PermissionHelper : EventBus.Event {
     abstract val isGranted: Boolean
@@ -38,6 +41,7 @@ object Permission : Logger() {
             REQ_CODE_OVERLAY -> "Overlay"
             REQ_CODE_LOCATION -> "Location"
             REQ_CODE_SETTINGS -> "WriteSettings"
+            REQ_CODE_USAGE -> "UsageStats"
             else -> "Invalid requestCode ($requestCode)"
         }
         Log.i("onRequestResult($name)")
@@ -87,6 +91,31 @@ object Permission : Logger() {
             val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
                                 Uri.parse("package:" + activity.packageName))
             activity.startActivityForResult(intent, requestCode)
+        }
+    }
+
+    object UsageStats : ElevatedPermission() {
+        override val requestCode: Int = REQ_CODE_USAGE
+
+        override val granted: Boolean
+            get() = if (belowAPI(22)) true else @TargetApi(21) {
+                val aom = appContext.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+                val mode = aom.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS,
+                                                 android.os.Process.myUid(),
+                                                 appContext.getPackageName())
+                when (mode) {
+                    AppOpsManager.MODE_ALLOWED -> true
+                    AppOpsManager.MODE_DEFAULT -> {
+                        val pus = android.Manifest.permission.PACKAGE_USAGE_STATS
+                        val granted = appContext.checkCallingOrSelfPermission(pus)
+                        granted == PackageManager.PERMISSION_GRANTED
+                    } else -> false
+                }
+            }
+
+        override @TargetApi(21) fun send(activity: Activity) {
+            val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
+            activity.startActivityForResult(intent, REQ_CODE_USAGE)
         }
     }
 }

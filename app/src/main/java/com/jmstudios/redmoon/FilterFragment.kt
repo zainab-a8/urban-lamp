@@ -28,6 +28,11 @@ import android.os.Bundle
 import android.preference.Preference
 import android.preference.PreferenceFragment
 import android.preference.TwoStatePreference
+import android.support.design.widget.BaseTransientBottomBar.BaseCallback
+import android.support.design.widget.Snackbar
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 
 import com.jmstudios.redmoon.R
 
@@ -39,7 +44,7 @@ import com.jmstudios.redmoon.util.*
 
 import org.greenrobot.eventbus.Subscribe
 
-class FilterFragment : PreferenceFragment() {
+class FilterFragment : BaseFragment() {
 
     private val profileSelectorPref: ProfileSelectorPreference
         get() = pref(R.string.pref_key_profile_spinner)
@@ -66,6 +71,7 @@ class FilterFragment : PreferenceFragment() {
         get() = pref(R.string.pref_key_button_backlight)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.i("onCreate()")
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.filter_preferences)
 

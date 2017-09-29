@@ -21,7 +21,7 @@ import com.jmstudios.redmoon.util.*
 
 import org.greenrobot.eventbus.Subscribe
 
-class ScheduleFragment : PreferenceFragment() {
+class ScheduleFragment : BaseFragment() {
 
     // Preferences
     private val switchBar: SwitchPreference

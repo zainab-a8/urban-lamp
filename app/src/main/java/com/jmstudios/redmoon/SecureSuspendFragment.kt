@@ -17,7 +17,7 @@ import com.jmstudios.redmoon.securesuspend.CurrentAppChecker
 import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.util.*
 
-class SecureSuspendFragment : PreferenceFragment() {
+class SecureSuspendFragment : BaseFragment() {
 
     private val switchBar: SwitchPreference
         get() = pref(R.string.pref_key_secure_suspend)

@@ -120,6 +120,9 @@
     <string name="snackbar_searching_location">Searching for location</string>
     <string name="snackbar_location_updated">Found location!</string>
     <string name="help_snackbar_text">Press the switch to enable Red Moon</string>
+    <!-- This text is expected to take 2 lines in the snackbar -->
+    <string name="permission_snackbar_text">Some active features require additional permissions.</string>
+    <string name="permission_snackbar_action">Show</string>
 
     <!-- Dialog -->
     <string name="dialog_title_add_filter">Enter filter name</string>
