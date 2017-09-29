@@ -15,9 +15,3 @@ class useLocationChanged       : Event
 class locationChanged          : Event
 class secureSuspendChanged     : Event
 class buttonBacklightChanged   : Event
-
-class overlayPermissionDenied  : Event
-class locationAccessDenied     : Event
-class changeBrightnessDenied   : Event
-
-data class locationService(val isSearching: Boolean, val isRunning: Boolean = true) : Event

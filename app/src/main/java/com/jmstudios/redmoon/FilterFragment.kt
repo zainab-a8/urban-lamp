@@ -34,29 +34,27 @@ import com.jmstudios.redmoon.R
 import com.jmstudios.redmoon.model.Profile
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.ui.preference.SeekBarPreference
+import com.jmstudios.redmoon.ui.preference.ProfileSelectorPreference
 import com.jmstudios.redmoon.util.*
 
 import org.greenrobot.eventbus.Subscribe
 
 class FilterFragment : PreferenceFragment() {
-    //private var hasShownWarningToast = false
-    companion object : Logger()
 
-    // Preferences
-    private val profileSelectorPref: Preference
+    private val profileSelectorPref: ProfileSelectorPreference
         get() = pref(R.string.pref_key_profile_spinner)
 
     private val colorPref: SeekBarPreference
-        get() = pref(R.string.pref_key_color) as SeekBarPreference
+        get() = pref(R.string.pref_key_color)
 
     private val intensityPref: SeekBarPreference
-        get() = pref(R.string.pref_key_intensity) as SeekBarPreference
+        get() = pref(R.string.pref_key_intensity)
 
     private val dimLevelPref: SeekBarPreference
-        get()= pref(R.string.pref_key_dim) as SeekBarPreference
+        get()= pref(R.string.pref_key_dim)
 
     private val lowerBrightnessPref: TwoStatePreference
-        get() = pref(R.string.pref_key_lower_brightness) as TwoStatePreference
+        get() = pref(R.string.pref_key_lower_brightness)
 
     private val schedulePref: Preference
         get() = pref(R.string.pref_key_schedule_header)
@@ -75,16 +73,6 @@ class FilterFragment : PreferenceFragment() {
         updateScheduleSummary()
         updateBacklightPrefSummary()
 
-        if (!Permission.WriteSettings.isGranted) {
-            lowerBrightnessPref.isChecked = false
-        }
-
-        lowerBrightnessPref.onPreferenceChangeListener =
-                Preference.OnPreferenceChangeListener { _, newValue ->
-                    val checked = newValue as Boolean
-                    if (checked) Permission.WriteSettings.request(activity) else true
-                }
-
         schedulePref.intent = intent(ScheduleActivity::class)
         secureSuspendPref.intent = intent(SecureSuspendActivity::class)
     }
@@ -92,7 +80,6 @@ class FilterFragment : PreferenceFragment() {
     override fun onStart() {
         Log.i("onStart")
         super.onStart()
-        EventBus.register(profileSelectorPref)
         EventBus.register(this)
         updateSecureSuspendSummary()
         updateScheduleSummary()
@@ -100,7 +87,6 @@ class FilterFragment : PreferenceFragment() {
 
     override fun onStop() {
         EventBus.unregister(this)
-        EventBus.unregister(profileSelectorPref)
         super.onStop()
     }
 
@@ -135,6 +121,10 @@ class FilterFragment : PreferenceFragment() {
     }
 
     //region presenter
+    @Subscribe fun onProfilesChanged(event: profilesUpdated) {
+        profileSelectorPref.initLayout()
+    }
+
     @Subscribe fun onProfileChanged(profile: Profile) {
         profile.run {
             colorPref.setProgress(color)
@@ -142,11 +132,17 @@ class FilterFragment : PreferenceFragment() {
             dimLevelPref.setProgress(dimLevel)
             lowerBrightnessPref.isChecked = lowerBrightness
         }
+        profileSelectorPref.updateLayout()
     }
 
-    @Subscribe
-    fun onButtonBacklightChanged(event: buttonBacklightChanged) {
+    @Subscribe fun onButtonBacklightChanged(event: buttonBacklightChanged) {
         updateBacklightPrefSummary()
     }
+
+    @Subscribe fun onLocationUpdated(event: scheduleChanged) {
+        updateScheduleSummary()
+    }
     //endregion
+
+    companion object : Logger()
 }

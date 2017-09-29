@@ -68,6 +68,6 @@ fun belowAPI  (api: Int): Boolean = android.os.Build.VERSION.SDK_INT <  api
 fun intent() = Intent()
 fun <T: Any>intent(kc: KClass<T>) = Intent(appContext, kc.java)
 
-fun PreferenceFragment.pref(resId: Int): Preference {
-    return preferenceScreen.findPreference(getString(resId))
+inline fun <reified T: Preference>PreferenceFragment.pref(resId: Int): T {
+    return preferenceScreen.findPreference(getString(resId)) as T
 }

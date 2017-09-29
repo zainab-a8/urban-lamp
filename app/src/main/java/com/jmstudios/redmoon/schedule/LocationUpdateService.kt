@@ -37,7 +37,6 @@ import android.os.IBinder
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.util.*
 
-import org.greenrobot.eventbus.EventBus
 import java.util.concurrent.TimeUnit
 
 /**
@@ -48,6 +47,8 @@ import java.util.concurrent.TimeUnit
  * something more recent than the last time red moon updated location.
  */
 class LocationUpdateService: Service(), LocationListener {
+
+    data class status(val isSearching: Boolean, val isRunning: Boolean = true) : EventBus.Event
 
     private inner class Provider(val provider: String) {
         private var mRequested = false
@@ -127,7 +128,7 @@ class LocationUpdateService: Service(), LocationListener {
         Log.i("onStartCommand($intent, $flags, $startId)")
         if (mIsForeground != null) {
             val searching = mNetworkProvider.searching || mGpsProvider.searching
-            EventBus.getDefault().post(locationService(searching))
+            EventBus.post(status(searching))
         }
         val fg = intent.getBooleanExtra(BUNDLE_KEY_FOREGROUND, false)
         mIsForeground = fg || isForeground
@@ -176,7 +177,7 @@ class LocationUpdateService: Service(), LocationListener {
             }
         }
         super.onDestroy()
-        EventBus.getDefault().post(locationService(false, isRunning = false))
+        EventBus.post(status(false, isRunning = false))
     }
 
     // Filters duplicates
@@ -184,7 +185,7 @@ class LocationUpdateService: Service(), LocationListener {
         if (mIsSearching != searching) {
             Log.i("posting: $searching")
             mIsSearching = searching
-            EventBus.getDefault().post(locationService(searching))
+            EventBus.post(status(searching))
         }
     }
 
@@ -197,7 +198,7 @@ class LocationUpdateService: Service(), LocationListener {
         fun update(foreground: Boolean = true) {
             Log.i("Received request")
             if (!Permission.Location.isGranted) {
-                EventBus.getDefault().post(locationAccessDenied())
+                Log.i("Permission not granted!")
             } else if (Config.scheduleOn && Config.useLocation) {
                 val i = intent.putExtra(BUNDLE_KEY_FOREGROUND, foreground)
                 appContext.startService(i)

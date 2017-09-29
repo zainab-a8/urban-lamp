@@ -16,6 +16,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 
 import com.jmstudios.redmoon.R
+import com.jmstudios.redmoon.util.Logger
 
 private const val REQ_CODE_OVERLAY  = 1111
 private const val REQ_CODE_LOCATION = 2222
@@ -31,14 +32,15 @@ abstract class PermissionHelper : EventBus.Event {
     }
 }
 
-object Permission {
+object Permission : Logger() {
     fun onRequestResult(requestCode: Int) {
-        EventBus.post(when (requestCode) {
-                          REQ_CODE_OVERLAY -> Overlay
-                          REQ_CODE_LOCATION -> Location
-                          REQ_CODE_SETTINGS -> WriteSettings
-                          else -> return@onRequestResult
-                      })
+        val name = when (requestCode) {
+            REQ_CODE_OVERLAY -> "Overlay"
+            REQ_CODE_LOCATION -> "Location"
+            REQ_CODE_SETTINGS -> "WriteSettings"
+            else -> "Invalid requestCode ($requestCode)"
+        }
+        Log.i("onRequestResult($name)")
     }
 
     object Location : PermissionHelper() {
@@ -71,14 +73,7 @@ object Permission {
         override @TargetApi(23) fun send(activity: Activity) {
             val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                                 Uri.parse("package:" + activity.packageName))
-            AlertDialog.Builder(activity).run {
-                setMessage(R.string.dialog_message_permission_overlay)
-                setTitle(R.string.dialog_title_permission_overlay)
-                setPositiveButton(R.string.dialog_button_ok) { _, _ ->
-                    activity.startActivityForResult(intent, requestCode)
-                }
-                show()
-            }
+            activity.startActivityForResult(intent, requestCode)
         }
     }
 
@@ -91,14 +86,7 @@ object Permission {
         override @TargetApi(23) fun send(activity: Activity) {
             val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
                                 Uri.parse("package:" + activity.packageName))
-            AlertDialog.Builder(activity).run {
-                setMessage(R.string.dialog_message_permission_write_settings)
-                setTitle(R.string.dialog_title_permission_write_settings)
-                setPositiveButton(R.string.dialog_button_ok) { _, _ ->
-                    activity.startActivityForResult(intent, requestCode)
-                }
-                show()
-            }
+            activity.startActivityForResult(intent, requestCode)
         }
     }
 }

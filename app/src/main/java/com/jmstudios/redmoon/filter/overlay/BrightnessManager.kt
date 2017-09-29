@@ -53,7 +53,6 @@ class BrightnessManager(context: Context) {
         set(lower) = when {
             !Permission.WriteSettings.isGranted -> {
                 Log.i("Permission not granted!")
-                EventBus.post(changeBrightnessDenied())
             } lower == brightnessLowered -> {
                 Log.i("Brightness already raised/lowered")
             } lower -> {

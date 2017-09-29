@@ -79,8 +79,8 @@ class MainActivity : ThemedAppCompatActivity() {
     fun SwitchCompat.safeSetChecked(checked: Boolean) {
         setOnCheckedChangeListener { _, _ ->  }
         isChecked = checked
-        setOnCheckedChangeListener { _, checked ->
-            Command.toggle(checked)
+        setOnCheckedChangeListener { _, newChecked ->
+            Command.toggle(newChecked)
         }
     }
 
@@ -141,10 +141,5 @@ class MainActivity : ThemedAppCompatActivity() {
     @Subscribe fun onFilterIsOnChanged(event: filterIsOnChanged) {
         Log.i("FilterIsOnChanged")
         mSwitch?.safeSetChecked(filterIsOn)
-    }
-
-    @Subscribe fun onOverlayPermissionDenied(event: overlayPermissionDenied) {
-        mSwitch?.safeSetChecked(false)
-        Permission.Overlay.request(this)
     }
 }

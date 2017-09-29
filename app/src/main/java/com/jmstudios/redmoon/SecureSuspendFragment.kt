@@ -19,53 +19,28 @@ import com.jmstudios.redmoon.util.*
 
 class SecureSuspendFragment : PreferenceFragment() {
 
-    private val mSwitchBarPreference: SwitchPreference
-        get() = pref(R.string.pref_key_secure_suspend) as SwitchPreference
+    private val switchBar: SwitchPreference
+        get() = pref(R.string.pref_key_secure_suspend)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i("onCreate()")
         super.onCreate(savedInstanceState)
 
         addPreferencesFromResource(R.xml.secure_suspend_preferences)
-        setSwitchBarTitle(mSwitchBarPreference.isChecked)
 
-        mSwitchBarPreference.onPreferenceChangeListener =
-            Preference.OnPreferenceChangeListener { _, newValue ->
-                val on = newValue as Boolean
-                // TODO: Make this readable
-                if (!on) {
-                    setSwitchBarTitle(on)
-                    true
-                } else {
-                    val appChecker = CurrentAppChecker(appContext)
-                    if (!appChecker.isWorking) createEnableUsageStatsDialog()
-                    val working = appChecker.isWorking
-                    setSwitchBarTitle(working && on)
-                    working
-                }
+        setSwitchBarTitle(switchBar.isChecked)
+
+        switchBar.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { _, on ->
+                setSwitchBarTitle(on as Boolean)
+                true
             }
     }
 
     private fun setSwitchBarTitle(on: Boolean) {
-        mSwitchBarPreference.setTitle(
-                if (on) R.string.text_switch_on
-                else R.string.text_switch_off
-        )
+        val text = if (on) R.string.text_switch_on else R.string.text_switch_off
+        switchBar.setTitle(text)
     }
 
-    // TODO: Fix on API < 21
-    private fun createEnableUsageStatsDialog() {
-        AlertDialog.Builder(activity).apply {
-            setMessage(R.string.dialog_message_permission_usage_stats)
-            setTitle(R.string.dialog_title_permission_usage_stats)
-            setPositiveButton(R.string.dialog_button_ok) { _, _ ->
-                val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
-                startActivityForResult(intent, RESULT_USAGE_ACCESS)
-            }
-        }.show()
-    }
-
-    companion object : Logger() {
-        const val RESULT_USAGE_ACCESS = 1
-    }
+    companion object : Logger()
 }

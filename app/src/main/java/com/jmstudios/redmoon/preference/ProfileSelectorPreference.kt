@@ -26,8 +26,6 @@ import com.jmstudios.redmoon.model.ProfilesModel
 import com.jmstudios.redmoon.model.ProfilesModel.isSaved
 import com.jmstudios.redmoon.util.*
 
-import org.greenrobot.eventbus.Subscribe
-
 class ProfileSelectorPreference(ctx: Context, attrs: AttributeSet) : Preference(ctx, attrs),
                                                                      OnItemSelectedListener {
     lateinit private var mProfileSpinner: Spinner
@@ -49,7 +47,7 @@ class ProfileSelectorPreference(ctx: Context, attrs: AttributeSet) : Preference(
         initLayout()
     }
 
-    private fun initLayout() {
+    fun initLayout() {
         Log.i("Starting initLayout")
         customShown = false
         mArrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item)
@@ -59,7 +57,7 @@ class ProfileSelectorPreference(ctx: Context, attrs: AttributeSet) : Preference(
         updateLayout()
     }
 
-    private fun updateLayout() {
+    fun updateLayout() {
         activeProfile.let {
             Log.i("Updating spinner. Active: $it; Custom: ${Config.custom}")
             if (it.isSaved) {
@@ -143,14 +141,6 @@ class ProfileSelectorPreference(ctx: Context, attrs: AttributeSet) : Preference(
 
     override fun onNothingSelected(parent: AdapterView<*>) { }
     //endregion
-
-    @Subscribe fun onProfileChanged(profile: Profile) {
-        updateLayout()
-    }
-
-    @Subscribe fun onProfilesChanged(event: profilesUpdated) {
-        initLayout()
-    }
 
     companion object : Logger()
 }

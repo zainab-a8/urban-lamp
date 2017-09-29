@@ -77,7 +77,6 @@ class FilterService : Service() {
             }
         } else {
             Log.i("Overlay permission denied.")
-            EventBus.post(overlayPermissionDenied())
             stopForeground(false)
         }
 

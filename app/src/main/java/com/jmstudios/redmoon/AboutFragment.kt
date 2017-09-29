@@ -20,7 +20,7 @@ class AboutFragment : PreferenceFragment() {
         Log.i("onCreate()")
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.about)
-        pref(R.string.pref_key_version).apply{
+        pref<Preference>(R.string.pref_key_version).apply{
             summary = BuildConfig.VERSION_NAME
             onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 ChangeLog(activity).fullLogDialog.show()

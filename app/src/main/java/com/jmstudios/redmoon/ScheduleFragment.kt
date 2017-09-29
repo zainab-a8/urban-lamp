@@ -6,6 +6,7 @@
 package com.jmstudios.redmoon
 
 import android.os.Bundle
+import android.preference.Preference
 import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
 import android.support.design.widget.Snackbar
@@ -23,23 +24,36 @@ import org.greenrobot.eventbus.Subscribe
 class ScheduleFragment : PreferenceFragment() {
 
     // Preferences
-    private val schedulePref: SwitchPreference
-        get() = pref(R.string.pref_key_schedule) as SwitchPreference
+    private val switchBar: SwitchPreference
+        get() = pref(R.string.pref_key_schedule)
 
     private val automaticTurnOnPref: TimePickerPreference
-        get() = pref(R.string.pref_key_start_time) as TimePickerPreference
+        get() = pref(R.string.pref_key_start_time)
 
     private val automaticTurnOffPref: TimePickerPreference
-        get() = pref(R.string.pref_key_stop_time) as TimePickerPreference
+        get() = pref(R.string.pref_key_stop_time)
 
     private val useLocationPref: SwitchPreference
-        get() = pref(R.string.pref_key_use_location) as SwitchPreference
+        get() = pref(R.string.pref_key_use_location)
 
     private var mSnackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.schedule_preferences)
+
+        setSwitchBarTitle(switchBar.isChecked)
+
+        switchBar.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { _, on ->
+                setSwitchBarTitle(on as Boolean)
+                true
+            }
+    }
+
+    private fun setSwitchBarTitle(on: Boolean) {
+        val text = if (on) R.string.text_switch_on else R.string.text_switch_off
+        switchBar.setTitle(text)
     }
 
     override fun onStart() {
@@ -55,16 +69,8 @@ class ScheduleFragment : PreferenceFragment() {
     }
 
     private fun updatePrefs() {
-        updateSwitchBarTitle()
         updateTimePrefs()
         updateLocationPref()
-    }
-
-    private fun updateSwitchBarTitle() {
-        schedulePref.setTitle(
-                if (Config.scheduleOn) R.string.text_switch_on
-                else R.string.text_switch_off
-        )
     }
 
     private fun updateLocationPref() {
@@ -126,7 +132,7 @@ class ScheduleFragment : PreferenceFragment() {
     }
 
     @Subscribe
-    fun onLocationServiceEvent(service: locationService) {
+    fun onLocationServiceEvent(service: LocationUpdateService.status) {
         Log.i("onLocationEvent: ${service.isSearching}")
         if (!service.isRunning) {
             dismissSnackBar()
@@ -140,21 +146,6 @@ class ScheduleFragment : PreferenceFragment() {
     @Subscribe fun onLocationChanged(event: locationChanged) {
         showSnackbar(R.string.snackbar_location_updated, Snackbar.LENGTH_SHORT)
         updatePrefs()
-    }
-
-    @Subscribe
-    fun onLocationAccessDenied(event: locationAccessDenied) {
-        if (Config.scheduleOn && Config.useLocation) {
-            Permission.Location.request(activity)
-        }
-    }
-
-    @Subscribe
-    fun onLocationPermissionDialogClosed(event: Permission.Location) {
-        if (!Permission.Location.isGranted) {
-            useLocationPref.isChecked = false
-        }
-        LocationUpdateService.update()
     }
     //endregion
 
