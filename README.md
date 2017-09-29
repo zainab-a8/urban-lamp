@@ -9,7 +9,7 @@ use your phone comfortably at night.
 
 * Schedule Red Moon to run from sunset to sunrise, or at custom times.
 * Use the default color profiles, or set custom color, intensity, and dim levels.
-* Automatically pause in apps that are secured against overlays, or those you choose.
+* Automatically pause in apps secured against overlays, or those you choose.
 * Quickly start, stop, and switch filters via notification, tile (Android 7.0+), or widget.
 
 [<img src="https://gitlab.com/fdroid/artwork/raw/master/badge/get-it-on.png"
