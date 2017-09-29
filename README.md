@@ -36,7 +36,7 @@ other parts of their life. That's where you come in! You can:
 - Help translate using [Weblate]. 
 - Join the chat at [![Matrix](art/badge_matrix.svg)](https://matrix.to/#/#redmoon:matrix.org),
     [![IRC](art/badge_irc.svg)](https://kiwiirc.com/client/irc.freenode.net/#redmoon),
-    or [![Gitter](art/badge_gitter.svg)](https://gitter.im/LibreShift/red-moon)
+    or [![Gitter](https://img.shields.io/gitter/room/LibreShift/red-moon.svg)](https://gitter.im/LibreShift/red-moon)
 
 ## Screenshots & translation stats
 
