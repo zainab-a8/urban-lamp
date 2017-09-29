@@ -1,7 +1,6 @@
 <img alt="Red Moon Icon" align="right" height="256" src="https://lut.im/3IqLwsAZWH/piFLRMOgNLWmiqB8.png">
 
-# Red Moon [![Translation status](https://hosted.weblate.org/widgets/red-moon/-/svg-badge.svg)](https://hosted.weblate.org/engage/red-moon/?utm_source=widget)
-
+# Red Moon [![License](https://img.shields.io/badge/license-GPL--3.0%2B-bd0000.svg)](COPYING "License: GPL-3.0+") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/libreshift/red-moon.svg)](http://isitmaintained.com/project/libreshift/red-moon "Average time to resolve an issue") [![Translation status](https://hosted.weblate.org/widgets/red-moon/-/svg-badge.svg)](https://hosted.weblate.org/engage/red-moon/?utm_source=widget)
 <!-- [![Release](https://img.shields.io/github/release/qubyte/rubidium.svg)](https://github.com/raatmarien/red-moon/releases) -->
 
 Blue light may suppress the production of melatonin, the sleep hormone. Red Moon
