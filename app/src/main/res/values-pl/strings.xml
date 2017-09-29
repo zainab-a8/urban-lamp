@@ -56,12 +56,12 @@
 
     <string name="activity_intro">Wprowadzenie</string>
     <string name="menu_show_intro">Powtórz wprowadzenie</string>
-    <string name="activity_secure_suspend">Wstrzymuj w chronionych aplikacjach</string>
+    <string name="activity_secure_suspend">Wstrzymuj w wykluczanych aplikacjach</string>
 
     <string name="notification_action_resume">Wznów</string>
     <string name="notification_action_pause">Wstrzymaj</string>
 
-    <string name="pref_title_secure_suspend">Wstrzymuj filtr w chronionych aplikacjach</string>
+    <string name="pref_title_secure_suspend">Wstrzymuj filtr w wykluczanych aplikacjach</string>
     <string name="dialog_message_permission_usage_stats">W następnym oknie zezwól aplikacji Red Moon na dostęp do użytkowania, aby włączyć tą funkcję.
 
         Red Moon potrzebuje dostępu do użytkowania, żeby zobaczyć czy używasz aplikacji, która nie będzie współpracować z filtrem.</string>
@@ -69,11 +69,9 @@
     <string name="dialog_title_permission_usage_stats">Dostęp do użytkowania</string>
     <string name="text_switch_on">Włączone</string>
     <string name="text_switch_off">Wyłączone</string>
-    <string name="pref_summary_secure_suspend">Niektóre funkcje nie będą działać gdy Red Moon jest włączony*. Na przykład: instalowanie plików APK, udzielanie uprawnień lub używanie aplikacji SuperUser (na zrootowanych urządzeniach).
+    <string name="pref_summary_secure_suspend">Kiedy ta opcja jest włączona, Red Moon automatycznie wstrzyma pracę podczas otwierania wykluczanych aplikacji. Domyślnie są to aplikacje niedziałające* z Red Moonem, np. instalatory aplikacji. Możesz zmienić to zachowanie dla aktualnie uruchomionej aplikacji z paska powiadomień. Przykładowo możesz dodać dodać aplikacje w których barwa ma znaczenie, jak aplikacja aparatu.
 \n
-\nKiedy to ustawienie jest aktywne, Red Moon zostanie automatycznie wstrzymywany w przypadku, gdy któraś z tych funkcji zostanie wywołana.
-\n
-\nTa funkcja może w niewielkim stopniu zmniejszyć żywotność baterii Twojego telefonu. Dodatkowo może nie działać na wszystkich urządzeniach.
+\nTa funkcja może w niewielkim stopniu zmniejszyć żywotność baterii Twojego telefonu.
 \n
 \n*Red Moon działa rysując przezroczystą czerwoną warstwę nad całym ekranem; te aplikacje nie będą działać kiedy jakaś inna aplikacja po nich rysuje. W ten sposób, inne aplikacje nie mogą podstępem skłonić Cię do wybrania opcji, której nie chcesz lub podglądać co wystukujesz na ekranie.</string>
     <string name="slide_title_welcome">Witaj!</string>
@@ -152,4 +150,6 @@
 
     <string name="toast_warning_secured">Niektóre funkcje tej aplikacji mogą nie działać, gdy Red Moon jest uruchomiony.</string>
 
+    <string name="notification_action_whitelist_add">Wyklucz aplikację</string>
+    <string name="notification_action_whitelist_remove">Filtruj aplikację</string>
     </resources>
