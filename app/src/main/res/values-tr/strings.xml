@@ -31,7 +31,7 @@
     <string name="activity_shortcut">Red Moon\'u Aç/Kapa</string>
     <string name="activity_intro">Tanıtım</string>
     <string name="activity_about">Red Moon Hakkında</string>
-    <string name="activity_secure_suspend">Güvenli uygulamalarda duraklat</string>
+    <string name="activity_secure_suspend">Dışlanan uygulamalarda duraklat</string>
     <string name="activity_schedule">Plan</string>
     <string name="activity_timer">Zamanlayıcı</string>
 
@@ -71,7 +71,7 @@
     <!-- Start and stop times will be substituted for %on and %off -->
     <string name="pref_summary_schedule_custom" formatted="false">Özel (%on\'dan %off\'a)</string>
     <string name="pref_summary_schedule_none">Yok</string>
-    <string name="pref_title_secure_suspend">Güvenli uygulamalarda duraklat</string>
+    <string name="pref_title_secure_suspend">Dışlanan uygulamalarda duraklat</string>
     <string name="pref_title_button_backlight">Donanımsal düğme arka ışığı</string>
 
     <string name="pref_title_turn_on">Açma zamanı</string>
@@ -81,13 +81,11 @@
     <string name="pref_title_location">Gündoğumundan günbatımına</string>
     <string name="pref_summary_location_off">Konumunuza göre</string>
 
-    <string name="pref_summary_secure_suspend">Bazı özellikler Red Moon açıkken çalışmayacaktır*. Örneğin APK\'leri yükleme, izinler verme veya (kök erişimi olan aygıtlarda) SuperUser uygulamasını kullanma.\n
- \n
- Bu ayar etkinken, bu özelliklerden biri açıkken Red Moon duraklayacaktır.\n
- \n
- Bu özellik aygıtınızın pil seviyesini biraz düşürebilir. Üstelik, bu özellik tüm aygıtlarda çalışmayabilir.\n
- \n
- *Red Moon tüm ekran üzerine saydam kırmızı bir katman çizerek çalışır; bu uygulamalar başka uygulama onların üzerine çizim yapıyorsa çalışmayacaktır. Bu yolla, başka hiçbir uygulama sizi istemediğiniz bir seçeneği seçmek için kandıramaz veya ne yaptığınızı anlamak için dokunuşlarınızı izleyemez.</string>
+    <string name="pref_summary_secure_suspend">Bu ayar etkinken, Red Moon belli uygulamalar açıkken kendiliğinden duraklayacaktır. Öntanımlı olarak, bu, apk yükleme gibi Red Moon çalışıyorken* çalışmayacak uygulamaları içerir. Bildirimlerden geçerli uygulamanın geçerli ekranı için bu davranışı değiştirebilirsiniz. Örneğin, kamera gibi renge duyarlı uygulamaları eklemek isteyebilirsiniz.
+\n
+\nBu özellik aygıtınızın pil düzeyini biraz düşürebilir.
+\n
+\n*Bazı uygulamalar, kendilerini müdahaleden sakınmak için örten tabakalara karşı korumalıdır, örneğin istemediğiniz bir uygulamayı yüklemek için kandırılmanız gibi. Ekran üzerine saydam kırmızı katman çizerek çalışan Red Moon açıkken, o uygulamalar dokunmaları yanıtlamayacaktır.</string>
 
     <!-- Short strings; might be used in multiple places -->
     <string name="button_add_filter">Ekle</string>
@@ -190,4 +188,6 @@
     <string name="time_toggle_options_array_0">Elle</string>
     <string name="time_toggle_options_array_1">Kendiliğinden (güneş)</string>
     <string name="time_toggle_options_array_2">Kendiliğinden (özel)</string>
-</resources>
+<string name="notification_action_whitelist_add">Uygulamayı dışla</string>
+    <string name="notification_action_whitelist_remove">Uygulamayı süz</string>
+    </resources>
