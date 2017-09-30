@@ -32,7 +32,7 @@
     <string name="activity_intro">Tanıtım</string>
     <string name="activity_about">Red Moon Hakkında</string>
     <string name="activity_secure_suspend">Dışlanan uygulamalarda duraklat</string>
-    <string name="activity_schedule">Plan</string>
+    <string name="activity_schedule">Zamanlama</string>
     <string name="activity_timer">Zamanlayıcı</string>
 
     <!-- Menu Items -->
@@ -65,9 +65,9 @@
     <string name="pref_title_lower_brightness">Parlaklığı azalt</string>
 
     <string name="pref_title_time_toggle">Zamanlayıcı</string>
-    <string name="pref_title_schedule">Plan</string>
+    <string name="pref_title_schedule">Zamanlama</string>
     <!-- Start and stop times will be substituted for %on and %off -->
-    <string name="pref_summary_schedule_sun" formatted="false">Günbatımından (%on) gündoğumuna (%off)</string>
+    <string name="pref_summary_schedule_sun" formatted="false">Gün batımından (%on) gün doğumuna (%off)</string>
     <!-- Start and stop times will be substituted for %on and %off -->
     <string name="pref_summary_schedule_custom" formatted="false">Özel (%on\'dan %off\'a)</string>
     <string name="pref_summary_schedule_none">Yok</string>
@@ -78,7 +78,7 @@
     <string name="pref_title_turn_off">Kapatma zamanı</string>
     <string name="pref_title_start_time">Başlangıç zamanı</string>
     <string name="pref_title_stop_time">Bitiş zamanı</string>
-    <string name="pref_title_location">Gündoğumundan günbatımına</string>
+    <string name="pref_title_location">Gün doğumundan gün batımına</string>
     <string name="pref_summary_location_off">Konumunuza göre</string>
 
     <string name="pref_summary_secure_suspend">Bu ayar etkinken, Red Moon belli uygulamalar açıkken kendiliğinden duraklayacaktır. Öntanımlı olarak, bu, apk yükleme gibi Red Moon çalışıyorken* çalışmayacak uygulamaları içerir. Bildirimlerden geçerli uygulamanın geçerli ekranı için bu davranışı değiştirebilirsiniz. Örneğin, kamera gibi renge duyarlı uygulamaları eklemek isteyebilirsiniz.
@@ -102,7 +102,7 @@
     <string name="pref_title_version">Sürüm</string>
 
     <string name="pref_title_project_page">Proje sayfasını ziyaret et</string>
-    <string name="pref_summary_project_page">Daha fazla bilgi bulun, geri bildirim gönderin ve katkıda bulunun</string>
+    <string name="pref_summary_project_page">Daha çok bilgi bulun, geri bildirim gönderin ve katkıda bulunun</string>
 
     <string name="pref_title_email_developer">Geliştiricilere e-mail gönder</string>
     <string name="pref_summary_email_developer">Bize ulaşmak için başka bir yol</string>
@@ -152,7 +152,7 @@
     <string name="slide_text_welcome">Red Moon\'a hoş geldiniz!</string>
 
     <string name="slide_title_protect_eyes">Gözlerinizi korur</string>
-    <string name="slide_text_protect_eyes">Geceleri, telefonunuza bakmak gözlerinizi rahatsız ettiğinde,  ekranınızı karartmak için Red Moon\'u kullanabilirsiniz.</string>
+    <string name="slide_text_protect_eyes">Geceleri telefonunuza bakmak gözlerinizi rahatsız ettiğinde, ekranınızı karartmak için Red Moon\'u kullanabilirsiniz.</string>
 
     <string name="slide_title_improve_sleep">Uykunuzu iyileştirir</string>
     <string name="slide_text_improve_sleep">Mavi ışık geceleri uyumanızı  sağlayan Melatonin hormonu üretimini baskılar.  Red Moon daha kolay uyumanız için ekranınızdaki  mavi ışığı kaldırır.</string>
