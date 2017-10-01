@@ -5,7 +5,7 @@
     <string name="activity_shortcut">Comutator Red Moon</string>
     <string name="activity_intro">Introducere</string>
     <string name="activity_about">Despre Red Moon</string>
-    <string name="activity_secure_suspend">Suspendă în activități securizate</string>
+    <string name="activity_secure_suspend">Suspendă în aplicații excluse</string>
     <string name="activity_schedule">Orar</string>
     <string name="activity_timer">Temporizator</string>
 
@@ -39,7 +39,7 @@
     <string name="pref_summary_schedule_sun" formatted="false">Răsărit (%on) la apus (%off)</string>
     <string name="pref_summary_schedule_custom" formatted="false">Personalizat (%on la %off)</string>
     <string name="pref_summary_schedule_none">Nici unul</string>
-    <string name="pref_title_secure_suspend">Suspendă în activități securizate</string>
+    <string name="pref_title_secure_suspend">Suspendă în aplicații excluse</string>
     <string name="pref_title_button_backlight">Iluminare buton fizic</string>
 
     <string name="pref_title_turn_on">Activează la</string>
@@ -49,13 +49,11 @@
     <string name="pref_title_location">Răsărit la apus</string>
     <string name="pref_summary_location_off">Pe baza locației</string>
 
-    <string name="pref_summary_secure_suspend">Anumite funcții nu vor fi disponibile când Red Moon este activat*. Spre exemplu, instalarea APK-urilor, acordarea permisiunilor, sau utilizarea aplicației SuperUser (pe dispozitive root-ate).
-\n
-\nCând setarea este activată, Red Moon se va suspenda când una din aceste funcții este accesată.
-\n
-\nAceastă funcționalitate ar putea să reducă durata de viață a bateriei dispozitivului. De asemenea, această funcționalitate ar putea să nu fie disponibilă pentru toate dispozitivele.
-\n
-\n*Red Moon funcționează prin afișarea unui filtru roșu pe întreaga suprafață a ecranului; aceste aplicații nu vor funcționa dacă alte aplicații afișează deasupra lor. În acest mod, nici o altă aplicație nu vă poate păcăli să alegeți o opțiune pe care nu o doriți, sau să vă urmărească atingerile pentru a vă monitoriza activitatea.</string>
+    <string name="pref_summary_secure_suspend">Când setarea este activată, Red Moon se va suspenda când anumite aplicații sunt deschise. Ca opțiune standard, aceasta include aplicațiile care nu vor funcționa Red Moon este activat*, cum ar fi, instalarea apk-urilor. Puteți schimba această opțiune pentru ecranul curent al aplicației curente din notificare. Spre exemplu, ați putea dori să adăugați aplicații în care culorile sunt importante, cum ar fi Camera. 
+\n 
+\nAceastă funcționalitate ar putea să reducă ușor durata de viață a bateriei dispozitivului.
+\n 
+\nUnele aplicații sunt securizate împotriva aplicațiilor care afișează deasupra lor, pentru a se proteja de interferențe, cum ar fi să fiți păcăliți să instalați o aplicație nedorită. Acestea nu vor răspunde la atingere atât timp cât Red Moon este activat, acesta funcționând prin afișarea unui filtru transparent deasupra ecranului.</string>
 
     <string name="button_add_filter">Adaugă</string>
     <string name="button_remove_filter">Șterge</string>
@@ -146,4 +144,7 @@
     <string name="time_toggle_options_array_0">Manual</string>
     <string name="time_toggle_options_array_1">Automat (soare)</string>
     <string name="time_toggle_options_array_2">Automat (personalizat)</string>
-</resources>
+<string name="notification_action_stop">Oprește</string>
+    <string name="notification_action_whitelist_add">Exclude aplicația</string>
+    <string name="notification_action_whitelist_remove">Filtrează aplicația</string>
+    </resources>
