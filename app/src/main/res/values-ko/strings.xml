@@ -16,7 +16,7 @@
     <string name="pref_category_filter">필터</string>
     <string name="button_add_filter">추가</string>
     <string name="pref_title_appearance">프로파일</string>
-    <string name="notification_status_running">실행 중. APK를 설치하려면 끄세요.</string>
+    <string name="notification_status_running">실행 중. APK를 설치하려면 끄세요</string>
     <string name="notification_status_running_no_warning">실행 중</string>
 <string name="activity_main">Red Moon</string>
     <string name="app_name">Red Moon</string>
@@ -90,7 +90,7 @@
 
     <string name="toast_warning_secured">이 앱의 일부 기능은 Red Moon이 작동 중일 때 작동하지 않을 수 있습니다.</string>
 
-    <string name="snackbar_warning_no_location">위치를 설정하려면 위치 정보를 활성화 하세요</string>
+    <string name="snackbar_warning_no_location">위치를 갱신하려면 위치 서비스를 활성화 하세요</string>
     <string name="snackbar_searching_location">위치를 찾고 있습니다</string>
     <string name="snackbar_location_updated">위치를 찾았습니다!</string>
     <string name="help_snackbar_text">스위치를 눌러 Red Moon 활성화</string>
@@ -141,7 +141,7 @@
     <string name="add_new_profile_edit_hint">프로파일 이름</string>
     <string name="remove_profile_dialog_title">이 프로파일을 삭제할까요?</string>
     <string name="searching_location">위치 검색 중</string>
-    <string name="toast_warning_no_location">위치 서비스를 활성화하여 위치 갱신</string>
+    <string name="toast_warning_no_location">위치를 갱신하려면 위치 서비스를 활성화 하세요</string>
     <string name="set_dialog">설정</string>
     <string name="time_toggle_title">자동 토글</string>
     <string name="location">위치</string>
