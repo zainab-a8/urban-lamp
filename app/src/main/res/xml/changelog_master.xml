@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
-    <release version="3.2.0" versioncode="33" >
+    <release version="3.3.1" versioncode="35" >
+        <change>Update translations: Serbian, Japanese, Polish, Turkish, Romanian, Ukrainian, Korean</change>
+    </release>
+    <release version="3.3.0" versioncode="34" >
         <change>Pause in *excluded* apps: you can now control this feature via the notification</change>
         <change>Added Romanian translation (Ervin Bolat).</change>
         <change>Fixed a bug where backlight brightness was not restored</change>
