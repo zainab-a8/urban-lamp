@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!--
  * Copyright (c) 2016  Marien Raat <marienraat@riseup.net>
- * Copyright (c) 2017  Stephen Michel <s@smichel.me>
  * SPDX-License-Identifier: GPL3.0+
  *
  * This file incorporates work covered by the following copyright and
@@ -106,7 +105,7 @@
     <string name="pref_summary_email_developer">Een alternatieve manier om ons te bereiken</string>
     <string name="pref_title_translators">Help met vertalen</string>
     <!-- Add your name or handle here if you would like credit in the app -->
-    <string name="pref_summary_translators">Vertalers: smichel17, raatmarien, ltGuillaume</string>
+    <string name="pref_summary_translators">Vertalers: ltGuillaume, raatmarien</string>
 
     <string name="pref_title_integration">Integratie met andere apps</string>
     <string name="pref_summary_integration">Sommige apps, zoals LibreTasks of Tasker, automatiseren taken na specifieke gebeurtenissen. Red Moon stuurt een openbare notificatie wanneer het in- of uitgeschakeld wordt, zodat dit soort apps hierop kan reageren. Als je dit soort apps niet gebruikt, dan kun je de volgende paragraaf negeren.\n\nRed Moon verstuurt een publieke Intent met de actie `com.jmstudios.redmoon.RED_MOON_TOGGLED`. De Intent bevat een boolean extra met de key `jmstudios.bundle.key.FILTER_IS_ON`, die aangeeft of Red Moon is in- of uitgeschakeld.</string>
