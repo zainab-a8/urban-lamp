@@ -95,7 +95,7 @@
     <string name="pref_summary_location_off">Desfase horario desde ubicación</string>
     <string name="notification_action_turn_on">Reanudar</string>
     <string name="notification_action_turn_off">Pausar</string>
-    <string name="notification_action_stop">Pausar</string>
+    <string name="notification_action_stop">Detener</string>
 
     <string name="dialog_message_permission_overlay">Activa las superposiciones en la siguiente pantalla para que Red Moon pueda activar el filtro.</string>
 
@@ -135,4 +135,10 @@
 <string name="menu_restore_default_filters">Restaurar filtros por defecto</string>
     <string name="filter_name_dim_only">Tenue solamente</string>
 
+    <string name="activity_schedule">Horario</string>
+    <string name="notification_action_whitelist_add">Aplicaciones excluidas</string>
+    <string name="notification_action_whitelist_remove">Filtrar aplicaciones</string>
+    <string name="pref_title_schedule">Horario</string>
+    <string name="pref_summary_schedule_custom" formatted="false">Personalizado (%on hasta %off)</string>
+    <string name="pref_summary_schedule_none">Desactivado</string>
     </resources>
