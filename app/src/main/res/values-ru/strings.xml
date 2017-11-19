@@ -48,7 +48,7 @@
     <string name="help_snackbar_text">Нажмите на переключатель, чтобы включить Red Moon</string>
 
     <!-- Dialog -->
-    <string name="dialog_title_add_filter">Введите названия профиля</string>
+    <string name="dialog_title_add_filter">Введите название профиля</string>
     <string name="edit_hint_add_filter">Названия профиля</string>
     <string name="dialog_title_remove_filter">Удалить этот профиль?</string>
     <string name="dialog_button_ok">OK</string>
@@ -94,7 +94,7 @@
     <string name="slide_title_welcome">Добро пожаловать!</string>
     <string name="slide_text_welcome">Добро пожаловать в Red Moon!</string>
 
-    <string name="slide_title_protect_eyes">Защита ваших глаз</string>
+    <string name="slide_title_protect_eyes">Защита глаз</string>
     <string name="slide_text_protect_eyes">Ночью, когда экран вашего телефона
 режет вам глаза, вы можете использовать Red Moon, чтобы затемнить экран.</string>
 
@@ -148,7 +148,7 @@
     <string name="pref_entry_button_backlight_turn_off">Выключить</string>
 
     <string name="action_next_profile">Следующий профиль</string>
-    <string name="set_dialog">Задать</string>
+    <string name="set_dialog">Настроить</string>
     <string name="notification_status_running">Работаю. Остановите перед установкой новых приложений</string>
     <string name="notification_status_running_no_warning">Запущено</string>
 <string name="menu_restore_default_filters">Восстановить фильтры по умолчанию</string>
@@ -165,6 +165,6 @@
 
     <string name="toast_warning_secured">Некоторые функции этого приложения могут не работать, пока запущено Red Moon.</string>
 
-    <string name="notification_action_whitelist_add">Добавить приложение в привелегированные</string>
-    <string name="notification_action_whitelist_remove">Удалить приложение из привелегированных</string>
+    <string name="notification_action_whitelist_add">Добавить приложение в привилегированные</string>
+    <string name="notification_action_whitelist_remove">Удалить приложение из привилегированных</string>
     </resources>
