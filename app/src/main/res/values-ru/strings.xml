@@ -72,7 +72,7 @@
     <string name="activity_intro">Введение</string>
     <string name="menu_show_intro">Повторить введение</string>
 
-    <string name="notification_action_pause">Пауза</string>
+    <string name="notification_action_pause">Приостановить</string>
 
     <string name="notification_action_resume">Продолжить</string>
     <string name="activity_secure_suspend">Приостанавливать в привилегированных приложениях</string>
@@ -125,7 +125,7 @@
     <string name="dialog_title_permission_write_settings">Меняю настройки системы</string>
     <string name="dialog_message_permission_write_settings">Разрешите изменение настроек системы в следующем окне, чтобы позволить Red Moon изменять уровень яркости.</string>
 
-    <string name="notification_status_off">Выкл</string>
+    <string name="notification_status_off">Выкл.</string>
     <string name="notification_action_turn_on">Включить</string>
     <string name="notification_action_turn_off">Выключить</string>
     <string name="notification_action_stop">Выключить</string>
@@ -149,7 +149,7 @@
 
     <string name="action_next_profile">Следующий профиль</string>
     <string name="set_dialog">Настроить</string>
-    <string name="notification_status_running">Работаю. Остановите перед установкой новых приложений</string>
+    <string name="notification_status_running">Запущено. Остановите перед установкой новых приложений</string>
     <string name="notification_status_running_no_warning">Запущено</string>
 <string name="menu_restore_default_filters">Восстановить фильтры по умолчанию</string>
     <string name="filter_name_dim_only">Только затемнение</string>
