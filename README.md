@@ -29,9 +29,6 @@ into obscurity when the primary developer loses interest or becomes busy in
 other parts of their life. That's where you come in! You can:
 
 - Read through the [issues] and give a <g-emoji alias="+1" class="emoji" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44d.png" ios-version="6.0">👍</g-emoji> to the ones you care about most.
-    - Share opinions and ideas on issues tagged [`feedback wanted`] or [`needs design`].
-    - Try to find steps to trigger bugs tagged [`can't reproduce`].
-    - Android developers: some issues [`need technical info`].
 - Open [new issues] with feedback, feature requests, or bug reports.
 - Help translate using [Weblate]. 
 - Join the chat at [![Matrix](art/badge_matrix.svg)](https://matrix.to/#/#redmoon:matrix.org),
@@ -112,14 +109,7 @@ are all released in the public domain, namely:
 
 \* Google Play and the Google Play logo are trademarks of Google Inc.
 
-[irc]: https://kiwiirc.com/client/irc.freenode.net/#redmoon
-[gitter]: https://gitter.im/LibreShift/red-moon
-[matrix]: https://matrix.to/#/#redmoon:matrix.org
 [issues]: https://github.com/raatmarien/red-moon/issues
 [new issues]: https://github.com/raatmarien/red-moon/issues/new
 [Weblate]: https://hosted.weblate.org/projects/red-moon/strings/
 [labels]: https://github.com/LibreShift/red-moon/labels
-[`feedback wanted`]: https://github.com/LibreShift/red-moon/labels/feedback%20wanted
-[`needs design`]: https://github.com/LibreShift/red-moon/labels/needs%20design
-[`can't reproduce`]: https://github.com/LibreShift/red-moon/labels/can%27t%20reproduce
-[`need technical info`]: https://github.com/LibreShift/red-moon/labels/needs%20technical%20info
