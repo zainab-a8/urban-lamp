@@ -108,7 +108,7 @@
     <string name="notification_action_turn_on">تشغيل</string>
     <string name="notification_action_turn_off">إيقاف</string>
     <string name="notification_action_stop">إيقاف</string>
-    <string name="notification_action_next_filter">الفلتر التالي</string>
+    <string name="notification_action_next_filter">المرشح التالي</string>
 
     <string name="pref_category_button_backlight_disclaimer">قد لا تتأثر بعض الاجهزة</string>
     <string name="pref_title_button_backlight">إضاءة أزرار التنقل للجهاز</string>
