@@ -23,8 +23,8 @@
     <string name="pref_title_turn_off">Suspendre à</string>
     <string name="location">Localisation</string>
     <string name="location_not_set">Localisation non définie</string>
-    <string name="latitude_short">Lat</string>
-    <string name="longitude_short">Long</string>
+    <string name="latitude_short">Latitude</string>
+    <string name="longitude_short">Longitude</string>
     <string name="snackbar_searching_location">Recherche de localisation</string>
 
     <string name="menu_dark_theme">Thème sombre</string>
@@ -126,9 +126,9 @@
     <string name="pref_title_location">Du lever au coucher du soleil</string>
     <string name="pref_title_button_backlight">Rétro-éclairage des boutons physiques</string>
 
-    <string name="pref_summary_integration">Certaines applications, comme LibreTasks ou Tasker, vous permettent d’automatiser les tâches lorsque certains événements se produisent. Red Moon envoie une notification publique lorsqu’il s’allume et s’éteint, donc ces applications peuvent répondre. Si vous n\'utilisez ni développez pas une de ces applications, vous pouvez ignorer le paragraphe suivant.
-\n
-\nRed Moon diffuse une intention publique avec l’action « com.jmstudios.redmoon.RED_MOON_TOGGLED ». L’intention contient un valeur booléan supplémentaire avec la clé « jmstudios.bundle.key.FILTER_IS_ON », qui indique si Red Moon est basculant ou non.</string>
+    <string name="pref_summary_integration">Certaines applications, comme LibreTasks ou Tasker, vous permettent d’automatiser les tâches lorsque certains événements se produisent. Red Moon envoie une notification publique lorsqu’il s’allume et s’éteint, donc ces applications peuvent répondre. Si vous n\'utilisez ni développez pas une de ces applications, vous pouvez ignorer le paragraphe suivant. 
+\n 
+\nRed Moon diffuse une intention publique avec l’action « com.jmstudios.redmoon.RED_MOON_TOGGLED ». L’intention contient un booléen supplémentaire avec la clé « jmstudios.bundle.key.FILTER_IS_ON », qui indique si Red Moon s\'active ou se désactive.</string>
 
     <string name="dialog_title_permission_overlay">Superposition sur d\'autres applications</string>
     <string name="dialog_message_permission_overlay">Autoriser la superposition sur d\'autres applications pour permettre à Red Moon d\'activer le filtre.</string>
