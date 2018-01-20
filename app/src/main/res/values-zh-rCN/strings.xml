@@ -9,7 +9,7 @@
     <string name="pref_category_other">其他</string>
 
     <string name="button_remove_filter">删除</string>
-    <string name="pref_title_location">位置</string>
+    <string name="pref_title_location">日出到日落</string>
     <string name="latitude_short">纬度</string>
     <string name="longitude_short">经度</string>
     <string name="dialog_button_ok">确定</string>
@@ -30,7 +30,7 @@
     <string name="pref_title_project_page">浏览官方网站</string>
     <string name="shortcut_title_toggle">切换</string>
     <string name="help_snackbar_text">点击按钮切换红月模式</string>
-    <string name="pref_title_email_developer">给我发送邮件：marienraat@riseup.net</string>
+    <string name="pref_title_email_developer">给开发者发送邮件</string>
     <string name="menu_dark_theme">暗黑主题</string>
     <string name="pref_title_turn_on">恢复时间</string>
     <string name="pref_title_turn_off">中止时间</string>
@@ -43,7 +43,7 @@
     <string name="filter_name_custom">自定义</string>
     <string name="filter_name_default">默认</string>
     <string name="filter_name_bed_reading">阅读</string>
-    <string name="pref_summary_email_developer">发邮件给我报告Bug或者提意见</string>
+    <string name="pref_summary_email_developer">另一个联系我们的方式</string>
     <string name="pref_summary_project_page">查看更多信息，提交反馈和贡献</string>
     <string name="snackbar_warning_no_location">启用位置服务来更新位置</string>
     <string name="toast_warning_install">滤镜开启时无法安装应用。</string>
@@ -62,7 +62,7 @@
     <string name="notification_status_running">运行中……需要暂停来安装APK</string>
 <string name="activity_intro">简介</string>
     <string name="activity_about">关于红月</string>
-    <string name="activity_secure_suspend">在安全应用处暂停</string>
+    <string name="activity_secure_suspend">在被排除的应用处暂停</string>
     <string name="menu_restore_default_filters">恢复默认滤镜</string>
     <string name="menu_show_intro">重放简介</string>
     <string name="menu_about">关于</string>
@@ -76,15 +76,16 @@
 
     <string name="pref_category_button_backlight_disclaimer">对某些设备不起作用</string>
 
-    <string name="pref_title_secure_suspend">在安全应用处暂停</string>
+    <string name="pref_title_secure_suspend">在被排除的应用处暂停</string>
     <string name="pref_title_button_backlight">硬件按钮背光</string>
 
     <string name="pref_summary_location_off">基于时间（定时）</string>
 
-    <string name="pref_summary_secure_suspend">有些功能在红月运行时无法使用。例如，安装apk、获得权限或者使用SuperUser（在root后的手机上）等。
-\n当此设置开启时，红月会在这些功能开启时暂停。
-\n这个功能会稍微减少您设备电池的使用寿命。并非所有设备均支持此功能。
-\n红月通过在整个手机屏幕上覆盖一层红色图层达到效果。这些应用在其他应用覆盖的时候运行。这样，没有其他的应用能试图欺骗您点选不必要的选项，或者记录您的手指活动。</string>
+    <string name="pref_summary_secure_suspend">当该应用启用时，红月将会在特定应用开启时暂停。一般说来，这包括了那些在红月运行时无法工作的应用*，如应用安装器。您可以在通知中改变对当前占据屏幕的应用的应对方式。比如说，您也许希望添加会被颜色变化所影响的应用，如相机。
+\n
+\n该特性会稍微减少您设备的电池寿命。
+\n
+\n*一些应用被保护在覆盖层之外，以防它们受到干扰，如欺骗您安装您不打算安装的应用。它们在红月生效时不会回应触碰操作，因为红月正是通过绘制一红色透明覆盖层来工作的。</string>
 
     <string name="text_switch_on">开启</string>
     <string name="text_switch_off">关闭</string>
@@ -127,4 +128,20 @@
     <string name="pref_entry_button_backlight_turn_off">关闭</string>
 
     <string name="location">位置</string>
+    <string name="activity_schedule">计划</string>
+    <string name="notification_status_paused_with_info">已暂停。移除通知以停止。</string>
+    <string name="notification_action_whitelist_add">排除应用</string>
+    <string name="notification_action_whitelist_remove">过滤应用</string>
+    <string name="pref_title_schedule">计划</string>
+    <string name="pref_summary_schedule_sun" formatted="false">日出（%on）到日落（%off）</string>
+    <string name="pref_summary_schedule_custom" formatted="false">自定义（%on 到 %off）</string>
+    <string name="pref_summary_schedule_none">无</string>
+    <string name="pref_title_start_time">开始时间</string>
+    <string name="pref_title_stop_time">停止时间</string>
+    <string name="pref_title_translators">帮助翻译</string>
+    <string name="pref_summary_translators">翻译者：smichel17、raatmarien</string>
+
+    <string name="toast_warning_secured">红月的一些特性在其运行时可能无法生效。</string>
+
+    <string name="action_next_profile">下一设定</string>
     </resources>
