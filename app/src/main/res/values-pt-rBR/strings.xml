@@ -5,9 +5,9 @@
     <string name="activity_intro">Introdução</string>
     <string name="menu_show_intro">Repetir introdução</string>
 
-    <string name="notification_status_paused">Pausado</string>
+    <string name="notification_status_paused">Suspenso</string>
     <string name="notification_action_resume">Retomar</string>
-    <string name="notification_action_pause">Pausar</string>
+    <string name="notification_action_pause">Suspender</string>
 
     <string name="pref_category_filter">Perfil</string>
     <string name="activity_shortcut">Alternar Red Moon</string>
@@ -76,22 +76,20 @@
 
     <string name="pref_title_dim_level">Nível de escurecimento</string>
     <string name="longitude_short">Longitude</string>
-    <string name="activity_secure_suspend">Suspender em aplicativos seguros</string>
+    <string name="activity_secure_suspend">Suspender em aplicativos excluídos</string>
 
-    <string name="pref_title_secure_suspend">Suspender em aplicativos seguros</string>
-    <string name="pref_summary_secure_suspend">Alguns recursos não funcionarão enquanto o Red Moon estiver ativado*. Por exemplo, ao instalar APKs, conceder permissões ou utilizar o aplicativo SuperUser (em aparelhos com root).
-
-        Quando esse recurso estiver ativado, o Red Moon irá suspender automaticamente enquanto um desses recursos estiver aberto.
-
-        Esse recurso pode diminuir ligeiramente a duração da bateria do seu dispositivo. Além disso, este recurso pode não funcionar em todos os dispositivos.
-
-        *Red Moon funciona com uma camada transparente vermelha sobrepondo toda a tela; esses aplicativos não funcionarão se outro aplicativo estiver sobrepondo sobre eles. Funciona dessa forma para que nenhum outro aplicativo possa te enganar a selecionar uma opção que você não queira selecionar. Ou então, fique de olho nos seus toques na tela para descobrir o que está acontecendo.</string>
+    <string name="pref_title_secure_suspend">Suspender em aplicativos excluídos</string>
+    <string name="pref_summary_secure_suspend">Quando este recurso for ativado, o Red Moon irá automaticamente suspender quando certos aplicativos estiverem abertos. Por padrão, isto inclui aplicativos que não funcionam quando o Red Moon estiver em execução*, como por exemplo, ao instalar APKs. Você pode alterar este comportamento para a tela atual do aplicativo atual a partir da notificação. Por exemplo, você pode querer adicionar aplicativos sensíveis a cores, como a câmer.
+\n
+\nEste recurso pode diminuir ligeiramente a duração da bateria do seu dispositivo.
+\n
+\n*Alguns aplicativos são protegidos contra sobreposição de tela para protegê-los contra interferências, como enganá-lo ao instalar um aplicativo que você não deseja. Eles não responderão aos toques quando o Red Moon estiver ativo, já que ele funciona desenhando uma camada vermelha transparente sobre a tela.</string>
     <string name="text_switch_on">Ligado</string>
     <string name="text_switch_off">Desligado</string>
     <string name="dialog_title_permission_usage_stats">Acesso ao uso</string>
-    <string name="dialog_message_permission_usage_stats">Permita que o Red Moon acesse estatísticas de uso do aplicativo na próxima tela para pausar em aplicativos seguros.
-
-        O Red Moon necessita do acesso ao uso para determinar se você está usando um aplicativo que não irá funcionar quando o Red Moon estiver ligado.</string>
+    <string name="dialog_message_permission_usage_stats">Permita o acesso às estatísticas de uso dos aplicativos na próxima tela para permitir que o Red Moon suspenda em aplicativos protegidos.
+\n
+\nO Red Moon necessita do acesso ao uso para determinar se você está usando um aplicativo que não irá funcionar quando o Red Moon estiver ativo.</string>
 
     <string name="menu_about">Sobre</string>
     <string name="activity_about">Sobre o Red Moon</string>
@@ -153,4 +151,5 @@
 
     <string name="filter_name_dim_only">Apenas escurecer</string>
 
+    <string name="notification_status_paused_with_info">Suspenso. Descarte a notificação para parar.</string>
     </resources>
