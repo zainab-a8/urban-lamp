@@ -141,4 +141,7 @@
     <string name="pref_summary_schedule_none">Keine</string>
     <string name="pref_title_start_time">Beginn</string>
     <string name="pref_title_stop_time">Ende</string>
+    <string name="pref_title_translators">Beim Übersetzen helfen</string>
+    <string name="pref_summary_translators">Übersetzer: smichel17, elumbella</string>
+
     </resources>
