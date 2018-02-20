@@ -98,7 +98,7 @@
     <!-- Snackbar -->
     <string name="snackbar_warning_no_location">Schakel Locatie-services in om de locatie te kunnen bijwerken</string>
     <string name="snackbar_searching_location">Naar locatie zoeken</string>
-    <string name="snackbar_location_updated">Locatie gevonden</string>
+    <string name="snackbar_location_updated">Locatie gevonden!</string>
     <string name="help_snackbar_text">Druk op de schakelaar om Red Moon aan te zetten</string>
 
     <!-- Dialog -->
