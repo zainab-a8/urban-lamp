@@ -3,7 +3,7 @@
     <string name="app_name">Red Moon</string>
     <string name="activity_main">Red Moon</string>
     <string name="activity_shortcut">Pulsante di Red Moon</string>
-    <string name="activity_intro">Introduzione</string>
+    <string name="activity_intro">Intro</string>
     <string name="menu_show_intro">Mostra Introduzione</string>
 
     <string name="notification_status_paused">In pausa</string>
@@ -26,7 +26,7 @@
     <string name="time_toggle_title">Modalità di attivazione</string>
     <string name="pref_title_turn_on">Riprendi alle</string>
     <string name="pref_title_turn_off">Ferma alle</string>
-    <string name="pref_title_location">Posizione</string>
+    <string name="pref_title_location">Dall\'alba al tramonto</string>
     <string name="location_not_set">Posizione non impostata</string>
     <string name="latitude_short">Latitudine</string>
     <string name="longitude_short">Longitudine</string>
@@ -34,8 +34,8 @@
 
     <string name="menu_dark_theme">Tema scuro</string>
 
-    <string name="pref_title_email_developer">Inviami mail all\'indirizzo marienraat@riseup.net</string>
-    <string name="pref_summary_email_developer">Inviami mail con bug e proposte</string>
+    <string name="pref_title_email_developer">Contatta gli sviluppatori</string>
+    <string name="pref_summary_email_developer">Un metodo alternativo di contatto</string>
     <string name="pref_title_project_page">Visita la pagina del progetto </string>
     <string name="pref_summary_project_page">Trova più informazioni, lascia feedback e contribuisci</string>
     <string name="toast_warning_install">Non sarai in grado di installare APK quando il filtro é in esecuzione.</string>
@@ -55,16 +55,16 @@
     <string name="slide_text_welcome">Benvenuto in Red Moon!</string>
 
     <string name="slide_title_protect_eyes">Protegge i tuoi occhi</string>
-    <string name="slide_text_protect_eyes">Di notte, quando guardare il tuo smartphone fa male agli occhi, puoi usare Red Moon per oscurare il tuo schermo.</string>
+    <string name="slide_text_protect_eyes">Di notte, quando guardare il tuo cellulare fa male agli occhi, puoi usare Red Moon per attenuare lo schermo.</string>
 
     <string name="slide_title_improve_sleep">Migliora il sonno</string>
-    <string name="slide_text_improve_sleep">La luce blu sopprime la produzione di Melatonina, un ormone che ti aiuta ad addormentarti la notte. Red Moon rimuove la luce blu dal tuo schermo, facendo sì che tu possa addormentarti facilmente.</string>
+    <string name="slide_text_improve_sleep">La luce blu sopprime la produzione di melatonina, un ormone che ti aiuta ad addormentarti la notte. Red Moon rimuove la luce blu dal tuo schermo, assicurando che tu possa addormentarti facilmente.</string>
 
     <string name="slide_title_get_started">Inizia!</string>
-    <string name="slide_text_get_started">Per abilitare Red Moon, premi il pulsante in alto a destra.</string>
+    <string name="slide_text_get_started">Attiva e disattiva Red Moon con il pulsante in alto a destra.</string>
 
     <string name="filter_name_custom">Personalizzato</string>
-    <string name="filter_name_default">Default</string>
+    <string name="filter_name_default">Predefinito</string>
     <string name="filter_name_bed_reading">Lettura</string>
 
     <string name="time_toggle_options_array_0">Manualo</string>
@@ -81,8 +81,8 @@
     <string name="set_dialog">Imposta</string>
     <string name="notification_status_running">In esecuzione. Mettere in pausa per installare apk</string>
 <string name="activity_about">Riguardo Red Moon</string>
-    <string name="activity_secure_suspend">Ferma nelle app sicure</string>
-    <string name="menu_restore_default_filters">Ripristina filtri di default</string>
+    <string name="activity_secure_suspend">Sospendi nelle app sicure</string>
+    <string name="menu_restore_default_filters">Ripristina filtri predefiniti</string>
     <string name="menu_about">A proposito</string>
 
     <string name="notification_status_running_no_warning">In esecuzione</string>
@@ -94,18 +94,16 @@
 
     <string name="pref_category_button_backlight_disclaimer">Non ha effetto su alcuni dispositivi</string>
 
-    <string name="pref_title_secure_suspend">Ferma nelle app sicure</string>
+    <string name="pref_title_secure_suspend">Sospendi nelle app sicure</string>
     <string name="pref_title_button_backlight">Retroilluminazione bottoni hardware</string>
 
     <string name="pref_summary_location_off">In base alla tua posizione</string>
 
-    <string name="pref_summary_secure_suspend">Alcune funzioni non saranno disponibili quando Red Moon é attiva. Per esempio, l\\\'installazione di APK, la concessione dei permessi, o l\\\'uso dell\\\'app SuperUser (su dispositivi con root).
-
-Quando quest\\\'impostazione é abilitata, Red Moon si fermerà quando una di queste funzioni sarà attiva.
-
-Quest\\\'impostazione potrebbe leggermente diminuire la durata della batteria del vostro dispositivo. In più, quest\\\'impostazione potrebbe non funzionare su tutti i dispositivi.
-
-Red Moon disegna uno strato rosso trasparente sopra l\\\'intero schermo; queste app non funzioneranno se un\\\'altra app le sta disegnando sopra. In questo modo nessun\\\'altra app può ingannarti e farti scegliere un\\\'opzione indesiderata, oppure registrare i tuoi tocchi e capire cosa stai facendo.</string>
+    <string name="pref_summary_secure_suspend">Quando questa funzione è attiva, Red Moon andrà automaticamente in pausa all\'apertura di certe app. Di base, questo include app che non funzionano quando Red Moon è attivo*, ad esempio installando apk. Dalle notifiche puoi cambiare il comportamento per lo schermo attuale dell\'app attuale. Per esempio, potresti voler aggiungere app sensibili al colore, come la fotocamera.
+\n
+\nQuesta funzione potrebbe diminuire la durata della batteria del tuo dispositivo.
+\n
+\n*Alcune app sono protette contro la sovrapposizione in modo da prevenire interferenze, come per esempio ingannarti ad installare applicazioni che non vuoi. Non risponderanno al tatto ogni volta che Red Moon è attivo, poichè quest\'ultimo sovrappone uno strato rosso sullo schermo.</string>
 
     <string name="text_switch_on">Acceso</string>
     <string name="text_switch_off">Spento</string>
@@ -137,4 +135,19 @@ Red Moon userà questi dati solo per determinare che tu stia usando un\\\'app ch
 
     <string name="action_next_profile">Prossimo profilo</string>
     <string name="location">Posizione</string>
+    <string name="activity_schedule">Pianifica</string>
+    <string name="notification_status_paused_with_info">In pausa. Elimina la notifica per arrestare.</string>
+    <string name="notification_action_whitelist_add">Escludi app</string>
+    <string name="notification_action_whitelist_remove">Filtra app</string>
+    <string name="pref_title_schedule">Pianifica</string>
+    <string name="pref_summary_schedule_sun" formatted="false">Dal tramonto (%on) all\'alba (%off)</string>
+    <string name="pref_summary_schedule_custom" formatted="false">Personale (dalle %on alle %off)</string>
+    <string name="pref_summary_schedule_none">Nessuno</string>
+    <string name="pref_title_start_time">Ora di inizio</string>
+    <string name="pref_title_stop_time">Ora di termine</string>
+    <string name="pref_title_translators">Aiuta a tradurre</string>
+    <string name="pref_summary_translators">Translators: smichel17, raatmarien, random</string>
+
+    <string name="toast_warning_secured">Alcune funzioni di questa app potrebbero non funzionare mentre Red Moon è attivo.</string>
+
     </resources>
