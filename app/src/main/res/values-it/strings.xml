@@ -95,7 +95,7 @@
     <string name="pref_category_button_backlight_disclaimer">Non ha effetto su alcuni dispositivi</string>
 
     <string name="pref_title_secure_suspend">Sospendi nelle app sicure</string>
-    <string name="pref_title_button_backlight">Retroilluminazione bottoni hardware</string>
+    <string name="pref_title_button_backlight">Retroilluminazione con pulsante hardware</string>
 
     <string name="pref_summary_location_off">In base alla tua posizione</string>
 
@@ -141,7 +141,7 @@ Red Moon userà questi dati solo per determinare che tu stia usando un\\\'app ch
     <string name="notification_action_whitelist_remove">Filtra app</string>
     <string name="pref_title_schedule">Pianifica</string>
     <string name="pref_summary_schedule_sun" formatted="false">Dal tramonto (%on) all\'alba (%off)</string>
-    <string name="pref_summary_schedule_custom" formatted="false">Personale (dalle %on alle %off)</string>
+    <string name="pref_summary_schedule_custom" formatted="false">Personalizzato (dalle %on alle %off)</string>
     <string name="pref_summary_schedule_none">Nessuno</string>
     <string name="pref_title_start_time">Ora di inizio</string>
     <string name="pref_title_stop_time">Ora di termine</string>
