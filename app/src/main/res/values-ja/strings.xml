@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-    <string name="app_name">レッドムーン</string>
-    <string name="activity_shortcut">レッドムーンの切り替え</string>
+    <string name="app_name">Red Moon</string>
+    <string name="activity_shortcut">Red Moonの切り替え</string>
 
     <string name="notification_status_paused">一時停止しました</string>
 
-    <string name="pref_category_filter">プロファイル</string>
-    <string name="activity_timer">時間のフィルター</string>
-    <string name="pref_title_time_toggle">時間のフィルター</string>
+    <string name="pref_category_filter">フィルター</string>
+    <string name="activity_timer">タイマー</string>
+    <string name="pref_title_time_toggle">タイマー</string>
     <string name="pref_title_startup">スタートアップ</string>
     <string name="pref_category_other">その他</string>
 
@@ -24,10 +24,10 @@
     <string name="pref_title_start_time">開始時刻</string>
     <string name="pref_title_stop_time">停止時刻</string>
     <string name="pref_title_location">日の出から日没</string>
-    <string name="location_not_set">場所が設定されていません</string>
+    <string name="location_not_set">位置情報が設定されていません</string>
     <string name="latitude_short">緯度</string>
     <string name="longitude_short">経度</string>
-    <string name="snackbar_searching_location">場所の検索中</string>
+    <string name="snackbar_searching_location">位置情報の検索中</string>
 
     <string name="menu_dark_theme">ダークテーマ</string>
 
@@ -38,17 +38,17 @@
     <string name="toast_warning_install">Red Moon がオンのときは APK をインストールできません。</string>
     <string name="snackbar_warning_no_location">位置情報サービスを有効にして、場所を更新してください</string>
 
-    <string name="help_snackbar_text">スイッチを押すと、レッドムーンを有効にします</string>
+    <string name="help_snackbar_text">Red Moonを有効にするにはスイッチを押してください</string>
 
-    <string name="dialog_title_add_filter">プロファイル名を入力してください</string>
-    <string name="edit_hint_add_filter">プロファイル名</string>
-    <string name="dialog_title_remove_filter">このプロファイルを削除しますか?</string>
+    <string name="dialog_title_add_filter">フィルター名を入力してください</string>
+    <string name="edit_hint_add_filter">フィルター名</string>
+    <string name="dialog_title_remove_filter">このフィルターを削除しますか?</string>
     <string name="dialog_button_ok">OK</string>
     <string name="dialog_button_cancel">キャンセル</string>
 
     <string name="shortcut_title_toggle">Red Moon の切り替え</string>
 
-    <string name="activity_main">レッドムーン</string>
+    <string name="activity_main">Red Moon</string>
     <string name="filter_name_custom">カスタム</string>
     <string name="filter_name_default">デフォルト</string>
     <string name="filter_name_bed_reading">読書</string>
@@ -77,15 +77,15 @@
         をオン、オフにします。</string>
 
     <string name="activity_intro">はじめに</string>
-    <string name="menu_show_intro">イントロをリプレイ</string>
+    <string name="menu_show_intro">チュートリアル</string>
 
     <string name="text_switch_on">オン</string>
     <string name="text_switch_off">オフ</string>
-    <string name="pref_summary_secure_suspend">この機能を有効にすると、特定のアプリケーションが開いているときに、Red Moon は自動的に一時停止します。デフォルトでは、これには apk をインストールするような、Red Moon を実行している間に動作しないアプリが含まれます*。 この現在のアプリの現在の画面の動作を通知から変更できます。たとえば、カメラのような色に敏感なアプリを追加します。
+    <string name="pref_summary_secure_suspend">この機能が有効で特定のアプリが開かれている時、Red Moonは自動的に一時停止になります。デフォルトでは、apk をインストールするようなRed Moonの実行中に動作しないアプリも一時停止の対象です※。現在開いているアプリでの画面に対する動作は通知から変更可能です。例えばカメラのように色が重要なアプリの追加が考えられます。
 \n
-\nこの機能は、お使いのデバイスのバッテリー残量を少し下げることがあります。
+\nこの機能は、端末のバッテリー残量をわずかに消費する可能性があります。
 \n
-\n* あなたをだまして望まないアプリをインストールするような一部のアプリは、インターフェースをオーバーレイの干渉から自らを保護します。画面上に赤い透明のレイヤーを描画することによって動作するので、Red Moon がオンのとき、それらはタッチに応答しません。</string>
+\n※いらないアプリを騙してインストールさせるような一部アプリは、干渉から守るためオーバーレイに対し保護されます。Red Moonはオンの時、透明な赤色レイヤーを画面上に描画して動作しているため、このようなアプリはタッチに応答しません。</string>
     <string name="dialog_message_permission_usage_stats">次の画面で使用状況へのアクセスを許可して、Red Moon がセキュリティで保護されたアプリを一時停止できるようにします。
 
         Red Moon がオンのときに作動しないと思われるアプリを使用しているかどうかを確認するためだけに、このデータを使用します。</string>
@@ -105,8 +105,8 @@
     <string name="notification_action_turn_off">オフにする</string>
     <string name="notification_action_stop">オフにする</string>
 
-    <string name="pref_summary_location_off">場所に基づいて</string>
-    <string name="notification_action_next_filter">次のプロファイル</string>
+    <string name="pref_summary_location_off">位置情報に基づく</string>
+    <string name="notification_action_next_filter">次のフィルター</string>
 
     <string name="menu_about">アプリについて</string>
     <string name="activity_about">Red Moon について</string>
@@ -131,20 +131,20 @@
 
     <string name="searching_location">場所の検索中</string>
     <string name="toast_warning_no_location">位置情報サービスを有効にして、場所を更新してください</string>
-    <string name="snackbar_location_updated">場所が見つかりました!</string>
+    <string name="snackbar_location_updated">位置情報が見つかりました!</string>
     <string name="location">場所</string>
     <string name="set_dialog">設定</string>
-    <string name="notification_status_running">実行中です。オフにして apk をインストールしてください</string>
+    <string name="notification_status_running">実行中。apkをインストールする際はオフ</string>
     <string name="notification_status_running_no_warning">実行中</string>
 <string name="menu_restore_default_filters">デフォルトのフィルターを復元</string>
     <string name="filter_name_dim_only">減光のみ</string>
 
     <string name="activity_schedule">スケジュール</string>
     <string name="notification_status_paused_with_info">一時停止します。通知を閉じると停止します。</string>
-    <string name="notification_action_whitelist_add">除外アプリ</string>
-    <string name="notification_action_whitelist_remove">アプリのフィルター</string>
+    <string name="notification_action_whitelist_add">アプリを除外</string>
+    <string name="notification_action_whitelist_remove">アプリを包含</string>
     <string name="pref_title_schedule">スケジュール</string>
-    <string name="pref_summary_schedule_sun" formatted="false">日の出 (%on) から日没 (%off)</string>
+    <string name="pref_summary_schedule_sun" formatted="false">日没 (%on) から日の出 (%off)</string>
     <string name="pref_summary_schedule_custom" formatted="false">カスタム (%on から %off)</string>
     <string name="pref_summary_schedule_none">なし</string>
     <string name="pref_title_translators">翻訳を手伝う</string>
