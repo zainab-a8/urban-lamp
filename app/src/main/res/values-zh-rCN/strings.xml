@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">红月</string>
     <string name="activity_main">红月</string>
-    <string name="activity_shortcut">红月切换键</string>
+    <string name="activity_shortcut">切换红月</string>
 
     <string name="notification_status_paused">已暂停</string>
 
@@ -20,11 +20,11 @@
     <string name="pref_title_time_toggle">定时</string>
     <string name="pref_title_startup">启动</string>
     <string name="button_add_filter">添加</string>
-    <string name="pref_title_dim_level">暗度</string>
-    <string name="pref_title_intensity">强度</string>
+    <string name="pref_title_dim_level">光暗</string>
+    <string name="pref_title_intensity">强弱</string>
     <string name="pref_title_color_temp">色温</string>
     <string name="pref_title_lower_brightness">降低亮度</string>
-    <string name="location_not_set">未设置地址</string>
+    <string name="location_not_set">未设置位置</string>
     <string name="dialog_title_remove_filter">是否删除配置？</string>
     <string name="snackbar_searching_location">正在搜索位置</string>
     <string name="pref_title_project_page">浏览官方网站</string>
@@ -44,7 +44,7 @@
     <string name="filter_name_default">默认</string>
     <string name="filter_name_bed_reading">阅读</string>
     <string name="pref_summary_email_developer">另一个联系我们的方式</string>
-    <string name="pref_summary_project_page">查看更多信息，提交反馈和贡献</string>
+    <string name="pref_summary_project_page">查看更多信息、提交反馈和贡献</string>
     <string name="snackbar_warning_no_location">启用位置服务来更新位置</string>
     <string name="toast_warning_install">滤镜开启时无法安装应用。</string>
 
@@ -59,29 +59,29 @@
     <string name="searching_location">正在搜索位置</string>
     <string name="toast_warning_no_location">启用位置服务来更新位置</string>
     <string name="set_dialog">设置</string>
-    <string name="notification_status_running">运行中……需要暂停来安装APK</string>
+    <string name="notification_status_running">运行中……须要安装APK时会暂停</string>
 <string name="activity_intro">简介</string>
     <string name="activity_about">关于红月</string>
-    <string name="activity_secure_suspend">在被排除的应用处暂停</string>
+    <string name="activity_secure_suspend">被排除的应用在运行时，暂停红月</string>
     <string name="menu_restore_default_filters">恢复默认滤镜</string>
-    <string name="menu_show_intro">重放简介</string>
+    <string name="menu_show_intro">重播简介</string>
     <string name="menu_about">关于</string>
 
     <string name="notification_status_running_no_warning">运行中</string>
     <string name="notification_status_off">关闭</string>
     <string name="notification_action_turn_on">开启</string>
     <string name="notification_action_turn_off">关闭</string>
-    <string name="notification_action_stop">关闭</string>
+    <string name="notification_action_stop">停止</string>
     <string name="notification_action_next_filter">下一个滤镜</string>
 
     <string name="pref_category_button_backlight_disclaimer">对某些设备不起作用</string>
 
-    <string name="pref_title_secure_suspend">在被排除的应用处暂停</string>
+    <string name="pref_title_secure_suspend">被排除应用运行时暂停红月</string>
     <string name="pref_title_button_backlight">硬件按钮背光</string>
 
-    <string name="pref_summary_location_off">基于时间（定时）</string>
+    <string name="pref_summary_location_off">基于您的位置</string>
 
-    <string name="pref_summary_secure_suspend">当该应用启用时，红月将会在特定应用开启时暂停。一般说来，这包括了那些在红月运行时无法工作的应用*，如应用安装器。您可以在通知中改变对当前占据屏幕的应用的应对方式。比如说，您也许希望添加会被颜色变化所影响的应用，如相机。
+    <string name="pref_summary_secure_suspend">本功能启用时，红月将会在特定应用开启时暂停。一般来说，这包括了那些在红月运行时无法工作的应用*，如应用安装器。您可以在通知中改变对当前占据屏幕的应用的应对方式。比如说，您也许希望添加会被颜色变化所影响的应用，如相机应用。
 \n
 \n该特性会稍微减少您设备的电池寿命。
 \n
@@ -90,7 +90,7 @@
     <string name="text_switch_on">开启</string>
     <string name="text_switch_off">关闭</string>
 
-    <string name="pref_title_version">版本号</string>
+    <string name="pref_title_version">版本</string>
 
     <string name="pref_title_integration">与其他应用的整合</string>
     <string name="snackbar_location_updated">发现位置！</string>
@@ -128,11 +128,11 @@
     <string name="pref_entry_button_backlight_turn_off">关闭</string>
 
     <string name="location">位置</string>
-    <string name="activity_schedule">计划</string>
-    <string name="notification_status_paused_with_info">已暂停。移除通知以停止。</string>
+    <string name="activity_schedule">时间表</string>
+    <string name="notification_status_paused_with_info">已暂停。要恢复运行，请关闭通知。</string>
     <string name="notification_action_whitelist_add">排除应用</string>
     <string name="notification_action_whitelist_remove">过滤应用</string>
-    <string name="pref_title_schedule">计划</string>
+    <string name="pref_title_schedule">时间表</string>
     <string name="pref_summary_schedule_sun" formatted="false">日出（%on）到日落（%off）</string>
     <string name="pref_summary_schedule_custom" formatted="false">自定义（%on 到 %off）</string>
     <string name="pref_summary_schedule_none">无</string>
