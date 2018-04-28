@@ -8,7 +8,7 @@
     <string name="pref_category_filter">フィルター</string>
     <string name="activity_timer">タイマー</string>
     <string name="pref_title_time_toggle">タイマー</string>
-    <string name="pref_title_startup">スタートアップ</string>
+    <string name="pref_title_startup">起動</string>
     <string name="pref_category_other">その他</string>
 
     <string name="button_add_filter">追加</string>
@@ -36,7 +36,7 @@
     <string name="pref_title_project_page">プロジェクトページをご覧ください</string>
     <string name="pref_summary_project_page">さらに詳しい情報を探す、フィードバックを残す、貢献する</string>
     <string name="toast_warning_install">Red Moon がオンのときは APK をインストールできません。</string>
-    <string name="snackbar_warning_no_location">位置情報サービスを有効にして、場所を更新してください</string>
+    <string name="snackbar_warning_no_location">位置情報サービスを有効にして、位置情報を更新してください</string>
 
     <string name="help_snackbar_text">Red Moonを有効にするにはスイッチを押してください</string>
 
@@ -93,7 +93,7 @@
     <string name="activity_secure_suspend">除外したアプリで一時停止</string>
 
     <string name="pref_title_secure_suspend">除外したアプリで一時停止</string>
-    <string name="dialog_title_permission_usage_stats">使用状況のアクセス</string>
+    <string name="dialog_title_permission_usage_stats">使用状況へのアクセス</string>
     <string name="dialog_title_permission_overlay">他のアプリ上に描画</string>
     <string name="dialog_message_permission_overlay">次の画面で他のアプリ上に描画を許可して、Red Moon をオンにできるようにします。</string>
 
@@ -103,7 +103,7 @@
     <string name="notification_status_off">オフ</string>
     <string name="notification_action_turn_on">オンにする</string>
     <string name="notification_action_turn_off">オフにする</string>
-    <string name="notification_action_stop">オフにする</string>
+    <string name="notification_action_stop">止める</string>
 
     <string name="pref_summary_location_off">位置情報に基づく</string>
     <string name="notification_action_next_filter">次のフィルター</string>
@@ -129,10 +129,10 @@
     <string name="pref_entry_button_backlight_filter_dim_level">薄暗いレベルのフィルターを使用</string>
     <string name="pref_entry_button_backlight_turn_off">オフにする</string>
 
-    <string name="searching_location">場所の検索中</string>
-    <string name="toast_warning_no_location">位置情報サービスを有効にして、場所を更新してください</string>
+    <string name="searching_location">位置情報の検索中</string>
+    <string name="toast_warning_no_location">位置情報サービスを有効にして、位置情報を更新してください</string>
     <string name="snackbar_location_updated">位置情報が見つかりました!</string>
-    <string name="location">場所</string>
+    <string name="location">位置情報</string>
     <string name="set_dialog">設定</string>
     <string name="notification_status_running">実行中。apkをインストールする際はオフ</string>
     <string name="notification_status_running_no_warning">実行中</string>
@@ -142,7 +142,7 @@
     <string name="activity_schedule">スケジュール</string>
     <string name="notification_status_paused_with_info">一時停止します。通知を閉じると停止します。</string>
     <string name="notification_action_whitelist_add">アプリを除外</string>
-    <string name="notification_action_whitelist_remove">アプリを包含</string>
+    <string name="notification_action_whitelist_remove">アプリに適用</string>
     <string name="pref_title_schedule">スケジュール</string>
     <string name="pref_summary_schedule_sun" formatted="false">日没 (%on) から日の出 (%off)</string>
     <string name="pref_summary_schedule_custom" formatted="false">カスタム (%on から %off)</string>
