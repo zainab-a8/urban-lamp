@@ -32,12 +32,14 @@ class Notification(
             as NotificationManager
 
     fun build(isOn: Boolean) : Notification {
+        // Register a notification channel for Oreo if we don't already have one
+        val channelID = getString(R.string.notification_channel_overlay_id)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O
-            && notificationManager.getNotificationChannel(getString(R.string.notification_channel_overlay_id)) == null) {
-            // Register a notification channel for Oreo if we don't already have one
-            val channel = NotificationChannel(getString(R.string.notification_channel_overlay_id),
-                    "Overlay Toggle", NotificationManager.IMPORTANCE_MIN)
-            channel.description = getString(R.string.notification_channel_overlay_description)
+            && notificationManager.getNotificationChannel(channelID) == null) {
+            val channelName = getString(R.string.notification_channel_overlay_name)
+            val channelDescription = getString(R.string.notification_channel_overlay_description)
+            val channel = NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_MIN)
+            channel.description = channelDescription
             notificationManager.createNotificationChannel(channel)
         }
 
