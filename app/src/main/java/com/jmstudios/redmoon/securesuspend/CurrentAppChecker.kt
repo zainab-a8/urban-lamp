@@ -5,6 +5,7 @@
  */
 package com.jmstudios.redmoon.securesuspend
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.ActivityManager
 import android.app.usage.UsageEvents
@@ -31,6 +32,7 @@ class CurrentAppChecker(private val context: Context) {
         }
     }
 
+    @SuppressLint("WrongConstant")
     @TargetApi(21)
     private fun getCurrentAppFromUsageStats(default: App): App {
         // Although the UsageStatsManager was added in API 21, the

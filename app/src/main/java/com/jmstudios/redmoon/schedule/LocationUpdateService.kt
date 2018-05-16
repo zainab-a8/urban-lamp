@@ -62,7 +62,11 @@ class LocationUpdateService: Service(), LocationListener {
             get() = mRequested && enabled
 
         val lastKnownLocation: Location?
-            get() = locationManager.getLastKnownLocation(provider)
+            get() = try {
+                locationManager.getLastKnownLocation(provider)
+            } catch (e: SecurityException) {
+                null
+            }
 
         fun requestUpdates(listener: LocationListener) = when {
             !exists -> {
@@ -76,7 +80,11 @@ class LocationUpdateService: Service(), LocationListener {
                 mRequested = true
                 if (enabled) { postStatus(searching = true) }
                 // If disabled, onProviderDisabled is called immediately
-                locationManager.requestLocationUpdates(provider, 0, 0f, listener)
+                try {
+                    locationManager.requestLocationUpdates(provider, 0, 0f, listener)
+                } catch(e: SecurityException) {
+                    Log.i("Location permission not granted; cannot update location.")
+                }
             }
         }
     }

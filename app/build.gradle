@@ -11,7 +11,7 @@ buildscript {
 }
 
 ext {
-    android_support_version = '26.0.2'
+    android_support_version = '26.1.0'
 }
 
 if(rootProject.file("keystore.properties").exists()) {

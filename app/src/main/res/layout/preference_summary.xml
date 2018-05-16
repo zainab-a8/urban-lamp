@@ -22,10 +22,9 @@
         android:id="@android:id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLines="1"
         android:textAppearance="?attr/textAppearanceListItem"
         android:ellipsize="marquee"
-        />
+        android:singleLine="true" />
     <!-- When we stop supporting API<21, swap this in:
          android:textAppearance="?android:attr/textAppearanceListItemSecondary" -->
     <TextView
