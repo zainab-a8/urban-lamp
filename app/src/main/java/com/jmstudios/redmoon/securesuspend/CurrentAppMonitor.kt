@@ -39,8 +39,8 @@ class CurrentAppMonitor(
 
     private val handleCurrentApp = Runnable {
         val newApp = mAppChecker.getCurrentApp(currentApp)
-        Log.i("Current app is: $newApp")
-        Log.i("Last app was: $currentApp")
+        Log.v("Current app is: $newApp")
+        Log.v("Last app was: $currentApp")
         when {
             newApp == currentApp -> {} // state not changed
             newApp.isWhitelisted -> Command.PAUSE.send()
@@ -60,7 +60,7 @@ class CurrentAppMonitor(
     }
 
     private fun start() {
-        Log.i("Starting app monitoring")
+        Log.v("Starting app monitoring")
         val pm = mContext.getSystemService(Context.POWER_SERVICE) as PowerManager
         val screenOn = pm.run {
             if (atLeastAPI(20)) isInteractive else @Suppress("DEPRECATION") isScreenOn
@@ -75,18 +75,18 @@ class CurrentAppMonitor(
     }
 
     private fun stop() {
-        Log.i("Stopping app monitoring")
+        Log.v("Stopping app monitoring")
         mContext.unregisterReceiver(screenStateReceiver)
         active = false
     }
 
     override fun onScreenTurnedOn() {
-        Log.i("Screen turn on received")
+        Log.v("Screen turn on received")
         active = true
     }
 
     override fun onScreenTurnedOff() {
-        Log.i("Screen turn off received")
+        Log.v("Screen turn off received")
         active = false
     }
 
