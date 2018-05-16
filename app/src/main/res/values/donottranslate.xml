@@ -71,6 +71,9 @@
   <string name="translation_url" translatable="false">https://hosted.weblate.org/engage/red-moon/</string>
   <string name="contact_email_adress" translatable="false">mailto:marienraat@riseup.net,s@smichel.me</string>
 
+  <!-- Notification channel slug -->
+  <string name="notification_channel_overlay_id" translatable="false">com.jmstudios.redmoon.overlay</string>
+
   <string-array name="time_toggle_values_array"
                 translatable="false">
     <item>never</item>

@@ -187,4 +187,7 @@
     <string name="time_toggle_options_array_0">Manual</string>
     <string name="time_toggle_options_array_1">Automatic (sun)</string>
     <string name="time_toggle_options_array_2">Automatic (custom)</string>
+
+    <!-- Notification channel descriptions -->
+    <string name="notification_channel_overlay_description">The persistent overlay control notification</string>
 </resources>

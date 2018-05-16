@@ -6,9 +6,13 @@
 package com.jmstudios.redmoon.filter
 
 import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat
 
@@ -23,12 +27,25 @@ import com.jmstudios.redmoon.util.*
 class Notification(
         private val context: Context,
         private val appMonitor: CurrentAppMonitor) {
+
+    private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE)
+            as NotificationManager
+
     fun build(isOn: Boolean) : Notification {
-        return NotificationCompat.Builder(context).apply {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O
+            && notificationManager.getNotificationChannel(getString(R.string.notification_channel_overlay_id)) == null) {
+            // Register a notification channel for Oreo if we don't already have one
+            val channel = NotificationChannel(getString(R.string.notification_channel_overlay_id),
+                    "Overlay Toggle", NotificationManager.IMPORTANCE_MIN)
+            channel.description = getString(R.string.notification_channel_overlay_description)
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        return NotificationCompat.Builder(context, getString(R.string.notification_channel_overlay_id)).apply {
             // Set notification appearance
             setSmallIcon(R.drawable.notification_icon_half_moon)
             color    = ContextCompat.getColor(appContext, R.color.color_primary)
-            priority = Notification.PRIORITY_MIN
+            priority = NotificationCompat.PRIORITY_MIN
 
             if (belowAPI(24)) { setContentTitle(getString(R.string.app_name)) }
             setSubText(activeProfile.name)
