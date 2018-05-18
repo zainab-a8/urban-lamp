@@ -34,11 +34,18 @@ class BrightnessManager(context: Context) {
     companion object: Logger()
 
     private val resolver = context.contentResolver
+    private val context = context
 
     private var level: Int
         get() = Settings.System.getInt(resolver, Settings.System.SCREEN_BRIGHTNESS)
         set(value) {
-            Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, value)
+            if (Settings.System.canWrite(context)) {
+                if (value != null) {
+                    Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, value)
+                }
+            } else {
+                Log.w("Write settings permission not granted; cannot set brightness")
+            }
         }
 
     private var auto: Boolean
