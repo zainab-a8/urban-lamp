@@ -65,6 +65,7 @@ class LocationUpdateService: Service(), LocationListener {
             get() = try {
                 locationManager.getLastKnownLocation(provider)
             } catch (e: SecurityException) {
+                Log.i("Location permission not granted; Could not get last known location")
                 null
             }
 
