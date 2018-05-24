@@ -11,18 +11,14 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat
 
 import com.jmstudios.redmoon.R
-
 import com.jmstudios.redmoon.MainActivity
 import com.jmstudios.redmoon.securesuspend.CurrentAppMonitor
 import com.jmstudios.redmoon.securesuspend.WhitelistChangeReceiver
 import com.jmstudios.redmoon.util.*
-
 
 class Notification(
         private val context: Context,

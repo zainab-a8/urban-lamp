@@ -48,10 +48,6 @@ open class TimePickerPreference(context: Context, attrs: AttributeSet) : DialogP
         summary = mTime
     }
 
-    override fun onBindView(view: View) {
-        super.onBindView(view)
-    }
-
     override fun onCreateDialogView(): View {
         mTimePicker = TimePicker(context)
         mTimePicker.setIs24HourView(DateFormat.is24HourFormat(context))

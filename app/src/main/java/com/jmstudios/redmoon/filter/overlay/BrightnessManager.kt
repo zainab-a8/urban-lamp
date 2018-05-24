@@ -30,19 +30,16 @@ import android.provider.Settings
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.util.*
 
-class BrightnessManager(context: Context) {
+class BrightnessManager(private val context: Context) {
     companion object: Logger()
 
     private val resolver = context.contentResolver
-    private val context = context
 
     private var level: Int
         get() = Settings.System.getInt(resolver, Settings.System.SCREEN_BRIGHTNESS)
         set(value) {
             if (Settings.System.canWrite(context)) {
-                if (value != null) {
-                    Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, value)
-                }
+                Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, value)
             } else {
                 Log.w("Write settings permission not granted; cannot set brightness")
             }
