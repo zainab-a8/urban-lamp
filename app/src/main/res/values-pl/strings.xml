@@ -152,4 +152,6 @@
 
     <string name="notification_action_whitelist_add">Wyklucz aplikację</string>
     <string name="notification_action_whitelist_remove">Filtruj aplikację</string>
-    </resources>
+    <string name="notification_channel_overlay_name">Kontrola nakładki</string>
+    <string name="notification_channel_overlay_description">Stałe powiadomienie do kontroli nakładki</string>
+</resources>
