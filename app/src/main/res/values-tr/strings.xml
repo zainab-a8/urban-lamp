@@ -81,11 +81,11 @@
     <string name="pref_title_location">Gün doğumundan gün batımına</string>
     <string name="pref_summary_location_off">Konumunuza göre</string>
 
-    <string name="pref_summary_secure_suspend">Bu ayar etkinken, Red Moon belli uygulamalar açıkken kendiliğinden duraklayacaktır. Öntanımlı olarak, bu, apk yükleme gibi Red Moon çalışıyorken* çalışmayacak uygulamaları içerir. Bildirimlerden geçerli uygulamanın geçerli ekranı için bu davranışı değiştirebilirsiniz. Örneğin, kamera gibi renge duyarlı uygulamaları eklemek isteyebilirsiniz.
-\n
-\nBu özellik aygıtınızın pil düzeyini biraz düşürebilir.
-\n
-\n*Bazı uygulamalar, kendilerini müdahaleden sakınmak için örten tabakalara karşı korumalıdır, örneğin istemediğiniz bir uygulamayı yüklemek için kandırılmanız gibi. Ekran üzerine saydam kırmızı katman çizerek çalışan Red Moon açıkken, o uygulamalar dokunmaları yanıtlamayacaktır.</string>
+    <string name="pref_summary_secure_suspend">Bu ayar etkinken, Red Moon belli uygulamalar açıkken kendiliğinden duraklayacaktır. Öntanımlı olarak, bu, apk yükleme gibi Red Moon çalışıyorken* çalışmayacak uygulamaları içerir. Bildirimlerden geçerli uygulamanın geçerli ekranı için bu davranışı değiştirebilirsiniz. Örneğin, kamera gibi renge duyarlı uygulamaları eklemek isteyebilirsiniz. 
+\n 
+\nBu özellik aygıtınızın pil düzeyini biraz düşürebilir. 
+\n 
+\n*Bazı uygulamalar, kendilerini etkilemelerden korumak için örten tabakalara karşı korumalıdır, örneğin istemediğiniz bir uygulamayı yüklemek için kandırılmanız gibi. Ekran üzerine saydam kırmızı katman çizerek çalışan Red Moon açıkken, o uygulamalar dokunmaları yanıtlamayacaktır.</string>
 
     <!-- Short strings; might be used in multiple places -->
     <string name="button_add_filter">Ekle</string>
@@ -190,4 +190,6 @@
     <string name="time_toggle_options_array_2">Kendiliğinden (özel)</string>
 <string name="notification_action_whitelist_add">Uygulamayı dışla</string>
     <string name="notification_action_whitelist_remove">Uygulamayı süz</string>
-    </resources>
+    <string name="notification_channel_overlay_name">Örten Tabaka Yönetimi</string>
+    <string name="notification_channel_overlay_description">Kalıcı örten tabaka yönetim bildirimi</string>
+</resources>
