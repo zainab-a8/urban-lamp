@@ -150,4 +150,6 @@ Rød Måne kringkaster en offentlig intensjon med handlingen `com.jmstudios.redm
     <string name="pref_title_schedule">Syklus</string>
     <string name="pref_summary_schedule_sun" formatted="false">Solnedgang (%on) til soloppgang (%off)</string>
     <string name="pref_summary_schedule_custom" formatted="false">Egendefinert (%on til %off)</string>
-    </resources>
+    <string name="notification_channel_overlay_name">Overlagskontroll</string>
+    <string name="notification_channel_overlay_description">Merknad for vedvarende overlagskontroll</string>
+</resources>
