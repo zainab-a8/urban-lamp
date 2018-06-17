@@ -6,6 +6,8 @@
 package com.jmstudios.redmoon.filter
 
 import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -13,22 +15,35 @@ import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat
 
 import com.jmstudios.redmoon.R
-
 import com.jmstudios.redmoon.MainActivity
 import com.jmstudios.redmoon.securesuspend.CurrentAppMonitor
 import com.jmstudios.redmoon.securesuspend.WhitelistChangeReceiver
 import com.jmstudios.redmoon.util.*
 
-
 class Notification(
         private val context: Context,
         private val appMonitor: CurrentAppMonitor) {
+
+    private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE)
+            as NotificationManager
+
     fun build(isOn: Boolean) : Notification {
-        return NotificationCompat.Builder(context).apply {
+        // Register a notification channel for Oreo if we don't already have one
+        val channelID = getString(R.string.notification_channel_overlay_id)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O
+            && notificationManager.getNotificationChannel(channelID) == null) {
+            val channelName = getString(R.string.notification_channel_overlay_name)
+            val channelDescription = getString(R.string.notification_channel_overlay_description)
+            val channel = NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_MIN)
+            channel.description = channelDescription
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        return NotificationCompat.Builder(context, getString(R.string.notification_channel_overlay_id)).apply {
             // Set notification appearance
             setSmallIcon(R.drawable.notification_icon_half_moon)
             color    = ContextCompat.getColor(appContext, R.color.color_primary)
-            priority = Notification.PRIORITY_MIN
+            priority = NotificationCompat.PRIORITY_MIN
 
             if (belowAPI(24)) { setContentTitle(getString(R.string.app_name)) }
             setSubText(activeProfile.name)
