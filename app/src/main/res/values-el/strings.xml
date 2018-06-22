@@ -2,7 +2,7 @@
 <resources>
     <string name="activity_intro">Εισαγωγή</string>
     <string name="menu_show_intro">Δείξε την εισαγωγή</string>
-    <string name="activity_secure_suspend">Αυτόματη αναστολή</string>
+    <string name="activity_secure_suspend">Αναστολή σε μη συμπεριλαμβανόμενες εφαρμογές</string>
 
     <string name="notification_status_paused">Σε παύση</string>
     <string name="notification_action_resume">Συνέχισε</string>
@@ -24,7 +24,7 @@
     <string name="time_toggle_title">Εναλλαγή λειτουργίας</string>
     <string name="pref_title_turn_on">Συνέχεια στις</string>
     <string name="pref_title_turn_off">Παύση στις</string>
-    <string name="pref_title_location">Τοποθεσία</string>
+    <string name="pref_title_location">Από την αυγή ως τη δύση</string>
     <string name="location_not_set">Δεν ορίστηκε</string>
     <string name="latitude_short">Γεωγρ. πλάτος</string>
     <string name="longitude_short">Γεωγρ. μήκος</string>
@@ -94,10 +94,57 @@
     <string name="add_new_profile_dialog_title">Δώστε όνομα προφίλ</string>
     <string name="add_new_profile_edit_hint">Όνομα προφίλ</string>
     <string name="remove_profile_dialog_title">Διαγραφή του προφίλ;</string>
-    <string name="pref_title_appearance">Φίλτρο</string>
+    <string name="pref_title_appearance">Προφίλ</string>
     <string name="searching_location">Αναζήτηση της τοποθεσίας σας</string>
     <string name="toast_warning_no_location">Ενεργοποιήστε τις υπηρεσίες τοποθεσίας για ενημέρωση τοποθεσίας</string>
     <string name="set_dialog">Όρισε</string>
     <string name="notification_status_running">Σε λειτουργία. Σε παύση για την εγκατάσταση των apks</string>
     <string name="notification_status_running_no_warning">Σε λειτουργία</string>
+<string name="activity_about">Σχετικά με το Red Moon</string>
+    <string name="activity_schedule">Πρόγραμμα</string>
+    <string name="menu_restore_default_filters">Επαναφορά αρχικών φίλτρων</string>
+    <string name="menu_about">Σχετικά</string>
+
+    <string name="notification_status_paused_with_info">Σε παύση. Κλείστε την ειδοποίηση για να σταματήσει.</string>
+    <string name="notification_status_off">Κλείσιμο</string>
+    <string name="notification_action_turn_on">Ενεργοποίηση</string>
+    <string name="notification_action_turn_off">Απενεργοποίηση</string>
+    <string name="notification_action_stop">Σταμάτημα</string>
+    <string name="notification_action_whitelist_add">Αποκλεισμός εφαρμογής</string>
+    <string name="notification_action_whitelist_remove">Φιλτράρισμα εφαρμογής</string>
+    <string name="notification_action_next_filter">Επόμενο φίλτρο</string>
+
+    <string name="pref_category_button_backlight_disclaimer">Κανένα αποτέλεσμα σε κάποιες συσκευές</string>
+
+    <string name="pref_title_schedule">Πρόγραμμα</string>
+    <string name="pref_summary_schedule_sun" formatted="false">Οι ώρες ενεργοποίησης και απενεργοποίησης θα αντικατασταθούν από τα %on και %off</string>
+    <string name="pref_summary_schedule_none">Κανένα</string>
+    <string name="pref_title_button_backlight">Oπίσθιος φωτισμός πλήκτρου υλικού</string>
+
+    <string name="pref_title_start_time">Ώρα έναρξης</string>
+    <string name="pref_title_stop_time">Ώρα τερματισμού</string>
+    <string name="pref_summary_location_off">Βασισμένο στον τοποθεσία σας</string>
+
+    <string name="pref_title_translators">Βοηθήστε στη μετάφραση</string>
+    <string name="pref_summary_translators">andlydakis</string>
+
+    <string name="pref_title_integration">Ενσωμάτωση με άλλες εφαρμογές</string>
+    <string name="toast_warning_secured">Kάποια χαρακτηριστικά αυτής της εφαρμογής μπορεί να μη λειτουργούν όστο το Red Moon τρέχει.</string>
+
+    <string name="snackbar_location_updated">Η τοποθεσία βρέθηκε!</string>
+    <string name="dialog_title_permission_overlay">Ζωγραφίζετε πάνω από άλλες εφαρμογές</string>
+    <string name="dialog_message_permission_overlay">Επιτρέψτε τη ζωγραφικής πάνω από άλλες εφαρμογές στην επόμενη οθόνη για να επιτρέψετε στο Red Moon να ενεργοποιηθεί.</string>
+
+    <string name="dialog_title_permission_write_settings">Τροποποίηση ρυθίμσεων συστήματος</string>
+    <string name="dialog_message_permission_write_settings">Επιτρέψτε την τροποποίηση ρυθμίσεων συστήματος στην επόμενη οθόνη για να επιτρέψετε στο Red Moon να αλλάξει το επίπεδο φωτεινότητας.</string>
+
+    <string name="filter_name_dim_only">Χαμηλός φωτισμός μόνο</string>
+
+    <string name="pref_entry_button_backlight_filter_dim_level">Χρησιμοποιήστε το φίλτρο επιπέδου χαμηλού φωτισμού</string>
+    <string name="pref_entry_button_backlight_turn_off">Απενεργοποίηση</string>
+
+    <string name="action_next_profile">Επόμενο προφίλ</string>
+    <string name="location">Τοποθεσία</string>
+    <string name="notification_channel_overlay_name">Έλεγχος επικάλυψης</string>
+    <string name="notification_channel_overlay_description">Ειδοποίηση μόνιμου ελέγχου επικάλυψης</string>
 </resources>
