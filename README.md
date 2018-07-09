@@ -38,15 +38,14 @@ other parts of their life. That's where you come in! You can:
 ## Screenshots & translation stats
 
 <a href="https://hosted.weblate.org/engage/red-moon/en/?utm_source=widget">
-<img src="https://hosted.weblate.org/widgets/red-moon/en/strings/multi-auto.svg" alt="Translation status" align="right" height="650" />
+<img src="https://hosted.weblate.org/widgets/red-moon/en/strings/multi-auto.svg" alt="Translation status" align="right" height="732" />
 </a>
 
-
-<img src="https://lut.im/O5bUIZVPDR/ddcBY3akDK6Sq1zU.png" width="180" height="320" /> <img src="https://lut.im/uMUMujZSZU/rfHRfhIrDnDznetz.png" width="180" height="320" /> 
-<img src="https://lut.im/0YrVNYZbj2/lr0SDpIqy7jlpg13.png" width="180" height="320" />
-<img src="https://lut.im/LPf77AuSRG/MsJbEeHXHxyQ7XSf.png" width="180" height="320" />
-
 Screenshots are slightly out of date.
+
+<img src="https://github.com/LibreShift/red-moon/blob/master/app/src/main/play/en-US/listing/phoneScreenshots/1.png" width="189" height="336" /> <img src="https://github.com/LibreShift/red-moon/blob/master/app/src/main/play/en-US/listing/phoneScreenshots/2.png" width="189" height="336" /> 
+<img src="https://github.com/LibreShift/red-moon/blob/master/app/src/main/play/en-US/listing/phoneScreenshots/6.png" width="189" height="336" />
+<img src="https://github.com/LibreShift/red-moon/blob/master/app/src/main/play/en-US/listing/phoneScreenshots/7.png" width="189" height="336" />
 
 ## Development [![Build Status](https://travis-ci.org/LibreShift/red-moon.svg?branch=master)](https://travis-ci.org/LibreShift/red-moon)
 
