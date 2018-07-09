@@ -61,10 +61,10 @@
     <string name="pref_category_other">Other</string>
     <string name="pref_category_button_backlight_disclaimer">No effect on some devices</string>
 
-    <string name="pref_title_dim_level">Dim level</string>
-    <string name="pref_title_intensity">Intensity level</string>
-    <string name="pref_title_color_temp">Color temperature</string>
-    <string name="pref_title_lower_brightness">Lower brightness</string>
+    <string name="pref_title_dim_level">Darkness</string>
+    <string name="pref_title_intensity">Opacity</string>
+    <string name="pref_title_color_temp">Color</string>
+    <string name="pref_title_lower_brightness">Lower system brightness</string>
 
     <string name="pref_title_time_toggle">Timer</string>
     <string name="pref_title_schedule">Schedule</string>
