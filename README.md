@@ -1,7 +1,6 @@
 <img alt="Red Moon Icon" align="right" height="256" src="https://lut.im/3IqLwsAZWH/piFLRMOgNLWmiqB8.png">
 
-# Red Moon [![Translation status](https://hosted.weblate.org/widgets/red-moon/-/svg-badge.svg)](https://hosted.weblate.org/engage/red-moon/?utm_source=widget) [![License](https://img.shields.io/badge/license-GPL--3.0%2B-bd0000.svg)](COPYING "License: GPL-3.0+") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/libreshift/red-moon.svg)](http://isitmaintained.com/project/libreshift/red-moon "Average time to resolve an issue")
-<!-- [![Release](https://img.shields.io/github/release/qubyte/rubidium.svg)](https://github.com/raatmarien/red-moon/releases) -->
+# Red Moon [![Translation status](https://hosted.weblate.org/widgets/red-moon/-/svg-badge.svg)](https://hosted.weblate.org/engage/red-moon/?utm_source=widget) [![License](https://img.shields.io/badge/license-GPL--3.0%2B-bd0000.svg)](COPYING "License: GPL-3.0+") ![Commits (since latest release)](https://img.shields.io/github/commits-since/LibreShift/red-moon/latest.svg "Commits since latest release")
 
 Blue light may suppress the production of melatonin, the sleep hormone. Red Moon
 filters out blue light and dims your screen below the normal minimum, so you can
@@ -22,9 +21,9 @@ use your phone comfortably at night.
       alt="Direct download"
       height="80">](https://github.com/raatmarien/red-moon/releases)
 
-## Join the community
+## Do your part — participate in the community
 
-Communities keep software projects alive. Without them, projects usually fade
+**Communities keep software projects alive.** Without them, projects usually fade
 into obscurity when the primary developer loses interest or becomes busy in
 other parts of their life. That's where you come in! You can:
 
@@ -78,7 +77,7 @@ here's a short list of what I've been doing.
 - Good comments explain *why* something is done; if you find yourself describing *what* the code does, consider:
     - Refactoring into smaller functions with descriptive names
     - Converting comments to logs. Code that requires comments probably also requires good logs to debug.
-- Don't omit the curly braces from `if` statements except short variable assignment (`val x = if (a) b else c`)
+- Always use curly braces with `if` (except short val/var one-liners: `val x = if (a) b else c`)
 
 ### License
 
