@@ -1,6 +1,6 @@
 <img alt="Red Moon Icon" align="right" height="256" src="https://lut.im/3IqLwsAZWH/piFLRMOgNLWmiqB8.png">
 
-# Red Moon [![Translation status](https://hosted.weblate.org/widgets/red-moon/-/svg-badge.svg)](https://hosted.weblate.org/engage/red-moon/?utm_source=widget) [![License](https://img.shields.io/badge/license-GPL--3.0%2B-bd0000.svg)](COPYING "License: GPL-3.0+") ![Commits (since latest release)](https://img.shields.io/github/commits-since/LibreShift/red-moon/latest.svg "Commits since latest release")
+# Red Moon [![Translation status](https://hosted.weblate.org/widgets/red-moon/-/svg-badge.svg)](https://hosted.weblate.org/engage/red-moon/?utm_source=widget) [![License](https://img.shields.io/badge/license-GPL--3.0%2B-bd0000.svg)](COPYING "License: GPL-3.0+") [![Commits (since latest release)](https://img.shields.io/github/commits-since/LibreShift/red-moon/latest.svg "Commits since latest release")](https://github.com/LibreShift/red-moon/releases/latest)
 
 Blue light may suppress the production of melatonin, the sleep hormone. Red Moon
 filters out blue light and dims your screen below the normal minimum, so you can
@@ -10,7 +10,7 @@ use your phone comfortably at night.
 * Use the default color profiles, or set custom color, intensity, and dim levels.
 * Automatically pause in apps secured against overlays, or those you choose.
 * Quickly start, stop, and switch profiles via notification, tile (Android 7.0+), or widget.
-
+@joonatoona and I started work on bringing OpenShift's [root mode](https://github.com/LibreShift/red-moon/issues/150) to Red Moon a while back, so the work to support multiple backends is mostly done if we started with Red Moon's code base. **I'm totally willing to use one of your apps as the base, though.**
 [<img src="https://gitlab.com/fdroid/artwork/raw/master/badge/get-it-on.png"
       alt="Get it on F-Droid"
       height="80">](https://f-droid.org/repository/browse/?fdid=com.jmstudios.redmoon)
