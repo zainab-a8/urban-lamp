@@ -14,10 +14,10 @@
 
     <string name="button_add_filter">Legg til</string>
     <string name="button_remove_filter">Slett</string>
-    <string name="pref_title_dim_level">Filternivå</string>
-    <string name="pref_title_intensity">Intensitetsnivå</string>
-    <string name="pref_title_color_temp">Fargetemperatur</string>
-    <string name="pref_title_lower_brightness">Lavere lysstyrke</string>
+    <string name="pref_title_dim_level">Mørkhet</string>
+    <string name="pref_title_intensity">Dekkevne</string>
+    <string name="pref_title_color_temp">Farge</string>
+    <string name="pref_title_lower_brightness">Lavere systemlysstyrke</string>
 
     <string name="time_toggle_title">Veksle modus</string>
     <string name="pref_title_turn_on">Gjennoppta om</string>
