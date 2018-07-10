@@ -14,10 +14,10 @@
 
     <string name="button_add_filter">Dodaj</string>
     <string name="button_remove_filter">Usuń</string>
-    <string name="pref_title_dim_level">Przyciemnienie</string>
-    <string name="pref_title_intensity">Intensywność</string>
-    <string name="pref_title_color_temp">Temperatura barwowa</string>
-    <string name="pref_title_lower_brightness">Zmniejsz jasność</string>
+    <string name="pref_title_dim_level">Ciemność</string>
+    <string name="pref_title_intensity">Przezroczystość</string>
+    <string name="pref_title_color_temp">Barwa</string>
+    <string name="pref_title_lower_brightness">Zmniejsz jasność systemu</string>
 
     <string name="time_toggle_title">Automatyczne przełączanie</string>
     <string name="pref_title_turn_on">Wznawiaj o</string>
