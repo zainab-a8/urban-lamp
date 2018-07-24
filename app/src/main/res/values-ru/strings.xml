@@ -18,9 +18,9 @@
     <string name="button_add_filter">Добавить</string>
     <string name="button_remove_filter">Удалить</string>
     <string name="pref_title_dim_level">Уровень затемнения</string>
-    <string name="pref_title_intensity">Уровень интенсивности</string>
-    <string name="pref_title_color_temp">Цветовая температура</string>
-    <string name="pref_title_lower_brightness">Снижать яркость</string>
+    <string name="pref_title_intensity">Прозрачность</string>
+    <string name="pref_title_color_temp">Цвет</string>
+    <string name="pref_title_lower_brightness">Снижать яркость в системных настройках</string>
 
     <string name="time_toggle_title">Режим переключения</string>
     <string name="pref_title_turn_on">Включить в</string>
@@ -167,4 +167,6 @@
 
     <string name="notification_action_whitelist_add">Добавить приложение в привилегированные</string>
     <string name="notification_action_whitelist_remove">Удалить приложение из привилегированных</string>
-    </resources>
+    <string name="notification_channel_overlay_name">Наложение уведомлений</string>
+    <string name="notification_channel_overlay_description">Постоянные уведомления о наложении</string>
+</resources>
