@@ -59,10 +59,10 @@
     <string name="pref_category_other">Diğer</string>
     <string name="pref_category_button_backlight_disclaimer">Bazı aygıtlarda çalışmaz</string>
 
-    <string name="pref_title_dim_level">Karartma düzeyi</string>
-    <string name="pref_title_intensity">Yoğunluk düzeyi</string>
-    <string name="pref_title_color_temp">Renk sıcaklığı</string>
-    <string name="pref_title_lower_brightness">Parlaklığı azalt</string>
+    <string name="pref_title_dim_level">Karanlık</string>
+    <string name="pref_title_intensity">Donukluk</string>
+    <string name="pref_title_color_temp">Renk</string>
+    <string name="pref_title_lower_brightness">Sistem parlaklığını azalt</string>
 
     <string name="pref_title_time_toggle">Zamanlayıcı</string>
     <string name="pref_title_schedule">Zamanlama</string>
