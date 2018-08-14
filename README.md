@@ -10,7 +10,7 @@ use your phone comfortably at night.
 * Use the default color profiles, or set custom color, intensity, and dim levels.
 * Automatically pause in apps secured against overlays, or those you choose.
 * Quickly start, stop, and switch profiles via notification, tile (Android 7.0+), or widget.
-@joonatoona and I started work on bringing OpenShift's [root mode](https://github.com/LibreShift/red-moon/issues/150) to Red Moon a while back, so the work to support multiple backends is mostly done if we started with Red Moon's code base. **I'm totally willing to use one of your apps as the base, though.**
+
 [<img src="https://gitlab.com/fdroid/artwork/raw/master/badge/get-it-on.png"
       alt="Get it on F-Droid"
       height="80">](https://f-droid.org/repository/browse/?fdid=com.jmstudios.redmoon)
