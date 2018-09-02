@@ -36,4 +36,26 @@
     <string name="pref_title_time_toggle">Időzítő</string>
     <string name="pref_title_schedule">Időzítés</string>
     <string name="pref_summary_schedule_sun" formatted="false">Napnyugtától (%on) napkeltéig (%off)</string>
+    <string name="notification_action_whitelist_add">Alkalmazás kihagyása</string>
+    <string name="notification_action_whitelist_remove">Alkalmazás szűrése</string>
+    <string name="notification_action_next_filter">Következő szűrő</string>
+
+    <string name="pref_summary_schedule_custom" formatted="false">Saját (%on -tól %off -ig)</string>
+    <string name="pref_summary_schedule_none">Nincs</string>
+    <string name="pref_title_secure_suspend">Szüneteltetés a kihagyandó alkalmazásokban</string>
+    <string name="pref_title_button_backlight">Hardveres világítás gomb</string>
+
+    <string name="pref_title_turn_on">Bekapcsolás:</string>
+    <string name="pref_title_turn_off">Kikapcsolás:</string>
+    <string name="pref_title_start_time">Indítási idő</string>
+    <string name="pref_title_stop_time">Kikapcsolási idő</string>
+    <string name="pref_title_location">Napkeltétől napnyugtáig</string>
+    <string name="pref_summary_location_off">A helyzeted alapján</string>
+
+    <string name="button_add_filter">Hozzáadás</string>
+    <string name="button_remove_filter">Törlés</string>
+
+    <string name="text_switch_on">Bekapcsolva</string>
+    <string name="text_switch_off">Kikapcsolva</string>
+
     </resources>
