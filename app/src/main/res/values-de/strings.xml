@@ -23,7 +23,7 @@
     <string name="pref_title_turn_off">Ausschaltzeit</string>
     <string name="pref_title_turn_on">Einschaltzeit</string>
     <string name="menu_dark_theme">Dunkles Thema</string>
-    <string name="pref_summary_email_developer">Eine weitere Kontaktmöglichkeit</string>
+    <string name="pref_summary_email_developer">Eine zweite Kontaktmöglichkeit</string>
     <string name="pref_title_email_developer">E-Mail an die Entwickler</string>
     <string name="dialog_button_ok">OK</string>
     <string name="activity_timer">Automatischer Filter</string>
@@ -148,7 +148,7 @@
     <string name="pref_title_translators">Beim Übersetzen helfen</string>
     <string name="pref_summary_translators">Übersetzer: smichel17, elumbella</string>
 
-    <string name="toast_warning_secured">Einige Funktionen dieser Anwendung funktionieren möglicherweise nicht, während Red Moon ausgeführt wird.</string>
+    <string name="toast_warning_secured">"Währen Red Moon läuft, sind einige Features dieser App womöglich nur eingeschränkt verfügbar. "</string>
 
     <string name="notification_channel_overlay_name">Overlaykontrolle</string>
     <string name="notification_channel_overlay_description">Die ständige Notifikation der Overlaykontrolle</string>
