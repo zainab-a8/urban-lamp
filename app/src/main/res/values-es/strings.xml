@@ -149,4 +149,6 @@
 
     <string name="toast_warning_secured">Algunas características de esta aplicación pueden no funcionar mientras Red Moon este en ejecución.</string>
 
-    </resources>
+    <string name="notification_channel_overlay_name">Control de superposición</string>
+    <string name="notification_channel_overlay_description">La notificación persistente de control de superposición</string>
+</resources>
