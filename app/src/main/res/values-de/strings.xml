@@ -148,7 +148,7 @@
     <string name="pref_title_translators">Beim Übersetzen helfen</string>
     <string name="pref_summary_translators">Übersetzer: smichel17, elumbella</string>
 
-    <string name="toast_warning_secured">"Währen Red Moon läuft, sind einige Features dieser App womöglich nur eingeschränkt verfügbar. "</string>
+    <string name="toast_warning_secured">Einige Features dieser App funktionieren womöglich nicht während Red Moon läuft.</string>
 
     <string name="notification_channel_overlay_name">Overlaykontrolle</string>
     <string name="notification_channel_overlay_description">Die ständige Notifikation der Overlaykontrolle</string>
