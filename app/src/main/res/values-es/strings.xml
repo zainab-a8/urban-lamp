@@ -122,7 +122,7 @@
     <string name="searching_location">Buscando ubicación</string>
     <string name="toast_warning_no_location">Activa los servicios de ubicación para actualizar tu posición</string>
     <string name="pref_category_button_backlight_disclaimer">Inútil en ciertos dispositivos</string>
-    <string name="snackbar_location_updated">¡Ubicación encontrada!</string>
+    <string name="snackbar_location_updated">¡Se encontró la ubicación!</string>
     <string name="pref_entry_button_backlight_system">Gestionado por el sistema</string>
     <string name="pref_entry_button_backlight_turn_off">Apagar</string>
 
