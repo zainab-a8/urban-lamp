@@ -95,7 +95,7 @@
     <string name="notification_status_off">No</string>
     <string name="pref_summary_location_off">Desfase horario desde ubicación</string>
     <string name="notification_action_turn_on">Reanudar</string>
-    <string name="notification_action_turn_off">Pausar</string>
+    <string name="notification_action_turn_off">Detener</string>
     <string name="notification_action_stop">Detener</string>
 
     <string name="dialog_message_permission_overlay">Activa las superposiciones en la siguiente pantalla para que Red Moon pueda activar el filtro.</string>
