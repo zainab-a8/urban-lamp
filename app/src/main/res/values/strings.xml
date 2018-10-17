@@ -80,7 +80,7 @@
     <string name="pref_title_turn_off">Turn off at</string>
     <string name="pref_title_start_time">Start time</string>
     <string name="pref_title_stop_time">Stop time</string>
-    <string name="pref_title_location">Sunrise to sunset</string>
+    <string name="pref_title_location">Sunset to Sunrise</string>
     <string name="pref_summary_location_off">Based on your location</string>
 
     <string name="pref_summary_secure_suspend">When this feature is enabled, Red Moon will automatically pause when certain apps are open. By default, this includes apps that won\'t work when Red Moon is running*, like installing apks. You can change this behavior for the current screen of the current app from the notification. For example, you might want to add color-sensitive apps, like the camera.\n\nThis feature may slightly lower the battery life of your device.\n\n*Some apps are secured against overlays to protect themselves from interference, like tricking you into installing an app you don\'t want. They won\'t respond to touches when Red Moon is on, since it works by drawing transparent red layer over the screen.</string>
@@ -106,7 +106,7 @@
     <string name="pref_summary_email_developer">A secondary way to contact us</string>
     <string name="pref_title_translators">Help translate</string>
     <!-- Add your name or handle here if you would like credit in the app -->
-    <string name="pref_summary_translators">Translators: smichel17, raatmarien</string>
+    <string name="pref_summary_translators">Translators: smichel17, raatmarien, Mostafa Ahangarha</string>
 
     <string name="pref_title_integration">Integration with other apps</string>
     <string name="pref_summary_integration">Some apps, like LibreTasks or Tasker, allow you to automate tasks when certain events happen. Red Moon sends a public notification when it turns on and off, so those apps can respond. If you don\'t use or develop one of those apps, you can ignore the next paragraph.\n\nRed Moon broadcasts a public intent with the action `com.jmstudios.redmoon.RED_MOON_TOGGLED`. The intent contains a boolean extra with the key `jmstudios.bundle.key.FILTER_IS_ON`, which indicates whether Red Moon is toggling on or off.</string>
