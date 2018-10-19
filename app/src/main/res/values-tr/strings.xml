@@ -78,7 +78,7 @@
     <string name="pref_title_turn_off">Kapatma zamanı</string>
     <string name="pref_title_start_time">Başlangıç zamanı</string>
     <string name="pref_title_stop_time">Bitiş zamanı</string>
-    <string name="pref_title_location">Gün doğumundan gün batımına</string>
+    <string name="pref_title_location">Gün Batımından Gün Doğumuna</string>
     <string name="pref_summary_location_off">Konumunuza göre</string>
 
     <string name="pref_summary_secure_suspend">Bu ayar etkinleştirildiğinde Red Moon belli uygulamalar açıkken kendiliğinden duraklayacaktır. Öntanımlı olarak bu, apk yükleme gibi Red Moon çalışıyorken* çalışmayacak uygulamaları içerir. Bildirimden geçerli uygulamanın geçerli ekranı için bu davranışı değiştirebilirsiniz. Örneğin, kamera gibi renge duyarlı uygulamaları eklemek isteyebilirsiniz. 
