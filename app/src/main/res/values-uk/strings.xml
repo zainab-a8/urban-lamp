@@ -39,7 +39,7 @@
 
     <string name="pref_title_turn_on">Увімкніть в</string>
     <string name="pref_title_turn_off">Вимкніть в</string>
-    <string name="pref_title_location">Від світанку до заходу</string>
+    <string name="pref_title_location">Від заходу до світанку</string>
     <string name="pref_summary_location_off">Виходячи з вашого місцезнаходження</string>
 
     <string name="pref_summary_secure_suspend">"Коли ця функція включена, Red Moon автоматично призупиняється, коли певні застосунки відкриті. За замовчуванням це включає застосунки, які не працюватимуть під час роботи функції Red Moon *, такі як встановлення apks. Ви можете змінити цю поведінку для поточного застосунку на панелі сповіщень.  Наприклад, ви можете додати світлочутливі застосунки, такі як камеру.
