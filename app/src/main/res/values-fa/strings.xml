@@ -75,7 +75,7 @@
     <string name="add_new_profile_dialog_title">ورود نام نمایه</string>
     <string name="add_new_profile_edit_hint">نام نمایه</string>
     <string name="remove_profile_dialog_title">حذف این نمایه؟</string>
-    <string name="pref_title_appearance">پالایه</string>
+    <string name="pref_title_appearance">نمایه</string>
     <string name="searching_location">در حال جست‌وجو برای موقعیّت</string>
     <string name="toast_warning_no_location">برای به‌روز رسانی موقعیّت، خدمات موقعیّت را فعّال کنید</string>
     <string name="set_dialog">تنظیم</string>
@@ -140,4 +140,28 @@
     <string name="dialog_title_permission_write_settings">تغییر تنظیمات سیستم</string>
     <string name="dialog_message_permission_write_settings">برای اینکه Red Moon بتواند سطح روشنایی را تغییر دهد، در صفحه بعد، اجازه تغییر در تنظیمات سیستمی را بدهید.</string>
 
+    <string name="dialog_title_permission_usage_stats">اجازه دسترسی</string>
+    <string name="dialog_message_permission_usage_stats">برای اینکه ردمون بتواند در برنامه‌های ایمن شده متوقف شود، در صفحه بعد به آن اجازه دسترسی بدهید.
+\n
+\nردمون از این داده‌ها صرفا برای تشخیص ناسازگاری اجرای ردمون با برنامه‌های دیگر استفاده می‌کند.</string>
+
+    <string name="slide_title_welcome">خوش‌آمدید!</string>
+    <string name="slide_text_welcome">به ردمون خوش‌آمدید!</string>
+
+    <string name="slide_title_protect_eyes">هوای چشمان‌تان را داشته باشید</string>
+    <string name="slide_text_protect_eyes">"در هنگام شب که نگاه کردن به صفحه گوشی  به چشمان شما آسیب وارد می‌کند می‌توانید با کمک ردمون، روشنایی صفحه را کاهش دهید."</string>
+
+    <string name="slide_title_improve_sleep">بهتر بخوابید</string>
+    <string name="slide_text_improve_sleep">نور آبی باعث اختلال در تولید هورمون ملاتونین که برای خوابیدن در شب به ما کمک می‌کند می‌شود. ردمون با حذف رنگ آبی از صفحه نمایش، خواب بهتری را برای شما به ارمغان می‌آورد.</string>
+
+    <string name="slide_title_get_started">شروع کنید!</string>
+    <string name="slide_text_get_started">با کلید بالا سمت چپ می‌توانید ردمون را روشن یا خاموش کنید.</string>
+
+    <string name="filter_name_dim_only">صرفا تغییر روشنایی</string>
+
+    <string name="pref_entry_button_backlight_turn_off">خاموش کردن</string>
+
+    <string name="action_next_profile">نمایه بعدی</string>
+    <string name="location">مکان</string>
+    <string name="notification_channel_overlay_name">کنترل هم‌پوشانی</string>
     </resources>
