@@ -57,8 +57,17 @@ object ProfilesModel : Logger() {
 
     fun save(profile: Profile, name: String) {
         Log.i("saving $name: $profile")
-        if (!profile.isSaved || model.containsValue(name)) {
-            prefs.edit().putString(profile.toString(), name).apply()
+	var newName = name
+        if (!profile.isSaved) {
+            if(model.containsValue(name)) {
+                var profileVersionNumber = 1
+                while (model.containsValue("$name ($profileVersionNumber)")){
+                    ++profileVersionNumber
+                }
+                newName = "$name ($profileVersionNumber)"
+            }
+
+            prefs.edit().putString(profile.toString(), newName).apply()
             modelOutdated = true
             EventBus.post(profilesUpdated())
         }
