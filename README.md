@@ -36,7 +36,9 @@ other parts of their life. That's where you come in! You can:
 
 ## Looking for co-maintainers
 
-Red Moon is still maintained, and I have no plans to change that. I would actually like to do more development and get Red Moon feature-complete. However, it is hard for me to get motivated to do that when I'm the only developer (especially when there are [other](https://snowdrift.coop) projects I'm involved in that *do* have others working on them). If you're interested in becoming a co-maintainer, I'm willing to spend time walking you through the code base.
+Red Moon is still maintained, and I have no plans to change that. I would actually like to do more development and get Red Moon feature-complete. However, it is hard for me to get motivated to do that when I'm the only developer (especially when there are [other](https://snowdrift.coop) projects I'm involved in that *do* have others working on them).
+
+If you're interested in becoming a co-maintainer, I'm willing to spend time walking you through the code base.
 
 ## Screenshots & translation stats
 
