@@ -13,10 +13,10 @@
 
     <string name="button_add_filter">Ajouter</string>
     <string name="button_remove_filter">Supprimer</string>
-    <string name="pref_title_dim_level">Niveau de luminosité</string>
-    <string name="pref_title_intensity">Niveau d\'intensité</string>
-    <string name="pref_title_color_temp">Température de couleur</string>
-    <string name="pref_title_lower_brightness">Luminosité minimale</string>
+    <string name="pref_title_dim_level">Obscurité</string>
+    <string name="pref_title_intensity">Opacité</string>
+    <string name="pref_title_color_temp">Couleur</string>
+    <string name="pref_title_lower_brightness">Diminution de la luminosité du système</string>
 
     <string name="time_toggle_title">Mode d\'activation</string>
     <string name="pref_title_turn_on">Reprendre à</string>
@@ -123,7 +123,7 @@
     <string name="pref_entry_button_backlight_turn_off">Éteindre</string>
 
     <string name="action_next_profile">Profil suivant</string>
-    <string name="pref_title_location">Du lever au coucher du soleil</string>
+    <string name="pref_title_location">Du coucher au lever du soleil</string>
     <string name="pref_title_button_backlight">Rétro-éclairage des boutons physiques</string>
 
     <string name="pref_summary_integration">Certaines applications, comme LibreTasks ou Tasker, vous permettent d’automatiser les tâches lorsque certains événements se produisent. Red Moon envoie une notification publique lorsqu’il s’allume et s’éteint, donc ces applications peuvent répondre. Si vous n\'utilisez ni développez pas une de ces applications, vous pouvez ignorer le paragraphe suivant. 
@@ -146,10 +146,12 @@
     <string name="pref_title_start_time">Début</string>
     <string name="pref_title_stop_time">Fin</string>
     <string name="pref_title_translators">Aider à traduire</string>
-    <string name="pref_summary_translators">Traduction : smichel17, raatmarien, dmaulat</string>
+    <string name="pref_summary_translators">Traduction : smichel17, raatmarien, Mostafa Ahangarha</string>
 
     <string name="toast_warning_secured">Certaines fonctionnalités de cette application pourraient ne pas marcher lorsque Red Moon est active.</string>
 
     <string name="pref_entry_button_backlight_system">Géré par le système</string>
     <string name="pref_entry_button_backlight_filter_dim_level">Utiliser le filtre de luminosité</string>
-    </resources>
+    <string name="notification_channel_overlay_name">Contrôle de superposition</string>
+    <string name="notification_channel_overlay_description">La notification persistante du contrôle de superposition</string>
+</resources>
