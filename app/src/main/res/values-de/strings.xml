@@ -48,7 +48,7 @@
     <string name="time_toggle_options_array_1">Sonnenstand</string>
     <string name="time_toggle_options_array_2">Benutzerdefinierte Zeiten</string>
     <string name="location_not_set">Standort nicht festgelegt</string>
-    <string name="pref_title_location">Sonnenauf- bis Sonnenuntergang</string>
+    <string name="pref_title_location">Sonnenuntergang bis Sonnenaufgang</string>
     <string name="latitude_short">Breitengrad</string>
     <string name="longitude_short">Längengrad</string>
     <string name="pref_category_other">Weitere</string>
@@ -146,7 +146,7 @@
     <string name="pref_title_start_time">Beginn</string>
     <string name="pref_title_stop_time">Ende</string>
     <string name="pref_title_translators">Beim Übersetzen helfen</string>
-    <string name="pref_summary_translators">Übersetzer: smichel17, elumbella</string>
+    <string name="pref_summary_translators">Übersetzer: smichel17, raatmarien, Mostafa Ahangarha</string>
 
     <string name="toast_warning_secured">Einige Features dieser App funktionieren womöglich nicht während Red Moon läuft.</string>
 
